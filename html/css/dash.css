@@ -1,0 +1,70 @@
+body {
+  background: black; 
+  color: white; 
+  margin: 0;
+}
+
+h1 { 
+  font-family: Raleway, sans-serif;
+  font-size: 250% 
+}
+
+p, dd {
+  font-family: Merriweather, serif; 
+  font-size: 200%;
+}
+
+dd { 
+  padding-bottom: 20px; 
+}
+
+dt { 
+  font-family: Merriweather, serif; 
+  font-size: 180%; 
+  color:#bbbbbb;
+}
+
+#time {
+  font-weight: 300;
+  font-size: 350%; 
+  background-color: #222222;
+  color: #999999; 
+  z-index:10
+  text-shadow: 10px 10px #ff0000;
+}
+
+#slack-chat {
+}
+
+.slackee {
+  font-size: 135%;
+  font-weight: bold;
+}
+
+.slacker {
+  color: orange;
+  font-size: 135%;
+}
+
+.slacking {
+  font-size: 135%;
+  color: #eeeeee;
+}
+
+.slackhead {
+  font-size: 150%;
+  padding: 8px;
+  margin: 0px;
+  padding-top: 15px;
+  width: 100%;
+  background: #222222;
+}
+
+div.hr {
+  height: 15px;
+  background: #fff no-repeat scroll center;
+}
+
+div.hr hr {
+  display: none;
+}
