@@ -7,9 +7,11 @@ import humanize
 import re
 import os
 import json
+import sys
 
+pwd = os.path.dirname(sys.argv[0])
 sig_file = ".keys/meetup_sig"
-with open(sig_file) as x: sig = x.read().rstrip()
+with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
 query = "https://api.meetup.com/hackmanhattan/events?photo-host=public&page=20&sig_id=1998556&sig="
 query = query + sig
 

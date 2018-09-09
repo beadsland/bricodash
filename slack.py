@@ -2,9 +2,13 @@
 
 from slacker import Slacker
 import re
+import json
+import os
+import sys
 
+pwd = os.path.dirname(sys.argv[0])
 token_file = ".keys/slacker_token"
-with open(token_file) as x: token = x.read().rstrip()
+with open('/'.join([pwd, token_file])) as x: token = x.read().rstrip()
 slack = Slacker(token)
 channels = slack.channels.list().body['channels']
 
