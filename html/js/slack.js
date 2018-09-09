@@ -21,6 +21,6 @@ function retrieveChat() {
        });
      }
  };
-xhttp.open("GET", "slack.json", true);
+xhttp.open("GET", "pull/slack.json", true);
 xhttp.send();
 }

@@ -18,7 +18,6 @@ query = query + sig
 response = requests.get(query)
 data = json.loads(response.text)
 
-filename = "/var/www/html/hm/events.json"
 
 dump = []
 
@@ -32,8 +31,7 @@ for item in data[:6]:
   dump.append({ 'dt': "%s, %s" % (date, time), 'name': item['name'],
                 'rsvp': item['yes_rsvp_count'] })
 
-
-
+filename = pwd + "/html/pull/events.json"
 file = open(filename + ".new", "w")
 file.write( json.dumps(dump) )
 os.rename(filename + ".new", filename)

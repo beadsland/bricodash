@@ -44,7 +44,8 @@ for message in reversed(response.body['messages']):
 import json
 import os
 
-filename = "/var/www/html/hm/slack.json"
+# new path
+filename = pwd + "/html/pull/slack.json"
 file = open(filename + ".new", "w")
 file.write( json.dumps(hist) )
 os.rename(filename + ".new", filename)

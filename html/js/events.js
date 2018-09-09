@@ -19,7 +19,7 @@ function retrieveData() {
        });
      }
  };
-xhttp.open("GET", "events.json", true);
+xhttp.open("GET", "pull/events.json", true);
 xhttp.send();
 }
 
