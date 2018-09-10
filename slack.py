@@ -33,14 +33,28 @@ def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def div(s): return "<div class='slacking'>" + s + "</div>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
 
-regex = re.compile(r"<@([^>]+)>")
+usrex = re.compile(r"<@([^>]+)>")
+chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
+lnkex = re.compile(r"<(.*)>")
 hist = []
 
 for message in reversed(response.body['messages']):
   print message
   user = names[message['user']] if 'user' in message else message['username']
-  text = regex.sub(lambda m: usp(names.get(m.group(1), m.group())),
+
+  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())),
                    message['text'])
+  text = chnex.sub(lambda m: "#" + m.group(1), text)
+  text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
+
+  if 'files' in message:
+    for file in message['files']:
+      url = file['url_private_download']
+      text += "[" + url + "]"
+
+#  print "+++"
+#  print text
+#  print "---"
 
   hist.append( div(who(user) + ": " + text) + "\n" )
 
