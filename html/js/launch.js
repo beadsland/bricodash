@@ -3,7 +3,7 @@
   Start polling for back-end content.
 */
 window.onload = function() {
-  scheduleDiv("#slack-chat", "pull/slack.json", 60000);
+  scheduleDiv("#slack-chat", "pull/slack.html", 60000);
 }
 
 /*

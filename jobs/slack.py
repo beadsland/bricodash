@@ -53,7 +53,7 @@ for message in reversed(response.body['messages']):
   hist.append( div(who(user) + ": " + text) )
 
 # new path
-filename = pwd + "/../html/pull/slack.json"
+filename = pwd + "/../html/pull/slack.html"
 file = open(filename + ".new", "w")
 file.write( "\n".join(hist) )
 os.rename(filename + ".new", filename)
