@@ -1,4 +1,5 @@
 <html>
+  <meta http-equiv="refresh" content="3600">
   <head>
     <title>Hackerspace Dashboard - Hack Manhattan</title>
 
@@ -26,8 +27,8 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
       <script src="js/weather.js"></script>
       <div class="slackhead" style="z-index:5">
-         Recently on the 
-         <img src="img/slack.png" height="20" 
+         Recently on the
+         <img src="img/slack.png" height="20"
                   style="vertical-align:middle">hackerspace channel...</div>
     </div>
 
@@ -48,7 +49,7 @@
 
     <center>
     <div style="float: left; width:60%;">
-    <em style="font-size: 120%;">Dashboard under construction. 
+    <em style="font-size: 120%;">Dashboard under construction.
                                 Expect components and layout to change.</em>
     </center>
 
