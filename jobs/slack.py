@@ -2,7 +2,6 @@
 
 from slacker import Slacker
 import re
-import json
 import os
 import sys
 
@@ -39,7 +38,6 @@ lnkex = re.compile(r"<(.*)>")
 hist = []
 
 for message in reversed(response.body['messages']):
-#  print message
   user = names[message['user']] if 'user' in message else message['username']
 
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())),
@@ -52,17 +50,10 @@ for message in reversed(response.body['messages']):
       url = file['url_private_download']
       text += "[" + url + "]"
 
-#  print "+++"
-#  print text
-#  print "---"
-
-  hist.append( div(who(user) + ": " + text) + "\n" )
-
-import json
-import os
+  hist.append( div(who(user) + ": " + text) )
 
 # new path
 filename = pwd + "/../html/pull/slack.json"
 file = open(filename + ".new", "w")
-file.write( json.dumps(hist) )
+file.write( "\n".join(hist) )
 os.rename(filename + ".new", filename)

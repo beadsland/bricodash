@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway:300,400" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/launch.js"></script>
 </head>
 <body>
 
@@ -35,7 +36,6 @@
 
   <div style="width:35%;z-index:1;position:absolute;bottom:0;right:0"
       id="slack-chat"></div>
-  <script src="js/slack.js"></script>
 
 
     <div style="float: left; width: 60%">
