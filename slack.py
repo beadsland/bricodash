@@ -39,7 +39,7 @@ lnkex = re.compile(r"<(.*)>")
 hist = []
 
 for message in reversed(response.body['messages']):
-  print message
+#  print message
   user = names[message['user']] if 'user' in message else message['username']
 
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())),
