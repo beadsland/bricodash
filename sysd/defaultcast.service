@@ -9,7 +9,7 @@ Type=forking
 GuessMainPID=yes
 KillMode=mixed
 Environment="DISPLAY_NAME=Hackerspace"
-Environment="DASHBOARD_URL=https://example.org/"
+Environment="DASHBOARD_URL=http://hackmanhattan.duckdns.org/hm/dash/"
 Environment="IGNORE_CEC=True"
 WorkingDirectory=/opt/defaultcast/
 ExecStart=/usr/bin/python3 /opt/defaultcast/app.py
