@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Run DashCast semi-persistently on a Chromecast while allowing other
 Chromecast apps to work also by only launching when idle.
