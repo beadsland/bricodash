@@ -37,9 +37,12 @@ regex = re.compile(r"<@([^>]+)>")
 hist = []
 
 for message in reversed(response.body['messages']):
+  print message
+  user = names[message['user']] if 'user' in message else message['username']
   text = regex.sub(lambda m: usp(names.get(m.group(1), m.group())),
                    message['text'])
-  hist.append( div(who(names[message['user']]) + ": " + text) + "\n" )
+
+  hist.append( div(who(user) + ": " + text) + "\n" )
 
 import json
 import os
