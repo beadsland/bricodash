@@ -48,7 +48,7 @@ for message in reversed(response.body['messages']):
   if 'files' in message:
     for file in message['files']:
       url = file['url_private_download']
-      text += "[" + url + "]"
+      text += " [" + url + "]"
 
   hist.append( div(who(user) + ": " + text) )
 
