@@ -10,7 +10,7 @@ import json
 import sys
 
 pwd = os.path.dirname(sys.argv[0])
-sig_file = ".keys/meetup_sig"
+sig_file = "../.keys/meetup_sig"
 with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
 query = "https://api.meetup.com/hackmanhattan/events?photo-host=public&page=20&sig_id=1998556&sig="
 query = query + sig
@@ -31,7 +31,7 @@ for item in data[:6]:
   dump.append({ 'dt': "%s, %s" % (date, time), 'name': item['name'],
                 'rsvp': item['yes_rsvp_count'] })
 
-filename = pwd + "/html/pull/events.json"
+filename = pwd + "/../html/pull/events.json"
 file = open(filename + ".new", "w")
 file.write( json.dumps(dump) )
 os.rename(filename + ".new", filename)

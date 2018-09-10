@@ -7,7 +7,7 @@ import os
 import sys
 
 pwd = os.path.dirname(sys.argv[0])
-token_file = ".keys/slacker_token"
+token_file = "../.keys/slacker_token"
 with open('/'.join([pwd, token_file])) as x: token = x.read().rstrip()
 slack = Slacker(token)
 channels = slack.channels.list().body['channels']
@@ -62,7 +62,7 @@ import json
 import os
 
 # new path
-filename = pwd + "/html/pull/slack.json"
+filename = pwd + "/../html/pull/slack.json"
 file = open(filename + ".new", "w")
 file.write( json.dumps(hist) )
 os.rename(filename + ".new", filename)
