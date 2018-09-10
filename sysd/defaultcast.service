@@ -9,10 +9,10 @@ Type=forking
 GuessMainPID=yes
 KillMode=mixed
 Environment="DISPLAY_NAME=Hackerspace"
-Environment="DASHBOARD_URL=http://hackmanhattan.duckdns.org/hm/dash/"
+Environment="DASHBOARD_URL=http://hackmanhattan.duckdns.org:8888/hm/dash/"
 Environment="IGNORE_CEC=True"
-WorkingDirectory=/opt/defaultcast/
-ExecStart=/usr/bin/python3 /opt/defaultcast/app.py
+WorkingDirectory=/opt/defaultcast/sysd/
+ExecStart=/usr/bin/python3 /opt/defaultcast/sysd/app.py
 
 [Install]
 WantedBy=multi-user.target
