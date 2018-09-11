@@ -1,34 +1,47 @@
+@font-face {
+ font-family: "NotoEmoji";
+ src: url('font/NotoColorEmoji.ttf')  format('truetype');
+}
+
+.emoji {
+  font-family: NotoEmoji;
+  vertical-align: 10%;
+  font-size: 80%;
+}
+
+
+
 body {
-  background: black; 
-  color: white; 
+  background: black;
+  color: white;
   margin: 0;
 }
 
-h1 { 
+h1 {
   font-family: Raleway, sans-serif;
-  font-size: 250% 
+  font-size: 250%
 }
 
 p, dd {
-  font-family: Merriweather, serif; 
+  font-family: Merriweather, serif;
   font-size: 200%;
 }
 
-dd { 
-  padding-bottom: 20px; 
+dd {
+  padding-bottom: 20px;
 }
 
-dt { 
-  font-family: Merriweather, serif; 
-  font-size: 180%; 
+dt {
+  font-family: Merriweather, serif;
+  font-size: 180%;
   color:#bbbbbb;
 }
 
 #time {
   font-weight: 300;
-  font-size: 350%; 
+  font-size: 350%;
   background-color: #222222;
-  color: #999999; 
+  color: #999999;
   z-index:10
   text-shadow: 10px 10px #ff0000;
 }

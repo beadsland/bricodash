@@ -5,7 +5,7 @@ make it easily accessible to everyone in the space, we added a Chromecast. To
 make that more useful, we're casting a "default" dashboard now.
 
 The same default dashboard is also displayed on a screen over the intercom
-at the entrance to our shop.
+at the entrance to our shop. This screen is driven by a Raspberry Pi.
 
 Based on [dashcast-docker](https://github.com/madmod/dashcast-docker)
 

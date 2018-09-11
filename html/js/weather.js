@@ -13,7 +13,7 @@ function getWeather() {
     success: function(weather) {
       html = '<h2>&thinsp;<i class="icon-'+weather.code+'"></i>';
       html += weather.temp+'&deg;F '+weather.humidity + '%';
-      html += '<span style="vertical-align: text-top; font-size:70%;">💦 </span>';
+      html += '<span class="emoji">💦</span>';
       html += '&thinsp;</h2>';
 //      html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
 //      html += '<li class="currently">'+weather.currently+'</li>';
