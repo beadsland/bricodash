@@ -4,6 +4,21 @@
 */
 window.onload = function() {
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
+  scheduleCam(1000);
+}
+
+/*
+ Reload camera feed if broken.
+*/
+
+function scheduleCam(interval) {
+  fixCam()
+  setInterval(function() { fixCam(); }, interval)
+}
+
+function fixCam() {
+  cam = document.querySelector("#doorcam");
+  cam.src = cam.src;
 }
 
 /*

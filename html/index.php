@@ -15,9 +15,11 @@
 </head>
 <body>
 
-  <div class="right" style="float: right; width: 35%;">
+  <div class="right" style="float: right; width: 448px;">
     <div class="container" style="z-index: 5; position: absolute; top: 0;">
-      <img width="100%" src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door">
+      <!-- doorcam: 640 x 480 -->
+      <img id="doorcam" width="448" height="336"
+           src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door">
       <div class="bottom-right" style="bottom:55">
         <span id="time"></span>
       </div>
