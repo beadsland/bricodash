@@ -21,9 +21,8 @@
       <img id="doorcam" width="448" height="336"
            src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door">
       <div class="bottom-right" style="bottom:55">
-        <span id="time"></span>
+        <span id="clock"></span>
       </div>
-      <script src="js/time.js"></script>
 
       <div class="top-right""><span id="weather"></span></div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>

@@ -1,3 +1,20 @@
+/*
+ Clock
+*/
+
+#clock {
+  font-weight: 300;
+  font-size: 350%;
+  background-color: #222222;
+  color: #999999;
+  z-index:10
+  text-shadow: 10px 10px #ff0000;
+}
+
+/*
+ Emoji
+*/
+
 @font-face {
  font-family: "NotoEmoji";
  src: url('font/NotoColorEmoji.ttf')  format('truetype');
@@ -8,6 +25,8 @@
   vertical-align: 10%;
   font-size: 80%;
 }
+
+
 
 
 
@@ -37,14 +56,6 @@ dt {
   color:#bbbbbb;
 }
 
-#time {
-  font-weight: 300;
-  font-size: 350%;
-  background-color: #222222;
-  color: #999999;
-  z-index:10
-  text-shadow: 10px 10px #ff0000;
-}
 
 #slack-chat {
 }
