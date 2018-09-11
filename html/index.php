@@ -7,12 +7,11 @@
     <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/overlay.css">
 
+    <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway:300,400" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/launch.js"></script>
-
-
 </head>
 <body>
 
