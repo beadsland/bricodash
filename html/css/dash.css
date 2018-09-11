@@ -4,7 +4,7 @@
 
 #clock {
   font-weight: 300;
-  font-size: 350%;
+  font-size: 300%;
   background-color: #222222;
   color: #999999;
   z-index:10
@@ -34,11 +34,15 @@ body {
   background: black;
   color: white;
   margin: 0;
+  padding: 10;
 }
 
 h1 {
   font-family: Raleway, sans-serif;
-  font-size: 250%
+  font-size: 300%;
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
 }
 
 /*
@@ -47,16 +51,17 @@ h1 {
 
 p, dd {
   font-family: Merriweather, serif;
-  font-size: 200%;
+  font-size: 150%;
 }
 
 dd {
+  font-family: Merriweather, serif;
   padding-bottom: 20px;
 }
 
 dt {
   font-family: Merriweather, serif;
-  font-size: 180%;
+  font-size: 120%;
   color:#bbbbbb;
 }
 

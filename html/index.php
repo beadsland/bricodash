@@ -15,6 +15,27 @@
 </head>
 <body>
 
+  <div style="width:35%;z-index:1;position:absolute;bottom:0;right:0;margin-top:0"
+      id="slack-chat"></div>
+
+
+    <div style="float: left; width: 60%; margin-top:0">
+
+    <h1>Welcome to Hack Manhattan!</h1>
+    <div id="event-schedule"></div>
+
+    </div>
+
+    <center>
+    <div style="float: left; width:60%;">
+    <em style="font-size: 120%;">Dashboard under construction.
+                                Expect components and layout to change.</em>
+    </center>
+
+    </div>
+
+
+
   <div class="right" style="float: right; width: 448px;">
     <div class="container" style="z-index: 5; position: absolute; top: 0;">
       <!-- doorcam: 640 x 480 -->
@@ -35,24 +56,7 @@
 
   </div>
 
-  <div style="width:35%;z-index:1;position:absolute;bottom:0;right:0"
-      id="slack-chat"></div>
 
-
-    <div style="float: left; width: 60%">
-
-    <h1>Welcome to Hack Manhattan!</h1>
-    <div id="event-schedule"></div>
-
-    </div>
-
-    <center>
-    <div style="float: left; width:60%;">
-    <em style="font-size: 120%;">Dashboard under construction.
-                                Expect components and layout to change.</em>
-    </center>
-
-    </div>
 
 </body>
 </html>
