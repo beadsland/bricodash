@@ -59,6 +59,7 @@ function startTime() {
       m = checkTime(today.getMinutes()),
       s = checkTime(today.getSeconds());
   h = parseInt(h % 12, 10);
+  if h == 0: h = 12;
   str = "&thinsp;" + h + ":" + m + ":" + s + "&thinsp;";
   document.getElementById('clock').innerHTML = str;
   t = setTimeout(function () {
