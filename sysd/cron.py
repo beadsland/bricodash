@@ -18,4 +18,4 @@ min = datetime.datetime.now().minute
 pwd = os.path.dirname(sys.argv[0])
 
 if 1:               os.system(pwd + "/../jobs/slack.py")
-if min % 15 == 0:   os.system(pwd + "/../jobs/meetup.py")
+if min % 5 == 0:    os.system(pwd + "/../jobs/meetup.py")

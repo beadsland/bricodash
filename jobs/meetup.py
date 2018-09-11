@@ -28,10 +28,14 @@ for item in data[:6]:
   time = re.sub(r':00', '', time)
   item['name'] = re.sub(r' at Hack Manhattan', '', item['name'])
 
-  dump.append({ 'dt': "%s, %s" % (date, time), 'name': item['name'],
-                'rsvp': item['yes_rsvp_count'] })
+  dt = "%s, %s" % (date, time)
 
-filename = pwd + "/../html/pull/events.json"
+  dd = item['name'];
+  if item['yes_rsvp_count'] > 4:  dd += " (%s)" % item['yes_rsvp_count']
+
+  dump.append("<dt>%s<dd>%s" % (dt, dd))
+
+filename = pwd + "/../html/pull/events.html"
 file = open(filename + ".new", "w")
-file.write( json.dumps(dump) )
+file.write( "\n".join(dump) )
 os.rename(filename + ".new", filename)

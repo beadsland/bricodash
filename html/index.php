@@ -44,7 +44,6 @@
 
     <h1>Welcome to Hack Manhattan!</h1>
     <div id="event-schedule"></div>
-    <script src="js/events.js"></script>
 
     </div>
 

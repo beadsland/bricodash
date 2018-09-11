@@ -4,6 +4,7 @@
 */
 window.onload = function() {
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
+  scheduleDiv("#event-schedule", "pull/events.html", 60000);
   scheduleCam(1000);
 }
 
