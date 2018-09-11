@@ -18,8 +18,10 @@ query = query + sig
 response = requests.get(query)
 data = json.loads(response.text)
 
-
 dump = []
+
+def wdt(s): return "<span class='date'>%s</span>" % (s)
+def wdd(s): return "<span class='event'>%s</span>" % (s)
 
 for item in data[:6]:
   dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
@@ -33,7 +35,9 @@ for item in data[:6]:
   dd = item['name'];
   if item['yes_rsvp_count'] > 4:  dd += " (%s)" % item['yes_rsvp_count']
 
-  dump.append("<dt>%s<dd>%s" % (dt, dd))
+  dt = wdt(dt)
+  dd = wdd(dd)
+  dump.append("<p>%s &mdash; %s</p>" % (dt, dd))
 
 filename = pwd + "/../html/pull/events.html"
 file = open(filename + ".new", "w")

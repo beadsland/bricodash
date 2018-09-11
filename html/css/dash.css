@@ -50,17 +50,12 @@ h1 {
  Events
 */
 
-p, dd {
+.event {
   font-family: Merriweather, serif;
   font-size: 150%;
 }
 
-dd {
-  font-family: Merriweather, serif;
-  padding-bottom: 20px;
-}
-
-dt {
+.date {
   font-family: Merriweather, serif;
   font-size: 120%;
   color:#bbbbbb;
