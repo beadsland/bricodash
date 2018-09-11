@@ -26,9 +26,9 @@
   font-size: 80%;
 }
 
-
-
-
+/*
+ General style
+*/
 
 body {
   background: black;
@@ -40,6 +40,10 @@ h1 {
   font-family: Raleway, sans-serif;
   font-size: 250%
 }
+
+/*
+ Events
+*/
 
 p, dd {
   font-family: Merriweather, serif;
@@ -56,9 +60,9 @@ dt {
   color:#bbbbbb;
 }
 
-
-#slack-chat {
-}
+/*
+ Slack
+*/
 
 .slackee {
   font-size: 135%;
@@ -82,13 +86,4 @@ dt {
   padding-top: 15px;
   width: 100%;
   background: #222222;
-}
-
-div.hr {
-  height: 15px;
-  background: #fff no-repeat scroll center;
-}
-
-div.hr hr {
-  display: none;
 }
