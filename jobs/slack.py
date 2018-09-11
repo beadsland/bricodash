@@ -55,5 +55,5 @@ for message in reversed(response.body['messages']):
 # new path
 filename = pwd + "/../html/pull/slack.html"
 file = open(filename + ".new", "w")
-file.write( "\n".join(hist) )
+file.write( u"\n".join(hist).encode("utf-8") )
 os.rename(filename + ".new", filename)
