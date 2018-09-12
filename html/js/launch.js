@@ -28,7 +28,6 @@ function scheduleCam() {
 
 function fixCam(src) {
   document.querySelector("#doorcam").src = src + "&action=snapshot&now=" + Date.now()
-  console.log(Date.now())
 }
 
 /*
