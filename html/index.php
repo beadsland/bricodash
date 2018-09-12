@@ -30,7 +30,7 @@
       <div class="container">
         <!-- doorcam: 640 x 480 -->
         <img id="doorcam" width="448" height="336"
-             src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door&action=snapshot">
+             src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door">
         <div class="bottom-right" style="not-bottom:55">
           <span id="clock"></span>
         </div>

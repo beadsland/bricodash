@@ -5,22 +5,30 @@
 window.onload = function() {
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 60000);
-  scheduleCam(1000);
   startTime()
+  scheduleCam()
 }
 
 /*
  Reload camera feed if broken.
 */
 
-function scheduleCam(interval) {
-  fixCam()
-  setInterval(function() { fixCam(); }, interval)
+function scheduleCam() {
+  var params = new URLSearchParams(window.location.search);
+  if ( params.has("timelapse") && $.isNumeric(params.get("timelapse")) ) {
+    interval = parseInt(params.get("timelapse"))
+  } else {
+    interval = 60; // ~ 15 Hz
+  }
+  src = document.querySelector("#doorcam").src;
+
+  fixCam(src)
+  setInterval(function() { fixCam(src); }, interval)
 }
 
-function fixCam() {
-  cam = document.querySelector("#doorcam");
-  cam.src = cam.src;
+function fixCam(src) {
+  document.querySelector("#doorcam").src = src + "&action=snapshot&now=" + Date.now()
+  console.log(Date.now())
 }
 
 /*
