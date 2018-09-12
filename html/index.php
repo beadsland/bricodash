@@ -27,7 +27,7 @@
 -->
 
     <div style="float: right; width: 448px;"> <!-- right column -->
-      <div class="container">
+      <div class="container" style="background-size: contain; background-image: url('img/ceilingcat.jpg');">
         <!-- doorcam: 640 x 480 -->
         <img id="doorcam" width="448" height="336"
              src="http://hackmanhattan.duckdns.org:8888/hm/dash/util/camera.php?view=door">
