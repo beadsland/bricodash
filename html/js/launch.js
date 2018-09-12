@@ -44,7 +44,7 @@ function updateDiv(divID, pullPath) {
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if (this.readyState == 4 && this.status == 200 && xhttp.response.length > 0) {
       document.querySelector(divID).innerHTML = xhttp.response;
     };
   }
