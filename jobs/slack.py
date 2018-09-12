@@ -34,16 +34,16 @@ def who(s): return "<span class='slackee'>" + s + "</span>"
 
 usrex = re.compile(r"<@([^>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
-lnkex = re.compile(r"<(.*)>")
+lnkex = re.compile(r"<(http.*)>")
 hist = []
 
 for message in reversed(response.body['messages']):
   user = names[message['user']] if 'user' in message else message['username']
 
+  text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
+  text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())),
                    message['text'])
-  text = chnex.sub(lambda m: "#" + m.group(1), text)
-  text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
 
   if 'files' in message:
     for file in message['files']:
