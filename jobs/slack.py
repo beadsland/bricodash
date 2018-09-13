@@ -40,10 +40,10 @@ hist = []
 for message in reversed(response.body['messages']):
   user = names[message['user']] if 'user' in message else message['username']
 
+  text = message['text'];
   text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
-  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())),
-                   message['text'])
+  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
 
   if 'files' in message:
     for file in message['files']:
