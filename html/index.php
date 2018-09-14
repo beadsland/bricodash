@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <div style="display: flex; width: 100%; z-index: 10; position:absolute; margin-bottom: 30px; top: 0; background-image: url('img/black1x1.png');">
+  <div style="display: flex; width: 100%; z-index: 10; position:absolute; margin-bottom: 30px; top: 0; left:0; background-image: url('img/black1x1.png');">
     <div style="flex: 1; height: 400px; overflow: hidden;">
       <h1>Welcome to Hack Manhattan!</h1>           <!-- welcome -->
       <div id="event-schedule"></div> <!-- events -->
