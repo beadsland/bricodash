@@ -15,17 +15,18 @@
   </head>
 <body>
 
-<div style="height: 336px" id="upper_row">
+<div id="upper_row">
   <table width="100%">
+    <tr><div id="outer_h1"></div></tr>
     <tr>
       <td>
-        <div style="flex: 1; height: 336px; overflow: hidden;">
-          <h1>Welcome to Hack Manhattan!</h1>
+        <div id="upper_left_column">
+          <div id="inner_h1"><h1>Welcome to Hack Manhattan!</h1></div>
           <div id="event-schedule"><?php include "pull/events.html"?></div>
         </div>
       </td>
-      <td width="448">
-        <div style="width: 448px;"><?php include "pane/camera.html"?></div>
+      <td>
+        <div id="upper_right_column"><?php include "pane/camera.html"?></div>
       </td>
     </tr>
   </table>

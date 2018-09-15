@@ -1,12 +1,30 @@
 
 /*
-  Start polling for back-end content.
-*/
+ Start polling for back-end content.
+ */
 window.onload = function() {
+  position_header()
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 60000);
-  startTime()
-  renewCam()
+  startTime();
+  renewCam();
+}
+
+/*
+ Position the H1
+*/
+
+function position_header() {
+  console.log($(window).width())
+
+  h1 = "<h1>Welcome to Hack Manhattan!</h1>";
+  if ($(window).width() < 1150) {
+    document.querySelector("#inner_h1").innerHTML = "";
+    document.querySelector("#outer_h1").innerHTML = h1;
+  } else {
+    document.querySelector("#outer_h1").innerHTML = "";
+    document.querySelector("#inner_h1").innerHTML = h1;
+  }
 }
 
 /*
@@ -14,15 +32,14 @@ window.onload = function() {
 */
 
 function renewCam() {
-  src = document.querySelector("#doorcam").src;
+  src = document.querySelector("#door-cam").src;
   lFunc = function() { return src; };
   fixCam(lFunc);
   setInterval(function() { fixCam(lFunc); }, 60000);
 }
 
 function fixCam(lFunc) {
-  document.querySelector("#doorcam").src = lFunc();
-  console.log(lFunc())
+  document.querySelector("#door-cam").src = lFunc();
 }
 
 /*
