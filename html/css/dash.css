@@ -3,11 +3,11 @@
 */
 
 #clock {
-  font-weight: 300;
-  font-size: 300%;
-  background-color: #222222;
-  color: #999999;
-  z-index:10
+  font-weight: bold;
+  font-size: 250%;
+  background-color: #111111;
+  color: #bb9999;
+  z-index: 10
   text-shadow: 10px 10px #ff0000;
 }
 
@@ -30,14 +30,19 @@
  Events
 */
 
+.event-line {
+  margin-top: 0;
+  margin-bottom: 14;
+}
+
 .event {
   font-family: Merriweather, serif;
-  font-size: 150%;
+  font-size: 140%;
 }
 
 .date {
   font-family: Merriweather, serif;
-  font-size: 120%;
+  font-size: 130%;
   color:#bbbbbb;
 }
 
@@ -52,6 +57,7 @@
   background: #222222;
   width: 100%;
   margin-right: 250px;
+  font-family: Raleway, sans-serif;
 }
 
 #slack-chat {
@@ -60,17 +66,17 @@
 }
 
 .slackee {
-  font-size: 135%;
+  font-size: 125%;
   font-weight: bold;
 }
 
 .slacker {
   color: orange;
-  font-size: 135%;
+  font-size: 125%;
 }
 
 .slacking {
-  font-size: 135%;
+  font-size: 125%;
   color: #eeeeee;
 }
 
@@ -101,6 +107,7 @@ h1 {
   padding-top: 0;
   width: 100%;
   text-align: center;
+  margin-bottom: 10;
 }
 
 /*
@@ -111,10 +118,6 @@ h1 {
 #door-cam {
   height: 312px;
   width: 416px;
-}
-
-h1 {
-  margin-bottom: 5;
 }
 
 #upper_row {

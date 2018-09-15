@@ -22,6 +22,7 @@ dump = []
 
 def wdt(s): return "<span class='date'>%s</span>" % (s)
 def wdd(s): return "<span class='event'>%s</span>" % (s)
+def evt(s): return "<div class='event-line'>%s</div>" % (s)
 
 for item in data[:6]:
   dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
@@ -37,7 +38,7 @@ for item in data[:6]:
 
   dt = wdt(dt)
   dd = wdd(dd)
-  dump.append("<p>%s &mdash; %s</p>" % (dt, dd))
+  dump.append( evt("%s &mdash; %s" % (dt, dd)) )
 
 filename = pwd + "/../html/pull/events.html"
 file = open(filename + ".new", "w")
