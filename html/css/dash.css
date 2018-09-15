@@ -79,6 +79,7 @@
 .slacking {
   font-size: 125%;
   color: #eeeeee;
+  padding-bottom: 1px;
 }
 
 #mta-widget {
