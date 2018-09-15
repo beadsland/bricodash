@@ -29,8 +29,16 @@
         <div id="upper_right_column"><?php include "pane/camera.html"?></div>
       </td>
     </tr>
+    <tr>
+      <td colspan=2>
+        <div id="slack_head">Meanwhile, on the hackmanhattan.slack.com
+            <img src="img/slack.png" height="20"
+                 style="vertical-align: baseline">hackerspace channel…</div>
+      </td>
+    <tr>
   </table>
 </div>
+
 
 <div id="bottom_row">
     <div id="slack-chat"><?php include "pull/slack.html"?></div>
@@ -38,9 +46,3 @@
 
 </body>
 </html>
-
-<!--
-      <div class="slackhead" style="position: absolute; bottom: 0; margin: 0; z-index:5">
-            Meanwhile, on the hackmanhattan.slack.com
-           <img src="img/slack.png" height="20" style="vertical-align: middle">hackerspace channel...</div>
--->

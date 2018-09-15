@@ -45,8 +45,18 @@
  Slack
 */
 
+#slack_head {
+  font-size: 150%;
+  padding: 8px;
+  padding-top: 20px;
+  background: #222222;
+  width: 100%;
+  margin-left: 300px;
+}
+
 #slack-chat {
   word-wrap: break-word;
+  margin-left: 300px;
 }
 
 .slackee {
@@ -62,15 +72,6 @@
 .slacking {
   font-size: 135%;
   color: #eeeeee;
-}
-
-.slackhead {
-  font-size: 150%;
-  padding: 8px;
-  margin: 0px;
-  padding-top: 15px;
-  width: 100%;
-  background: #222222;
 }
 
 /*
@@ -104,7 +105,7 @@ h1 {
 }
 
 h1 {
-  margin-bottom: 10;
+  margin-bottom: 5;
 }
 
 #upper_row {
@@ -117,16 +118,18 @@ h1 {
   z-index: 10;
 
   background-image: url('../img/black1x1.png');
-  padding-bottom: 20px;
+/*  padding-bottom: 20px; */
 }
 
 #upper_left_column {
   height: 336px;
   overflow: hidden;
+  padding-left: 5px;
 }
 
 #upper_right_column {
   width: 448px;
+  float: right;
 }
 
 #bottom_row {
