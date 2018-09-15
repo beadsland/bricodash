@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from slacker import Slacker
 import re
 import os
 import sys
+import emoji_data_python
 
 pwd = os.path.dirname(sys.argv[0])
 token_file = "../.keys/slacker_token"
@@ -44,6 +45,7 @@ for message in reversed(response.body['messages']):
   text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
+  text = emoji_data_python.replace_colons(text)
 
   if 'files' in message:
     for file in message['files']:
@@ -54,6 +56,6 @@ for message in reversed(response.body['messages']):
 
 # new path
 filename = pwd + "/../html/pull/slack.html"
-file = open(filename + ".new", "w")
+file = open(filename + ".new", "wb")
 file.write( u"\n".join(hist).encode("utf-8") )
 os.rename(filename + ".new", filename)

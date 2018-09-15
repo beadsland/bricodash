@@ -61,6 +61,7 @@
 }
 
 #slack-chat {
+  font-family: Lato, sans-serif;
   word-wrap: break-word;
   margin-right: 250px;
 }
