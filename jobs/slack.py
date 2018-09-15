@@ -33,6 +33,7 @@ def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def div(s): return "<div class='slacking'>" + s + "</div>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
 
+emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
@@ -45,6 +46,7 @@ for message in reversed(response.body['messages']):
   text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
+  text = emjex.sub(lambda m: "<span class='emoji'>:" + m.group(1) + ":</span>", text)
   text = emoji_data_python.replace_colons(text)
 
   if 'files' in message:
