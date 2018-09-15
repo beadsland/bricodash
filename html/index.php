@@ -31,18 +31,24 @@
     </tr>
     <tr>
       <td colspan=2>
-        <div id="slack_head">Meanwhile, on the hackmanhattan.slack.com
+        <div id="slack_head">Meanwhile, on
             <img src="img/slack.png" height="20"
-                 style="vertical-align: baseline">hackerspace channel…</div>
+                 style="vertical-align: baseline">hackerspace at
+                 hackmanhattan.slack.com…</div>
       </td>
     <tr>
   </table>
 </div>
 
+<div id="mta-widget">
+  <script type="text/javascript"
+          src="http://www.mta.info/sites/all/libraries/mta_WidgetScripts/serviceStatusWidget.js"></script>
+</div>
 
 <div id="bottom_row">
-    <div id="slack-chat"><?php include "pull/slack.html"?></div>
+  <div id="slack-chat"><?php include "pull/slack.html"?></div>
 </div>
+
 
 </body>
 </html>
