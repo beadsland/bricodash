@@ -1,6 +1,6 @@
 <html>
   <head>
-    <meta http-equiv="refresh" content="3600">
+    <!--meta http-equiv="refresh" content="3600" -->
     <title>Hackerspace Dashboard - Hack Manhattan</title>
 
     <link rel="stylesheet" type="text/css" href="css/dash.css">
