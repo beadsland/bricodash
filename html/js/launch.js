@@ -6,28 +6,43 @@ window.onload = function() {
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 60000);
   startTime()
-  scheduleCam()
+  renewCam()
 }
 
 /*
  Reload camera feed if broken.
 */
 
-function scheduleCam() {
+function renewCam() {
+  src = document.querySelector("#doorcam").src;
+  lFunc = function() { return src; };
+  fixCam(lFunc);
+  setInterval(function() { fixCam(lFunc); }, 60000);
+}
+
+function fixCam(lFunc) {
+  document.querySelector("#doorcam").src = lFunc();
+  console.log(lFunc())
+}
+
+/*
+ Timelapse camera rather than live MJPG feed.
+ Stalls on chromecast, so not used, but retained for possible future use.
+ */
+
+function lapseCam() {
   var params = new URLSearchParams(window.location.search);
   if ( params.has("timelapse") && $.isNumeric(params.get("timelapse")) ) {
     interval = parseInt(params.get("timelapse"))
   } else {
     interval = 60; // ~ 15 Hz
   }
+
   src = document.querySelector("#doorcam").src;
+  lapseFunc = function () { return src + "&action=snapshot&now=" + Date.now() };
 
-  fixCam(src)
-  setInterval(function() { fixCam(src); }, interval)
-}
-
-function fixCam(src) {
-  document.querySelector("#doorcam").src = src + "&action=snapshot&now=" + Date.now()
+  fixCam(lapseFunc)
+  setInterval(function() { fixCam(lapseFunc); }, interval)
 }
 
 /*
