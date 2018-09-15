@@ -27,26 +27,6 @@
 }
 
 /*
- General style
-*/
-
-body {
-  background: black;
-  color: white;
-  margin: 0;
-  padding: 10;
-}
-
-h1 {
-  font-family: Raleway, sans-serif;
-  font-size: 300%;
-  margin-top: 0;
-  padding-top: 0;
-  width: 100%;
-  text-align: center;
-}
-
-/*
  Events
 */
 
@@ -64,6 +44,10 @@ h1 {
 /*
  Slack
 */
+
+#slack-chat {
+  word-wrap: break-word;
+}
 
 .slackee {
   font-size: 135%;
@@ -87,4 +71,48 @@ h1 {
   padding-top: 15px;
   width: 100%;
   background: #222222;
+}
+
+/*
+ General style
+*/
+
+body {
+  background: black;
+  color: white;
+  margin: 0;
+  padding: 10;
+}
+
+h1 {
+  font-family: Raleway, sans-serif;
+  font-size: 300%;
+  margin-top: 0;
+  padding-top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/*
+ Structural elements. Underscore for structural. Dash for functional.
+ 'Cause so.
+ */
+
+#upper_row {
+   display: flex;
+   width: 100%;
+
+   position: absolute;
+   top: 0;
+   left: 0;
+
+   z-index: 10;
+   background-image: url('../img/black1x1.png');
+   padding-bottom: 20px;
+}
+
+#bottom_row {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
