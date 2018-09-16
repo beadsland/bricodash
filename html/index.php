@@ -27,7 +27,7 @@
         </div>
       </td>
       <td>
-        <div id="upper_right_column"><?php include "pane/camera.php"?></div>
+        <div id="upper_right_column"><?php include "pane/upper_right.php"?></div>
       </td>
     </tr>
     <tr>
