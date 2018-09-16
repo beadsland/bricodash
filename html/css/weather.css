@@ -21,6 +21,10 @@
   font-size: 80%;
 }
 
+#weather-condn {
+  letter-spacing: -.3em;
+}
+
 #moon-27:before,
 #moon-29:before,
 #moon-31:before,
@@ -29,7 +33,6 @@
   vertical-align: super;
   content: "🌙";
 } /* (night) */
-
 
 #icon-0:before { content: "🌪"; } /* tornado */
 #icon-1:before { content: "🌀"; } /* tropical storm */
