@@ -12,6 +12,8 @@
   text-transform: uppercase;
 
   margin: 0 0 8px;
+  padding-left: .3em;
+  padding-right: .3em;
   background-color: #111111;
 }
 
