@@ -33,6 +33,10 @@ function span(str, cls, id) {
   }
 }
 
+function hspan(str, percent) {
+  return '<span style="font-size: ' + percent + '%;">' + str + '</span>'
+}
+
 function getWeather() {
   hotmoji = '<img src="img/ggl-hot-face.png" style="height: .8em;">';
 
@@ -50,8 +54,8 @@ function getWeather() {
       document.querySelector("#weather-ftemp").innerHTML = localStorage.tempF;
       document.querySelector("#weather-ctemp").innerHTML = localStorage.tempC;
 
-      localStorage.humid = weather.humidity
-                          + span("%", "degrees") + span("💦", "emoji");
+      localStorage.humid = weather.humidity + span("%", "degrees") +
+                            hspan(span("💦", "emoji"), weather.humidity);
       document.querySelector("#weather-humid").innerHTML = localStorage.humid;
 
       localStorage.feelsF = weather.heatindex + span("℉", "degrees");
