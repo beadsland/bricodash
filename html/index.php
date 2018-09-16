@@ -27,7 +27,7 @@
         </div>
       </td>
       <td>
-        <div id="upper_right_column"><?php include "pane/camera.html"?></div>
+        <div id="upper_right_column"><?php include "pane/camera.php"?></div>
       </td>
     </tr>
     <tr>
@@ -47,7 +47,7 @@
 </div>
 
 <div id="bottom_row">
-  <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div>
+  <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div>
 </div>
 
 
