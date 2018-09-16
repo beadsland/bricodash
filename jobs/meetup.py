@@ -25,7 +25,7 @@ def wdt(s): return "<span class='date'>%s</span>" % (s)
 def wdd(s): return "<span class='event'>%s</span>" % (s)
 def evt(s): return "<div class='event-line'>%s</div>" % (s)
 
-for item in data[:6]:
+for item in data[:8]:
   dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
   date = humanize.naturalday(dt)
   start = dt.strftime("%-I:%M %p").lower()
