@@ -5,6 +5,7 @@ import re
 import os
 import sys
 import emoji_data_python
+import time
 
 pwd = os.path.dirname(sys.argv[0])
 token_file = "../.keys/slacker_token"
@@ -27,7 +28,7 @@ for channel in channels:
 response = slack.channels.history(channel = channel['id'],
                                   latest = None,
                                   oldest = 0,
-                                  count = 15)
+                                  count = 11)
 
 def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def div(s): return "<div class='slacking'>" + s + "</div>"
@@ -55,6 +56,8 @@ for message in reversed(response.body['messages']):
       text += " [" + url + "]"
 
   hist.append( div(who(user) + ": " + text) )
+
+hist.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 # new path
 filename = pwd + "/../html/pull/slack.html"

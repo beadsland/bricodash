@@ -26,6 +26,13 @@
   font-size: 80%;
 }
 
+.timeout-error:before {
+  content: "⚠️";
+  font-family: NotoEmoji;
+  font-size: 300%;
+  opacity: 0.25;
+}
+
 /*
  Events
 */
@@ -64,6 +71,7 @@
   font-family: Lato, sans-serif;
   word-wrap: break-word;
   margin-right: 250px;
+  text-align: left;
 }
 
 .slackee {

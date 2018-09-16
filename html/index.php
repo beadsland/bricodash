@@ -47,7 +47,7 @@
 </div>
 
 <div id="bottom_row">
-  <div id="slack-chat"><?php include "pull/slack.html"?></div>
+  <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div>
 </div>
 
 
