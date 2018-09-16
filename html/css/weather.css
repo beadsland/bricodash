@@ -41,9 +41,9 @@
 #icon-7:before { content: "🌨️⛸"; } /* mixed snow and sleet */
 #icon-8:before { content: "☔⛸"; } /* freezing drizzle */
 #icon-9:before { content: "☔"; } /* drizzle */
-#icon-10:before { content: "🌨️⛸"; } /* freezing rain */
-#icon-11:before { content: "🌨"; } /* showers */
-#icon-12:before { content: "🌨"; } /* showers */
+#icon-10:before { content: "🌧⛸"; } /* freezing rain */
+#icon-11:before { content: "🌧"; } /* showers */
+#icon-12:before { content: "🌧"; } /* showers */
 #icon-13:before { content: "❄"; } /* snow flurries */
 #icon-14:before { content: "❄❄"; } /* light snow showers */
 #icon-15:before { content: "🌬️🌨️"; } /* blowing snow */
