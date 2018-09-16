@@ -97,8 +97,6 @@ function checkStale(divID, interval) {
   }
 
   elapsed = new Date() / 1000 - e;
-  console.log(divID + ": " + elapsed);
-  console.log(interval / 1000)
 
   if (elapsed > (interval / 1000 * 2)) {
     err = document.createElement("div");
