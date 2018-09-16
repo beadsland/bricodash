@@ -7,23 +7,12 @@ $(document).ready(function() {
 });
 
 function toggleTemp() {
-  if ( $("#weather_temp").html() === localStorage.getItem("tempF") ) {
-    $("#weather_temp").html(localStorage.getItem("tempC"))
+  if ( $("#weather-ftemp").is(":visible") ) {
+    $("#weather-ftemp").hide();
+    $("#weather-ctemp").show();
   } else {
-    $("#weather_temp").html(localStorage.getItem("tempF"))
-  }
-}
-
-function newtoggleTemp() {
-  console.log("toggle");
-  if ( $("#weather_ftemp").is(":visible") ) {
-    $("#weather_ftemp").hide();
-    $("#weather_ctemp").show();
-    console.log("yes")
-  } else {
-    $("#weather_ctemp").hide();
-    $("#weather_ftemp").show();
-    console.log("no")
+    $("#weather-ctemp").hide();
+    $("#weather-ftemp").show();
   }
 }
 
@@ -47,12 +36,13 @@ function getWeather() {
       localStorage.humid = weather.humidity
                           + span("%", "degrees") + span("💦", "emoji");
 
-      html  = span("", "emoji", "moon-" + weather.code);
-      html += span("", "emoji", "icon-" + weather.code);
-      html += span(localStorage.tempF, "", "weather_temp")
-      html += " " + localStorage.humid;
+      document.querySelector("#weather-condn").innerHTML =
+                            span("", "emoji", "moon-" + weather.code) +
+                            span("", "emoji", "icon-" + weather.code);
+      document.querySelector("#weather-ftemp").innerHTML = localStorage.tempF;
+      document.querySelector("#weather-ctemp").innerHTML = localStorage.tempC;
+      document.querySelector("#weather-humid").innerHTML = localStorage.humid;
 
-      $("#weather").html('&thinsp;' + html + '&thinsp;');
       toggleTemp()
     },
     error: function(error) {
