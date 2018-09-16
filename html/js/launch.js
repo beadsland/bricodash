@@ -89,10 +89,10 @@ function updateDiv(divID, pullPath, interval) {
  */
 
 function checkStale(divID, interval) {
-  mydiv = document.querySelector(divID)
+  mydiv = document.querySelector(divID);
   try {
     e = mydiv.querySelector("#timestamp").getAttribute("epoch");
-  } catch {
+  } catch (err) {
     e = 0;
   }
 

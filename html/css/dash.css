@@ -6,9 +6,9 @@
   font-weight: bold;
   font-size: 250%;
   background-color: #111111;
-  color: #bb9999;
-  z-index: 10
-  text-shadow: 10px 10px #ff0000;
+  color: #dd9999;
+  z-index: 10;
+  text-shadow: 3px 3px #444444;
 }
 
 /*
