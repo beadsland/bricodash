@@ -21,7 +21,6 @@ function scheduleMTA(divID, loadID, pullPath, interval) {
 }
 
 function updateMTA(divID, loadID, pullPath, interval) {
-  console.log(divID + loadID + new Date().toLocaleTimeString());
   $(divID).show();
   $(loadID).hide();
   updateDiv(loadID, pullPath, interval);
