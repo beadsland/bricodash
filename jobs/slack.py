@@ -6,6 +6,8 @@ import os
 import sys
 import emoji_data_python
 import time
+import humanize
+import datetime
 
 pwd = os.path.dirname(sys.argv[0])
 token_file = ".keys/slacker_token"
@@ -33,6 +35,7 @@ response = slack.channels.history(channel = channel['id'],
 def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def div(s): return "<div class='slacking'>" + s + "</div>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
+def whn(s): return "<span class='slacked'>" + s + "</span>"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^>]+)>")
@@ -50,12 +53,15 @@ for message in reversed(response.body['messages']):
   text = emjex.sub(lambda m: "<span class='emoji'>:" + m.group(1) + ":</span>", text)
   text = emoji_data_python.replace_colons(text)
 
+  delta = datetime.datetime.now().timestamp() - float(message['ts'])
+  when = humanize.naturaltime(delta)
+
   if 'files' in message:
     for file in message['files']:
       url = file['url_private_download']
       text += " [" + url + "]"
 
-  hist.append( div(who(user) + ": " + text) )
+  hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
 
 hist.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 

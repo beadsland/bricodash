@@ -4,7 +4,7 @@
  */
 window.onload = function() {
   position_header()
-  scheduleDiv("#slack-chat", "pull/slack.html", 60000);
+  scheduleDiv("#slack-chat", "pull/slack.html", 30000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 600000);
   scheduleDiv("#building-events", "pull/building_events.html", 600000);

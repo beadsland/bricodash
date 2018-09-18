@@ -116,6 +116,10 @@
   padding-bottom: 1px;
 }
 
+.slacked {
+  font-style: italic;
+}
+
 #mta-widget, #mta-loader {
   position: absolute;
   bottom: -30;
