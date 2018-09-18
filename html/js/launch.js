@@ -5,7 +5,10 @@
 window.onload = function() {
   position_header()
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
-  scheduleDiv("#event-schedule", "pull/events.html", 300000);
+
+  scheduleDiv("#space-events", "pull/space_events.html", 600000);
+  scheduleDiv("#building-events", "pull/building_events.html", 600000);
+  buildingCal()
 
   if (navigator.userAgent.search(/Midori/i) >0 ) {
     $("#mta-widget").hide();
@@ -19,6 +22,22 @@ window.onload = function() {
 
   scheduleDiv("#random_photo", "pull/photo.html", 330000);
   peekawait()
+}
+
+/*
+ Alternate between building and space calendars.
+ */
+
+function buildingCal() {
+  $("#upper_left_column").hide()
+  $("#upper_left_column_alt").show()
+  setTimeout(spaceCal, 1*60000)
+}
+
+function spaceCal() {
+  $("#upper_left_column_alt").hide()
+  $("#upper_left_column").show()
+  setTimeout(buildingCal, 4*60000)
 }
 
 /*
@@ -110,8 +129,6 @@ function scheduleDiv(divID, pullPath, interval) {
 }
 
 function updateDiv(divID, pullPath, interval) {
-  console.log(divID)
-
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {

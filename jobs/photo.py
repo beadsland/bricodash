@@ -8,10 +8,7 @@ import random
 import time
 
 pwd = os.path.dirname(sys.argv[0])
-sig_file = ".keys/meetup_sig"
-with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
 query = "https://api.meetup.com/HackManhattan/photos?&sign=true&photo-host=public&page=100"
-query = query + sig
 
 response = requests.get(query)
 if response.status_code != 200:   sys.exit(response.status_code);

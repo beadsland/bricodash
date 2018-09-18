@@ -25,7 +25,10 @@
       <td>
         <div id="upper_left_column">
           <div id="inner_h1"><h1>Welcome to Hack Manhattan!</h1></div>
-          <div id="event-schedule"><?php include "pull/events.html"?></div>
+          <div id="space-events"><?php include "pull/space_events.html"?></div>
+        </div>
+        <div id="upper_left_column_alt" style="display: none;">
+          <div id="building-events"><?php include "pull/building_events.html"?></div>
         </div>
       </td>
       <td>
