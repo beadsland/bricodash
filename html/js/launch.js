@@ -6,7 +6,7 @@ window.onload = function() {
   position_header()
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 300000);
-  scheduleDiv("#mta-widget", "pane/mta.html", 60000);
+  updateMTA("#mta-widget", "#mta-loader", "pane/mta.html", 30000);
   startTime();
   renewCam();
 }
@@ -15,10 +15,17 @@ window.onload = function() {
  Reload the MTA widget
 */
 
-function renewMTA() {
-  widget = $("#mta-widget").find(".iframe");
-  src = widget.src;
-  widget.src = src;
+function scheduleMTA(divID, loadID, pullPath, interval) {
+  updateMTA(divID, loadID, pullPath, interval);
+  setInterval(function() { updateMTA(divID, loadID, pullPath, interval); }, interval);
+}
+
+function updateMTA(divID, loadID, pullPath, interval) {
+  console.log(divID + loadID + new Date().toLocaleTimeString());
+  $(divID).show();
+  $(loadID).hide();
+  updateDiv(loadID, pullPath, interval);
+  setTimeout(function () { updateMTA(loadID, divID, pullPath, interval); }, interval);
 }
 
 /*
@@ -101,6 +108,7 @@ function updateDiv(divID, pullPath, interval) {
 
 function checkStale(divID, interval) {
   if (divID === "#mta-widget") { return; }; // short circuit
+  if (divID === "#mta-loader") { return; }; // short circuit
 
   mydiv = document.querySelector(divID);
   try {
