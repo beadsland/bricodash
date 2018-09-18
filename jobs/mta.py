@@ -28,7 +28,7 @@ outr.attrs['style'] = outr_style.cssText
 
 hedr = soup.find(id="headerDiv")
 hedr_style = cssutils.parseStyle(hedr.attrs['style'])
-hedr_style['top'] = "5px";
+hedr_style['top'] = "2px";
 hedr.attrs['style'] = hedr_style.cssText
 
 cbar = soup.find(id="controlBar2")
