@@ -40,17 +40,25 @@
 .event-line {
   margin-top: 0;
   margin-bottom: 12;
+  padding-left: 10em ;
+  text-indent: -10em ;
 }
 
-.event {
+.event, .hm-event {
   font-family: Merriweather, serif;
   font-size: 140%;
+  color:#bbbbbb;
+}
+
+.hm-event {
+  font-weight: normal;
+  color: #dddd00;
 }
 
 .date {
   font-family: Merriweather, serif;
   font-size: 130%;
-  color:#bbbbbb;
+  color:#eeeeee;
 }
 
 .venue {

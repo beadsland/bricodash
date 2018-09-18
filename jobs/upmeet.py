@@ -6,6 +6,7 @@ import requests
 import json
 import datetime
 import dateutil.parser
+import re
 
 pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/brite.json"
@@ -23,8 +24,10 @@ events = result['events']
 
 for event in events:
   if "venue" in event and event['venue']['name'] == "Offside Tavern":
+    name = event['name']
+    name = re.sub(' FREE!', '', name)
     ratpark.append( { "start": " ".join( [event['local_date'], event['local_time']] ),
-                      "event": event['name'], "venue": "Offside Tavern" } )
+                      "event": name, "venue": "Offside Tavern" } )
 
 d = datetime.date.today()
 while d.weekday() != 4:

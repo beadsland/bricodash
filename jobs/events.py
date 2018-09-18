@@ -50,6 +50,7 @@ ratpark = [ {"start": e[0].isoformat(), "event": e[1], "venue": e[2], "rsvp": e[
 def wdv(s): return "<span class='venue'>%s</span>" % (s)
 def wdt(s): return "<span class='date'>%s</span>" % (s)
 def wdd(s): return "<span class='event'>%s</span>" % (s)
+def wddhm(s): return "<span class='hm-event'>%s</span>" % (s)
 def evt(s): return "<div class='event-line'>%s</div>" % (s)
 
 evtSpce = []
@@ -68,9 +69,12 @@ for item in ratpark:
   if item["rsvp"] > 4:  dd += " (%s)" % item["rsvp"]
 
   if item["venue"] == "Hack Manhattan":
-    evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wdd(dd)) ) )
-  evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
-                                              wdt(dt), wdd(dd) ) )
+    evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wddhm(dd)) ) )
+    evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
+                                                wdt(dt), wddhm(dd) ) )
+  else:
+    evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
+                                                wdt(dt), wdd(dd) ) )
 
 evtSpce.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 evtBldg.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
