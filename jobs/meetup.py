@@ -9,6 +9,8 @@ import os
 import json
 import sys
 import time
+import datetime
+import calendar
 
 pwd = os.path.dirname(sys.argv[0])
 sig_file = "../.keys/meetup_sig"
@@ -22,6 +24,10 @@ data = json.loads(response.text)
 
 dump = []
 
+today = datetime.date.today()
+lasttuesday = max( week[calendar.TUESDAY]
+                   for week in calendar.monthcalendar(today.year, today.month) )
+
 def wdt(s): return "<span class='date'>%s</span>" % (s)
 def wdd(s): return "<span class='event'>%s</span>" % (s)
 def evt(s): return "<div class='event-line'>%s</div>" % (s)
@@ -32,6 +38,8 @@ for item in data[:8]:
   start = dt.strftime("%-I:%M %p").lower()
   start = re.sub(r':00', '', start)
   item['name'] = re.sub(r' at Hack Manhattan', '', item['name'])
+  if (dt.day == lasttuesday) and (dt.month == today.month):
+    item['name'] = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', item['name'])
 
   dt = "%s, %s" % (date, start)
 
