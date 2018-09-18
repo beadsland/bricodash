@@ -6,7 +6,8 @@ window.onload = function() {
   position_header()
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 300000);
-  updateMTA("#mta-widget", "#mta-loader", "pane/mta.html", 30000);
+  scheduleDiv("#mta-widget", "pull/mta.html", 60000);
+//  updateMTA("#mta-widget", "#mta-loader", "pane/mta.html", 30000);
   startTime();
   renewCam();
 }

@@ -19,3 +19,4 @@ pwd = os.path.dirname(sys.argv[0])
 
 if 1:                os.system(pwd + "/../jobs/slack.py")
 if min % 10 == 0:    os.system(pwd + "/../jobs/meetup.py")
+if 1:                os.system(pwd + "/../jobs/mta.py")
