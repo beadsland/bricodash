@@ -159,6 +159,15 @@ h1 {
   right-margin: 400;
 }
 
+#random_photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 400;
+  left: 0;
+  z-index: 1000;
+}
+
 .mta_iframe {
   width: 225;
   height: 400;

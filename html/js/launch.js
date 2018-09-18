@@ -16,6 +16,25 @@ window.onload = function() {
 
   startTime();
   renewCam();
+
+  scheduleDiv("#random_photo", "pull/photo.html", 330000);
+  peekawait()
+}
+
+/*
+ Show random photo
+ */
+
+function peekawait() {
+  setInterval(peekaboo, 300000 + Math.random(600000))
+}
+
+function peekaboo() {
+  $("#peekaboo").show(3000, unpeekaboo)
+}
+
+function unpeekaboo() {
+  $('#peekaboo').hide(8000, peekawait)
 }
 
 /*
@@ -91,6 +110,8 @@ function scheduleDiv(divID, pullPath, interval) {
 }
 
 function updateDiv(divID, pullPath, interval) {
+  console.log(divID)
+
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {

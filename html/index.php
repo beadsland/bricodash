@@ -16,6 +16,8 @@
   </head>
 <body>
 
+<div class="container" id="random_photo"><?php include "pull/photo.html"?></div>
+
 <div id="upper_row">
   <table width="100%">
     <tr><div id="outer_h1"></div></tr>
