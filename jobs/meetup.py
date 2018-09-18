@@ -13,7 +13,7 @@ import datetime
 import calendar
 
 pwd = os.path.dirname(sys.argv[0])
-sig_file = "../.keys/meetup_sig"
+sig_file = ".keys/meetup_sig"
 with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
 query = "https://api.meetup.com/hackmanhattan/events?photo-host=public&page=20&sig_id=1998556&sig="
 query = query + sig
