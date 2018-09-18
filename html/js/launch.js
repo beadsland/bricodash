@@ -26,7 +26,7 @@ window.onload = function() {
  */
 
 function peekawait() {
-  setInterval(peekaboo, 300000 + Math.random(600000))
+  setTimeout(peekaboo, 300000 + Math.random(600000))
 }
 
 function peekaboo() {
@@ -34,7 +34,7 @@ function peekaboo() {
 }
 
 function unpeekaboo() {
-  $('#peekaboo').hide(8000, peekawait)
+  $('#peekaboo').hide(7000, peekawait)
 }
 
 /*
