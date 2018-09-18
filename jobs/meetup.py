@@ -17,6 +17,7 @@ query = "https://api.meetup.com/hackmanhattan/events?photo-host=public&page=20&s
 query = query + sig
 
 response = requests.get(query)
+if response.status_code != 200:   sys.exit(response.status_code);
 data = json.loads(response.text)
 
 dump = []
