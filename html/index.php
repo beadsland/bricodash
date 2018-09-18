@@ -42,7 +42,6 @@
 </div>
 
 <div id="mta-widget"><?php include "pane/mta.html"?></div>
-<div id="mta-loader"><?php include "pane/mta.html"?></div>
 
 <div id="bottom_row">
   <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div>
