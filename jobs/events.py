@@ -37,7 +37,7 @@ for item in data[:8]:
   evt = item['name']
   evt = re.sub(r' at Hack Manhattan', '', evt)
   if (dt.day == lasttuesday) and (dt.month == today.month):
-    evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', item['name'])
+    evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
 
   ratpark.append( { "start": dt.isoformat(), "event":  evt,
                     "venue": "Hack Manhattan", "rsvp": item['yes_rsvp_count'] } )
