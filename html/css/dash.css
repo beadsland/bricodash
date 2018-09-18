@@ -39,7 +39,7 @@
 
 .event-line {
   margin-top: 0;
-  margin-bottom: 14;
+  margin-bottom: 12;
 }
 
 .event {
@@ -126,8 +126,8 @@ h1 {
  */
 
 #door-cam {
-  height: 312px;
-  width: 416px;
+  height: 340.8px;
+  width: 454.4px;
 }
 
 #upper_row {
@@ -142,13 +142,13 @@ h1 {
 }
 
 #upper_left_column {
-  height: 312px;
+  height: 340.8px;
   overflow: hidden;
   padding-left: 5px;
 }
 
 #upper_right_column {
-  width: 416px;
+  width: 454.4px;
   float: right;
 }
 
