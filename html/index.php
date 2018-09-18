@@ -41,10 +41,7 @@
   </table>
 </div>
 
-<div id="mta-widget">
-  <script type="text/javascript"
-          src="http://www.mta.info/sites/all/libraries/mta_WidgetScripts/serviceStatusWidget.js"></script>
-</div>
+<div id="mta-widget"><?php include "pane/mta.html"?></div>
 
 <div id="bottom_row">
   <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div>

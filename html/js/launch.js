@@ -6,8 +6,19 @@ window.onload = function() {
   position_header()
   scheduleDiv("#slack-chat", "pull/slack.html", 60000);
   scheduleDiv("#event-schedule", "pull/events.html", 300000);
+  scheduleDiv("#mta-widget", "pane/mta.html", 60000);
   startTime();
   renewCam();
+}
+
+/*
+ Reload the MTA widget
+*/
+
+function renewMTA() {
+  widget = $("#mta-widget").find(".iframe");
+  src = widget.src;
+  widget.src = src;
 }
 
 /*
@@ -89,6 +100,8 @@ function updateDiv(divID, pullPath, interval) {
  */
 
 function checkStale(divID, interval) {
+  if (divID === "#mta-widget") { return; }; // short circuit
+
   mydiv = document.querySelector(divID);
   try {
     e = mydiv.querySelector("#timestamp").getAttribute("epoch");
