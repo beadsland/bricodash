@@ -45,15 +45,19 @@ function spaceCal() {
  */
 
 function peekawait() {
-  setTimeout(peekaboo, 300000 + Math.random(600000))
+  setTimeout(peekaboo, 300000 + Math.random(600000));
 }
 
 function peekaboo() {
-  $("#peekaboo").show(3000, unpeekaboo)
+  $("#peekaboo").show(3000, peekabout);
+}
+
+function peekabout() {
+  setTimeout(unpeekaboo, 2000);
 }
 
 function unpeekaboo() {
-  $('#peekaboo').hide(7000, peekawait)
+  $('#peekaboo').hide(7000, peekawait);
 }
 
 /*
