@@ -15,11 +15,6 @@ window.onload = function() {
  Reload the MTA widget
 */
 
-function scheduleMTA(divID, loadID, pullPath, interval) {
-  updateMTA(divID, loadID, pullPath, interval);
-  setInterval(function() { updateMTA(divID, loadID, pullPath, interval); }, interval);
-}
-
 function updateMTA(divID, loadID, pullPath, interval) {
   $(divID).show();
   $(loadID).hide();
