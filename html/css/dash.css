@@ -95,9 +95,10 @@
 
 #slack-chat {
   font-family: Lato, sans-serif;
-  word-wrap: break-word;
   margin-right: 250px;
   text-align: left;
+  padding-left: 8em ;
+  text-indent: -8em ;
 }
 
 .slackee {
