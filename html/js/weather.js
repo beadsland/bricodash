@@ -38,7 +38,7 @@ function hspan(str, percent) {
 }
 
 function getWeather() {
-  hotmoji = '<img src="img/ggl-hot-face.png" style="height: .8em;">';
+  var hotmoji = '<img src="img/ggl-hot-face.png" style="height: .8em;">';
 
   $.simpleWeather({
     location: '10011',

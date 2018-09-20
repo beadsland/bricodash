@@ -4,20 +4,15 @@
  */
 window.onload = function() {
   position_header()
+  setInterval(function() { updateTime() }, 500)
   scheduleDiv("#slack-chat", "pull/slack.html", 30000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 600000);
   scheduleDiv("#building-events", "pull/building_events.html", 600000);
   buildingCal()
 
-  if (navigator.userAgent.search(/Midori/i) >0 ) {
-    $("#mta-widget").hide();
-  } else {
-    scheduleDiv("#mta-widget", "pane/mta.html", 60000);
-  }
-//  updateMTA("#mta-widget", "#mta-loader", "pane/mta.html", 30000);
+  scheduleDiv("#mta-widget", "pane/mta.html", 60000);
 
-  startTime();
   renewCam();
 
   scheduleDiv("#random_photo", "pull/photo.html", 330000);
@@ -61,10 +56,10 @@ function unpeekaboo() {
 }
 
 /*
- Reload the MTA widget
+ Reload the MTA widget -- not using
 */
 
-function updateMTA(divID, loadID, pullPath, interval) {
+function NOTupdateMTA(divID, loadID, pullPath, interval) {
   $(divID).show();
   $(loadID).hide();
   updateDiv(loadID, pullPath, interval);
@@ -78,7 +73,7 @@ function updateMTA(divID, loadID, pullPath, interval) {
 function position_header() {
   console.log($(window).width())
 
-  h1 = "<h1>Welcome to Hack Manhattan!</h1>";
+  var h1 = "<h1>Welcome to Hack Manhattan!</h1>";
   if ($(window).width() < 1150) {
     document.querySelector("#inner_h1").innerHTML = "";
     document.querySelector("#outer_h1").innerHTML = h1;
@@ -93,8 +88,8 @@ function position_header() {
 */
 
 function renewCam() {
-  src = document.querySelector("#door-cam").src;
-  lFunc = function() { return src; };
+  var src = document.querySelector("#door-cam").src;
+  var lFunc = function() { return src; };
   fixCam(lFunc);
   setInterval(function() { fixCam(lFunc); }, 60000);
 }
@@ -110,14 +105,15 @@ function fixCam(lFunc) {
 
 function lapseCam() {
   var params = new URLSearchParams(window.location.search);
+  var interval
   if ( params.has("timelapse") && $.isNumeric(params.get("timelapse")) ) {
     interval = parseInt(params.get("timelapse"))
   } else {
     interval = 60; // ~ 15 Hz
   }
 
-  src = document.querySelector("#doorcam").src;
-  lapseFunc = function () { return src + "&action=snapshot&now=" + Date.now() };
+  var src = document.querySelector("#doorcam").src;
+  var lapseFunc = function () { return src + "&action=snapshot&now=" + Date.now() };
 
   fixCam(lapseFunc)
   setInterval(function() { fixCam(lapseFunc); }, interval)
@@ -153,19 +149,20 @@ function checkStale(divID, interval) {
   if (divID === "#mta-widget") { return; }; // short circuit
   if (divID === "#mta-loader") { return; }; // short circuit
 
-  mydiv = document.querySelector(divID);
+  var mydiv = document.querySelector(divID);
+  var e
   try {
     e = mydiv.querySelector("#timestamp").getAttribute("epoch");
   } catch (err) {
     e = 0;
   }
 
-  elapsed = new Date() / 1000 - e;
+  var elapsed = new Date() / 1000 - e;
 
   if (elapsed > (interval / 1000 * 2)) {
-    err = document.createElement("div");
+    var err = document.createElement("div");
     err.className = "centered";
-    ico = document.createElement("span");
+    var ico = document.createElement("span");
     ico.className = "timeout-error";
     err.appendChild(ico);
     mydiv.appendChild(err);
@@ -181,16 +178,13 @@ function checkTime(i) {
   return (i < 10) ? "0" + i : i;
 }
 
-function startTime() {
-  var today = new Date(),
-      h = checkTime(today.getHours()),
-      m = checkTime(today.getMinutes()),
-      s = checkTime(today.getSeconds());
+function updateTime() {
+  var today = new Date();
+  var h = checkTime(today.getHours());
+  var m = checkTime(today.getMinutes());
+  var s = checkTime(today.getSeconds());
   h = parseInt(h % 12, 10);
   if (h == 0) { h = 12 };
-  str = "&thinsp;" + h + ":" + m + ":" + s + "&thinsp;";
+  var str = "&thinsp;" + h + ":" + m + ":" + s + "&thinsp;";
   document.getElementById('clock').innerHTML = str;
-  t = setTimeout(function () {
-      startTime()
-  }, 500);
 }
