@@ -1,3 +1,5 @@
+'use strict';
+
 // v3.1.0
 //Docs at http://simpleweatherjs.com
 $(document).ready(function() {

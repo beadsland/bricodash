@@ -1,3 +1,4 @@
+'use strict';
 
 /*
  Start polling for back-end content.
