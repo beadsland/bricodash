@@ -4,8 +4,10 @@
  Start polling for back-end content.
  */
 window.onload = function() {
-  position_header()
-  setInterval(function() { updateTime() }, 500)
+  position_header();
+  setInterval(renewCam, 1000);     /*  renewCam(); */
+  setInterval(updateTime, 500);
+
   scheduleDiv("#slack-chat", "pull/slack.html", 30000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 600000);
@@ -13,8 +15,6 @@ window.onload = function() {
   buildingCal()
 
   scheduleDiv("#mta-widget", "pane/mta.html", 60000);
-
-  renewCam();
 
   scheduleDiv("#random_photo", "pull/photo.html", 330000);
   peekawait()
@@ -40,32 +40,13 @@ function spaceCal() {
  Show random photo
  */
 
-function peekawait() {
-  setTimeout(peekaboo, 300000 + Math.random(600000));
-}
+function peekawait() { setTimeout(peekaboo, 300000 + Math.random(600000)); }
 
-function peekaboo() {
-  $("#peekaboo").show(3000, peekabout);
-}
+function peekaboo() {  $("#peekaboo").show(3000, peekabout); }
 
-function peekabout() {
-  setTimeout(unpeekaboo, 2000);
-}
+function peekabout() { setTimeout(unpeekaboo, 2000); }
 
-function unpeekaboo() {
-  $('#peekaboo').hide(7000, peekawait);
-}
-
-/*
- Reload the MTA widget -- not using
-*/
-
-function NOTupdateMTA(divID, loadID, pullPath, interval) {
-  $(divID).show();
-  $(loadID).hide();
-  updateDiv(loadID, pullPath, interval);
-  setTimeout(function () { updateMTA(loadID, divID, pullPath, interval); }, interval);
-}
+function unpeekaboo() { $('#peekaboo').hide(7000, peekawait); }
 
 /*
  Position the H1
@@ -89,35 +70,8 @@ function position_header() {
 */
 
 function renewCam() {
-  var src = document.querySelector("#door-cam").src;
-  var lFunc = function() { return src; };
-  fixCam(lFunc);
-  setInterval(function() { fixCam(lFunc); }, 60000);
-}
-
-function fixCam(lFunc) {
-  document.querySelector("#door-cam").src = lFunc();
-}
-
-/*
- Timelapse camera rather than live MJPG feed.
- Stalls on chromecast, so not used, but retained for possible future use.
- */
-
-function lapseCam() {
-  var params = new URLSearchParams(window.location.search);
-  var interval
-  if ( params.has("timelapse") && $.isNumeric(params.get("timelapse")) ) {
-    interval = parseInt(params.get("timelapse"))
-  } else {
-    interval = 60; // ~ 15 Hz
-  }
-
-  var src = document.querySelector("#doorcam").src;
-  var lapseFunc = function () { return src + "&action=snapshot&now=" + Date.now() };
-
-  fixCam(lapseFunc)
-  setInterval(function() { fixCam(lapseFunc); }, interval)
+  cam = document.querySelector("#door-cam");
+  cam.src = cam.src;
 }
 
 /*
