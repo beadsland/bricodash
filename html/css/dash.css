@@ -101,25 +101,28 @@
   text-indent: -8em ;
 }
 
+.slacking {
+  font-size: 150%;
+  color: #ccffcc;
+  padding-bottom: 1px;
+}
+
+.slacked {
+  font-size: 90%;
+  font-style: italic;
+}
+
 .slackee {
-  font-size: 125%;
   font-weight: bold;
 }
 
 .slacker {
   color: orange;
-  font-size: 125%;
 }
 
-.slacking {
-  font-size: 125%;
-  color: #eeeeee;
-  padding-bottom: 1px;
-}
-
-.slacked {
-  font-style: italic;
-}
+/*
+ MTA
+ */
 
 #mta-widget, #mta-loader {
   position: absolute;
