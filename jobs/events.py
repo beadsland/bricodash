@@ -91,7 +91,7 @@ evtBldg.append( wdd('<span id="ratparkHdr">Rat Park Building Calendar</span>') )
 for item in ratpark:
   dt = dateutil.parser.parse(item["start"])
   today = datetime.datetime.combine(datetime.date.today(), datetime.datetime.min.time())
-  if (today + datetime.timedelta(days=1,seconds=-1)) \
+  if (today + datetime.timedelta(days=2,seconds=-1)) \
                                 < dt < (today + datetime.timedelta(days=7)):
     date = dt.strftime('%a')
   else:
