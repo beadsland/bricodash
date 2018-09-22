@@ -12,14 +12,21 @@ usnat = "cal/usnat.cal"
 
 def recur(str): return subprocess.check_output(["./recur.pl", str])
 
+def emoji(s): return '<span class="emoji">' + s + '</span>'
+
 def parse_cal(filename):
   arr = []
   with open(filename, "rb") as f:
     for line in f.readlines():
       if line.strip() != "":
-        arr.append( ((line.split("::"))) )
+        spl = line.strip().split("::")
+        if len(spl) > 2 and spl[2].strip() != "":
+          full = "%s %s" % (spl[1], emoji(spl[2].strip()))
+          arr.append( (spl[0], full) )
+        else:
+          arr.append( (spl[0], spl[1]) )
 
-  arr = ( (recur(t[0]), t[1].strip()) for t in arr )
+  arr = (( recur(t[0]), t[1].strip() ) for t in arr)
   arr = sorted(arr)
   return arr
 
