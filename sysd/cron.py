@@ -18,6 +18,7 @@ min = datetime.datetime.now().minute
 hr = datetime.datetime.now().hour
 pwd = os.path.dirname(sys.argv[0])
 
+if 1:                os.system(pwd + "/../jobs/wiki.py")
 if 1:                os.system(pwd + "/../jobs/slack.py")
 if 1:                os.system(pwd + "/../jobs/mta.py")
 if min % 5 == 0:     os.system(pwd + "/../jobs/photo.py")

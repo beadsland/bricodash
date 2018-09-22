@@ -93,6 +93,57 @@
 }
 
 /*
+ MTA
+ */
+
+#mta-widget, #mta-loader {
+  position: absolute;
+  bottom: -20;
+  right: 0;
+  z-index: 30;
+  background-color: white;
+}
+
+/*
+ Wiki
+ */
+
+#wiki_td {
+  width: 200px;
+}
+
+#wiki_head {
+  font-family: Raleway, sans-serif;
+  font-size: 150%;
+  padding: 8px;
+  padding-top: 20px;
+  background: #333333;
+}
+
+#wiki-edits {
+  width: 200px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  width: 200px;
+  background: #111111;
+}
+
+.wiki-line {
+  font-family: Georgia, serif;
+  font-size: 112%;
+  overflow-wrap: break-word;
+  margin-top: 9px;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+.wiki-special {
+  font-size: 85%;
+}
+
+/*
  Slack
 */
 
@@ -108,6 +159,7 @@
 
 #slack-chat {
   font-family: Lato, sans-serif;
+  margin-left: 200px;
   margin-right: 250px;
   text-align: left;
   padding-left: 8em ;
@@ -131,18 +183,6 @@
 
 .slacker {
   color: orange;
-}
-
-/*
- MTA
- */
-
-#mta-widget, #mta-loader {
-  position: absolute;
-  bottom: -30;
-  right: 0;
-  z-index: 30;
-  background-color: white;
 }
 
 /*

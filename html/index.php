@@ -27,19 +27,16 @@
       </td>
     </tr>
     <tr>
-      <td colspan=2>
-        <div id="slack_head">Meanwhile, on
-            <img class="logo" src="img/slack.png">hackerspace at
-                 hackmanhattan.slack.com…</div>
-      </td>
-    <tr>
+      <td colspan=2><?php include "pane/heads.html"?></td>
+    </tr>
   </table>
 </div>
 
 <div id="mta-widget"><?php include "pane/mta.html"?></div>
+<div id="wiki-edits"><?php include "pull/wiki.html"?></div>
 
 <div id="bottom_row">
-  <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div>
+  <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div></td>
 </div>
 
 
