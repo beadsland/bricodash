@@ -29,7 +29,7 @@ ratpark = brite + upmeet + holiday;
 d = datetime.date.today()
 while d.weekday() != 4:
   d += datetime.timedelta(1)
-def noisy(s): return '<span class="noisy">' + s + '</span> <span class="emoji">' + u"🔊🎶" + "</span>"
+def noisy(s): return '<span class="noisy">' + s + '</span> <span class="noisemoji">' + u"🔊🎶" + "</span>"
 ratpark.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
                   "event": noisy("Friday Night Live Music"), "venue": "Offside Tavern" } )
 

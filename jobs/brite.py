@@ -14,7 +14,7 @@ eventbrite = Eventbrite(token)
 venues = {}
 ratpark = []
 
-def noisy(s): return '<span class="noisy">' + s + '</span> <span class="emoji">' + u"🔊🎶" + "</span>"
+def noisy(s): return '<span class="noisy">' + s + '</span> <span class="noisemoji">' + u"🔊🎶" + "</span>"
 
 for page in range(1,20):
   query = '/events/search?location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date&page='

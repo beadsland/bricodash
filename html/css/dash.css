@@ -26,6 +26,13 @@
   font-size: 80%;
 }
 
+.noisemoji {
+  font-family: NotoEmoji;
+  vertical-align: 10%;
+  font-size: 80%;
+  text-shadow: 2px 2px #228822;
+}
+
 .slemoji {
   height: .8em;
   vertical-align: -5%;
@@ -70,7 +77,7 @@
 }
 
 .noisy {
-  text-shadow: 1px 1px #228822;
+  text-shadow: 3px 3px #228822;
 }
 
 .date {
