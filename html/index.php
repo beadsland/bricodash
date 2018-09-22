@@ -23,9 +23,11 @@
     <tr><td colspan=2><div id="outer_h1"></div></td></tr>
     <tr>
       <td><?php include "pane/events.html"?></td>
-      <td><div id="upper_right_column"><?php include "pane/upper_right.php"?></div>
+      <td id="upper_right_td"><div id="upper_right_column"><?php include "pane/upper_right.php"?></div>
       </td>
     </tr>
+  </table>
+  <table width="100%">
     <tr>
       <td colspan=2><?php include "pane/heads.html"?></td>
     </tr>

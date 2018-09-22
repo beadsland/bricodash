@@ -49,8 +49,8 @@
 .event-line {
   margin-top: 0;
   margin-bottom: 12;
-  padding-left: 9.5em ;
-  text-indent: -9.5em ;
+  padding-left: 9.6em ;
+  text-indent: -9.6em ;
 }
 
 .event, .hm-event {
@@ -98,7 +98,7 @@
 
 #mta-widget, #mta-loader {
   position: absolute;
-  bottom: -20;
+  bottom: -30;
   right: 0;
   z-index: 30;
   background-color: white;
@@ -126,7 +126,7 @@
   bottom: 0;
   left: 0;
   padding: 5px;
-  width: 200px;
+  width: 197px;
   background: #111111;
 }
 
@@ -238,7 +238,7 @@ h1 {
 
 #upper_right_column, #upper_right_td {
   width: 454.4px;
-  white-space: nowrap;
+  align: right;
 }
 
 #bottom_row {
