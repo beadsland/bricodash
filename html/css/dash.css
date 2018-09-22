@@ -26,6 +26,16 @@
   font-size: 80%;
 }
 
+.slemoji {
+  height: .8em;
+  vertical-align: -5%;
+}
+
+.logo {
+  height: 1em;
+  vertical-align: 0%;
+}
+
 .timeout-error:before {
   content: "⚠️";
   font-family: NotoEmoji;
@@ -35,11 +45,6 @@
 
 .math {
   font-size: 120%;
-}
-
-.logo {
-  height: 1em;
-  vertical-align: 0%;
 }
 
 /*

@@ -54,9 +54,9 @@ def emjlnk(name):
   if name in semoji:
     if semoji[name].startswith("alias:"):
       alias = semoji[name].replace("alias:", "")
-      return avt(semoji[alias])
+      return emjlnk(alias)
     else:
-      return avt(semoji[name])
+      return "<img class='slemoji' src='" + semoji[name] + "'>"
   else:
     return "<span class='emoji'>:" + name + ":</span>"
 
