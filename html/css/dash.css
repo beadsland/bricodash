@@ -162,18 +162,19 @@
   margin-left: 200px;
   margin-right: 250px;
   text-align: left;
-  padding-left: 8em ;
-  text-indent: -8em ;
 }
 
 .slacking {
   font-size: 150%;
   color: #ccffcc;
   padding-bottom: 1px;
+  padding-left: 4.75em;
+  text-indent: -4.75em;
+  overflow-wrap: break-word;
 }
 
 .slacked {
-  font-size: 90%;
+  font-size: 80%;
   font-style: italic;
 }
 

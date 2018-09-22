@@ -17,6 +17,8 @@ channels = slack.channels.list().body['channels']
 
 names = { user['id']: (user['profile']['display_name'], user['name'])
 	  for user in slack.users.list().body['members'] }
+avatr = { user['id']: user['profile']['image_32']
+    for user in slack.users.list().body['members'] }
 for id in names:
   if names[id][0] == "":
     names[id] = names[id][1]
@@ -32,36 +34,62 @@ response = slack.channels.history(channel = channel['id'],
                                   oldest = 0,
                                   count = 11)
 
-def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def div(s): return "<div class='slacking'>" + s + "</div>"
-def who(s): return "<span class='slackee'>" + s + "</span>"
+def hid(s): return "<span style='opacity: .25;'>" + s + "</span>"
 def whn(s): return "<span class='slacked'>" + s + "</span>"
+def usp(s): return "<span class='slacker'>@" + s + "</span>"
+def who(s): return "<span class='slackee'>" + s + "</span>"
+def avt(s): return "<img class='logo' src=\"" + s + "\">"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
+imgext = ('.gif', '.jpg', '.jpeg', '.png',
+          '.GIF', '.JPG', '.JPEG', '.PNG')
+def extlnk(o, u, c):
+  if u.endswith(imgext) and o == "<":
+    return ' ' + avt(url)
+  else: return ' ' + o + u + c
+
 hist = []
+lstwhn = ""
+lstwho = ""
 
 for message in reversed(response.body['messages']):
+  delta = datetime.datetime.now().timestamp() - float(message['ts'])
+  when = humanize.naturaltime(delta)
+  when = when.replace("second", "sec")
+  when = when.replace("minute", "min")
+  when = when.replace("hour", "hr")
+  when = when.replace("day", "dy")
+  when = when.replace("week", "wk")
+  when = when.replace(" ago", "")
+
   user = names[message['user']] if 'user' in message else message['username']
+  if 'user' in message:
+    user = avt(avatr[message['user']]) + " " + user
 
   text = message['text'];
-  text = lnkex.sub(lambda m: "&lt;" + m.group(1) + "&gt;", text)
+
+  if 'files' in message:
+    for file in message['files']:
+      url = file['thumb_64']
+      text += ' ' + extlnk("[", url, "]")
+      print(message)
+
+  text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1), "&gt;"), text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
   text = emjex.sub(lambda m: "<span class='emoji'>:" + m.group(1) + ":</span>", text)
   text = emoji_data_python.replace_colons(text)
 
-  delta = datetime.datetime.now().timestamp() - float(message['ts'])
-  when = humanize.naturaltime(delta)
-
-  if 'files' in message:
-    for file in message['files']:
-      url = file['url_private_download']
-      text += " [" + url + "]"
-
-  hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
+  if lstwhn == when and lstwho == user:
+    hist.append( div(hid(whn(when) + " &mdash; " +  who(user) + ": ") + text) )
+  else:
+    lstwhn = when
+    lstwho = user
+    hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
 
 hist.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
