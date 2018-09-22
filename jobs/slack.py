@@ -20,10 +20,8 @@ names = { user['id']: (user['profile']['display_name'], user['name'])
 avatr = { user['id']: user['profile']['image_32']
     for user in slack.users.list().body['members'] }
 for id in names:
-  if names[id][0] == "":
-    names[id] = names[id][1]
-  else:
-    names[id] = names[id][0]
+  if names[id][0] == "":          names[id] = names[id][1]
+  else:                           names[id] = names[id][0]
 
 for channel in channels:
   if channel['name'] == 'hackerspace':
@@ -48,9 +46,19 @@ lnkex = re.compile(r"<(http.*)>")
 imgext = ('.gif', '.jpg', '.jpeg', '.png',
           '.GIF', '.JPG', '.JPEG', '.PNG')
 def extlnk(o, u, c):
-  if u.endswith(imgext) and o == "<":
-    return ' ' + avt(url)
-  else: return ' ' + o + u + c
+  if u.endswith(imgext) and o == "<":     return ' ' + avt(url)
+  else:                                   return ' ' + o + u + c
+
+semoji = slack.emoji.list().body["emoji"];
+def emjlnk(name):
+  if name in semoji:
+    if semoji[name].startswith("alias:"):
+      alias = semoji[name].replace("alias:", "")
+      return avt(semoji[alias])
+    else:
+      return avt(semoji[name])
+  else:
+    return "<span class='emoji'>:" + name + ":</span>"
 
 hist = []
 lstwhn = ""
@@ -81,7 +89,7 @@ for message in reversed(response.body['messages']):
   text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1), "&gt;"), text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
-  text = emjex.sub(lambda m: "<span class='emoji'>:" + m.group(1) + ":</span>", text)
+  text = emjex.sub(lambda m: emjlnk(m.group(1)), text)
   text = emoji_data_python.replace_colons(text)
 
   if lstwhn == when and lstwho == user:
