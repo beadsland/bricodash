@@ -13,9 +13,18 @@ import datetime
 import calendar
 import dateutil.parser
 
+
 pwd = os.path.dirname(sys.argv[0])
-filename = pwd + "/../html/pull/ratpark.json"
-with open(filename) as f: ratpark = json.load(f)
+filename = pwd + "/../html/pull/brite.json"
+with open(filename) as f: brite = json.load(f)
+
+filename = pwd + "/../html/pull/upmeet.json"
+with open(filename) as f: upmeet = json.load(f)
+
+filename = pwd + "/../html/pull/holiday.json"
+with open(filename) as f: holiday = json.load(f)
+
+ratpark = brite + upmeet + holiday;
 
 sig_file = ".keys/meetup_events"
 with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
@@ -69,7 +78,7 @@ for item in ratpark:
 
   start = dt.strftime("%-I:%M %p").lower()
   start = re.sub(r':00', '', start)
-  dt = "%s, %s" % (date, start)
+  dt = "%s, %s" % (date, start) if start != "12 am" else date
 
   dd = item["event"];
   if item["rsvp"] > 4:  dd += " (%s)" % item["rsvp"]
@@ -78,19 +87,23 @@ for item in ratpark:
     evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wddhm(dd)) ) )
     evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
                                                 wdt(dt), wddhm(dd) ) )
+  elif item["venue"] == "Holiday":
+    evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wdd(dd)) ) )
   else:
     evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
                                                 wdt(dt), wdd(dd) ) )
 
+evtSpce = evtSpce[:10]
+evtBldg = evtBldg[:10]
 evtSpce.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 evtBldg.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 filename = pwd + "/../html/pull/space_events.html"
 file = open(filename + ".new", "w")
-file.write( "\n".join(evtSpce) )
+file.write( u"\n".join(evtSpce[:11]).encode('utf-8') )
 os.rename(filename + ".new", filename)
 
 filename = pwd + "/../html/pull/building_events.html"
 file = open(filename + ".new", "w")
-file.write( "\n".join(evtBldg) )
+file.write( u"\n".join(evtBldg[:11]).encode('utf-8') )
 os.rename(filename + ".new", filename)
