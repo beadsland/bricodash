@@ -70,7 +70,7 @@ function position_header() {
 */
 
 function renewCam() {
-  cam = document.querySelector("#door-cam");
+  var cam = document.querySelector("#door-cam");
   cam.src = cam.src;
 }
 
