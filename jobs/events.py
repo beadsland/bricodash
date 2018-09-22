@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 import requests
@@ -26,6 +26,14 @@ with open(filename) as f: holiday = json.load(f)
 
 ratpark = brite + upmeet + holiday;
 
+d = datetime.date.today()
+while d.weekday() != 4:
+  d += datetime.timedelta(1)
+def noisy(s): return '<span class="noisy">' + s + '</span> <span class="emoji">' + u"🔊🎶" + "</span>"
+ratpark.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
+                  "event": noisy("Friday Night Live Music"), "venue": "Offside Tavern" } )
+
+
 sig_file = ".keys/meetup_events"
 with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
 query = "https://api.meetup.com/HackManhattan/events?photo-host=public&page=20&"
@@ -35,6 +43,10 @@ response = requests.get(query)
 if response.status_code != 200:   sys.exit(response.status_code);
 data = json.loads(response.text)
 
+
+maths = requests.get("https://api.meetup.com/nyc-math/events?&sign=true&photo-host=public&page=20")
+maths = json.loads(maths.text)
+maths = { e["name"]: e["yes_rsvp_count"] for e in maths }
 
 today = datetime.date.today()
 lasttuesday = max( week[calendar.TUESDAY]
@@ -47,9 +59,18 @@ for item in data[:8]:
   evt = re.sub(r' at Hack Manhattan', '', evt)
   if (dt.day == lasttuesday) and (dt.month == today.month):
     evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
+  evt = re.sub(r'(Open House)', r'\1 <img class="logo" src="img/balloons.png">', evt)
+  evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
+  evt = re.sub(r'(Fixers\' Collective)', r'\1 <img class="logo" src="img/fixers.png">', evt)
+  evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌃🎲</span>', evt)
+  if evt in maths:
+    rsvp = item['yes_rsvp_count'] + maths[evt] - 2
+    evt += ' <img class="logo" src="img/math.png">'
+  else:
+    rsvp = item['yes_rsvp_count']
 
   ratpark.append( { "start": dt.isoformat(), "event":  evt,
-                    "venue": "Hack Manhattan", "rsvp": item['yes_rsvp_count'] } )
+                    "venue": "Hack Manhattan", "rsvp": rsvp } )
 
 ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"],
                                    e["rsvp"] if "rsvp" in e else 0) for e in ratpark ]
@@ -99,11 +120,11 @@ evtSpce.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' 
 evtBldg.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 filename = pwd + "/../html/pull/space_events.html"
-file = open(filename + ".new", "w")
+file = open(filename + ".new", "wb")
 file.write( u"\n".join(evtSpce[:11]).encode('utf-8') )
 os.rename(filename + ".new", filename)
 
 filename = pwd + "/../html/pull/building_events.html"
-file = open(filename + ".new", "w")
+file = open(filename + ".new", "wb")
 file.write( u"\n".join(evtBldg[:11]).encode('utf-8') )
 os.rename(filename + ".new", filename)

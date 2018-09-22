@@ -21,18 +21,14 @@ events = result['events']
 
 ratpark = []
 
+def meetup(s): return s + ' <img class="logo" src="img/meetup.png">'
+
 for event in events:
   if "venue" in event and event['venue']['name'] == "Offside Tavern":
     name = event['name']
-    name = re.sub(' FREE!', '', name)
+    name = re.sub(' Wednesday! FREE!', ' Wed!', name)
     ratpark.append( { "start": " ".join( [event['local_date'], event['local_time']] ),
-                      "event": name, "venue": "Offside Tavern" } )
-
-d = datetime.date.today()
-while d.weekday() != 4:
-  d += datetime.timedelta(1)
-ratpark.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
-                  "event": "Friday Night Live Music", "venue": "Offside Tavern" } )
+                      "event": meetup(name), "venue": "Offside Tavern" } )
 
 ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"]) for e in ratpark ]
 ratpark.sort()

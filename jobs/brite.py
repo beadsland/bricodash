@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from eventbrite import Eventbrite
 import os
@@ -14,6 +14,8 @@ eventbrite = Eventbrite(token)
 venues = {}
 ratpark = []
 
+def noisy(s): return '<span class="noisy">' + s + '</span> <span class="emoji">' + u"🔊🎶" + "</span>"
+
 for page in range(1,20):
   query = '/events/search?location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date&page='
   result = eventbrite.get(query + str(page))
@@ -24,7 +26,7 @@ for page in range(1,20):
       venues[event['venue_id']] = eventbrite.get('/venues/' + event['venue_id'])
     venue = venues[event['venue_id']]
     if venue['name'] == "Offside Tavern" or venue['name'] == "Secret Loft":
-      ratpark.append( {"start": event['start']['local'], "venue": venue['name'], "event": event['name']['text']} )
+      ratpark.append( {"start": event['start']['local'], "venue": venue['name'], "event": noisy(event['name']['text'])} )
 
   if len(ratpark) > 2: break
 
