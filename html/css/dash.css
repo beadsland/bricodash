@@ -131,7 +131,7 @@
   bottom: 0;
   left: 0;
   padding: 5px;
-  width: 197px;
+  width: 194px;
   background: #111111;
 }
 
@@ -222,6 +222,15 @@ h1 {
 #door-cam {
   height: 340.8px;
   width: 454.4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+table, tr, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 #upper_row {
