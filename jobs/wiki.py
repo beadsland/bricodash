@@ -43,13 +43,12 @@ for p in range(1,10):
       seen.append( push["repo"]["name"] )
 
 report = sorted(report)
-report = list(s for (t,s) in report)
-
+report = list(s for (t,s) in report)[15:]
 
 report.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/wiki.html"
 file = open(filename + ".new", "w")
-file.write( u"\n".join(report[15:]) )
+file.write( u"\n".join(report) )
 os.rename(filename + ".new", filename)
