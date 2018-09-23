@@ -14,3 +14,11 @@ Requires:
 * [pychromecast](https://github.com/balloob/pychromecast) `876ed6c` and above
 * daemonize
 * systemd unless you want to write your own init scripts
+* a variety of python and perl libraries
+* apache 2 (for support of continuously running php scripts)
+
+TODO:
+
+* Still adding a variety of minor features.
+* Source files are in desperate need of refactoring
+* Probably ought to write a dependency install script
