@@ -28,18 +28,19 @@ for edit in recent:
     report.append( (edit["timestamp"], html) )
     seen.append( edit["title"] )
 
-query = "https://api.github.com/users/hackmanhattan/events"
-response = requests.get(query)
-if response.status_code != 200:   sys.exit(response.status_code);
-result = json.loads(response.text)
+query = "https://api.github.com/users/hackmanhattan/events?page="
 
-for push in result:
-  if push["repo"]["name"] not in seen:
-    repo = push["repo"]["name"].replace("hackmanhattan/", "")
-    title = glogo + repo
-    html = '<div class="wiki-line">' + title + "</div>"
-    report.append( (push["created_at"], html) )
-    seen.append( push["repo"]["name"] )
+for p in range(1,10):
+  response = requests.get(query + str(p))
+  if response.status_code != 200:   sys.exit(response.status_code);
+  result = json.loads(response.text)
+  for push in result:
+    if push["repo"]["name"] not in seen:
+      repo = push["repo"]["name"].replace("hackmanhattan/", "")
+      title = glogo + repo
+      html = '<div class="wiki-line">' + title + "</div>"
+      report.append( (push["created_at"], html) )
+      seen.append( push["repo"]["name"] )
 
 report = sorted(report)
 report = list(s for (t,s) in report)

@@ -15,7 +15,7 @@ window.onload = function() {
   buildingCal()
 
   scheduleDiv("#mta-widget", "pane/mta.html", 60000);
-  scheduleDiv("#wiki-edits", "pull/wiki.html", 60000);
+  scheduleDiv("#wiki-edits", "pull/wiki.html", 300000);
 
   scheduleDiv("#random_photo", "pull/photo.html", 330000);
   peekawait()
