@@ -46,7 +46,7 @@ data = json.loads(response.text)
 
 maths = requests.get("https://api.meetup.com/nyc-math/events?&sign=true&photo-host=public&page=20")
 maths = json.loads(maths.text)
-maths = { e["name"]: e["yes_rsvp_count"] for e in maths }
+maths = { e["name"]: (e["yes_rsvp_count"], e["id"]) for e in maths }
 
 today = datetime.date.today()
 lasttuesday = max( week[calendar.TUESDAY]
@@ -64,8 +64,22 @@ for item in data[:8]:
   if evt.startswith("Shakespeare Night"): evt += ' <span class="emoji">🎭📖</span>'
   evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
   evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌃🎲</span>', evt)
+
   if evt in maths:
-    rsvp = item['yes_rsvp_count'] + maths[evt] - 2
+    rsvp = item['yes_rsvp_count'] + maths[evt][0] - 2
+    req = [ "http://api.meetup.com/hackmanhattan/events/" + item["id"] + "/rsvps",
+            "http://api.meetup.com/nyc-math/events/" + maths[evt][1] + "/rsvps" ]
+    rsvps = {};
+    for r in req:
+      resp = requests.get(r)
+      if resp.status_code != 200:   sys.exit(resp.status_code);
+      for ans in json.loads(resp.text):
+        id = ans["member"]["id"]
+        if id in rsvps and rsvps[id] > ans["guests"]:
+          pass
+        elif ans["response"] == "yes":
+          rsvps[id] = ans["guests"]
+    rsvp = len(rsvps) + sum(rsvps.values())
     evt += ' <img class="logo" src="img/math.png">'
   else:
     rsvp = item['yes_rsvp_count']
