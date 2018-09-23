@@ -36,7 +36,7 @@
 <div id="wiki-edits"><?php include "pull/wiki.html"?></div>
 
 <div id="bottom_row">
-  <div id="slack-chat" class="container"><?php include "pull/slack.php"?></div></td>
+  <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div></td>
 </div>
 
 
