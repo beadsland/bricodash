@@ -14,8 +14,8 @@ result = json.loads(response.text)
 recent = result["query"]["recentchanges"]
 seen = []
 report = []
-wlogo = '<img class="logo" src="img/mediawiki.png">'
-glogo = '<img class="logo" src="img/github.png">'
+wlogo = '<img class="logo" src="img/mediawiki.png">&thinsp;'
+glogo = '<img class="logo" src="img/github.png">&thinsp;'
 
 for edit in recent:
   if edit["title"] not in seen:

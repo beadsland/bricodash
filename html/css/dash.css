@@ -121,30 +121,30 @@
  */
 
 #wiki_td {
-  width: 200px;
+  width: 250px;
 }
 
 #wiki_head {
   font-family: Raleway, sans-serif;
-  font-size: 150%;
+  font-size: 150%;   /* experiment with changing this */
   padding: 8px;
   padding-top: 20px;
   background: #333333;
+  text-align: center;
 }
 
 #wiki-edits {
-  width: 200px;
+  width: 244px;
   position: absolute;
   bottom: 0;
   left: 0;
   padding: 5px;
-  width: 194px;
   background: #111111;
 }
 
 .wiki-line {
   font-family: Georgia, serif;
-  font-size: 112%;
+  font-size: 120%;
   overflow-wrap: break-word;
   margin-top: 9px;
   padding-left: 1em;
@@ -171,7 +171,7 @@
 
 #slack-chat {
   font-family: Lato, sans-serif;
-  margin-left: 200px;
+  margin-left: 250px;
   margin-right: 250px;
   text-align: left;
 }
