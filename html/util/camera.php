@@ -26,18 +26,18 @@ SOFTWARE. */
 // config:
 $mjpg = array(
         'space' => "http://192.168.43.125:8080/",
-	'door' => "http://192.168.42.157:8080/",
+        'door' => "http://192.168.42.157:8080/",
         'cr10' => "http://192.168.43.166:8080/",
         'hydro' => "http://192.168.42.173:8081/"
         );
 
-if ( $_GET["view"] == "" ) {
+if ( !isset($_GET["view"]) ) {
   $mjpeg_url = $mjpg["space"];
 } else {
   $mjpeg_url = $mjpg[$_GET["view"]];
 };
 
-if ( $_GET["action"] == "" ) {
+if ( !isset($_GET["action"]) ) {
   do_stream($mjpeg_url);
 } elseif ( $_GET["action"] == "stream" ) {
   do_stream($mjpeg_url);
