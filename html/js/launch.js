@@ -8,6 +8,8 @@ window.onload = function() {
   setInterval(renewCam, 1000);     /*  renewCam(); */
   setInterval(updateTime, 500);
 
+/*  scheduleDiv("#sous", "pull/sous.html", 5000); */
+
   scheduleDiv("#slack-chat", "pull/slack.html", 30000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 600000);
@@ -17,7 +19,7 @@ window.onload = function() {
   scheduleDiv("#mta-widget", "pane/mta.html", 60000);
   scheduleDiv("#wiki-edits", "pull/wiki.html", 1800000);
 
-  scheduleDiv("#random_photo", "pull/photo.html", 330000);
+  scheduleDiv("#random_photo", "pull/photo.html", 600000);
   peekawait()
 }
 
