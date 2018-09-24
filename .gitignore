@@ -2,4 +2,5 @@
 cron.err
 *.pyc
 html/next.php
-html/pull
+html/pull/*
+html/pid/*
