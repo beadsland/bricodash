@@ -63,7 +63,7 @@ for item in data[:8]:
   evt = re.sub(r'(Fixers\' Collective)', r'\1 <img class="logo" src="img/fixers.png">', evt)
   if evt.startswith("Shakespeare Night"): evt += ' <span class="emoji">🎭📖</span>'
   evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
-  evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌃🎲</span>', evt)
+  evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌌🎲</span>', evt)
 
   if evt in maths:
     rsvp = item['yes_rsvp_count'] + maths[evt][0] - 2
