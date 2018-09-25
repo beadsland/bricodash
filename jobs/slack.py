@@ -83,10 +83,10 @@ for message in reversed(response.body['messages']):
   if 'files' in message:
     for file in message['files']:
       url = file['thumb_64']
-      text += ' ' + extlnk("[", url, "]")
+      text += ' ' + extlnk("[", url[:30], "…]")
       print(message)
 
-  text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1), "&gt;"), text)
+  text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1)[:30], "…&gt;"), text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
   text = emjex.sub(lambda m: emjlnk(m.group(1)), text)
