@@ -1,5 +1,7 @@
 <?php
   if ($_SERVER['QUERY_STRING'] == "widgetImages/mta_widget_logo.png") {
+    header('Pragma: public');
+    header('Cache-Control: max-age=86400');
     header("Content-Type: image/png");
     header("Content-Length: " . filesize("logo.png"));
     fpassthru(fopen("logo.png", 'r'));
@@ -11,7 +13,9 @@
     file_put_contents($tmpFilename, fopen($path, 'r'));
 
     exec("convert " . $tmpFilename . " -fuzz 40% -fill black -floodfill +0+0 white " . $tmpFilename);
-
+    
+    header('Pragma: public');
+    header('Cache-Control: max-age=86400');
     header("Content-Type: image/gif");
     header("Content-Length: " . filesize($tmpFilename));
     fpassthru($temp);
