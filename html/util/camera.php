@@ -31,7 +31,6 @@ SOFTWARE. */
  // NOTE: www-data needs to be in a group with write access to pid/
  if ( (!isset($_GET["view"])) or $_GET["view"] == "space" ) {
    $pid = exec("/opt/defaultcast/jobs/sous/live.sh > /dev/null 2>&1 & echo $!;");
-   error_log("souspid = " . $pid);
    function shutdown($pid) { exec("kill -9 " . $pid); }
    register_shutdown_function('shutdown', $pid);
  }
