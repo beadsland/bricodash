@@ -5,10 +5,11 @@
  */
 window.onload = function() {
   position_header();
+
   setInterval(renewCam, 1000);     /*  renewCam(); */
   setInterval(updateTime, 500);
 
-/*  scheduleDiv("#sous", "pull/sous.html", 5000); */
+/*  scheduleDiv("#sous", "pull/sous.html", 10000); */
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30000);
 
@@ -20,7 +21,19 @@ window.onload = function() {
   scheduleDiv("#wiki-edits", "pull/wiki.html", 1800000);
 
   scheduleDiv("#random_photo", "pull/photo.html", 600000);
-  peekawait()
+  peekawait();
+
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
+    setInterval(rebootCast, 6 * 60 * 60 * 1000);
+  }
+}
+
+function rebootCast() {
+  var oReq = new XMLHttpRequest();
+  oReq.onload = function() { console.log("Rebooting self."); }
+  oReq.open("get", "util/recast.php", true);
+  oReq.send();
 }
 
 /*
