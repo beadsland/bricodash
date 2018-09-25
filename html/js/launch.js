@@ -9,9 +9,6 @@ window.onload = function() {
   setInterval(renewCam, 1000);     /*  renewCam(); */
   setInterval(updateTime, 400);
 
-  scheduleDiv("#sous", "pull/sous.html", 250);
-  setInterval(sousveil, 500)
-
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
@@ -27,6 +24,9 @@ window.onload = function() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
     setInterval(rebootCast, 6 * 60 * 60 * 1000);
+
+    scheduleDiv("#sous", "pull/sous.html", 250);
+    setInterval(sousveil, 500)
   }
 }
 
