@@ -24,9 +24,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 /*
- Multiple feeds and snapshot functionality added by Beads Land-Trujillo
+ Multiple feeds, snapshot, and live pid functionality added by Beads Land-Trujillo
  at Hack Manhattan, 2018
  */
+
+ // NOTE: www-data needs to be in a group with write access to pid/
+ if ( (!isset($_GET["view"])) or $_GET["view"] == "space" ) {
+   $pid = exec("/opt/defaultcast/jobs/sous/live.sh > /dev/null 2>&1 & echo $!;");
+   error_log("souspid = " . $pid);
+   function shutdown($pid) { exec("kill -9 " . $pid); }
+   register_shutdown_function('shutdown', $pid);
+ }
+
 
 // config:
 $mjpg = array(

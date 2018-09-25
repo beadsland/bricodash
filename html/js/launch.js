@@ -9,7 +9,8 @@ window.onload = function() {
   setInterval(renewCam, 1000);     /*  renewCam(); */
   setInterval(updateTime, 500);
 
-/*  scheduleDiv("#sous", "pull/sous.html", 10000); */
+  scheduleDiv("#sous", "pull/sous.html", 1000);
+  setInterval(sousveil, 1000)
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
@@ -34,6 +35,14 @@ function rebootCast() {
   oReq.onload = function() { console.log("Rebooting self."); }
   oReq.open("get", "util/recast.php", true);
   oReq.send();
+}
+
+/*
+ Sous veil ance
+ */
+function sousveil() {
+  var op = document.querySelector("#veil").getAttribute("value");
+  document.querySelector("#eye").style.opacity = op;
 }
 
 /*

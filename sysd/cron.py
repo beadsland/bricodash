@@ -27,3 +27,5 @@ if min == 0 and hr == 0: os.systemd(pwd + "/../jobs/cal.py")
 if min % 60 == 0:    os.system(pwd + "/../jobs/brite.py")
 if min % 30 == 5:    os.system(pwd + "/../jobs/upmeet.py")
 if min % 10 == 0:    os.system(pwd + "/../jobs/events.py")
+
+if 1:                os.system(pwd + "/../jobs/sous/veil.py &")
