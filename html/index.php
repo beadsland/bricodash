@@ -18,7 +18,13 @@
 
 <div class="container" id="random_photo"><?php include "pull/photo.html"?></div>
 
-<div id="upper_row">
+<div id="upper_row" class="container">
+
+  <div class="top-left" style="z-index: 200;">
+    <img id="eye" style="height:30%; opacity: 0;" src="img/eye.gif">
+    <span id="sous"><?php include "pull/sous.html"?></span>
+  </div>
+
   <table width="100%">
     <tr><td colspan=2><div id="outer_h1"></div></td></tr>
     <tr>

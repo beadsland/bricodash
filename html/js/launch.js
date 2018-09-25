@@ -7,10 +7,10 @@ window.onload = function() {
   position_header();
 
   setInterval(renewCam, 1000);     /*  renewCam(); */
-  setInterval(updateTime, 500);
+  setInterval(updateTime, 400);
 
-  scheduleDiv("#sous", "pull/sous.html", 1000);
-  setInterval(sousveil, 1000)
+  scheduleDiv("#sous", "pull/sous.html", 250);
+  setInterval(sousveil, 500)
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
@@ -41,8 +41,18 @@ function rebootCast() {
  Sous veil ance
  */
 function sousveil() {
-  var op = document.querySelector("#veil").getAttribute("value");
-  document.querySelector("#eye").style.opacity = op;
+  var veil = document.querySelector("#veil");
+  var eye = document.querySelector("#eye");
+  var vop = veil.getAttribute("value");
+  var eop = eye.style.opacity;
+  if (vop === localStorage.eye_opacity) {
+    if (eop > 0) {
+      eye.style.opacity = eop * .9;
+    }
+  } else {
+    eye.style.opacity = vop;
+  }
+  localStorage.eye_opacity = vop;
 }
 
 /*

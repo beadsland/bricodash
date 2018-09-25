@@ -7,5 +7,4 @@
 
   <div class="top-right"><?php include "weather.html"?></div>
   <div class="bottom-right"><span id="clock"></span></div>
-  <div class="bottom-left"><img id="eye" style="opacity: 0;" src="img/eye-10-june.gif"><span id="sous"></span></div>
 </div>

@@ -7,7 +7,7 @@ import sys
 pwd = os.path.dirname(sys.argv[0])
 pid = os.path.join(pwd, "pid")
 
-for i in range(1,120):
+for i in range(1, 240):
   list = [ f for f in os.listdir(pid) if f.startswith("l") ]
   list = [ (os.path.join(pid, f.replace("l", "c")), os.path.join(pid, f)) for f in list ]
   list = [ t for t in list if os.path.isfile(t[0]) ]
@@ -20,11 +20,11 @@ for i in range(1,120):
     if t[1] < 1.1:
       result.append( live )
     else:
-      dead = 5 / ( t[1] + .0001 )
+      dead = 2 / ( t[1] + .0001 )
       result.append( min([dead, dead * live, live]) )
 
   result = str(sum(result))
-  result = '<span id="veil" value="' + result + '">' + result + '</span>'
+  result = '<span id="veil" value="' + result + '"></span>'
   result += '<span id="timestamp" epoch="' + str(time.time()) + '"></span>'
 
   filename = os.path.join(pwd, "../../html/pull/sous.html")
@@ -34,12 +34,12 @@ for i in range(1,120):
   file.close()
   os.rename(filename + ".new", filename)
 
-  time.sleep(.5)
+  time.sleep(.25)
 
 #  time.sleep(5)
 
 for f in os.listdir(pid):
   f = os.path.join(pid, f)
-  if os.stat(f).st_mtime < time.time() - 30 * 60:
+  if os.stat(f).st_mtime < time.time() - 20 * 60:
     if os.path.isfile(f):
       os.remove(f)
