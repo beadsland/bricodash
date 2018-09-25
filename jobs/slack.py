@@ -40,7 +40,8 @@ def who(s): return "<span class='slackee'>" + s + "</span>"
 def avt(s): return "<img class='logo' src=\"" + s + "\">"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
-usrex = re.compile(r"<@([^>]+)>")
+usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
+us2ex = re.compile(r"<@([^\|>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
 imgext = ('.gif', '.jpg', '.jpeg', '.png',
@@ -88,7 +89,8 @@ for message in reversed(response.body['messages']):
 
   text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1)[:30], "…&gt;"), text)
   text = chnex.sub(lambda m: "#" + m.group(1), text)
-  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
+  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group(2))), text)
+  text = us2ex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
   text = emjex.sub(lambda m: emjlnk(m.group(1)), text)
   text = emoji_data_python.replace_colons(text)
 
