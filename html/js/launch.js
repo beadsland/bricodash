@@ -11,16 +11,16 @@ window.onload = function() {
 
 /*  scheduleDiv("#sous", "pull/sous.html", 10000); */
 
-  scheduleDiv("#slack-chat", "pull/slack.html", 30000);
+  scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
-  scheduleDiv("#space-events", "pull/space_events.html", 600000);
-  scheduleDiv("#building-events", "pull/building_events.html", 600000);
+  scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
+  scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);
   buildingCal()
 
-  scheduleDiv("#mta-widget", "pane/mta.html", 60000);
-  scheduleDiv("#wiki-edits", "pull/wiki.html", 1800000);
+  scheduleDiv("#mta-widget", "pane/mta.html", 60 * 1000);
+  scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
 
-  scheduleDiv("#random_photo", "pull/photo.html", 600000);
+  scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   peekawait();
 
   var urlParams = new URLSearchParams(window.location.search);
