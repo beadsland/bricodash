@@ -13,11 +13,15 @@ import time
 query = "http://service.mta.info/ServiceStatus/status.html?widget=yes"
 response = requests.get(query)
 if response.status_code != 200:   sys.exit(response.status_code)
-soup = BeautifulSoup(response.text, "html.parser")
 
-head = soup.find("head");
+text = response.text.replace("white", "black")
+text = text.replace("silver", "black")
+soup = BeautifulSoup(text, "html.parser")
+
+head = soup.find("head")
 base = soup.new_tag('base')
-base.attrs['href'] = "http://service.mta.info/ServiceStatus/"
+#base.attrs['href'] = "http://service.mta.info/ServiceStatus/"
+base.attrs['href'] = "../prox/"
 head.insert(0, base)
 
 outr = soup.find(id="outerDiv")
@@ -30,6 +34,13 @@ hedr = soup.find(id="headerDiv")
 hedr_style = cssutils.parseStyle(hedr.attrs['style'])
 hedr_style['top'] = "2px";
 hedr.attrs['style'] = hedr_style.cssText
+
+mtal = soup.find(id="MTAwidgetlogo")
+mtal.attrs['src'] = "widgetImages/mta_widget_logo.png"
+mtal_style = cssutils.parseStyle("")
+mtal_style['height'] = "auto";
+mtal_style['width'] = "1em";
+mtal.attrs['style'] = mtal_style.cssText
 
 cbar = soup.find(id="controlBar2")
 ##cbar_top = cssutils.parseStyle(cbar.attrs['style']).top
@@ -71,6 +82,7 @@ sdiv.attrs['style'] = sdiv_style.cssText
 _ = soup.find_all('div')[-1].extract()
 
 text = soup.encode_contents(formatter='html')
+
 #text.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 pwd = os.path.dirname(sys.argv[0])
