@@ -9,6 +9,7 @@ import sys
 geek = "cal/geek.cal"
 birth = "cal/birth.cal"
 usnat = "cal/usnat.cal"
+local = "cal/local.cal"
 
 def recur(str): return subprocess.check_output(["./recur.pl", str])
 
@@ -30,7 +31,7 @@ def parse_cal(filename):
   arr = sorted(arr)
   return arr
 
-arr = sorted( parse_cal(geek)[:3] + parse_cal(birth)[:3] + parse_cal(usnat)[:3] )
+arr = sorted( parse_cal(geek)[:3] + parse_cal(birth)[:3] + parse_cal(usnat)[:3] + parse_cal(local)[:3] )
 arr = ( { "start": t[0], "venue": "Holiday", "event": t[1] } for t in arr )
 
 holidays = list(arr)
