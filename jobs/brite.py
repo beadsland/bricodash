@@ -26,7 +26,10 @@ for page in range(1,20):
       venues[event['venue_id']] = eventbrite.get('/venues/' + event['venue_id'])
     venue = venues[event['venue_id']]
     if venue['name'] == "Offside Tavern" or venue['name'] == "Secret Loft":
-      ratpark.append( {"start": event['start']['local'], "venue": venue['name'], "event": noisy(event['name']['text'])} )
+      name = event['name']['text']
+      name = name.replace("at Secret Loft", "")
+      name = name.replace("at Offside Tavern", "")
+      ratpark.append( {"start": event['start']['local'], "venue": venue['name'], "event": noisy(name)} )
 
   if len(ratpark) > 2: break
 
