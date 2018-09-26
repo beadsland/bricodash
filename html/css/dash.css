@@ -41,6 +41,7 @@
 .logo {
   height: 1em;
   vertical-align: 0%;
+  display: inline-block;
 }
 
 .timeout-error:before {

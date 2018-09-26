@@ -4,3 +4,4 @@ cron.err
 html/next.php
 html/pull/*
 jobs/sous/pid/*
+html/thmb/*
