@@ -6,7 +6,7 @@
 window.onload = function() {
   position_header();
 
-  setInterval(renewCam, 1000);     /*  renewCam(); */
+  setInterval(renewCam, 1000);
   setInterval(updateTime, 400);
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
