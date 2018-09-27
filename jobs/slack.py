@@ -38,7 +38,7 @@ def hid(s): return "<span style='opacity: .25;'>" + s + "</span>"
 def whn(s): return "<span class='slacked'>" + s + "</span>"
 def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
-def avt(s): return "<img class='logo' src='" + s + "' alt='" + s + "'>"
+def avt(s): return "<img class='logo' src='" + s + "' alt='" + s + "' onerror=\"this.src='img/broken.png';\">"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
