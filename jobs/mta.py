@@ -14,8 +14,9 @@ query = "http://service.mta.info/ServiceStatus/status.html?widget=yes"
 response = requests.get(query)
 if response.status_code != 200:   sys.exit(response.status_code)
 
-text = response.text.replace("white", "black")
-text = text.replace("silver", "black")
+text = response.text.replace("white", "#101010")
+text = text.replace("silver", "#101010")
+
 soup = BeautifulSoup(text, "html.parser")
 
 head = soup.find("head")
@@ -23,6 +24,10 @@ base = soup.new_tag('base')
 #base.attrs['href'] = "http://service.mta.info/ServiceStatus/"
 base.attrs['href'] = "../prox/"
 head.insert(0, base)
+
+shad = soup.new_tag('style')
+shad.string = ".subwayCategory { text-shadow: 1px 1px #303030, -1px -1px #303030; }"
+head.insert(0, shad)
 
 outr = soup.find(id="outerDiv")
 #outr_style = cssutils.parseStyle(outr.attrs['style']) # no style

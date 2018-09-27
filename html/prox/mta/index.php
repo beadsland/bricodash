@@ -12,8 +12,8 @@
     $tmpFilename = $metaDatas['uri'];
     file_put_contents($tmpFilename, fopen($path, 'r'));
 
-    exec("convert " . $tmpFilename . " -fuzz 40% -fill black -floodfill +0+0 white " . $tmpFilename);
-    
+    exec("convert " . $tmpFilename . " -fuzz 40% -fill '#101010' -floodfill +0+0 white " . $tmpFilename);
+
     header('Pragma: public');
     header('Cache-Control: max-age=86400');
     header("Content-Type: image/gif");
