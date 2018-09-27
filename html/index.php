@@ -39,6 +39,7 @@
 </div>
 
 <div id="mta-widget"><?php include "pane/mta.html"?></div>
+<div id="mta-loader"><?php include "pane/mta.html"?></div>
 <div id="wiki-edits"><?php include "pull/wiki.html"?></div>
 
 <div id="bottom_row">

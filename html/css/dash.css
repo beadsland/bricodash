@@ -113,7 +113,7 @@
   position: absolute;
   bottom: -30;
   right: 0;
-  z-index: 30;
+  z-index: 100;
   background-color: black;
 }
 
@@ -280,7 +280,7 @@ table, tr, td {
   z-index: 1000;
 }
 
-.mta_iframe {
+#mta_iframe {
   width: 225;
   height: 400;
 }

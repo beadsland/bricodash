@@ -15,11 +15,12 @@ window.onload = function() {
   scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);
   buildingCal()
 
-  scheduleDiv("#mta-widget", "pane/mta.html", 60 * 1000);
   scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
 
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   peekawait();
+
+  refreshMTA()
 
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
@@ -35,6 +36,30 @@ function rebootCast() {
   oReq.onload = function() { console.log("Rebooting self."); }
   oReq.open("get", "util/recast.php", true);
   oReq.send();
+}
+
+/*
+ MTA widget
+*/
+
+function refreshMTA() {
+  var src = $("#mta-widget").find("#mta_iframe").attr("src");
+  $("#mta-loader").css('zIndex',200);
+  $("#mta-widget").css('zIndex',100);
+  $("#mta-widget").find("#mta_iframe").attr("src", src);
+  $("#mta-widget").finish().fadeIn(2000);
+  $("#mta-loader").finish().fadeOut(4000)
+  setTimeout(restoreMTA, 30000);
+}
+
+function restoreMTA() {
+  var src = $("#mta-loader").find("#mta_iframe").attr("src");
+  $("#mta-widget").css('zIndex',200);
+  $("#mta-loader").css('zIndex',100);
+  $("#mta-loader").find("#mta_iframe").attr("src", src);
+  $("#mta-loader").finish().fadeIn(2000);
+  $("#mta-widget").finish().fadeOut(4000);
+  setTimeout(refreshMTA, 30000);
 }
 
 /*
