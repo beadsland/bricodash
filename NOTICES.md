@@ -78,6 +78,12 @@ other rights such as publicity, privacy, or moral rights may limit how
 you use the material.
 
 
+## html/css/font
+
+Noto is a trademark of Google Inc. Noto fonts are open source.
+All Noto fonts are published under the SIL Open Font License, Version 1.1.
+
+
 ## html/img
 
 The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan.
