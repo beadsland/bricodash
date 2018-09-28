@@ -1,39 +1,36 @@
-/* Container holding the image and the text */
+/*
+####
+## Copyright © 2018 Beads Land-Trujillo.
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as published
+## by the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program.  If not, see <https://www.gnu.org/licenses/>.
+####
+*/
+
 .container {
     position: relative;
     text-align: center;
     color: white;
 }
 
-/* Bottom left text */
-.bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
-}
+.bottom-left, .top-left, .bottom-right, .top-right  { position: absolute; }
 
-/* Top left text */
-.top-left {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-}
+.bottom-left, .bottom-right                         { bottom: 8px; }
+.top-left, .top-right                               { top: 8px; }
 
-/* Top right text */
-.top-right {
-    position: absolute;
-    top: 8px;
-    right: 16px;
-}
+.bottom-left, .top-left                             { left: 12px; }
+.bottom-right, .top-right                           { right: 12px; }
 
-/* Bottom right text */
-.bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-}
-
-/* Centered text */
 .centered {
     position: absolute;
     top: 50%;
