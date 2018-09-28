@@ -9,6 +9,8 @@ import time
 import humanize
 import datetime
 import requests
+from resizeimage import resizeimage
+from PIL import Image
 
 pwd = os.path.dirname(sys.argv[0])
 token_file = ".keys/slacker_token"
@@ -47,7 +49,8 @@ chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
 
 def fetch_image(file, url, token):
-  headers = { "Authorization": "Bearer " + token }
+  if token is None:   headers = {}
+  else:               headers = { "Authorization": "Bearer " + token }
   response = requests.get(url, headers=headers, stream=True)
   if response.status_code != 200:   sys.exit(response.status_code);
   with open(file, 'wb') as handle:
@@ -56,22 +59,31 @@ def fetch_image(file, url, token):
 
 imgext = ('.gif', '.jpg', '.jpeg', '.png')
 
-def intlnk(u):
-  file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
-  thmb = os.path.join(pwd, "../html/thmb/")
-  fetch_image(thmb + file, u, token)
-
+def clnlnk(thmb):
   for f in os.listdir(thmb):
     f = os.path.join(thmb, f)
     if os.stat(f).st_mtime < time.time() - 20 * 60:
       if os.path.isfile(f):
         os.remove(f)
 
+def intlnk(u):
+  file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
+  thmb = os.path.join(pwd, "../html/thmb/")
+  fetch_image(thmb + file, u, token)
+  clnlnk(thmb)
   return ' ' + avt("thmb/" + file)
 
 def extlnk(o, u, c):
   if u.split("?")[0].lower().endswith(imgext) and o == "&lt;":
-    return ' ' + avt(u)
+    file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
+    thmb = os.path.join(pwd, "../html/thmb/")
+    fetch_image(thmb + file, u, token)
+    with open(thmb+file, 'r+b') as f:
+      with Image.open(f) as image:
+        small = resizeimage.resize_height(image, 32)
+        small.save(thmb + "small_" + file, image.format)
+    clnlnk(thmb)
+    return ' ' + avt("thmb/" + "small_" + file)
   else:
     if u.split("?")[0].lower().endswith(imgext) and o == "[":
       return intlnk(u)
