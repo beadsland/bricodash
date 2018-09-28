@@ -24,8 +24,6 @@ window.onload = function() {
 
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
-    setInterval(rebootCast, 6 * 60 * 60 * 1000);
-
     scheduleDiv("#sous", "pull/sous.html", 500);
     setInterval(sousveil, 500)
   }
