@@ -61,7 +61,7 @@ for p in range(1,10):
       seen.append( push["repo"]["name"] )
 
 report = sorted(report)
-report = list(s for (t,s) in report)[15:]
+report = list(s for (t,s) in report)[-10:]
 
 report.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
