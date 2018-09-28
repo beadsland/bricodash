@@ -1,6 +1,6 @@
 # Notices
 
-HackDash copyright © 2018 Beads Land-Trujillo, except where noticed below.
+Bricodash copyright © 2018 Beads Land-Trujillo, except where noticed below.
 Based on Hack Manhattan's defaultcast project.
 
 This program is free software: you can redistribute it and/or modify

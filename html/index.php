@@ -20,7 +20,7 @@
 <html>
   <head>
     <!-- meta http-equiv="refresh" content="21600" -->
-    <title>HackDash - Hackerspace Dashboard - Hack Manhattan</title>
+    <title>Bricodash — Hack Manhattan Dashboard</title>
 
     <link rel="stylesheet" type="text/css" href="css/dash.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
@@ -57,14 +57,15 @@
   </table>
 </div>
 
-<div id="mta-widget"><?php include "pane/mta.html"?></div>
-<div id="mta-loader"><?php include "pane/mta.html"?></div>
 <div id="wiki-edits"><?php include "pull/wiki.html"?></div>
+<div id="src_info">src: github.com/beadsland/bricodash</div>
 
 <div id="bottom_row">
   <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div></td>
 </div>
 
+<div id="mta-widget"><?php include "pane/mta.html"?></div>
+<div id="mta-loader"><?php include "pane/mta.html"?></div>
 
 </body>
 </html>
