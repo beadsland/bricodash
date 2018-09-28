@@ -48,6 +48,7 @@ mtal.attrs['src'] = "widgetImages/mta_widget_logo.png"
 mtal_style = cssutils.parseStyle("")
 mtal_style['height'] = "auto";
 mtal_style['width'] = "1em";
+mtal_style['display'] = "inline";
 mtal.attrs['style'] = mtal_style.cssText
 
 cbar = soup.find(id="controlBar2")
