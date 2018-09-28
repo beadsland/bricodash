@@ -19,6 +19,8 @@ text = text.replace("silver", "#101010")
 
 soup = BeautifulSoup(text, "html.parser")
 [s.extract() for s in soup('script')]
+body = soup.find("body")
+del body.attrs["onload"]
 
 head = soup.find("head")
 base = soup.new_tag('base')
