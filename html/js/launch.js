@@ -40,7 +40,7 @@ window.onload = function() {
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   peekawait();
 
-  refreshMTA()
+  refreshMTA("#mta-widget", "#mta-loader")
 
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
@@ -60,24 +60,14 @@ function rebootCast() {
  MTA widget
 */
 
-function refreshMTA() {
-  var src = $("#mta-widget").find("#mta_iframe").attr("src");
-  $("#mta-loader").css('zIndex',200);
-  $("#mta-widget").css('zIndex',100);
-  $("#mta-widget").find("#mta_iframe").attr("src", src);
-  $("#mta-widget").finish().fadeIn(2000);
-  $("#mta-loader").finish().fadeOut(4000)
-  setTimeout(restoreMTA, 30000);
-}
-
-function restoreMTA() {
-  var src = $("#mta-loader").find("#mta_iframe").attr("src");
-  $("#mta-widget").css('zIndex',200);
-  $("#mta-loader").css('zIndex',100);
-  $("#mta-loader").find("#mta_iframe").attr("src", src);
-  $("#mta-loader").finish().fadeIn(2000);
-  $("#mta-widget").finish().fadeOut(4000);
-  setTimeout(refreshMTA, 30000);
+function refreshMTA(back, fore) {
+ var src = $(fore).find("#mta_iframe").attr("src");
+ $(fore).css('zIndex',200);
+ $(back).css('zIndex',100);
+ $(back).find("#mta_iframe").attr("src", src);
+ $(back).finish().fadeIn(2000);
+ $(fore).finish().fadeOut(4000)
+ setTimeout(function() { refreshMTA(fore, back); }, 30000);
 }
 
 /*
