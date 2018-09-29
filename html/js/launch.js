@@ -98,14 +98,14 @@ function eyeball() {
  */
 
 function buildingCal() {
-  document.querySelector("#upper_left_column_alt").style.display = "block";
-  document.querySelector("#upper_left_column").style.display = "none";
+  $("#upper_left_column").hide()
+  $("#upper_left_column_alt").show()
   setTimeout(spaceCal, 1*60000)
 }
 
 function spaceCal() {
-  document.querySelector("#upper_left_column").style.display = "block";
-  document.querySelector("#upper_left_column_alt").style.display = "none";
+  $("#upper_left_column_alt").hide()
+  $("#upper_left_column").show()
   setTimeout(buildingCal, 4*60000)
 }
 
