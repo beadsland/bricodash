@@ -25,111 +25,21 @@
  */
 window.onload = function() {
   position_header();
+  sousveil()
 
   setInterval(renewCam, 60000);
   setInterval(updateTime, 500);
 
+  scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
+  scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
   scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
   scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);
   buildingCal()
 
-  scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
-
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
-  peekawait();
-
-  scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
-  
-  sousveil()
-}
-
-function rebootCast() {
-  var oReq = new XMLHttpRequest();
-  oReq.onload = function() { console.log("Rebooting self."); }
-  oReq.open("get", "util/recast.php", true);
-  oReq.send();
-}
-
-/*
- Sous veil ance
- */
- function sousveil() {
-   var urlParams = new URLSearchParams(window.location.search);
-   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
-     scheduleDiv("#sous", "pull/sous.html", 500);
-     setInterval(eyeball, 500)
-   }
- }
-
-function eyeball() {
-  var veil = document.querySelector("#veil");
-  var eye = document.querySelector("#eye");
-  var vop = veil.getAttribute("value");
-  var eop = eye.style.opacity;
-  if (vop === localStorage.eye_opacity) {
-    if (eop > 0) {
-      eye.style.opacity = eop * .9;
-    }
-  } else {
-    eye.style.opacity = vop;
-  }
-  localStorage.eye_opacity = vop;
-}
-
-/*
- Alternate between building and space calendars.
- */
-
-function buildingCal() {
-  $("#upper_left_column").hide()
-  $("#upper_left_column_alt").show()
-  setTimeout(spaceCal, 1*60000)
-}
-
-function spaceCal() {
-  $("#upper_left_column_alt").hide()
-  $("#upper_left_column").show()
-  setTimeout(buildingCal, 4*60000)
-}
-
-/*
- Show random photo
- */
-
-function peekawait() { setTimeout(peekaboo, 300000 + Math.random(600000)); }
-
-function peekaboo() {  $("#peekaboo").show(3000, peekabout); }
-
-function peekabout() { setTimeout(unpeekaboo, 2000); }
-
-function unpeekaboo() { $('#peekaboo').hide(7000, peekawait); }
-
-/*
- Position the H1
-*/
-
-function position_header() {
-  console.log($(window).width())
-
-  var h1 = "<h1>Welcome to Hack Manhattan!</h1>";
-  if ($(window).width() < 1150) {
-    document.querySelector("#inner_h1").innerHTML = "";
-    document.querySelector("#outer_h1").innerHTML = h1;
-  } else {
-    document.querySelector("#outer_h1").innerHTML = "";
-    document.querySelector("#inner_h1").innerHTML = h1;
-  }
-}
-
-/*
- Reload camera feed if broken.
-*/
-
-function renewCam() {
-  var cam = document.querySelector("#door-cam");
-  cam.src = cam.src;
+  peekawait();  
 }
 
 /*
