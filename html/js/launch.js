@@ -41,12 +41,7 @@ window.onload = function() {
   peekawait();
 
   refreshMTA("#mta-widget", "#mta-loader")
-
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
-    scheduleDiv("#sous", "pull/sous.html", 500);
-    setInterval(sousveil, 500)
-  }
+  sousveil()
 }
 
 function rebootCast() {
@@ -61,10 +56,9 @@ function rebootCast() {
 */
 
 function refreshMTA(back, fore) {
- var src = $(fore).find("#mta_iframe").attr("src");
  $(fore).css('zIndex',200);
  $(back).css('zIndex',100);
- $(back).find("#mta_iframe").attr("src", src);
+ $(back).find("#mta_iframe").attr("src", $(fore).find("#mta_iframe").attr("src"));
  $(back).finish().fadeIn(2000);
  $(fore).finish().fadeOut(4000)
  setTimeout(function() { refreshMTA(fore, back); }, 30000);
@@ -73,7 +67,15 @@ function refreshMTA(back, fore) {
 /*
  Sous veil ance
  */
-function sousveil() {
+ function sousveil() {
+   var urlParams = new URLSearchParams(window.location.search);
+   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
+     scheduleDiv("#sous", "pull/sous.html", 500);
+     setInterval(eyeball, 500)
+   }
+ }
+
+function eyeball() {
   var veil = document.querySelector("#veil");
   var eye = document.querySelector("#eye");
   var vop = veil.getAttribute("value");
