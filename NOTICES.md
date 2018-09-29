@@ -22,6 +22,22 @@ Contact info:
   @beadsland@twitter.com
 
 
+## LICENSE.md
+
+Converted to markdown by Andreas Renberg. https://github.com/IQAndreas/markdown-licenses
+
+If there is any inconsistency between the markdown formatted license and
+the license it represents, please refer to the original license for the
+correct wording.
+
+GNU Affero General Public License (AGPL) v3.0 <http://www.gnu.org/licenses/agpl-3.0.txt>
+
+Please read the licenses ahead of time to make sure they are correct,
+and use them at your own risk. Although we have strived to keep the license
+wording identical to the originals, we are not responsible for any legal
+implications caused by discrepancies in the licenses.
+
+
 ## sysd/app.py
 
 Based on https://github.com/madmod/dashcast-docker
