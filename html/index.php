@@ -75,7 +75,6 @@
 </div>
 
 <div id="mta-widget"><?php include "pull/mta.html"?></div>
-<div id="mta-loader"><?php include "pull/mta.html"?></div>
 
 </body>
 </html>

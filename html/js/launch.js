@@ -40,7 +40,8 @@ window.onload = function() {
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   peekawait();
 
-  refreshMTA("#mta-widget", "#mta-loader")
+  scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
+  
   sousveil()
 }
 
@@ -49,22 +50,6 @@ function rebootCast() {
   oReq.onload = function() { console.log("Rebooting self."); }
   oReq.open("get", "util/recast.php", true);
   oReq.send();
-}
-
-/*
- MTA widget
-*/
-
-function refreshMTA(back, fore) {
-  var f = document.querySelector(fore);
-  var b = document.querySelector(back);
-  f.style.zIndex = 200;
-  b.style.zIndex = 100;
-  updateDiv(back, "pull/mta.html", 0);
-//  b.querySelector("#mta_iframe").src = f.querySelector("#mta_iframe").src;
-  b.style.display = "block";
-  f.style.display = "none";
-  setTimeout(function() { refreshMTA(fore, back); }, 30 * 1000);
 }
 
 /*
@@ -174,9 +159,6 @@ function updateDiv(divID, pullPath, interval) {
  */
 
 function checkStale(divID, interval) {
-  if (divID === "#mta-widget") { return; }; // short circuit
-  if (divID === "#mta-loader") { return; }; // short circuit
-
   var mydiv = document.querySelector(divID);
   var e
   try {
