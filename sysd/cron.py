@@ -40,7 +40,7 @@ if 1:                os.system(pwd + "/../jobs/mta.py &")
 if min % 5 == 0:     os.system(pwd + "/../jobs/photo.py &")
 if min % 60 == 0:    os.system(pwd + "/../jobs/wiki.py &")
 
-if min == 0 and hr == 0:
+if min == 0 and hr % 12 == 0:
                      os.system(pwd + "/../jobs/cal.py &")
 if min % 60 == 0:    os.system(pwd + "/../jobs/brite.py &")
 if min % 60 == 0:    os.system(pwd + "/../jobs/cal/tober.py &")
