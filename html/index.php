@@ -22,6 +22,9 @@
     <!-- meta http-equiv="refresh" content="21600" -->
     <title>Bricodash — Hack Manhattan Dashboard</title>
 
+    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
+    <style>body { font: initial; }</style>
+
     <link rel="stylesheet" type="text/css" href="css/struct.css">
     <link rel="stylesheet" type="text/css" href="css/events.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
@@ -30,7 +33,6 @@
     <link rel="stylesheet" type="text/css" href="css/misc.css">
 
     <link rel="stylesheet" type="text/css" href="css/overlay.css">
-    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
 
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway:300,400" rel="stylesheet">
