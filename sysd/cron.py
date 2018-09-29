@@ -49,4 +49,5 @@ if min % 10 == 0:    os.system(pwd + "/../jobs/events.py &")
 if 1:                os.system(pwd + "/../jobs/sous/veil.py &")
 
 if 1:                os.system(pwd + "/../jobs/nap/upt.py &")
-if hr % 6 == 0:      os.system(pwd + "/../jobs/nap/chk.py &")
+if min == 0 and hr % 6 == 0:
+                     os.system(pwd + "/../jobs/nap/chk.py &")
