@@ -33,12 +33,12 @@ window.onload = function() {
 
   scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
   scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);
-  //buildingCal()
+  buildingCal()
 
   scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
 
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
-  //peekawait();
+  peekawait();
 
   refreshMTA("#mta-widget", "#mta-loader")
   sousveil()
@@ -98,14 +98,14 @@ function eyeball() {
  */
 
 function buildingCal() {
-  $("#upper_left_column").hide()
-  $("#upper_left_column_alt").show()
+  document.querySelector("#upper_left_column_alt").style.display = "block";
+  document.querySelector("#upper_left_column").style.display = "none";
   setTimeout(spaceCal, 1*60000)
 }
 
 function spaceCal() {
-  $("#upper_left_column_alt").hide()
-  $("#upper_left_column").show()
+  document.querySelector("#upper_left_column").style.display = "block";
+  document.querySelector("#upper_left_column_alt").style.display = "none";
   setTimeout(buildingCal, 4*60000)
 }
 
