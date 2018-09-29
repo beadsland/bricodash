@@ -1,0 +1,61 @@
+/*
+####
+## Copyright © 2018 Beads Land-Trujillo.
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as published
+## by the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with this program.  If not, see <https://www.gnu.org/licenses/>.
+####
+*/
+
+/*
+ Slack
+*/
+
+#slack_head {
+  font-size: 150%;
+  padding: 8px;
+  padding-top: 20px;
+  background: #222222;
+  width: 100%;
+  margin-right: 250px;
+  font-family: Raleway, sans-serif;
+}
+
+#slack-chat {
+  font-family: Lato, sans-serif;
+  margin-left: 250px;
+  margin-right: 250px;
+  text-align: left;
+}
+
+.slacking {
+  font-size: 150%;
+  color: #ccffcc;
+  padding-bottom: 1px;
+  padding-left: 4.75em;
+  text-indent: -4.75em;
+  overflow-wrap: break-word;
+}
+
+.slacked {
+  font-size: 80%;
+  font-style: italic;
+}
+
+.slackee {
+  font-weight: bold;
+}
+
+.slacker {
+  color: orange;
+}

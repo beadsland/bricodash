@@ -22,8 +22,13 @@
     <!-- meta http-equiv="refresh" content="21600" -->
     <title>Bricodash — Hack Manhattan Dashboard</title>
 
-    <link rel="stylesheet" type="text/css" href="css/dash.css">
+    <link rel="stylesheet" type="text/css" href="css/struct.css">
+    <link rel="stylesheet" type="text/css" href="css/events.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
+    <link rel="stylesheet" type="text/css" href="css/cloud.css">
+    <link rel="stylesheet" type="text/css" href="css/slack.css">
+    <link rel="stylesheet" type="text/css" href="css/misc.css">
+
     <link rel="stylesheet" type="text/css" href="css/overlay.css">
 
     <meta charset="UTF-8">
