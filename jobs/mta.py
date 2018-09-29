@@ -39,6 +39,11 @@ soup = BeautifulSoup(text, "html.parser")
 body = soup.find("body")
 del body.attrs["onload"]
 
+stmp = soup.findAll("td", {"class": "statusDateTime"})[0]
+stmp_style = cssutils.parseStyle("")
+stmp_style['color'] = "white";
+stmp.attrs['style'] = stmp_style.cssText
+
 head = soup.find("head")
 base = soup.new_tag('base')
 #base.attrs['href'] = "http://service.mta.info/ServiceStatus/"
