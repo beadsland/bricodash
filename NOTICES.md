@@ -105,6 +105,10 @@ All Noto fonts are published under the SIL Open Font License, Version 1.1.
 
 The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan.
 
+The Fixers Collective logo is a trademark of the Fixers' Collective.
+
+The freeCodeCamp logo and glyph are trademarks of freeCodeCamp.
+
 All product names, logos, brands, memes and other images are property of
 their respective owners. All company, product and service identifiers used
 in this application are for identification purposes only. Use of these
