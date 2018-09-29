@@ -26,6 +26,7 @@ cssutils.log.setLevel(logging.CRITICAL)
 import os
 import sys
 import time
+import re
 
 query = "http://service.mta.info/ServiceStatus/status.html?widget=yes"
 response = requests.get(query)
@@ -33,11 +34,17 @@ if response.status_code != 200:   sys.exit(response.status_code)
 
 text = response.text.replace("white", "#101010")
 text = text.replace("silver", "#101010")
+text = text.replace("widgetImages", "prox/widgetImages")
 
 soup = BeautifulSoup(text, "html.parser")
 [s.extract() for s in soup('script')]
 body = soup.find("body")
 del body.attrs["onload"]
+
+body.insert(0, soup('style')[0].extract())
+shad = soup.new_tag('style')
+shad.string = ".subwayCategory { text-shadow: 1px 1px #303030, -1px -1px #303030; }"
+body.insert(0, shad)
 
 stmp = soup.findAll("td", {"class": "statusDateTime"})[0]
 stmp_style = cssutils.parseStyle("")
@@ -47,12 +54,8 @@ stmp.attrs['style'] = stmp_style.cssText
 head = soup.find("head")
 base = soup.new_tag('base')
 #base.attrs['href'] = "http://service.mta.info/ServiceStatus/"
-base.attrs['href'] = "../prox/"
-head.insert(0, base)
-
-shad = soup.new_tag('style')
-shad.string = ".subwayCategory { text-shadow: 1px 1px #303030, -1px -1px #303030; }"
-head.insert(0, shad)
+#base.attrs['href'] = "../prox/"
+#head.insert(0, base)
 
 outr = soup.find(id="outerDiv")
 #outr_style = cssutils.parseStyle(outr.attrs['style']) # no style
@@ -66,7 +69,7 @@ hedr_style['top'] = "2px";
 hedr.attrs['style'] = hedr_style.cssText
 
 mtal = soup.find(id="MTAwidgetlogo")
-mtal.attrs['src'] = "widgetImages/mta_widget_logo.png"
+mtal.attrs['src'] = "prox/widgetImages/mta_widget_logo.png"
 mtal_style = cssutils.parseStyle("")
 mtal_style['height'] = "auto";
 mtal_style['width'] = "1em";
@@ -112,9 +115,10 @@ sdiv.attrs['style'] = sdiv_style.cssText
 
 _ = soup.find_all('div')[-1].extract()
 
-text = soup.encode_contents(formatter='html')
+text = body.encode_contents(formatter='html')
 
-#text.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
+stamp = '<span id="timestamp" epoch="' + str(time.time()) + '"></span>'
+text = text + stamp.encode('utf-8')
 
 pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/mta.html"

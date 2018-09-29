@@ -74,7 +74,7 @@ table, tr, td {
   z-index: 1000;
 }
 
-#mta_iframe {
+#mta-widget, #mta-loader {
   width: 225;
   height: 400;
 }

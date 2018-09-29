@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="css/misc.css">
 
     <link rel="stylesheet" type="text/css" href="css/overlay.css">
+    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
 
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway:300,400" rel="stylesheet">
@@ -71,8 +72,8 @@
   <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div></td>
 </div>
 
-<div id="mta-widget"><?php include "pane/mta.html"?></div>
-<div id="mta-loader"><?php include "pane/mta.html"?></div>
+<div id="mta-widget"><?php include "pull/mta.html"?></div>
+<div id="mta-loader"><?php include "pull/mta.html"?></div>
 
 </body>
 </html>

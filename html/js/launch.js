@@ -60,11 +60,11 @@ function refreshMTA(back, fore) {
   var b = document.querySelector(back);
   f.style.zIndex = 200;
   b.style.zIndex = 100;
-  //updateDiv(back, "pane/mta.html", 0);
-  b.querySelector("#mta_iframe").src = f.querySelector("#mta_iframe").src;
+  updateDiv(back, "pull/mta.html", 0);
+//  b.querySelector("#mta_iframe").src = f.querySelector("#mta_iframe").src;
   b.style.display = "block";
   f.style.display = "none";
-  setTimeout(function() { refreshMTA(fore, back); }, 10 * 60 * 1000);
+  setTimeout(function() { refreshMTA(fore, back); }, 30 * 1000);
 }
 
 /*
