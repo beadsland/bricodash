@@ -27,7 +27,7 @@ window.onload = function() {
   position_header();
 
   setInterval(renewCam, 60000);
-  setInterval(updateTime, 400);
+  setInterval(updateTime, 500);
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
 
@@ -200,24 +200,4 @@ function checkStale(divID, interval) {
     err.appendChild(ico);
     mydiv.appendChild(err);
   }
-}
-
-/*
- Clock
-*/
-
-// https://stackoverflow.com/questions/18229022/how-to-show-current-time-in-java$
-function checkTime(i) {
-  return (i < 10) ? "0" + i : i;
-}
-
-function updateTime() {
-  var today = new Date();
-  var h = checkTime(today.getHours());
-  var m = checkTime(today.getMinutes());
-  var s = checkTime(today.getSeconds());
-  h = parseInt(h % 12, 10);
-  if (h == 0) { h = 12 };
-  var str = "&thinsp;" + h + ":" + m + ":" + s + "&thinsp;";
-  document.getElementById('clock').innerHTML = str;
 }

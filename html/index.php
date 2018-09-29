@@ -36,6 +36,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/clock.js"></script>
     <script src="js/launch.js"></script>
   </head>
 <body>

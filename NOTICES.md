@@ -69,6 +69,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+## html/js/clock.js
+
+Copyright © Tushar Gupta. From https://stackoverflow.com/a/18229123
+
+Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+https://creativecommons.org/licenses/by-sa/3.0/
+
+You do not have to comply with the license for elements of the material
+in the public domain or where your use is permitted by an applicable
+exception or limitation.
+
+No warranties are given. The license may not give you all of the permissions
+necessary for your intended use. For example, other rights such as publicity,
+privacy, or moral rights may limit how you use the material.
+
+
 ## html/prox/mta
 
 MTA Service Status widget proxied from http://www.mta.info/mta-service-status-widget
