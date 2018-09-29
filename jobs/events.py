@@ -41,7 +41,11 @@ with open(filename) as f: upmeet = json.load(f)
 filename = pwd + "/../html/pull/holiday.json"
 with open(filename) as f: holiday = json.load(f)
 
-ratpark = brite + upmeet + holiday;
+filename = pwd + "/../html/pull/tober.json"
+with open(filename) as f: tober = json.load(f)
+
+
+ratpark = brite + upmeet + holiday + tober;
 
 d = datetime.date.today()
 while d.weekday() != 4:
