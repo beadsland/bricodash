@@ -40,7 +40,7 @@ window.onload = function() {
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   //peekawait();
 
-  //refreshMTA("#mta-widget", "#mta-loader")
+  refreshMTA("#mta-widget", "#mta-loader")
   sousveil()
 }
 
@@ -56,12 +56,15 @@ function rebootCast() {
 */
 
 function refreshMTA(back, fore) {
- $(fore).css('zIndex',200);
- $(back).css('zIndex',100);
- $(back).find("#mta_iframe").attr("src", $(fore).find("#mta_iframe").attr("src"));
- $(back).finish().fadeIn(2000);
- $(fore).finish().fadeOut(4000)
- setTimeout(function() { refreshMTA(fore, back); }, 30000);
+  var f = document.querySelector(fore);
+  var b = document.querySelector(back);
+  f.style.zIndex = 200;
+  b.style.zIndex = 100;
+  //updateDiv(back, "pane/mta.html", 0);
+  //b.querySelector("#mta_iframe").src = f.querySelector("#mta_iframe").src;
+  b.style.display = "block";
+  f.style.display = "none";
+  setTimeout(function() { refreshMTA(fore, back); }, 30000);
 }
 
 /*
