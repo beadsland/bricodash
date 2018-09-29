@@ -141,7 +141,6 @@ for message in reversed(response.body['messages']):
     user = avt(avatr[message['user']]) + " " + user
 
   text = message['text'];
-  print(text)
 
   if 'files' in message:
     for file in message['files']:
