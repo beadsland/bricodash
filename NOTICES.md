@@ -26,6 +26,7 @@ Contact info:
 
 Based on https://github.com/madmod/dashcast-docker
 Copyright © 2017 John Wells. Used and adapted in good faith.
+Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
 
 ## html/util/camera.php
