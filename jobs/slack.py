@@ -58,6 +58,7 @@ def whn(s): return "<span class='slacked'>" + s + "</span>"
 def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
 def avt(s): return "<img class='logo' src='" + s + "' alt='" + s + "' onerror=\"this.src='img/broken.png';\">"
+def sml(s): return "<span style='font-size: 75%'>" + s + "</span>"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
@@ -105,11 +106,8 @@ def extlnk(o, u, c):
     if u.split("?")[0].lower().endswith(imgext) and o == "[":
       return intlnk(u)
     else:
-      if len(u) < 50:
-        start = len(u) - 20
-      else:
-        start = 30
-      return ' ' + o + u[:start] + '…' + u[-20:] + c
+      if len(u) < 55:   return sml(' ' + o + u + c)
+      else:             return sml(' ' + o + u[:30] + '…' + u[-20:] + c)
 
 
 semoji = slack.emoji.list().body["emoji"];
