@@ -17,10 +17,10 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import brico.common
+import os
 from slacker import Slacker
 import re
-import os
-import sys
 import emoji_data_python
 import time
 import humanize
@@ -29,9 +29,8 @@ import requests
 from resizeimage import resizeimage
 from PIL import Image
 
-pwd = os.path.dirname(sys.argv[0])
 token_file = ".keys/slacker_token"
-with open('/'.join([pwd, token_file])) as x: token = x.read().rstrip()
+with open('/'.join([brico.common.pwd(), token_file])) as x: token = x.read().rstrip()
 slack = Slacker(token)
 channels = slack.channels.list().body['channels']
 
@@ -87,7 +86,7 @@ def clnlnk(thmb):
 
 def intlnk(u):
   file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
-  thmb = os.path.join(pwd, "../html/thmb/")
+  thmb = os.path.join(brico.common.pwd(), "../html/thmb/")
   fetch_image(thmb + file, u, token)
   clnlnk(thmb)
   return ' ' + avt("thmb/" + file)
@@ -95,7 +94,7 @@ def intlnk(u):
 def extlnk(o, u, c):
   if u.split("?")[0].lower().endswith(imgext) and o == "&lt;":
     file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
-    thmb = os.path.join(pwd, "../html/thmb/")
+    thmb = os.path.join(brico.common.pwd(), "../html/thmb/")
     fetch_image(thmb + file, u, token)
     with open(thmb+file, 'r+b') as f:
       with Image.open(f) as image:
@@ -166,7 +165,7 @@ for message in reversed(response.body['messages']):
 hist.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
 # new path
-filename = pwd + "/../html/pull/slack.html"
+filename = brico.common.pwd() + "/../html/pull/slack.html"
 file = open(filename + ".new", "wb")
 file.write( u"\n".join(hist).encode("utf-8") )
 os.rename(filename + ".new", filename)

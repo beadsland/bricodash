@@ -1,26 +1,26 @@
-cssutils>=1.0.2
-
-pipreqs>=0.4.9
-
-pip_tools>=3.0.0
-
 emoji_data_python>=1.1.0
-
-python_resize_image>=1.1.12
 
 daemonize>=2.4.7
 
 humanize>=0.5.1
-
-PyChromecast>=2.3.0
-
-dateparser>=0.7.0
 
 slacker>=0.9.65
 
 requests>=2.18.4
 
 eventbrite>=3.3.3
+
+PyChromecast>=2.3.0
+
+dateparser>=0.7.0
+
+pip_tools>=3.0.0
+
+cssutils>=1.0.2
+
+python_resize_image>=1.1.12
+
+pipreqs>=0.4.9
 
 Pillow>=5.2.0
 
