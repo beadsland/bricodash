@@ -48,8 +48,8 @@ Developed for use under Chromecast or a single-board computer running Chromium. 
 * store keys for various scripts under jobs/.keys
 * set up a dedicated group including both your cron user and www-data
 * create subdirs owned by said group allowing g+w permissions:
- * html/pull
- * html/thmb
- * jobs/nap/sid
- * jobs/sous/pid
+  - html/pull
+  - html/thmb
+  - jobs/nap/sid
+  - jobs/sous/pid
 * configure html/util/camera.php to point to your local camera MJPG camera devices, as appropriate
