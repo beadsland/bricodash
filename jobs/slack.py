@@ -28,8 +28,10 @@ import requests
 from resizeimage import resizeimage
 from PIL import Image
 import os
+import time
 
-slack = Slacker( brico.common.get_token("slacker_token") )
+token = brico.common.get_token("slacker_token")
+slack = Slacker( token )
 channels = slack.channels.list().body['channels']
 
 names = { user['id']: (user['profile']['display_name'], user['name'])
