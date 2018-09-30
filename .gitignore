@@ -6,3 +6,4 @@ html/pull/*
 jobs/sous/pid/*
 jobs/nap/sid/*
 html/thmb/*
+*.bak

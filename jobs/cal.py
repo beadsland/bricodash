@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 ####
 ## Copyright © 2018 Beads Land-Trujillo.
@@ -38,11 +37,11 @@ def parse_cal(filename):
   with open(filename, "rb") as f:
     for line in f.readlines():
       if line.strip() != "":
-        spl = line.strip().split("::")
+        spl = line.strip().decode().split("::")
         if len(spl) > 2 and spl[2].strip() != "":
           full = "%s %s" % (spl[1], emoji(spl[2].strip()))
           arr.append( (spl[0], full) )
-        else:
+        elif len(spl) > 1:
           arr.append( (spl[0], spl[1]) )
 
   arr = (( recur(t[0]), t[1].strip() ) for t in arr)
@@ -50,7 +49,7 @@ def parse_cal(filename):
   return arr
 
 arr = sorted( parse_cal(geek)[:3] + parse_cal(birth)[:3] + parse_cal(usnat)[:3] + parse_cal(local)[:3] )
-arr = ( { "start": t[0], "venue": "Holiday", "event": t[1] } for t in arr )
+arr = ( { "start": t[0].decode('utf-8'), "venue": "Holiday", "event": t[1].encode().decode('utf-8') } for t in arr )
 
 holidays = list(arr)
 

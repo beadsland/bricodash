@@ -1,0 +1,9 @@
+{
+    "prereqs" : {
+        "configure" : {
+            "requires" : {
+                "Date::Manip" : "6.72"
+            }
+        },
+    },
+}
