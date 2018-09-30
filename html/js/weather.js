@@ -22,12 +22,12 @@
 // v3.1.0
 //Docs at http://simpleweatherjs.com
 
-$(document).ready(function() {
+function launch_weather() {
   getWeather(); //Get the initial weather.
   setInterval(getWeather, 600000); //Update the weather every 10 minutes.
   toggleTemp();
   setInterval(toggleTemp, 5000);
-});
+}
 
 
 function toggleTemp() {

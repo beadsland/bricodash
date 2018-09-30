@@ -29,6 +29,7 @@ window.onload = function() {
 
   setInterval(renewCam, 60000);
   setInterval(updateTime, 500);
+  launch_weather();
 
   scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
   scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
@@ -39,8 +40,9 @@ window.onload = function() {
   buildingCal()
 
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
-  peekawait();  
+  peekawait();
 }
+
 
 /*
  Load a text file from server.
