@@ -18,20 +18,18 @@
 ####
 
 import brico.common
-import os
 from slacker import Slacker
+
 import re
 import emoji_data_python
-import time
 import humanize
 import datetime
 import requests
 from resizeimage import resizeimage
 from PIL import Image
+import os
 
-token_file = ".keys/slacker_token"
-with open('/'.join([brico.common.pwd(), token_file])) as x: token = x.read().rstrip()
-slack = Slacker(token)
+slack = Slacker( brico.common.get_token("slacker_token") )
 channels = slack.channels.list().body['channels']
 
 names = { user['id']: (user['profile']['display_name'], user['name'])
@@ -162,10 +160,4 @@ for message in reversed(response.body['messages']):
     lstwho = user
     hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
 
-hist.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
-
-# new path
-filename = brico.common.pwd() + "/../html/pull/slack.html"
-file = open(filename + ".new", "wb")
-file.write( u"\n".join(hist).encode("utf-8") )
-os.rename(filename + ".new", filename)
+brico.common.write_pull( "slack.html", hist )

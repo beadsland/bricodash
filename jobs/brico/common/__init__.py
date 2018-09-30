@@ -20,6 +20,21 @@
 from brico.common.memoize import memoized
 import os
 import sys
+import time
 
 @memoized
-def pwd():   return os.path.dirname(sys.argv[0])
+def pwd():      return os.path.dirname(sys.argv[0])
+
+@memoized
+def get_token(keyfile):
+  with open( os.path.join( pwd(), ".keys", keyfile ) ) as x:
+    return x.read().rstrip()
+
+def write_pull(filename, list):
+  filename = os.path.join( pwd(), "../html/pull", filename )
+  list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
+
+  file = open(filename + ".new", "wb")
+  file.write( u"\n".join(list).encode("utf-8") )
+  file.close()
+  os.rename(filename + ".new", filename)
