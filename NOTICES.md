@@ -72,7 +72,6 @@ SOFTWARE.
 ## html/js/clock.js
 
 Copyright © Tushar Gupta. From https://stackoverflow.com/a/18229123
-
 Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 https://creativecommons.org/licenses/by-sa/3.0/
 
@@ -89,7 +88,6 @@ privacy, or moral rights may limit how you use the material.
 
 Copyright (c) ~2017 by unknown wiki contributor.
 https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize
-
 Used under GNU General Public License, version 2 (short: GNU GPLv2 or simply GPLv2)
 http://www.gnu.org/licenses/gpl-2.0.html
 
