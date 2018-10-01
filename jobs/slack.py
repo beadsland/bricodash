@@ -57,7 +57,7 @@ def whn(s): return "<span class='slacked'>" + s + "</span>"
 def usp(s): return "<span class='slacker'>@" + s + "</span>"
 def chn(s): return "<span class='slackchan'>#" + s + "</span>"
 def who(s): return "<span class='slackee'>" + s + "</span>"
-def avt(s): return "<img class='logo' src='" + s + "' alt='" + s + "' onerror=\"this.src='img/broken.png';\">"
+def avt(s): return "<img class='logo' src='" + s + "'>"
 def sml(s): return "<span style='font-size: 75%'>" + s + "</span>"
 
 emjex = re.compile(r":([A-Za-z\-_]+):")

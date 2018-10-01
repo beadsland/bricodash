@@ -49,8 +49,18 @@ window.onload = function() {
 */
 
 function scheduleDiv(divID, pullPath, interval) {
+  document.querySelector(divID).addEventListener('error', fixImage, true);
   updateDiv(divID, pullPath, interval);
   setInterval(function() { updateDiv(divID, pullPath, interval); }, interval);
+}
+
+/* Chrome disregards padding-left if inline image errors out rather than load.
+   When image is within a hanging-indented span, the broken image icon is
+   displaced to the left of where it is supposed to be. We fix this by
+   giving the IMG tag a valid image to display, thereby forcing Chrome
+   to again pay attention to padding-left. */
+function fixImage(event) {
+  if( event.target.tagName == 'IMG') { event.target.src = "img/broken.png"; }
 }
 
 function updateDiv(divID, pullPath, interval) {
@@ -58,7 +68,8 @@ function updateDiv(divID, pullPath, interval) {
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200 && xhttp.response.length > 0) {
-      document.querySelector(divID).innerHTML = xhttp.response;
+      var div = document.querySelector(divID);
+      div.innerHTML = xhttp.response;
       checkStale(divID, interval);
     };
   }

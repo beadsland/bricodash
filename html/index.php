@@ -44,6 +44,7 @@
     <script src="js/clock.js"></script>
     <script src="js/sous.js"></script>
     <script src="js/apps.js"></script>
+    <script src="js/broken.js"></script>
     <script src="js/launch.js"></script>
   </head>
 <body>
