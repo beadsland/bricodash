@@ -15,14 +15,14 @@
 ##
 ## You should have received a copy of the GNU Affero General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#### 
+####
 
 import pipreqs
 import piptools
 import os
 import fileinput
 
-os.system("pipreqs . --savepath requirements.in")
+os.system("pipreqs . --savepath requirements.in --use-local")
 
 for line in fileinput.input(files=["requirements.in"], inplace=True, backup='.bak'):
   print(line.replace("==", ">="))
