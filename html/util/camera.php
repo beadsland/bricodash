@@ -95,7 +95,7 @@ function do_stream($mjpeg_url) {
   } else {
   	// error: webcam probably offline
   	// send alternative picture:
-  	$d = file_get_contents("webcam_offline.jpg");
+  	$d = file_get_contents("../img/ceilingcat.jpg");
   	Header("Content-Type: image/jpeg");
   	Header("Content-Length: ".strlen($d));
   	header("Cache-Control: no-cache");
