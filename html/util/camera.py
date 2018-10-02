@@ -27,6 +27,8 @@ import sys
 import requests
 import time
 import logging
+from PIL import Image
+import io
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -65,8 +67,23 @@ def snap():
   if response.status_code != 200:   sys.exit(response.status_code);
 
   sys.stdout.flush()
+
+#  for block in response.iter_content(1024):
+#    sys.stdout.buffer.write(block)
+  bstr = b''
   for block in response.iter_content(1024):
-    sys.stdout.buffer.write(block)
+    bstr += block
+  img = Image.open(io.BytesIO(bstr))
+  try:
+    img.getpixel( (img.width-1, img.height-1) )
+  except Exception as e:
+    if str(e).startswith("broken data stream"):
+      logging.error(e)
+      snap()
+    else:
+      sys.stdout.buffer.write(bstr)
+  else:
+    sys.stdout.buffer.write(bstr)
 
 boundary = '--SNAP-HACKLE-STOP--'
 
@@ -84,7 +101,7 @@ elif action == "stream":
   print('Pragma: no-cache')
   while 1:
     time.sleep(.1)
-    logger.info(time.time())
+#    logger.info(time.time())
     handler.flush()
     print("")
     print(boundary)
