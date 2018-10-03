@@ -18,7 +18,7 @@
 ####
 
 import brico.common
-from slacker import Slacker
+import brico.slack
 
 import re
 import emoji_data_python
@@ -31,25 +31,14 @@ import os
 import time
 
 token = brico.common.get_token("slacker_token")
-slack = Slacker( token )
-channels = slack.channels.list().body['channels']
+slack = brico.slack.Slack( token )
 
-names = { user['id']: (user['profile']['display_name'], user['name'])
-	  for user in slack.users.list().body['members'] }
-avatr = { user['id']: user['profile']['image_32']
-    for user in slack.users.list().body['members'] }
-for id in names:
-  if names[id][0] == "":          names[id] = names[id][1]
-  else:                           names[id] = names[id][0]
+names = slack.names()
+avatr = slack.avatars()
+channel = slack.channels()['hackerspace']
 
-for channel in channels:
-  if channel['name'] == 'hackerspace':
-    break
-
-response = slack.channels.history(channel = channel['id'],
-                                  latest = None,
-                                  oldest = 0,
-                                  count = 11)
+response = slack.history(channel = channel['id'], latest = None,
+                         oldest = 0, count = 11)
 
 def div(s): return "<div class='slacking'>" + s + "</div>"
 def hid(s): return "<span style='opacity: .25;'>" + s + "</span>"
@@ -110,7 +99,7 @@ def extlnk(o, u, c):
       else:             return sml(' ' + o + u[:30] + '…' + u[-20:] + c)
 
 
-semoji = slack.emoji.list().body["emoji"];
+semoji = slack.emoji()
 def emjlnk(name):
   if name in semoji:
     if semoji[name].startswith("alias:"):

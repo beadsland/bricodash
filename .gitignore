@@ -9,3 +9,4 @@ html/thmb/
 *.bak
 __pycache__/
 *.log
+*-dev.py
