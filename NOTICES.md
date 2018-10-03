@@ -134,8 +134,24 @@ you use the material.
 
 ## html/css/font
 
-Noto is a trademark of Google Inc. Noto fonts are open source.
+Lato copyright © 2010-2014 by tyPoland Lukasz Dziedzic (team@latofonts.com).
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+http://scripts.sil.org/OFL
+
+Merriweather copyright © 2016 The Merriweather Project Authors <https://github.com/EbenSorkin/Merriweather>.
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+http://scripts.sil.org/OFL
+
+Noto is a trademark of Google Inc. Copyright © 2012 Google Inc.
+Noto fonts are open source.
 All Noto fonts are published under the SIL Open Font License, Version 1.1.
+http://scripts.sil.org/OFL
+
+Raleway copyright © 2010, Matt McInerney (matt@pixelspread.com),
+Copyright (c) 2011, Pablo Impallari (www.impallari.com|impallari@gmail.com),
+Copyright (c) 2011, Rodrigo Fuenzalida (www.rfuenzalida.com|hello@rfuenzalida.com).
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+http://scripts.sil.org/OFL
 
 
 ## html/img

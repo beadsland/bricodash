@@ -22,21 +22,18 @@
     <!-- meta http-equiv="refresh" content="21600" -->
     <title>Bricodash — Hack Manhattan Dashboard</title>
 
-    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
-    <style>body { font: initial; }</style>
-
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/struct.css">
     <link rel="stylesheet" type="text/css" href="css/events.css">
     <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/cloud.css">
     <link rel="stylesheet" type="text/css" href="css/slack.css">
     <link rel="stylesheet" type="text/css" href="css/misc.css">
-
     <link rel="stylesheet" type="text/css" href="css/overlay.css">
 
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway:300,400" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
+    <style>body { font: initial; }</style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>

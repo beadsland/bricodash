@@ -46,11 +46,6 @@
  Emoji and icons
 */
 
-@font-face {
- font-family: "NotoEmoji";
- src: url('font/NotoColorEmoji.ttf')  format('truetype');
-}
-
 .emoji {
   font-family: NotoEmoji;
   vertical-align: 10%;
