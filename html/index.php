@@ -19,7 +19,14 @@
 
 <html>
   <head>
-    <!-- meta http-equiv="refresh" content="21600" -->
+    <?php
+      $pref = '192.168';
+      if (strrpos($_SERVER['REMOTE_ADDR'], $pref) === 0) {
+        print '<base href="http://' . $_SERVER['SERVER_ADDR']
+                                    . $_SERVER['REQUEST_URI'] . '">';
+      }
+    ?>
+
     <title>Bricodash — Hack Manhattan Dashboard</title>
 
     <meta charset="UTF-8">

@@ -32,7 +32,7 @@ browser to poll for those files as needed.
 
 **Dependencies:**
 
-* Apache2 + cgid mod enabled
+* Apache2 + mods cgid and headers enabled
 * systemd
 * python3 + [requirements.txt](requirements.txt)
 * Perl + Date::Manip
