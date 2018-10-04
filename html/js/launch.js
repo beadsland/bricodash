@@ -70,8 +70,8 @@ function updateDiv(divID, pullPath, interval) {
     if (this.readyState == 4 && this.status == 200 && xhttp.response.length > 0) {
       var div = document.querySelector(divID);
       div.innerHTML = xhttp.response;
-      checkStale(divID, interval);
     };
+    checkStale(divID, interval);
   }
   xhttp.open("GET", pullPath, true);
   xhttp.send();
