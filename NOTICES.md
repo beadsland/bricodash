@@ -1,5 +1,26 @@
 # Notices
 
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Notices](#notices)
+	- [bricodash](#bricodash)
+	- [Software](#software)
+		- [LICENSE.md](#licensemd)
+		- [sysd/app.py](#sysdapppy)
+		- [html/util/camera.php](#htmlutilcameraphp)
+		- [html/js/clock.js](#htmljsclockjs)
+		- [jobs/brico/common/memoize.py](#jobsbricocommonmemoizepy)
+	- [Assets](#assets)
+		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
+		- [html/prox/mta](#htmlproxmta)
+		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
+		- [html/css/font](#htmlcssfont)
+		- [html/img](#htmlimg)
+
+<!-- /TOC -->
+
+## bricodash
+
 Bricodash copyright © 2018 Beads Land-Trujillo, except where noticed below.
 Based on Hack Manhattan's defaultcast project.
 
@@ -22,7 +43,9 @@ Contact info:
 * @beadsland@twitter.com
 
 
-## LICENSE.md
+## Software
+
+### LICENSE.md
 
 Converted to markdown by Andreas Renberg.
 https://github.com/IQAndreas/markdown-licenses
@@ -40,14 +63,14 @@ wording identical to the originals, we are not responsible for any legal
 implications caused by discrepancies in the licenses.
 
 
-## sysd/app.py
+### sysd/app.py
 
 Based on <https://github.com/madmod/dashcast-docker>.
 Copyright © 2017 John Wells. Used and adapted in good faith.
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
 
-## html/util/camera.php
+### html/util/camera.php
 
 Adapted from <https://github.com/simonwalz/php-mjpeg-proxy>.
 Copyright © 2017 Simon Walz. Used under MIT License.
@@ -71,7 +94,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## html/js/clock.js
+### html/js/clock.js
 
 Copyright © Tushar Gupta, via <https://stackoverflow.com/a/18229123>.
 Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
@@ -86,7 +109,7 @@ necessary for your intended use. For example, other rights such as publicity,
 privacy, or moral rights may limit how you use the material.
 
 
-## jobs/brico/common/memoize.py
+### jobs/brico/common/memoize.py
 
 Copyright (c) ~2017 by unknown wiki contributor, via
 <https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize>.
@@ -108,7 +131,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-## jobs/brico/weather/open.py
+## Assets
+
+### jobs/brico/weather/open.py
 
 Weather condition icons copyright © 2012-2018 OpenWeather.
 Icons and API used under Attribution-ShareAlike 4.0 International
@@ -124,7 +149,7 @@ rights such as publicity, privacy, or moral rights may limit how
 you use the material.
 
 
-## html/prox/mta
+### html/prox/mta
 
 MTA Service Status widget proxied from
 <http://www.mta.info/mta-service-status-widget>.  
@@ -137,7 +162,7 @@ as provided within the MTA's Service Status widget.
 Use of these names, logos, icons and brands does not imply endorsement.
 
 
-## html/img/flickr_nalends_super_pop.png
+### html/img/flickr_nalends_super_pop.png
 
 Super Pop B-Pop <https://www.flickr.com/photos/130475615@N06/17177586749>
 copyright © 2015 nalends @ Flickr. Transparency added.
@@ -152,7 +177,7 @@ other rights such as publicity, privacy, or moral rights may limit how
 you use the material.
 
 
-## html/css/font
+### html/css/font
 
 Lato copyright © 2010-2014 by tyPoland Lukasz Dziedzic (team@latofonts.com).
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
@@ -175,7 +200,7 @@ This Font Software is licensed under the SIL Open Font License, Version 1.1.
 http://scripts.sil.org/OFL
 
 
-## html/img
+### html/img
 
 The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan.
 
