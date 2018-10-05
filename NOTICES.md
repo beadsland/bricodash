@@ -117,9 +117,9 @@ the MTA's Service Status widget.
 Use of these names, logos, icons and brands does not imply endorsement.
 
 
-## html/img/flickr_nalends_super_pop
+## html/img/flickr_nalends_super_pop.png
 
-Super Pop B-Pop <https://www.flickr.com/photos/130475615@N06/17177586749>
+Super Pop B-Pop https://www.flickr.com/photos/130475615@N06/17177586749
 copyright © 2015 nalends @ Flickr.
 Used under a Attribution-NoDerivs 2.0 Generic (CC BY-ND 2.0) license.
 https://creativecommons.org/licenses/by-nd/2.0/ Transparency added.
@@ -138,7 +138,8 @@ Lato copyright © 2010-2014 by tyPoland Lukasz Dziedzic (team@latofonts.com).
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 http://scripts.sil.org/OFL
 
-Merriweather copyright © 2016 The Merriweather Project Authors <https://github.com/EbenSorkin/Merriweather>.
+Merriweather copyright © 2016 The Merriweather Project Authors
+https://github.com/EbenSorkin/Merriweather.
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 http://scripts.sil.org/OFL
 
@@ -162,7 +163,7 @@ The Fixers Collective logo is a trademark of the Fixers' Collective.
 
 The freeCodeCamp logo and glyph are trademarks of freeCodeCamp.
 
-All product names, logos, brands, memes and other images are property of
+All product names, logos, brands, emoji glyphs, memes and other images are property of
 their respective owners. All company, product and service identifiers used
 in this application are for identification purposes only. Use of these
 names, logos, and brands does not imply endorsement.
