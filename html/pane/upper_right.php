@@ -25,5 +25,5 @@
 
   <div class="top-right"><?php include "weather.html"?></div>
   <div class="bottom-right"><span id="clock"></span></div>
-  <div class="bottom-left"><span id="diagnostics"></span></div>
+  <div class="bottom-left"><span id="diagnostics" style="color: red;"></span></div>
 </div>

@@ -19,44 +19,20 @@ from brico.common.memoize import memoized
 import os
 import sys
 import time
-import urllib.parse
-import requests
-import json
 
 @memoized
 def pwd():      return os.path.dirname(sys.argv[0])
 
-###
-# API access
-###
 @memoized
 def get_token(keyfile):
   with open( os.path.join( pwd(), ".keys", keyfile ) ) as x:
     return x.read().rstrip()
 
-def get_result(path, params, token):
-  question = "&".join([ urllib.parse.urlencode(params), token ])
-  response = requests.get( "?".join([path, question]) )
-  if response.status_code != 200:   sys.exit(response.status_code);
-  return response
-
-###
-# File operations
-###
 def write_pull(filename, list):
   filename = os.path.join( pwd(), "../html/pull", filename )
   list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
   file = open(filename + ".new", "wb")
   file.write( u"\n".join(list).encode("utf-8") )
-  file.close()
-  os.rename(filename + ".new", filename)
-
-def write_json(filename, dict):
-  filename = os.path.join( pwd(), "../html/pull", filename )
-  dict['epoch'] = str(time.time())
-
-  file = open(filename + ".new", "w")
-  file.write( json.dumps(dict) )
   file.close()
   os.rename(filename + ".new", filename)

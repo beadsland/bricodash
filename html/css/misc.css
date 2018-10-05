@@ -73,7 +73,7 @@
 .timeout-error:before {
   content: "⚠️";
   font-family: NotoEmoji;
-  font-size: 300%;
+  font-size: 30px;
   opacity: 0.25;
 }
 

@@ -17,10 +17,33 @@
 ####
 -->
 
-<span id="weather">
-  <span id="weather-condn"></span>
-  <span id="weather-ftemp"></span>
-  <span id="weather-ctemp"></span>
-  <span id="weather-hindx"></span>
-  <span id="weather-humid"></span>
-</span>
+<div id="weather">
+  <span id="condn"></span>
+  <span id="weather-ftemp" style="display: none;">
+    <span id="tempf"></span><span class="degrees">℉</span>
+  </span>
+  <span id="weather-ctemp" style="display: none;">
+    <span id="tempc"></span><span class="degrees">℃</span>
+  </span>
+  <span id="weather-index" style="display: none;">
+    <span class="emoji"><img src="img/ggl-hot-face.png"
+      style="height: .8em;"></span><span id="index"></span><span
+      class="degrees">℉</span>
+  </span>
+  <span id="weather-humid" style="display: none;">
+    <span id="humid"></span><span class="degrees">%</span><span
+      class="emoji" id="humoji"></span>
+  </span>
+  <span id="weather-chill" style="display: none;">
+    <span class="emoji"><img src="img/ggl-cld-face.png"
+      style="height: .8em;"></span><span id="chill"></span><span
+      class="degrees">℉</span>
+  </span>
+  <span id="weather-winds" style="display: none;">
+    <span id="winds"></span><span class="mphs">mph</span><span
+      class="emoji" id="winoji"></span>
+  </span>
+  <span id="timestamp" epoch="">
+    <span id="epoch" style="display: none;"</span>
+  </span>
+</div>

@@ -67,7 +67,8 @@ function updateDiv(divID, pullPath, interval) {
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200 && xhttp.response.length > 0) {
+    if (this.readyState == 4 && this.status == 200 && 
+                                              xhttp.response.length > 0) {
       var div = document.querySelector(divID);
       div.innerHTML = xhttp.response;
     };
@@ -91,7 +92,6 @@ function checkStale(divID, interval) {
   }
 
   var elapsed = new Date() / 1000 - e;
-
   if (elapsed > (interval / 1000 * 2)) {
     var err = document.createElement("div");
     err.className = "centered";
@@ -99,5 +99,13 @@ function checkStale(divID, interval) {
     ico.className = "timeout-error";
     err.appendChild(ico);
     mydiv.appendChild(err);
+  }
+}
+
+function removeStale(divID) {
+  var mydiv = document.querySelector(divID);
+  var err = mydiv.querySelector(".centered");
+  if (typeof err !== 'undefined' && err !== null) {
+    err.remove()
   }
 }

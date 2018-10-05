@@ -1,4 +1,5 @@
-/*
+#!/usr/bin/env python3
+
 ####
 ## Copyright © 2018 Beads Land-Trujillo.
 ##
@@ -15,41 +16,23 @@
 ## You should have received a copy of the GNU Affero General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
-*/
 
-/*
-  Docs at http://http://simpleweatherjs.com
-*/
+import datetime
+import brico.common
+import brico.weather.open
+#import brico.weather.dark
+#import brico.weather.accu
+#import brico.weather.mashup
 
-#weather {
-  font-family: Raleway, sans-serif;
-  color: #fff;
-  font-size: 225%;
-  font-weight: bold;
-  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+coord = (40.7383652,-73.9983442)
+zipcd = 10011
 
-  text-transform: uppercase;
+min = datetime.datetime.now().minute
 
-  margin: 0 0 8px;
-  padding-left: .2em;
-  padding-right: .3em;
-  padding-bottom: .1em;
-  background-color: #111111;
-}
+if 1:                 w = brico.weather.open.poll(zipcd)
+#if min % 2:           brico.weather.dark.poll(coord)
+#if min % 30:          brico.weather.accu.poll(coord)
 
-.degrees {
-  font-size: 80%;
-}
+#weather.mashup.update()
 
-.mphs {
-  font-size: 35%;
-  letter-spacing: -1px;
-}
-
-.condn {
-  margin: 0;
-  padding: 0;
-  height: 1em;
-  vertical-align: baseline;
-  margin-right: -.3em;
-}
+brico.common.write_json("weather.json", w)

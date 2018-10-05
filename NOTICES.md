@@ -106,6 +106,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
+## jobs/brico/weather.open.py
+
+Weather condition icons and API copyright © 2012-2018 OpenWeather.
+Used under Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+https://creativecommons.org/licenses/by-sa/4.0/
+
+You do not have to comply with the license for elements of the
+material in the public domain or where your use is permitted by
+an applicable exception or limitation.
+
+No warranties are given. The license may not give you all of the
+permissions necessary for your intended use. For example, other
+rights such as publicity, privacy, or moral rights may limit how
+you use the material.
+
+
 ## html/prox/mta
 
 MTA Service Status widget proxied from http://www.mta.info/mta-service-status-widget

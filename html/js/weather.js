@@ -23,72 +23,68 @@
 //Docs at http://simpleweatherjs.com
 
 function launch_weather() {
-  getWeather(); //Get the initial weather.
-  setInterval(getWeather, 600000); //Update the weather every 10 minutes.
   toggleTemp();
-  setInterval(toggleTemp, 5000);
+  setInterval(toggleTemp, 5000)
+  pollWeather();
+  setInterval(pollWeather, 30 * 1000);
 }
 
+function pollWeather() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.responseType = "json";
+  xhttp.onreadystatechange = function() {
+    removeStale("#weather");
+    if (this.readyState == 4 && this.status == 200
+                                            && 'tempf' in xhttp.response) {
+      var w = xhttp.response;
+      var div = document.querySelector("#weather");
+
+      for (var key in xhttp.response) {
+        div.querySelector("#"+key).innerHTML = w[key]
+      };
+      div.querySelector("#winds").innerHTML = Math.round(w.winds);
+      div.querySelector("#winoji").innerHTML = feeloji("🍃", w.winds/15*100);
+      div.querySelector("#humoji").innerHTML = feeloji("💦", w.humid);
+      div.querySelector("#timestamp").setAttribute("epoch", w.epoch);
+    };
+    checkStale("#weather", 30 * 1000);
+  }
+  xhttp.open("GET", "pull/weather.json", true);
+  xhttp.send();
+}
+
+function feeloji(str, percent) {
+  return '<span style="font-size: ' + percent + '%;">' + str + '</span>'
+}
 
 function toggleTemp() {
+  var div = document.querySelector("#weather");
+
   if ( $("#weather-ftemp").is(":visible") ) {
     $("#weather-ftemp").hide();
     $("#weather-ctemp").show();
 
-    $("#weather-hindx").hide();
-    $("#weather-humid").show();
+    $("#weather-index").hide();
+    if (div.querySelector("#tempf").innerHTML > 70) {
+      $("#weather-humid").show();
+    };
+
+    $("#weather-chill").hide();
+    if (div.querySelector("#tempf").innerHTML <= 70) {
+      $("#weather-winds").show();
+    };
   } else {
     $("#weather-ctemp").hide();
     $("#weather-ftemp").show();
 
-    if (localStorage.tempF < localStorage.feelsF) {
+    if (div.querySelector("#tempf").innerHTML
+                                < div.querySelector("#index").innerHTML) {
       $("#weather-humid").hide();
-      $("#weather-hindx").show();
-    }
+      $("#weather-index").show();
+    } else if (div.querySelector("#tempf").innerHTML
+                                > div.querySelector("#chill").innerHTML) {
+      $("#weather-winds").hide();
+      $("#weather-chill").show();
+    };
   }
-}
-
-function span(str, cls, id) {
-  if (id !== undefined) {
-    return '<span class="' + cls + '" id="' + id + '">' + str + '</span>'
-  } else {
-    return '<span class="' + cls + '">' + str + '</span>'
-  }
-}
-
-function hspan(str, percent) {
-  return '<span style="font-size: ' + percent + '%;">' + str + '</span>'
-}
-
-function getWeather() {
-  var hotmoji = '<img src="img/ggl-hot-face.png" style="height: .8em;">';
-
-  $.simpleWeather({
-    location: '10011',
-    woeid: '',
-    unit: 'f',
-    success: function(weather) {
-      document.querySelector("#weather-condn").innerHTML =
-                            span("", "emoji", "moon-" + weather.code) +
-                            span("", "emoji", "icon-" + weather.code);
-
-      localStorage.tempF = weather.temp + span("℉", "degrees");
-      localStorage.tempC = weather.alt.temp + span("℃", "degrees");
-      document.querySelector("#weather-ftemp").innerHTML = localStorage.tempF;
-      document.querySelector("#weather-ctemp").innerHTML = localStorage.tempC;
-
-      localStorage.humid = weather.humidity + span("%", "degrees") +
-                            hspan(span("💦", "emoji"), weather.humidity);
-      document.querySelector("#weather-humid").innerHTML = localStorage.humid;
-
-      localStorage.feelsF = weather.heatindex + span("℉", "degrees");
-      document.querySelector("#weather-hindx").innerHTML = hotmoji +
-                                                           localStorage.feelsF;
-
-      toggleTemp()
-    },
-    error: function(error) {
-      $("#weather").html('<p>'+error+'</p>');
-    }
-  });
 }
