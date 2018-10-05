@@ -56,5 +56,5 @@ holidays = list(arr)
 pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/holiday.json"
 file = open(filename + ".new", "w")
-file.write( json.dumps(holidays) )
+file.write( json.dumps(holidays[:4]) )
 os.rename(filename + ".new", filename)
