@@ -22,6 +22,7 @@ import sys
 import requests
 import json
 import dateutil.parser
+import re
 
 pwd = os.path.dirname(sys.argv[0])
 sig_file = "../.keys/meetup_hacktoberfest"
@@ -48,9 +49,10 @@ events = events + result['events']
 
 def logoit(l): return '<img class="logo" src="' + l + '">'
 def dateit(e): return " ".join([ e['local_date'], e['local_time'] ])
-def nameit(e): return u" ".join([ e['name'], " ", logoit("img/tober.png"),
-                                  " (", e['group']['name'], " ",
-                                  logoit("img/meetup.png") + ")" ])
+def nameit(e): return u"".join([ e['name'].strip(), " ",
+                                 logoit("img/tober.png"), " (",
+                                 e['group']['name'].strip(), " ",
+                                 logoit("img/meetup.png") + ")" ])
 
 events = [ { "start": dateit(e), "event": nameit(e), "venue": "Holiday" } for e in events ]
 events = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"]) for e in events ]
