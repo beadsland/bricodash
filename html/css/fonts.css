@@ -40,3 +40,8 @@
  font-family: "NotoEmoji";
  src: url('font/Noto/NotoColorEmoji.ttf')  format('truetype');
 }
+
+@font-face {
+ font-family: "RalewayThin";
+ src: url('font/Raleway/Raleway-Thin.ttf')  format('truetype');
+}

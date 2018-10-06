@@ -42,8 +42,9 @@ function pollWeather() {
       for (var key in xhttp.response) {
         div.querySelector("#"+key).innerHTML = w[key]
       };
+
       div.querySelector("#winds").innerHTML = Math.round(w.winds);
-      div.querySelector("#winoji").innerHTML = feeloji("🍃", w.winds/15*100);
+      div.querySelector("#winoji").innerHTML = windscale(w.winds);
       div.querySelector("#humoji").innerHTML = feeloji("💦", w.humid);
       div.querySelector("#timestamp").setAttribute("epoch", w.epoch);
     };
@@ -53,7 +54,29 @@ function pollWeather() {
   xhttp.send();
 }
 
-function feeloji(str, percent) {
+// http://gyre.umeoce.maine.edu/data/gomoos/buoy/php/variable_description.php?variable=wind_speed
+// https://en.wikipedia.org/wiki/Saffir%E2%80%93Simpson_scale
+var scale = [
+  [13, "🍃", ""],          // breeze
+  [25, "💨", "🍃"],        // moderate or fresh breeze
+  [39, "🌬", "💨"],        // strong breeze, moderate gale
+  [74, "🌀", "🌬"],        // strong gale, tropical depression or storm
+  [96, "🌀", "🌀"],         // category 1
+  [111, "🌀", "🌀🌀"],       // category 2
+  [130, "🌀", "🌀🌀🌀"],      // category 3
+  [157, "🌀", "🌀🌀🌀🌀"],     // category 4
+  [200, "❗", "🌀🌀🌀🌀🌀"]      // category 5
+  [767, "🛦", "❗🌀🌀🌀🌀🌀❗"]    // approaching mach 1
+]
+
+function windscale(speed) {
+  var speed = parseInt(speed, 10);
+  for (var s in scale) {
+    if (speed < scale[s][0]) { return feeloji(scale[s][1], speed/scale[s][0]*100) + feeloji(scale[s][2]) }
+  }
+}
+
+function feeloji(str, percent=100) {
   return '<span style="font-size: ' + percent + '%;">' + str + '</span>'
 }
 

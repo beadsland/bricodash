@@ -22,13 +22,11 @@
 */
 
 #weather {
-  font-family: Raleway, sans-serif;
+  font-family: RalewayThin, sans-serif;
   color: #fff;
   font-size: 225%;
   font-weight: bold;
   text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-
-  text-transform: uppercase;
 
   margin: 0 0 8px;
   padding-left: .2em;
