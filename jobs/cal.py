@@ -28,13 +28,15 @@ birth = "cal/birth.cal"
 usnat = "cal/usnat.cal"
 local = "cal/local.cal"
 
-def recur(str): return subprocess.check_output(["./recur.pl", str])
+pwd = os.path.dirname(sys.argv[0])
+
+def recur(str): return subprocess.check_output([pwd + "/recur.pl", str])
 
 def emoji(s): return '<span class="emoji">' + s + '</span>'
 
 def parse_cal(filename):
   arr = []
-  with open(filename, "rb") as f:
+  with open(pwd + "/" + filename, "rb") as f:
     for line in f.readlines():
       if line.strip() != "":
         spl = line.strip().decode().split("::")
@@ -53,7 +55,6 @@ arr = ( { "start": t[0].decode('utf-8'), "venue": "Holiday", "event": t[1].encod
 
 holidays = list(arr)
 
-pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/holiday.json"
 file = open(filename + ".new", "w")
 file.write( json.dumps(holidays[:4]) )
