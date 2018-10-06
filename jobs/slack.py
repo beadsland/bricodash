@@ -19,6 +19,7 @@
 
 import brico.common
 import brico.slack
+import brico.html
 
 import re
 import emoji_data_python
@@ -40,14 +41,14 @@ channel = slack.channels()['hackerspace']
 response = slack.history(channel = channel['id'], latest = None,
                          oldest = 0, count = 11)
 
-def div(s): return "<div class='slacking'>" + s + "</div>"
-def hid(s): return "<span style='opacity: .25;'>" + s + "</span>"
-def whn(s): return "<span class='slacked'>" + s + "</span>"
-def usp(s): return "<span class='slacker'>@" + s + "</span>"
-def chn(s): return "<span class='slackchan'>#" + s + "</span>"
-def who(s): return "<span class='slackee'>" + s + "</span>"
-def avt(s): return "<img class='logo' src='" + s + "'>"
-def sml(s): return "<span style='font-size: 75%'>" + s + "</span>"
+def div(s): return brico.html.div().clss("slacking").inner(s).str()
+def hid(s): return brico.html.span().style("opacity: .25;").inner(s).str()
+def whn(s): return brico.html.span().clss("slacked").inner(s).str()
+def usp(s): return brico.html.span().clss("slacker").inner("@%s" % s).str()
+def chn(s): return brico.html.span().clss("slackchan").inner("#%s" % s).str()
+def who(s): return brico.html.span().clss("slackee").inner(s).str()
+def avt(s): return brico.html.img().clss("logo").src(s).str()
+def sml(s): return brico.html.span().style("font-size: 75%;").inner(s).str()
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
@@ -106,9 +107,9 @@ def emjlnk(name):
       alias = semoji[name].replace("alias:", "")
       return emjlnk(alias)
     else:
-      return "<img class='slemoji' src='" + semoji[name] + "'>"
+      return brico.html.img().clss("slemoji").src(semoji[name]).str()
   else:
-    return "<span class='emoji'>:" + name + ":</span>"
+    return brico.html.span().clss("emoji").inner(":%s:" % name).str()
 
 hist = []
 lstwhn = ""

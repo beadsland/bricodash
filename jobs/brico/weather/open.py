@@ -21,6 +21,7 @@
 # Data License: https://opendatacommons.org/licenses/odbl/
 
 import brico.common
+import brico.html
 import json
 
 # https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
@@ -58,7 +59,8 @@ def poll(zipcode):
 
   w['condn'] = "http://openweathermap.org/img/w/%s.png" \
                % data['weather'][0]['icon']
-  w['condn'] = '<img class="condn" src="' + w['condn'] + '">'
+  w['condn'] = brico.html.img().clss('condn').src(w['condn']).str()
+#  w['condn'] = '<img class="condn" src="' + w['condn'] + '">'
 
   w['tempf'] = data['main']['temp']
   w['tempc'] = (w['tempf'] - 32) * 5/9
