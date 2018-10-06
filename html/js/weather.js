@@ -77,12 +77,12 @@ function toggleTemp() {
     $("#weather-ctemp").hide();
     $("#weather-ftemp").show();
 
-    if (div.querySelector("#tempf").innerHTML
-                                < div.querySelector("#index").innerHTML) {
+    var tempf = parseInt(div.querySelector("#tempf").innerHTML, 10);
+
+    if (tempf < parseInt(div.querySelector("#index").innerHTML, 10)) {
       $("#weather-humid").hide();
       $("#weather-index").show();
-    } else if (div.querySelector("#tempf").innerHTML
-                                > div.querySelector("#chill").innerHTML) {
+    } else if (tempf > parseInt(div.querySelector("#chill").innerHTML, 10)) {
       $("#weather-winds").hide();
       $("#weather-chill").show();
     };
