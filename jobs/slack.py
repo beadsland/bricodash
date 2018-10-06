@@ -30,6 +30,7 @@ from resizeimage import resizeimage
 from PIL import Image
 import os
 import time
+import sys
 
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
@@ -85,7 +86,7 @@ def extlnk(o, u, c):
   if u.split("?")[0].lower().endswith(imgext) and o == "&lt;":
     file = time.strftime("%Y%m%d-%H%M%S_") + u.split("?")[0].split("/")[-1]
     thmb = os.path.join(brico.common.pwd(), "../html/thmb/")
-    fetch_image(thmb + file, u, token)
+    fetch_image(thmb + file, u, None)
     with open(thmb+file, 'r+b') as f:
       with Image.open(f) as image:
         small = resizeimage.resize_height(image, 32)
@@ -139,6 +140,12 @@ for message in reversed(response.body['messages']):
         text += ' ' + extlnk("[", file['permalink'], "]")
 
   text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1), "&gt;"), text)
+
+  if 'attachments' in message:
+    for file in message['attachments']:
+      if 'image_url' in file:
+        text += ' ' + extlnk("&lt;", file['image_url'], "&gt;")
+
   text = chnex.sub(lambda m: chn(m.group(1)), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group(2))), text)
   text = us2ex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
