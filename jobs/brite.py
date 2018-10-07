@@ -22,6 +22,7 @@ import os
 import sys
 import re
 import json
+import dateutil.parser
 import brico.common.html as html
 from brico.common.short import shorten
 
@@ -39,26 +40,31 @@ def noisy(s): return html.span().clss('noisy').inner(s).str() \
 def shortest(s): return shorten(s).replace("https://", "", 1)
 def short(s): return html.span().clss('shorty').inner(shortest(s)).str()
 
-for page in range(1,20):
-  query = '/events/search?location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date&page='
-  result = eventbrite.get(query + str(page))
-  events = result['events']
+query = '/events/search?q=Secret Loft&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
+result = eventbrite.get(query)
+events = result['events']
 
-  for event in events:
-    if event['venue_id'] not in venues:
-      venues[event['venue_id']] = eventbrite.get('/venues/' + event['venue_id'])
-    venue = venues[event['venue_id']]
-    if venue['name'] == "Offside Tavern" or venue['name'] == "Secret Loft":
-      name = event['name']['text']
-      name = name.replace("at Secret Loft", "")
-      name = name.replace("at Offside Tavern", "")
-      ratpark.append( {"start": event['start']['local'],
-                       "venue": venue['name'],
-                       "event": "%s %s" % (noisy(name), short(event['url'])) } )
+query = '/events/search?q=Offside Tavern&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
+result = eventbrite.get(query)
+events = events + result['events']
 
-  if len(ratpark) > 2: break
+for event in events:
+  if event['venue_id'] not in venues:
+    venues[event['venue_id']] = eventbrite.get('/venues/' + event['venue_id'])
+  venue = venues[event['venue_id']]
+  if venue['name'] == "Offside Tavern" or venue['name'] == "Secret Loft":
+    name = event['name']['text']
+    name = name.replace("at Secret Loft", "")
+    name = name.replace("at Offside Tavern", "")
+    ratpark.append( {"start": event['start']['local'],
+                     "venue": venue['name'],
+                     "event": "%s %s" % (noisy(name), short(event['url'])) } )
+
+ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"]) for e in ratpark ]
+ratpark.sort()
+ratpark = [ {"start": e[0].isoformat(), "event": e[1], "venue": e[2]} for e in ratpark ]
 
 filename = pwd + "/../html/pull/brite.json"
 file = open(filename + ".new", "w")
-file.write( json.dumps(ratpark) )
+file.write( json.dumps(ratpark[:5]) )
 os.rename(filename + ".new", filename)
