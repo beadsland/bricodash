@@ -43,20 +43,28 @@
 }
 
 /*
- Emoji and icons
+ Events specific
 */
-
-.emoji {
-  font-family: NotoEmoji;
-  vertical-align: 10%;
-  font-size: 80%;
-}
 
 .noisemoji {
   font-family: NotoEmoji;
   vertical-align: 10%;
   font-size: 80%;
   text-shadow: 2px 2px #228822;
+}
+
+.math {
+  font-size: 120%;
+}
+
+/*
+ General emoji and icons
+*/
+
+.emoji {
+  font-family: NotoEmoji;
+  vertical-align: 10%;
+  font-size: 80%;
 }
 
 .slemoji {
@@ -75,8 +83,4 @@
   font-family: NotoEmoji;
   font-size: 30px;
   opacity: 0.25;
-}
-
-.math {
-  font-size: 120%;
 }
