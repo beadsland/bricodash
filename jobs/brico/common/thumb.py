@@ -25,7 +25,7 @@ import re
 
 import urllib.parse
 import brico.common
-from brico.common.memoize import memoized
+from vend.memoize import memoized
 
 class Cache():
   def __init__(self):

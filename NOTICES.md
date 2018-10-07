@@ -1,29 +1,29 @@
 # Notices
 
-<!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
-
+<!-- TOC START min:1 max:3 link:true update:true -->
 - [Notices](#notices)
-	- [bricodash](#bricodash)
-	- [Software](#software)
-		- [LICENSE.md](#licensemd)
-		- [sysd/app.py](#sysdapppy)
-		- [html/util/camera.php](#htmlutilcameraphp)
-		- [html/js/clock.js](#htmljsclockjs)
-		- [jobs/brico/common/memoize.py](#jobsbricocommonmemoizepy)
-	- [APIs](#apis)
-		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
-		- [jobs/slack.py](#jobsslackpy)
-		- [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
-		- [jobs/brite.py](#jobsbritepy)
-		- [jobs/wiki.py](#jobswikipy)
-	- [Assets](#assets)
-		- [img/fog.png](#imgfogpng)
-		- [html/prox/mta](#htmlproxmta)
-		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
-		- [html/css/font](#htmlcssfont)
-		- [html/img](#htmlimg)
+  - [bricodash](#bricodash)
+  - [Software](#software)
+    - [LICENSE.md](#licensemd)
+    - [sysd/app.py](#sysdapppy)
+    - [html/util/camera.php](#htmlutilcameraphp)
+    - [html/js/clock.js](#htmljsclockjs)
+    - [jobs/vend/memoize.py](#jobsvendmemoizepy)
+  - [APIs](#apis)
+    - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
+    - [jobs/slack.py](#jobsslackpy)
+    - [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
+    - [jobs/brite.py](#jobsbritepy)
+    - [jobs/wiki.py](#jobswikipy)
+  - [Assets](#assets)
+    - [img/fog.png](#imgfogpng)
+    - [html/prox/mta](#htmlproxmta)
+    - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
+    - [html/css/font](#htmlcssfont)
+    - [html/img](#htmlimg)
 
-<!-- /TOC -->
+<!-- TOC END -->
+
 
 ## bricodash
 
@@ -115,7 +115,7 @@ necessary for your intended use. For example, other rights such as publicity,
 privacy, or moral rights may limit how you use the material.
 
 
-### jobs/brico/common/memoize.py
+### jobs/vend/memoize.py
 
 Copyright (c) ~2017 by unknown wiki contributor, via
 <https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize>.

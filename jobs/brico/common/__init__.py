@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-from brico.common.memoize import memoized
+from vend.memoize import memoized
 import os
 import sys
 import time
