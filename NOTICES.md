@@ -136,8 +136,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 ### jobs/brico/weather/open.py
 
-Weather condition icons copyright © 2012-2018 OpenWeather.
-Icons and API used under Attribution-ShareAlike 4.0 International
+OpenWeather API used under Attribution-ShareAlike 4.0 International
 (CC BY-SA 4.0). https://creativecommons.org/licenses/by-sa/4.0/
 
 You do not have to comply with the license for elements of the
@@ -148,6 +147,11 @@ No warranties are given. The license may not give you all of the
 permissions necessary for your intended use. For example, other
 rights such as publicity, privacy, or moral rights may limit how
 you use the material.
+
+OpenWeather data is made available under the Open Database License:
+<http://opendatacommons.org/licenses/odbl/1.0/>.
+Any rights in individual contents of the database are licensed under
+the Database Contents License: <http://opendatacommons.org/licenses/dbcl/1.0/>.
 
 
 ### img/fog.png

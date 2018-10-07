@@ -48,6 +48,13 @@ def wind_chill(T, WS):
   else:
     return T
 
+condn = { '01d': "🌞", '02d': "🌤", '03d': "🌥", '04d': "☁☁",
+          '01n': "🌝", '02n': "🌙☁", '03n': "☁", '04n': "☁☁",
+          '09d': "🌦", '10d': "🌧", '11d': "⛈", '13d': "🌨",
+          '09n': "🌧", '10n': "🌧", '11n': "⛈", '13n': "🌨",
+          '50d': brico.html.img().clss('logo').src("img/fog.png").str(),
+          '50n': brico.html.img().clss('logo').src("img/fog.png").str() }
+
 def poll(zipcode):
   path = "http://api.openweathermap.org/data/2.5/weather"
   params = { "zip": zipcode, "units": "imperial" }
@@ -57,12 +64,8 @@ def poll(zipcode):
 
   w = {}
 
-  if data['weather'][0]['icon'][0:1] == "50":
-    w['condn'] = brico.html.img().clss('logo').src("img/fog.png").str()
-  else:
-    w['condn'] = "http://openweathermap.org/img/w/%s.png" \
-                 % data['weather'][0]['icon']
-    w['condn'] = brico.html.img().clss('condn').src(w['condn']).str()
+  w['condn'] = condn[data['weather'][0]['icon']]
+  w['condn'] = brico.html.span().clss('emoji').inner(w['condn']).str()
 
   w['tempf'] = data['main']['temp']
   w['tempc'] = (w['tempf'] - 32) * 5/9
