@@ -232,6 +232,12 @@ https://help.github.com/articles/github-privacy-statement/
 The Github mark is a trademark of Github, Inc.
 
 
+### jobs/common/short.py
+
+Firebase Dynamic Links API used under the applicable Terms of Service
+for Firebase Services. https://firebase.google.com/terms/
+
+
 ## Assets
 
 ### img/fog.png

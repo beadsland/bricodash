@@ -43,6 +43,12 @@
   text-shadow: 3px 3px #228822;
 }
 
+.shorty {
+  font: RalewayThin;
+  font-size: 50%;
+  vertical-align: text-top;
+}
+
 .date {
   font-family: Merriweather, serif;
   font-size: 130%;

@@ -15,13 +15,15 @@
 ##
 ## You should have received a copy of the GNU Affero General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#### 
+####
 
 from eventbrite import Eventbrite
 import os
 import sys
 import re
 import json
+import brico.common.html as html
+from brico.common.short import shorten
 
 pwd = os.path.dirname(sys.argv[0])
 token_file = ".keys/eventbrite_token"
@@ -31,7 +33,11 @@ eventbrite = Eventbrite(token)
 venues = {}
 ratpark = []
 
-def noisy(s): return '<span class="noisy">' + s + '</span> <span class="noisemoji">' + u"🔊🎶" + "</span>"
+def noisy(s): return html.span().clss('noisy').inner(s).str() \
+                     + html.span().clss('noisemoji').inner(u"🔊🎶").str()
+
+def shortest(s): return shorten(s).replace("https://", "", 1)
+def short(s): return html.span().clss('shorty').inner(shortest(s)).str()
 
 for page in range(1,20):
   query = '/events/search?location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date&page='
@@ -46,7 +52,9 @@ for page in range(1,20):
       name = event['name']['text']
       name = name.replace("at Secret Loft", "")
       name = name.replace("at Offside Tavern", "")
-      ratpark.append( {"start": event['start']['local'], "venue": venue['name'], "event": noisy(name)} )
+      ratpark.append( {"start": event['start']['local'],
+                       "venue": venue['name'],
+                       "event": "%s %s" % (noisy(name), short(event['url'])) } )
 
   if len(ratpark) > 2: break
 
