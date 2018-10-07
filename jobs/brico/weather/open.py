@@ -57,7 +57,7 @@ def poll(zipcode):
 
   w = {}
 
-  if data['weather'][0]['icon'] == "50n":
+  if data['weather'][0]['icon'][0:1] == "50":
     w['condn'] = brico.html.img().clss('logo').src("img/fog.png").str()
   else:
     w['condn'] = "http://openweathermap.org/img/w/%s.png" \

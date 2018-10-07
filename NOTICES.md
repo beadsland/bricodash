@@ -12,6 +12,7 @@
 		- [jobs/brico/common/memoize.py](#jobsbricocommonmemoizepy)
 	- [Assets](#assets)
 		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
+		- [img/fog.png](#imgfogpng)
 		- [html/prox/mta](#htmlproxmta)
 		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
 		- [html/css/font](#htmlcssfont)
