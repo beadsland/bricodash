@@ -22,9 +22,14 @@ import time
 import urllib.parse
 import requests
 import json
+import grp
 
 @memoized
 def pwd():      return os.path.dirname(sys.argv[0])
+
+@memoized
+def gid():      return  grp.getgrnam("hmweb").gr_gid
+
 
 ###
 # API access
@@ -43,6 +48,9 @@ def get_result(path, params, token):
 ###
 # File operations
 ###
+def touch(f):
+  with open(f, 'a'):    os.utime(f, None)
+
 def write_pull(filename, list):
   filename = os.path.join( pwd(), "../html/pull", filename )
   list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
