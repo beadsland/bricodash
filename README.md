@@ -45,18 +45,19 @@ browser to poll for those files as needed.
 * Perl + Date::Manip
 * ImageMagick
 
-Developed for use under Chromecast or a single-board computer running Chromium. No guarantees as to how it will behave on other browsers.
+Developed for use under Chromecast or a single-board computer running
+Chromium. No guarantees as to how it will behave on other browsers.
 
 **Setting Up:**
-* install under /opt/bricocast
-* soft link to /opt/bricocast/html from within your /var/www/html hierarchy
+* install under /opt/bricodash
+* soft link to /opt/bricodash/html from within your /var/www/html hierarchy
 * install /sysd/defaultcast.service as you would any systemd service
 * set up a dedicated user to run sysd/cron.py
 * store keys for various scripts under jobs/.keys
-* set up a dedicated group including both your cron user and www-data
+* set up a dedicated group "hmweb", including both your cron user and www-data
 * create subdirs owned by said group allowing g+w permissions:
   - html/pull
   - html/thmb
   - jobs/nap/sid
   - jobs/sous/pid
-* configure html/util/camera.php to point to your local camera MJPG camera devices, as appropriate
+* configure html/util/camera.php and camera.py to point to your local camera MJPG camera devices, as appropriate

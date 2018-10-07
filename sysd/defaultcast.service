@@ -1,5 +1,5 @@
 [Unit]
-Description=Bricocast Dashboard for Hack Manhattan
+Description=Bricodash Dashboard for Hack Manhattan
 After=network-online.target
 
 [Service]
@@ -11,8 +11,8 @@ KillMode=mixed
 Environment="DISPLAY_NAME=Hackerspace"
 Environment="DASHBOARD_URL=http://hackmanhattan.duckdns.org:8888/hm/dash/?whoami=chromecast"
 Environment="IGNORE_CEC=True"
-WorkingDirectory=/opt/bricocast/sysd/
-ExecStart=/usr/bin/python3 /opt/bricocast/sysd/app.py
+WorkingDirectory=/opt/bricodash/sysd/
+ExecStart=/usr/bin/python3 /opt/bricodash/sysd/app.py
 
 [Install]
 WantedBy=multi-user.target
