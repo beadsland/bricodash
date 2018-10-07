@@ -38,11 +38,13 @@ def noisy(s):
   return html.span().clss('noisy').inner(s).str() \
          + html.span().clss('noisemoji').inner(u"🔊🎶").str()
 
-def short(s):
-  h = shorten(s).replace("https://", "", 1).split("/")
-  s1 = "%s%s" % (h[1], html.a().src(s).inner("🔗").str())
-  return html.span().clss('thiny').inner("%s/" % h[0]).str() \
-         + html.span().clss('shorty').inner(s1).str()
+def linky(href, str):
+  return html.a().clss('linky').href(href).target('_blank').inner(str).str()
+
+def short(url):
+  h = shorten(url).replace("https://", "", 1).split("/")
+  return html.span().clss('thiny').inner(linky(url, "%s/" % h[0])).str() \
+         + html.span().clss('shorty').inner(linky(url, h[1])).str()
 
 query = '/events/search?q=Secret Loft&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
 result = eventbrite.get(query)

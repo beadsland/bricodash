@@ -29,5 +29,6 @@ def shorten(url):
   data = json.dumps( { "dynamicLinkInfo": info, "suffix": suff } )
 
   response = requests.post("%s%s" % (rest, token), data=data)
+  if response.status_code != 200:   sys.exit(response.status_code);
   result = json.loads(response.text)
   return result['shortLink']

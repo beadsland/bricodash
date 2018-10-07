@@ -40,9 +40,15 @@ function spaceCal() {
  Show random photo
  */
 
-function peekawait() { setTimeout(peekaboo, 300000 + Math.random(600000)); }
+function peekawait() {
+  document.querySelector("#random_photo").style.zIndex = 0;
+  setTimeout(peekaboo, 300000 + Math.random(600000));
+}
 
-function peekaboo() {  $("#peekaboo").show(3000, peekabout); }
+function peekaboo() {
+  document.querySelector("#random_photo").style.zIndex = 1000;
+  $("#peekaboo").show(3000, peekabout);
+}
 
 function peekabout() { setTimeout(unpeekaboo, 2000); }
 

@@ -77,8 +77,10 @@
 <div id="wiki-edits"><?php include "pull/wiki.html"?></div>
 <div id="src_info">
   <span class="thiny">src & notices:</span>
-  <span class="shorty">github.com/beadsland/bricodash
-  <a href="http://github.com/beadsland/bricodash">🔗</a></span>
+  <span class="shorty">
+    <a class="linky" target="_blank"
+       href="http://github.com/beadsland/bricodash">github.com/beadsland/bricodash</a>
+  </span>
 </div>
 
 <div id="bottom_row">
