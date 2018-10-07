@@ -75,7 +75,10 @@
 </div>
 
 <div id="wiki-edits"><?php include "pull/wiki.html"?></div>
-<div id="src_info">src: github.com/beadsland/bricodash</div>
+<div id="src_info">src & notices:
+  github.com/beadsland/bricodash
+  <a href="http://github.com/beadsland/bricodash">🔗</a>
+</div>
 
 <div id="bottom_row">
   <div id="slack-chat" class="container"><?php include "pull/slack.html"?></div></td>

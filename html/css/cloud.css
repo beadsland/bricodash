@@ -64,6 +64,14 @@
   text-align: right;
   font-family: Merriweather, serif;
   color: #888888;
-  font-size: .7em;
+  font-size: .6em;
   font-style: italic;
+}
+
+#src_info a:link,
+#src_info a:hover,
+#src_info a:visited,
+#src_info a:active {
+  color: blue;
+  text-decoration: none;
 }

@@ -1,5 +1,12 @@
 # bricodash
 
+## Notices
+
+This project draws together a number of resources from other creators,
+used under various licenses. Please see [NOTICES.md](NOTICES.md) for
+more details.
+
+
 ## Status
 
 This project is a work-in-progress. Worse than that, it's a messy hack.
