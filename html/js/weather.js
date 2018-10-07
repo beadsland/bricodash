@@ -83,29 +83,30 @@ function feeloji(str, percent=100) {
 function toggleTemp() {
   var div = document.querySelector("#weather");
 
+  var tempf = parseInt(div.querySelector("#tempf").innerHTML, 10);
+
   if ( $("#weather-ftemp").is(":visible") ) {
     $("#weather-ftemp").hide();
     $("#weather-ctemp").show();
 
     $("#weather-index").hide();
-    if (div.querySelector("#tempf").innerHTML > 70) {
+    if (tempf > 70) {
       $("#weather-humid").show();
     };
 
     $("#weather-chill").hide();
-    if (div.querySelector("#tempf").innerHTML <= 70) {
+    if (tempf <= 70 || parseInt(div.querySelector("#winds").innerHTML, 10) >= 10) {
       $("#weather-winds").show();
     };
   } else {
     $("#weather-ctemp").hide();
     $("#weather-ftemp").show();
 
-    var tempf = parseInt(div.querySelector("#tempf").innerHTML, 10);
-
     if (tempf < parseInt(div.querySelector("#index").innerHTML, 10)) {
       $("#weather-humid").hide();
       $("#weather-index").show();
-    } else if (tempf > parseInt(div.querySelector("#chill").innerHTML, 10)) {
+    }
+    if (tempf > parseInt(div.querySelector("#chill").innerHTML, 10)) {
       $("#weather-winds").hide();
       $("#weather-chill").show();
     };
