@@ -1,6 +1,6 @@
 # Notices
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Notices](#notices)
 	- [bricodash](#bricodash)
@@ -10,8 +10,13 @@
 		- [html/util/camera.php](#htmlutilcameraphp)
 		- [html/js/clock.js](#htmljsclockjs)
 		- [jobs/brico/common/memoize.py](#jobsbricocommonmemoizepy)
-	- [Assets](#assets)
+	- [APIs](#apis)
 		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
+		- [jobs/slack.py](#jobsslackpy)
+		- [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
+		- [jobs/brite.py](#jobsbritepy)
+		- [jobs/wiki.py](#jobswikipy)
+	- [Assets](#assets)
 		- [img/fog.png](#imgfogpng)
 		- [html/prox/mta](#htmlproxmta)
 		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
@@ -132,7 +137,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-## Assets
+## APIs
 
 ### jobs/brico/weather/open.py
 
@@ -154,10 +159,85 @@ Any rights in individual contents of the database are licensed under
 the Database Contents License: <http://opendatacommons.org/licenses/dbcl/1.0/>.
 
 
+### jobs/slack.py
+
+Slack Web API used under Slack's API Terms of Service.
+https://slack.com/terms-of-service/api
+
+The API is used to serve on-site dashboards,
+and is not offered for use outside of our organization.
+
+For Slack's privacy policy, see: <https://slack.com/privacy-policy>
+
+The Slack name and logo are trademarks of Slack Technologies, Inc.
+
+
+### jobs/events.py, jobs/photo.py, jobs/upmeet.py
+
+Meetup API used under Meetup's Terms of Service and Meetup API License Guidelines.
+https://help.meetup.com/hc/en-us/articles/360001636711-Meetup-API-License-Guidelines
+
+This application uses the Meetup API but is not verified by Meetup, Inc.
+
+For Meetup's privacy policy, see: <https://www.meetup.com/privacy/>.
+
+The Meetup logo is a trademark of Meetup, Inc.
+
+
+### jobs/brite.py
+
+Eventbrite API used under Eventbrite's API Terms of Service.
+https://www.eventbrite.com/support/articles/en_US/Troubleshooting/eventbrite-api-terms-of-use
+
+This application is not owned, developed or controlled by Eventbrite.
+
+For Eventbrite's privacy policy, see:
+<https://www.eventbrite.com/support/articles/en_US/Troubleshooting/eventbrite-privacy-policy?lg=en_US>.
+
+
+### jobs/wiki.py
+
+#### Mediawiki
+
+Mediawiki's API used in accordance with draft Mediawiki's API:Licensing guidelines.
+https://www.mediawiki.org/wiki/API:Licensing
+
+Content from wiki.hackmanhattan.com is the property of Hack Manhattan.
+
+##### Logo
+
+Mediawiki logo variant copyright © 2003 by
+<https://commons.wikimedia.org/wiki/User:Anthere>.
+
+Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) license.
+https://creativecommons.org/licenses/by-sa/3.0/
+
+You do not have to comply with the license for elements of the material in
+the public domain or where your use is permitted by an applicable exception
+or limitation.
+
+No warranties are given. The license may not give you all of the permissions
+necessary for your intended use. For example, other rights such as publicity,
+privacy, or moral rights may limit how you use the material.
+
+
+#### Github
+
+Github's API used under Github's Terms of Service.
+https://help.github.com/articles/github-terms-of-service/
+
+For Github's privacy statement, see:
+https://help.github.com/articles/github-privacy-statement/
+
+The Github mark is a trademark of Github, Inc.
+
+
+## Assets
+
 ### img/fog.png
 
 Fog/mist glyph copyright © 2016 Emoji One.
-Used under Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+Used under Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license.
 https://creativecommons.org/licenses/by-sa/4.0/
 
 You do not have to comply with the license for elements of the material
