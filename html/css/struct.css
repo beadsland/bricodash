@@ -71,7 +71,6 @@ table, tr, td {
   bottom: 0;
   right: 400;
   left: 0;
-  z-index: 1000;
 }
 
 #mta-widget, #mta-loader {
@@ -99,6 +98,37 @@ h1 {
   padding-top: 0;
   text-align: center;
   margin-bottom: 10;
-
   overflow: hidden;
+}
+
+/*
+ Links
+*/
+
+
+.shorty, .thiny {
+  font-size: 50%;
+  vertical-align: text-top;
+  font-weight: bold;
+}
+
+.thiny  { font-family: RalewayThin, sans-serif; }
+.shorty { font-family: Raleway, sans-serif; }
+
+a:link,
+a:hover,
+a:visited,
+a:active {
+  color: blue;
+  text-decoration: none;
+}
+
+#src_info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  text-align: right;
+  font-size: 1.1em;
+  margin-bottom: -.4em;
 }

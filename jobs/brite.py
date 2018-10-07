@@ -34,11 +34,15 @@ eventbrite = Eventbrite(token)
 venues = {}
 ratpark = []
 
-def noisy(s): return html.span().clss('noisy').inner(s).str() \
-                     + html.span().clss('noisemoji').inner(u"🔊🎶").str()
+def noisy(s):
+  return html.span().clss('noisy').inner(s).str() \
+         + html.span().clss('noisemoji').inner(u"🔊🎶").str()
 
-def shortest(s): return shorten(s).replace("https://", "", 1)
-def short(s): return html.span().clss('shorty').inner(shortest(s)).str()
+def short(s):
+  h = shorten(s).replace("https://", "", 1).split("/")
+  s1 = "%s%s" % (h[1], html.a().src(s).inner("🔗").str())
+  return html.span().clss('thiny').inner("%s/" % h[0]).str() \
+         + html.span().clss('shorty').inner(s1).str()
 
 query = '/events/search?q=Secret Loft&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
 result = eventbrite.get(query)

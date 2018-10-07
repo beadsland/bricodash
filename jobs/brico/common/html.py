@@ -42,3 +42,5 @@ class div(elem):
   def __init__(self):   elem.__init__(self, 'div')
 class img(elem):
   def __init__(self):   elem.__init__(self, 'img')
+class a(elem):
+  def __init__(self):   elem.__init__(self, 'a')
