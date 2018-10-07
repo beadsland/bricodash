@@ -44,9 +44,10 @@
 }
 
 .shorty {
-  font: RalewayThin;
+  font-family: RalewayThin, sans-serif;
   font-size: 50%;
   vertical-align: text-top;
+  font-weight: bold;
 }
 
 .date {

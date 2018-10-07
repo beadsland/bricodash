@@ -37,7 +37,7 @@ possible while keeping client load to a minimum. With this in mind, we rely
 heavily on server-side jobs to update various HTML components, allowing the
 browser to poll for those files as needed.
 
-**Dependencies:**
+## Server Dependencies
 
 * Apache2 + mods cgid and headers enabled
 * systemd
@@ -45,10 +45,16 @@ browser to poll for those files as needed.
 * Perl + Date::Manip
 * ImageMagick
 
+## Kiosk Dependencies
+
 Developed for use under Chromecast or a single-board computer running
 Chromium. No guarantees as to how it will behave on other browsers.
 
-**Setting Up:**
+If running chromium in kiosk mode on Raspbian, install `fonts-noto` and
+`fonts-symbola` for better (but perhaps not complete) emoji support.
+
+## Setting Up
+
 * install under /opt/bricodash
 * soft link to /opt/bricodash/html from within your /var/www/html hierarchy
 * install /sysd/defaultcast.service as you would any systemd service
@@ -60,4 +66,5 @@ Chromium. No guarantees as to how it will behave on other browsers.
   - html/thmb
   - jobs/nap/sid
   - jobs/sous/pid
-* configure html/util/camera.php and camera.py to point to your local camera MJPG camera devices, as appropriate
+* configure html/util/camera.php and camera.py to point to your local
+camera MJPG camera devices, as appropriate
