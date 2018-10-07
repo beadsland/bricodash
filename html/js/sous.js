@@ -26,7 +26,7 @@
  function sousveil() {
    var urlParams = new URLSearchParams(window.location.search);
    if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
-     scheduleDiv("#sous", "pull/sous.html", 500);
+     scheduleDiv("#sous", "pull/sous.html", 750);
      setInterval(eyeball, 500)
    }
  }
