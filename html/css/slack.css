@@ -48,6 +48,7 @@
 .slacked {
   font-size: 80%;
   font-style: italic;
+  letter-spacing: -.09em;
 }
 
 .slackee {
