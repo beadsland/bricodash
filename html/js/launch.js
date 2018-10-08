@@ -67,7 +67,7 @@ function updateDiv(divID, pullPath, interval) {
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200 && 
+    if (this.readyState == 4 && this.status == 200 &&
                                               xhttp.response.length > 0) {
       var div = document.querySelector(divID);
       div.innerHTML = xhttp.response;
@@ -92,7 +92,7 @@ function checkStale(divID, interval) {
   }
 
   var elapsed = new Date() / 1000 - e;
-  if (elapsed > (interval / 1000 * 2)) {
+  if (elapsed > (interval / 1000 * 3)) {
     var err = document.createElement("div");
     err.className = "centered";
     var ico = document.createElement("span");
