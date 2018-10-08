@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 ####
 # memoize decorator class copyright (c) ~2017 by unknown wiki contributor.
 # https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize
