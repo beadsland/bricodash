@@ -24,7 +24,7 @@
 
 function launch_weather() {
   toggleTemp();
-  setInterval(toggleTemp, 5000)
+  setInterval(toggleTemp, 5000);
   pollWeather();
   setInterval(pollWeather, 30 * 1000);
 }
@@ -72,7 +72,7 @@ var scale = [
 function windscale(speed) {
   var speed = parseInt(speed, 10);
   for (var s in scale) {
-    if (speed < scale[s][0]) { return feeloji(scale[s][1], speed/scale[s][0]*100) + feeloji(scale[s][2]) }
+    if (speed < scale[s][0]) { return feeloji(scale[s][1], speed/scale[s][0]*90) + feeloji(scale[s][2]) }
   }
 }
 
@@ -92,12 +92,16 @@ function toggleTemp() {
     $("#weather-index").hide();
     if (tempf > 70) {
       $("#weather-humid").show();
-    };
+    } else {
+      $("#weather-humid").hide();
+    }
 
     $("#weather-chill").hide();
     if (tempf <= 70 || parseInt(div.querySelector("#winds").innerHTML, 10) >= 10) {
       $("#weather-winds").show();
-    };
+    } else {
+      $("#weather-winds").hide();
+    }
   } else {
     $("#weather-ctemp").hide();
     $("#weather-ftemp").show();
