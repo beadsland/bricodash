@@ -52,8 +52,8 @@ condn = { '01d': "🌞", '02d': "🌤", '03d': "🌥", '04d': "☁☁",
           '01n': "🌚", '02n': "🌙☁", '03n': "☁", '04n': "☁☁",
           '09d': "🌦", '10d': "🌧", '11d': "⛈", '13d': "🌨",
           '09n': "🌧", '10n': "🌧", '11n': "⛈", '13n': "🌨",
-          '50d': html.logo("img/fog.png").str(),
-          '50n': html.logo("img/fog.png").str() }
+          '50d': html.logo("img/fog.png"),
+          '50n': html.logo("img/fog.png") }
 
 def poll(zipcode):
   path = "http://api.openweathermap.org/data/2.5/weather"
@@ -65,7 +65,7 @@ def poll(zipcode):
   w = {}
 
   w['condn'] = condn[data['weather'][0]['icon']]
-  w['condn'] = html.span().clss('emoji').inner(w['condn']).str()
+  w['condn'] = html.emoji(w['condn'])
 
   w['tempf'] = data['main']['temp']
   w['tempc'] = (w['tempf'] - 32) * 5/9

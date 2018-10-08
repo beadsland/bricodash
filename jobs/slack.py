@@ -23,7 +23,6 @@ import brico.common.html as html
 import brico.slack
 
 import re
-import emoji_data_python
 import humanize
 import datetime
 import requests
@@ -51,16 +50,6 @@ usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
 us2ex = re.compile(r"<@([^\|>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
-
-def emjlnk(name):
-  if name in slack.emoji():
-    if slack.emoji()[name].startswith("alias:"):
-      alias = slack.emoji()[name].replace("alias:", "")
-      return emjlnk(alias)
-    else:
-      return html.img().clss("slemoji").src(slack.emoji()[name]).str()
-  else:
-    return html.span().clss("emoji").inner(":%s:" % name).str()
 
 hist = []
 lstwhn = ""
@@ -99,8 +88,7 @@ for message in reversed(response.body['messages']):
   text = chnex.sub(lambda m: chn(m.group(1)), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group(2))), text)
   text = us2ex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
-  text = emjex.sub(lambda m: emjlnk(m.group(1)), text)
-  text = emoji_data_python.replace_colons(text)
+  text = emjex.sub(lambda m: slack.emoji(m.group(1)), text)
 
   if lstwhn == when and lstwho == user:
     hist.append( div(hid(whn(when) + " &mdash; " +  who(user) + ": ") + text) )

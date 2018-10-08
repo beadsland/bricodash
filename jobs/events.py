@@ -82,9 +82,9 @@ for item in data[:8]:
     evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
   evt = re.sub(r'(Open House)', r'\1 ' + html.logo("img/balloons.png"), evt)
   evt = re.sub(r'(Fixers\' Collective)', r'\1 ' + html.logo("img/fixers.png"), evt)
-  if evt.startswith("Shakespeare Night"): evt += ' <span class="emoji">🎭📖</span>'
+  if evt.startswith("Shakespeare Night"): evt += ' ' + html.emoji("🎭📖")
   evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
-  evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌌🎲</span>', evt)
+  evt = re.sub(r'(Midnight Games)', r'\1 ' + html.emoji("🌌🎲"), evt)
 
   if evt in maths:
     rsvp = item['yes_rsvp_count'] + maths[evt][0] - 2

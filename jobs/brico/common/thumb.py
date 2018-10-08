@@ -42,9 +42,9 @@ class Cache():
         if os.path.isfile(f):
           os.remove(f)
 
-  def fetch(self, file, url, headers):
+  def fetch(self, file, url, headers=None):
     response = requests.get(url, stream=True,
-                            headers=headers if headers is not None else {})
+                            headers=headers if headers else {})
     if response.status_code != 200:   sys.exit(response.status_code);
     with open(file, 'wb') as handle:
       for block in response.iter_content(1024):
@@ -64,7 +64,7 @@ class Cache():
               "smll": "/".join(( self.route, sml )) }
     return { "local": local, "route": route }
 
-  def get(self, url, headers):
+  def get(self, url, headers=None):
     file = self.paths(url)['local']['full']
     if os.path.isfile(file):
       brico.common.touch(file)
@@ -72,7 +72,7 @@ class Cache():
       self.fetch(file, url, headers)
     return self.paths(url)['route']['full']
 
-  def get_thumb(self, url, headers):
+  def get_thumb(self, url, headers=None):
     smll = self.paths(url)['local']['smll']
     if os.path.isfile(smll):
       brico.common.touch(smll)

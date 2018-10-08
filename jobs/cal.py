@@ -23,6 +23,8 @@ import json
 import os
 import sys
 
+import brico.common.html as html
+
 geek = "cal/geek.cal"
 birth = "cal/birth.cal"
 usnat = "cal/usnat.cal"
@@ -32,8 +34,6 @@ pwd = os.path.dirname(sys.argv[0])
 
 def recur(str): return subprocess.check_output([pwd + "/recur.pl", str])
 
-def emoji(s): return '<span class="emoji">' + s + '</span>'
-
 def parse_cal(filename):
   arr = []
   with open(pwd + "/" + filename, "rb") as f:
@@ -41,7 +41,7 @@ def parse_cal(filename):
       if line.strip() != "":
         spl = line.strip().decode().split("::")
         if len(spl) > 2 and spl[2].strip() != "":
-          full = "%s %s" % (spl[1], emoji(spl[2].strip()))
+          full = "%s %s" % (spl[1], html.emoji(spl[2].strip()))
           arr.append( (spl[0], full) )
         elif len(spl) > 1:
           arr.append( (spl[0], spl[1]) )

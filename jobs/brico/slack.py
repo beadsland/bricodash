@@ -16,9 +16,10 @@
 ####
 
 from slacker import Slacker
+import emoji_data_python
 from vend.memoize import memoized
 import brico.common.thumb
-import brico.common.html
+import brico.common.html as html
 
 import urllib.parse
 import re
@@ -38,11 +39,9 @@ class Slack:
   def members(self):            return self.api.users.list().body['members']
 
   @memoized
-  def emoji(self):              return self.api.emoji.list().body['emoji'];
-
-  @memoized
-  def channels(self):
-    return { c['name']: c for c in self.api.channels.list().body['channels'] }
+  def emoji(self, name=None):
+    if not name:  return self.api.emoji.list().body['emoji']
+    else:         return self.mojilink(name);
 
   # not memoized 'cause kwargs'
   def history(self, **kwargs):  return self.api.channels.history(**kwargs)
@@ -50,6 +49,10 @@ class Slack:
   ###
   # Generated lookup tables
   ###
+  @memoized
+  def channels(self):
+    return { c['name']: c for c in self.api.channels.list().body['channels'] }
+
   @memoized
   def names(self):
     names = { u['id']: ( u['profile']['display_name'], u['name'] )
@@ -66,13 +69,25 @@ class Slack:
   # Links
   ###
   @memoized
-  def link(self, u):
+  def link(self, u, slemoji=False):
     parse = urllib.parse.urlparse(u)
-    if (parse.path.endswith( ('.gif', '.jpg', '.jpeg', '.png') )):
+    if (slemoji):
+      return html.img().clss('slemoji').src( thumb.get(u) ).str()
+    elif (parse.path.endswith( ('.gif', '.jpg', '.jpeg', '.png') )):
       headers = { "Authorization": "Bearer " + self.token }
       if (re_thumb.match(parse.path)):    file = thumb.get(u, headers)
-      else:                               file = thumb.get_thumb(u, None)
-      return brico.common.html.logo(file)
+      else:                               file = thumb.get_thumb(u)
+      return html.logo(file)
     else:
       file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
       return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
+
+  @memoized
+  def mojilink(self, name):
+    if name in self.emoji():
+      if self.emoji()[name].startswith("alias:"):
+        return self.mojilink( self.emoji()[name].replace("alias:", "") )
+      else:
+        return self.link( self.emoji()[name], True )
+    else:
+      return html.emoji( emoji_data_python.replace_colons(":%s:" % name) )

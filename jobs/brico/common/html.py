@@ -48,3 +48,4 @@ class a(elem):
   def __init__(self):   elem.__init__(self, 'a')
 
 def logo(src):          return img().clss('logo').src(src).str();
+def emoji(s):           return span().clss('emoji').inner(s).str();
