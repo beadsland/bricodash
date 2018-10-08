@@ -18,6 +18,7 @@
 ####
 
 from vend.memoize import memoized
+from vend.multisub import multiple_replace
 import brico.common
 import brico.common.html as html
 import brico.slack
@@ -55,15 +56,12 @@ hist = []
 lstwhn = ""
 lstwho = ""
 
+durdict = { "second": "sec", "minute": "min", "hour": "hr",
+            "day": "dy", "week": "wk", " ago": "" }
+
 for message in reversed(response.body['messages']):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
-  when = humanize.naturaltime(delta)
-  when = when.replace("second", "sec")
-  when = when.replace("minute", "min")
-  when = when.replace("hour", "hr")
-  when = when.replace("day", "dy")
-  when = when.replace("week", "wk")
-  when = when.replace(" ago", "")
+  when = multiple_replace( humanize.naturaltime(delta), durdict )
 
   user = names[message['user']] if 'user' in message else message['username']
   if 'user' in message:
