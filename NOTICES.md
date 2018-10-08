@@ -15,6 +15,7 @@
     - [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
     - [jobs/brite.py](#jobsbritepy)
     - [jobs/wiki.py](#jobswikipy)
+    - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
     - [img/fog.png](#imgfogpng)
     - [html/prox/mta](#htmlproxmta)
@@ -313,7 +314,7 @@ http://scripts.sil.org/OFL
 
 ### html/img
 
-The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan.
+The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan, Inc.
 
 The Fixers Collective logo is a trademark of the Fixers' Collective.
 
