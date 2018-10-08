@@ -33,6 +33,15 @@ class Slack:
     self.token = token
 
   ###
+  # Retrieve messages from a channel
+  ###
+  @memoized
+  def messages(self, channel, count):
+    history = self.history(channel = self.channels()[channel]['id'],
+                           latest = None, oldest = 0, count = count)
+    return history.body['messages']
+
+  ###
   # Queries against result
   ###
   @memoized

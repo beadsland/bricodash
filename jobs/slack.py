@@ -32,11 +32,6 @@ import os
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
 
-channel = slack.channels()['hackerspace']
-
-response = slack.history(channel = channel['id'], latest = None,
-                         oldest = 0, count = 11)
-
 def div(s): return html.div().clss("slacking").inner(s).str()
 def hid(s): return html.span().style("opacity: .25;").inner(s).str()
 def whn(s): return html.span().clss("slacked").inner(s).str()
@@ -59,7 +54,7 @@ durdict = { "second": "sec", "minute": "min", "hour": "hr",
 @memoized
 def avuser(u): return "%s %s" % (slack.avatars(u), slack.names(u));
 
-for message in reversed(response.body['messages']):
+for message in reversed(slack.messages('hackerspace', 11)):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
   when = multiple_replace( humanize.naturaltime(delta), durdict )
 
