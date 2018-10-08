@@ -62,9 +62,10 @@ table, tr, td {
 #bottom_row {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  margin-left: 250px;
-  margin-right: 250px;
+  margin-left: 245px;
+  padding-left: .5em;
+  padding-right: .25em;
+  margin-right: 230px;
 }
 
 #random_photo {
