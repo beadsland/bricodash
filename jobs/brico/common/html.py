@@ -35,8 +35,8 @@ class elem:
   def id(self, id):             return self.attr('id', id);
   def style(self, style):       return self.attr('style', style);
   def src(self, src):           return self.attr('src', src);
-  def href(self, src):          return self.attr('href', src);
-  def target(self, src):        return self.attr('target', src);
+  def href(self, href):         return self.attr('href', href);
+  def target(self, target):     return self.attr('target', target);
 
 class span(elem):
   def __init__(self):   elem.__init__(self, 'span')
@@ -46,3 +46,5 @@ class img(elem):
   def __init__(self):   elem.__init__(self, 'img')
 class a(elem):
   def __init__(self):   elem.__init__(self, 'a')
+
+def logo(src):          return img().clss('logo').src(src).str();

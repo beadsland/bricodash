@@ -47,7 +47,6 @@ def whn(s): return html.span().clss("slacked").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
 def who(s): return html.span().clss("slackee").inner(s).str()
-def avt(s): return html.img().clss("logo").src(s).str()
 def sml(s): return html.span().style("font-size: 75%;").inner(s).str()
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
@@ -64,7 +63,7 @@ def extlnk(o, u, c):
       file = thumb.get(u, { "Authorization": "Bearer " + token })
     else:
       file = thumb.get_thumb(u, None)
-    return avt(file)
+    return html.logo(file)
   else:
     if len(u) < 55:   return sml('%s%s%s' % (o, u, c))
     else:             return sml('%s%s…%s%s' % (o, u[:30], u[-20:], c))
@@ -96,7 +95,7 @@ for message in reversed(response.body['messages']):
 
   user = names[message['user']] if 'user' in message else message['username']
   if 'user' in message:
-    user = avt(avatr[message['user']]) + " " + user
+    user = html.logo(avatr[message['user']]) + " " + user
 
   text = message['text'];
 

@@ -29,7 +29,7 @@ import time
 import datetime
 import calendar
 import dateutil.parser
-
+import brico.common.html as html
 
 pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/brite.json"
@@ -80,8 +80,8 @@ for item in data[:8]:
   evt = re.sub(r' at Hack Manhattan', '', evt)
   if (dt.day == lasttuesday) and (dt.month == today.month):
     evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
-  evt = re.sub(r'(Open House)', r'\1 <img class="logo" src="img/balloons.png">', evt)
-  evt = re.sub(r'(Fixers\' Collective)', r'\1 <img class="logo" src="img/fixers.png">', evt)
+  evt = re.sub(r'(Open House)', r'\1 ' + html.logo("img/balloons.png"), evt)
+  evt = re.sub(r'(Fixers\' Collective)', r'\1 ' + html.logo("img/fixers.png"), evt)
   if evt.startswith("Shakespeare Night"): evt += ' <span class="emoji">🎭📖</span>'
   evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
   evt = re.sub(r'(Midnight Games)', r'\1 <span class="emoji">🌌🎲</span>', evt)
@@ -101,7 +101,7 @@ for item in data[:8]:
         elif ans["response"] == "yes":
           rsvps[id] = ans["guests"]
     rsvp = len(rsvps) + sum(rsvps.values())
-    evt += ' <img class="logo" src="img/math.png">'
+    evt += ' ' + html.logo("img/math.png")
   else:
     rsvp = item['yes_rsvp_count']
 

@@ -52,8 +52,8 @@ condn = { '01d': "🌞", '02d': "🌤", '03d': "🌥", '04d': "☁☁",
           '01n': "🌚", '02n': "🌙☁", '03n': "☁", '04n': "☁☁",
           '09d': "🌦", '10d': "🌧", '11d': "⛈", '13d': "🌨",
           '09n': "🌧", '10n': "🌧", '11n': "⛈", '13n': "🌨",
-          '50d': html.img().clss('logo').src("img/fog.png").str(),
-          '50n': html.img().clss('logo').src("img/fog.png").str() }
+          '50d': html.logo("img/fog.png").str(),
+          '50n': html.logo("img/fog.png").str() }
 
 def poll(zipcode):
   path = "http://api.openweathermap.org/data/2.5/weather"
