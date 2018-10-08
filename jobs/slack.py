@@ -64,10 +64,10 @@ def extlnk(o, u, c):
       file = thumb.get(u, { "Authorization": "Bearer " + token })
     else:
       file = thumb.get_thumb(u, None)
-    return " %s" % avt(file)
+    return avt(file)
   else:
-    if len(u) < 55:   return sml(' %s%s%s' % (o, u, c))
-    else:             return sml(' %s%s…%s%s' % (o, u[:30], u[-20:], c))
+    if len(u) < 55:   return sml('%s%s%s' % (o, u, c))
+    else:             return sml('%s%s…%s%s' % (o, u[:30], u[-20:], c))
 
 semoji = slack.emoji()
 def emjlnk(name):
@@ -107,7 +107,7 @@ for message in reversed(response.body['messages']):
       else:
         text += ' ' + extlnk("[", file['permalink'], "]")
 
-  text = lnkex.sub(lambda m: extlnk("&lt;", m.group(1), "&gt;"), text)
+  text = lnkex.sub(lambda m: ' ' + extlnk("&lt;", m.group(1), "&gt;"), text)
 
   if 'attachments' in message:
     for file in message['attachments']:
