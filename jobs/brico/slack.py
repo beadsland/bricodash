@@ -54,16 +54,22 @@ class Slack:
     return { c['name']: c for c in self.api.channels.list().body['channels'] }
 
   @memoized
-  def names(self):
-    names = { u['id']: ( u['profile']['display_name'], u['name'] )
+  def names(self, user=None):
+    if not user:
+      names = { u['id']: ( u['profile']['display_name'], u['name'] )
                                                     for u in self.members() }
-    for id in names:
-      names[id] = names[id][1] if names[id][0] == "" else names[id][0]
-    return names
+      for id in names:
+        names[id] = names[id][1] if names[id][0] == "" else names[id][0]
+      return names
+    else:
+      return self.names()[user]
 
   @memoized
-  def avatars(self):
-    return { u['id']: u['profile']['image_32'] for u in self.members() }
+  def avatars(self, user=None):
+    if not user:
+      return { u['id']: u['profile']['image_32'] for u in self.members() }
+    else:
+      return html.logo( self.avatars()[user] )
 
   ###
   # Links

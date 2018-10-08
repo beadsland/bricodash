@@ -32,8 +32,6 @@ import os
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
 
-names = slack.names()
-avatr = slack.avatars()
 channel = slack.channels()['hackerspace']
 
 response = slack.history(channel = channel['id'], latest = None,
@@ -58,15 +56,14 @@ lstwho = ""
 
 durdict = { "second": "sec", "minute": "min", "hour": "hr",
             "day": "dy", "week": "wk", " ago": "" }
+@memoized
+def avuser(u): return "%s %s" % (slack.avatars(u), slack.names(u));
 
 for message in reversed(response.body['messages']):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
   when = multiple_replace( humanize.naturaltime(delta), durdict )
 
-  user = names[message['user']] if 'user' in message else message['username']
-  if 'user' in message:
-    user = html.logo(avatr[message['user']]) + " " + user
-
+  user = avuser(message['user']) if 'user' in message else message['username'];
   text = message['text'];
 
   if 'files' in message:

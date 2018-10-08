@@ -52,8 +52,10 @@
 
 .slackee {
   font-weight: bold;
+  letter-spacing: -.06em;
 }
 
 .slacker, .slackchan {
   color: #F09A67;
+  letter-spacing: -.03em;
 }
