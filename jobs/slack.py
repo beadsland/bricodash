@@ -17,8 +17,8 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+from vend.memoize import memoized
 import brico.common
-import brico.common.thumb
 import brico.common.html as html
 import brico.slack
 
@@ -28,11 +28,9 @@ import humanize
 import datetime
 import requests
 import os
-import urllib.parse
 
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
-thumb = brico.common.thumb.Cache()
 
 names = slack.names()
 avatr = slack.avatars()
@@ -47,35 +45,20 @@ def whn(s): return html.span().clss("slacked").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
 def who(s): return html.span().clss("slackee").inner(s).str()
-def sml(s): return html.span().style("font-size: 75%;").inner(s).str()
 
 emjex = re.compile(r":([A-Za-z\-_]+):")
 usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
 us2ex = re.compile(r"<@([^\|>]+)>")
 chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
 lnkex = re.compile(r"<(http.*)>")
-thbex = re.compile(r"/files-tmb/")
 
-def extlnk(o, u, c):
-  parse = urllib.parse.urlparse(u)
-  if (parse.path.endswith( ('.gif', '.jpg', '.jpeg', '.png') )):
-    if ( thbex.match(parse.path) ):
-      file = thumb.get(u, { "Authorization": "Bearer " + token })
-    else:
-      file = thumb.get_thumb(u, None)
-    return html.logo(file)
-  else:
-    if len(u) < 55:   return sml('%s%s%s' % (o, u, c))
-    else:             return sml('%s%s…%s%s' % (o, u[:30], u[-20:], c))
-
-semoji = slack.emoji()
 def emjlnk(name):
-  if name in semoji:
-    if semoji[name].startswith("alias:"):
-      alias = semoji[name].replace("alias:", "")
+  if name in slack.emoji():
+    if slack.emoji()[name].startswith("alias:"):
+      alias = slack.emoji()[name].replace("alias:", "")
       return emjlnk(alias)
     else:
-      return html.img().clss("slemoji").src(semoji[name]).str()
+      return html.img().clss("slemoji").src(slack.emoji()[name]).str()
   else:
     return html.span().clss("emoji").inner(":%s:" % name).str()
 
@@ -102,16 +85,16 @@ for message in reversed(response.body['messages']):
   if 'files' in message:
     for file in message['files']:
       if 'thumb_64' in file:
-        text += ' ' + extlnk("[", file['thumb_64'], "]")
+        text += "%s " % slack.link(file['thumb_64'])
       else:
-        text += ' ' + extlnk("[", file['permalink'], "]")
+        text += "%s " % slack.link(file['permalink'])
 
-  text = lnkex.sub(lambda m: ' ' + extlnk("&lt;", m.group(1), "&gt;"), text)
+  text = lnkex.sub(lambda m: ' ' + slack.link(m.group(1)), text)
 
   if 'attachments' in message:
     for file in message['attachments']:
       if 'image_url' in file:
-        text += ' ' + extlnk("&lt;", file['image_url'], "&gt;")
+        text += " %s" % slack.link(file['image_url'])
 
   text = chnex.sub(lambda m: chn(m.group(1)), text)
   text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group(2))), text)
