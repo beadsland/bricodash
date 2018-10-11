@@ -32,19 +32,6 @@ import os
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
 
-def div(s): return html.div().clss("slacking").inner(s).str()
-def hid(s): return html.span().style("opacity: .25;").inner(s).str()
-def whn(s): return html.span().clss("slacked").inner(s).str()
-def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
-def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
-def who(s): return html.span().clss("slackee").inner(s).str()
-
-emjex = re.compile(r":([A-Za-z\-_]+):")
-usrex = re.compile(r"<@([^\|>]+)\|([^>]+)>")
-us2ex = re.compile(r"<@([^\|>]+)>")
-chnex = re.compile(r"<#[A-Z0-9]+\|([^>]+)>")
-lnkex = re.compile(r"<(http.*)>")
-
 hist = []
 lstwhn = ""
 lstwho = ""
@@ -54,12 +41,20 @@ durdict = { "second": "sec", "minute": "min", "hour": "hr",
 @memoized
 def avuser(u): return "%s %s" % (slack.avatars(u), slack.names(u));
 
+def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
+def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
+txtdict = [ ("<(http[^>]+)>",          lambda m: slack.link(m.group(1)) ),
+            ("<#[^\|>]+\|([^>]+)?>",   lambda m: chn(m.group(1)) ),
+            ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
+            (":([A-Za-z\-_]+):",       lambda m: slack.emoji(m.group(1)) ) ]
+
 for message in reversed(slack.messages('hackerspace', 11)):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
   when = multiple_replace( humanize.naturaltime(delta), durdict )
-
   user = avuser(message['user']) if 'user' in message else message['username'];
+
   text = message['text'];
+  for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
 
   if 'files' in message:
     for file in message['files']:
@@ -68,17 +63,15 @@ for message in reversed(slack.messages('hackerspace', 11)):
       else:
         text += "%s " % slack.link(file['permalink'])
 
-  text = lnkex.sub(lambda m: ' ' + slack.link(m.group(1)), text)
-
   if 'attachments' in message:
     for file in message['attachments']:
       if 'image_url' in file:
         text += " %s" % slack.link(file['image_url'])
 
-  text = chnex.sub(lambda m: chn(m.group(1)), text)
-  text = usrex.sub(lambda m: usp(names.get(m.group(1), m.group(2))), text)
-  text = us2ex.sub(lambda m: usp(names.get(m.group(1), m.group())), text)
-  text = emjex.sub(lambda m: slack.emoji(m.group(1)), text)
+  def div(s): return html.div().clss("slacking").inner(s).str()
+  def hid(s): return html.span().style("opacity: .25;").inner(s).str()
+  def whn(s): return html.span().clss("slacked").inner(s).str()
+  def who(s): return html.span().clss("slackee").inner(s).str()
 
   if lstwhn == when and lstwho == user:
     hist.append( div(hid(whn(when) + " &mdash; " +  who(user) + ": ") + text) )
