@@ -1,8 +1,7 @@
 ####
 # Original recipes from "1.18. Replacing Multiple Patterns in a Single Pass",
 # Python Cookbook™, Second Edition copyright (c) 2005, 2002 Xavier Defrang
-# and Alex MartelliAlex Martelli. Published by O’Reilly Media, Inc.
-# ISBN: 0596007973.
+# and Alex Martelli. Published by O’Reilly Media, Inc. ISBN: 0596007973.
 # https://www.oreilly.com/library/view/python-cookbook-2nd/0596007973/ch01s19.html
 #
 # O'Reilly books are here to help you get your job done. In general,

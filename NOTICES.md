@@ -9,6 +9,7 @@
     - [html/util/camera.php](#htmlutilcameraphp)
     - [html/js/clock.js](#htmljsclockjs)
     - [jobs/vend/memoize.py](#jobsvendmemoizepy)
+  - [jobs/vend/multisub.py](#jobsvendmultisubpy)
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
     - [jobs/slack.py](#jobsslackpy)
@@ -136,6 +137,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+## jobs/vend/multisub.py
+
+Original recipes from "1.18. Replacing Multiple Patterns in a Single Pass",
+Python Cookbook™, Second Edition copyright (c) 2005, 2002 Xavier Defrang
+and Alex Martelli. Published by O’Reilly Media, Inc. ISBN: 0596007973.
+https://www.oreilly.com/library/view/python-cookbook-2nd/0596007973/ch01s19.html
+
+Please note that the examples are not production code and have not been
+carefully tested. They are provided "as-is" and come with no warranty
+of any kind.
 
 
 ## APIs
