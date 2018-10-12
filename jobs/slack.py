@@ -39,14 +39,20 @@ lstwho = ""
 durdict = { "second": "sec", "minute": "min", "hour": "hr",
             "day": "dy", "week": "wk", " ago": "" }
 @memoized
-def avuser(u): return "%s %s" % (slack.avatars(u), slack.names(u));
+def avuser(u): return "%s %s" % (slack.avatars(u, html.logo), slack.names(u));
+
+def linky(u):
+  file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
+  return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
 
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
-txtdict = [ ("<(http[^>]+)>",          lambda m: slack.link(m.group(1)) ),
+
+emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky }
+txtdict = [ ("<(http[^>]+)>",          lambda m: slack.link(m.group(1), html.logo) ),
             ("<#[^\|>]+\|([^>]+)?>",   lambda m: chn(m.group(1)) ),
             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
-            (":([A-Za-z\-_]+):",       lambda m: slack.emoji(m.group(1)) ) ]
+            (":([A-Za-z\-_]+):",       lambda m: slack.emoji(m.group(1), emotags) ) ]
 
 for message in reversed(slack.messages('hackerspace', 11)):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
@@ -59,14 +65,14 @@ for message in reversed(slack.messages('hackerspace', 11)):
   if 'files' in message:
     for file in message['files']:
       if 'thumb_64' in file:
-        text += "%s " % slack.link(file['thumb_64'])
+        text += "%s " % slack.link(file['thumb_64'], html.logo, linky)
       else:
-        text += "%s " % slack.link(file['permalink'])
+        text += "%s " % slack.link(file['permalink'], html.logo, linky)
 
   if 'attachments' in message:
     for file in message['attachments']:
       if 'image_url' in file:
-        text += " %s" % slack.link(file['image_url'])
+        text += " %s" % slack.link(file['image_url'], html.logo, linky)
 
   def div(s): return html.div().clss("slacking").inner(s).str()
   def hid(s): return html.span().style("opacity: .25;").inner(s).str()

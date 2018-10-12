@@ -47,10 +47,10 @@ class Slack:
   @memoized
   def members(self):            return self.api.users.list().body['members']
 
-  @memoized
-  def emoji(self, name=None):
+  # not memoized because tags
+  def emoji(self, name=None, tags={}):
     if not name:  return self.api.emoji.list().body['emoji']
-    else:         return self.mojilink(name);
+    else:         return self.mojilink(name, tags);
 
   # not memoized 'cause kwargs'
   def history(self, **kwargs):  return self.api.channels.history(**kwargs)
@@ -74,17 +74,17 @@ class Slack:
       return self.names()[user]
 
   @memoized
-  def avatars(self, user=None):
+  def avatars(self, user=None, tag=None):
     if not user:
       return { u['id']: u['profile']['image_32'] for u in self.members() }
     else:
-      return html.logo( self.avatars()[user] )
+      return self.link( self.avatars()[user], tag )
 
   ###
   # Links
   ###
   @memoized
-  def link(self, u, slemoji=False):
+  def link(self, u, imgtag=None, lnktag=None, slemoji=False):
     parse = urllib.parse.urlparse(u)
     if (slemoji):
       return html.img().clss('slemoji').src( thumb.get(u) ).str()
@@ -92,17 +92,17 @@ class Slack:
       headers = { "Authorization": "Bearer " + self.token }
       if (re_thumb.match(parse.path)):    file = thumb.get(u, headers)
       else:                               file = thumb.get_thumb(u)
-      return html.logo(file)
+      return file if not imgtag else imgtag( file )
     else:
-      file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
-      return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
+      return u if not lnktag else lnktag( u )
 
-  @memoized
-  def mojilink(self, name):
+  # can't memoize because tags
+  def mojilink(self, name, tags={}):
     if name in self.emoji():
       if self.emoji()[name].startswith("alias:"):
-        return self.mojilink( self.emoji()[name].replace("alias:", "") )
+        return self.mojilink( self.emoji()[name].replace("alias:", ""), tags )
       else:
-        return self.link( self.emoji()[name], True )
+        return self.link( self.emoji()[name], tags['imgtag'], tags['lnktag'], True )
     else:
-      return html.emoji( emoji_data_python.replace_colons(":%s:" % name) )
+      emoji = emoji_data_python.replace_colons(":%s:" % name)
+      return emoji if not 'emotag' in tags else tags['emotag']( emoji )

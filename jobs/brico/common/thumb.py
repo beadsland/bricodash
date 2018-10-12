@@ -66,24 +66,28 @@ class Cache():
 
   def get(self, url, headers=None):
     file = self.paths(url)['local']['full']
-    if os.path.isfile(file):
-      brico.common.touch(file)
-    else:
-      self.fetch(file, url, headers)
+    if os.path.isfile(file):      brico.common.touch(file)
+    else:                         self.fetch(file, url, headers)
     return self.paths(url)['route']['full']
+
+  def resize(self, url, image):
+    smll = self.paths(url)['local']['smll']
+    thumb = resizeimage.resize_height(image, 32)
+    thumb.save(smll, image.format)
+    os.chown(smll, -1, brico.common.gid())
+    os.remove(self.paths(url)['local']['full'])
+    return self.paths(url)['route']['smll']
 
   def get_thumb(self, url, headers=None):
     smll = self.paths(url)['local']['smll']
     if os.path.isfile(smll):
       brico.common.touch(smll)
+      return self.paths(url)['route']['smll']
     else:
       self.get(url, headers)
       full = self.paths(url)['local']['full']
       with open(full, 'r+b') as handle:
         with Image.open(handle) as image:
-          thumb = resizeimage.resize_height(image, 32)
-          thumb.save(smll, image.format)
-      handle.close()
-      os.chown(smll, -1, brico.common.gid())
-      os.remove(full)
-    return self.paths(url)['route']['smll']
+          handle.close()
+          if image.height > 64:   return self.resize(url, image)
+          else:                   return self.paths(url)['route']['full']
