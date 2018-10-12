@@ -38,8 +38,9 @@ durdict = { "second": "sec", "minute": "min", "hour": "hr",
             "day": "dy", "week": "wk", " ago": "" }
 @memoized
 def avuser(u): return "%s %s" % (slack.avatars(u, html.logo), slack.names(u));
-def whn(s): return html.span().clss("slacked").inner(s).str()
-def who(s): return html.span().clss("slackee").inner(s).str()
+def whn(s, ts):
+  return html.span().clss("slacked").attr("timestamp", ts).inner( s ).str()
+def who(s): return html.span().clss("slackee").inner( s ).str()
 
 ###
 # Link, image and emoji formatting
@@ -80,7 +81,8 @@ def hid(s): return html.span().style("opacity: .25;").inner(s).str()
 # Format each message
 ###
 for message in reversed(slack.messages('hackerspace', 11)):
-  delta = datetime.datetime.now().timestamp() - float(message['ts'])
+  ts = message['ts']
+  delta = datetime.datetime.now().timestamp() - float(ts)
   when = multiple_replace( humanize.naturaltime(delta), durdict )
   user = avuser(message['user']) if 'user' in message else message['username'];
 
@@ -93,11 +95,12 @@ for message in reversed(slack.messages('hackerspace', 11)):
                     ' '.join(slack.reactions(message, emotags)) ])
 
   if lstwhn == when and lstwho == user:
-    hist.append( div(hid(whn(when) + " &mdash; " +  who(user) + ": ") + text) )
+    line = div(hid(whn(when, ts) + " &mdash; " +  who(user) + ": ") + text)
+    hist.append( line )
   else:
     lstwhn = when
     lstwho = user
-    hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
+    hist.append( div(whn(when, ts) + " &mdash; " +  who(user) + ": " + text) )
 
 ###
 # Trim excess lines

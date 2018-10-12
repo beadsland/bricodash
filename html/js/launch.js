@@ -33,7 +33,9 @@ window.onload = function() {
 
   scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
   scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
+
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
+  setInterval(notifySlack, 1 * 1000)
 
   scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
   scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);

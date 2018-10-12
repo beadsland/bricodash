@@ -21,6 +21,33 @@
 'use strict';
 
 /*
+ Play slack notification when new message.
+ */
+
+function notifySlack() {
+  var slack = document.querySelector("#slack-chat")
+  forEach( slack.querySelectorAll(".slacked"), function(index, node) {
+    var stamp = node.getAttribute("timestamp");
+    if (slack.getAttribute("notifstamp") < stamp) {
+      slack.setAttribute("notifstamp", stamp)
+      if (slack.getAttribute("firstpass") === "done") {
+        var audio = new Audio('snd/slack_sfx/knock_brush.mp3');
+        audio.loop = false;
+        audio.play();
+      }
+    }
+  } )
+  slack.setAttribute("firstpass", "done")
+}
+
+// https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
+var forEach = function (array, callback, scope) {
+  for (var i = 0; i < array.length; i++) {
+    callback.call(scope, i, array[i]); // passes back stuff we need
+  }
+};
+
+/*
  Alternate between building and space calendars.
  */
 

@@ -184,6 +184,13 @@ For Slack's privacy policy, see: <https://slack.com/privacy-policy>
 
 The Slack name and logo are trademarks of Slack Technologies, Inc.
 
+#### Knock Brush
+
+Knock brush sound effect is public domain under CC0 1.0 Universal (CC0 1.0)
+Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
+
+Source: https://archive.org/details/slack_sfx
+
 
 ### jobs/events.py, jobs/photo.py, jobs/upmeet.py
 

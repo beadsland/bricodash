@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file name="animal_stick.mp3" source="original">
+    <mtime>1451331173</mtime>
+    <size>13693</size>
+    <md5>74d2956ce9d363e74a0fd89d49576c38</md5>
+    <crc32>885b3163</crc32>
+    <sha1>26e91de390caa839b9667008653215e3be12f918</sha1>
+    <format>VBR MP3</format>
+    <length>0.44</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="animal_stick.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>animal_stick.mp3</original>
+    <mtime>1451331229</mtime>
+    <size>7913</size>
+    <md5>8b43d289ad1980b8c35d5615ac4e898e</md5>
+    <crc32>08fcbf8b</crc32>
+    <sha1>9a189e9ba7106a74381592c9145859e7cf3664b2</sha1>
+    <length>0.42</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="animal_stick.png" source="derivative">
+    <format>PNG</format>
+    <original>animal_stick.mp3</original>
+    <mtime>1451331242</mtime>
+    <size>10355</size>
+    <md5>6b6a0e654f9440440105f929dbf232cd</md5>
+    <crc32>50d55bab</crc32>
+    <sha1>24334291cee2ed35b529e3a35adb848ed311b725</sha1>
+  </file>
+  <file name="animal_stick_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>animal_stick.mp3</original>
+    <mtime>1451331262</mtime>
+    <size>20231</size>
+    <md5>1fa473b59c08819a33a1331d1dddd99c</md5>
+    <crc32>d301773a</crc32>
+    <sha1>bbf1d220c02a49eb46acfbaa7c073957856c470d</sha1>
+  </file>
+  <file name="animal_stick_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>animal_stick.mp3</original>
+    <mtime>1451331256</mtime>
+    <size>173801</size>
+    <md5>677eb63336a3e614a0d320d64958aecf</md5>
+    <crc32>6380c57c</crc32>
+    <sha1>fb04fb2939b31d63f3b86e56c6ff832d62b1f7fd</sha1>
+  </file>
+  <file name="b2.mp3" source="original">
+    <mtime>1451331177</mtime>
+    <size>36937</size>
+    <md5>93abf8c9f5c7580273afeb80b0d380f5</md5>
+    <crc32>5e9a1aca</crc32>
+    <sha1>57fd58af0742922ed0246644f2f4e32206460386</sha1>
+    <format>VBR MP3</format>
+    <length>2.01</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="b2.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>b2.mp3</original>
+    <mtime>1451331227</mtime>
+    <size>19377</size>
+    <md5>28d8f8de45b52ec246d2810902db0059</md5>
+    <crc32>27700948</crc32>
+    <sha1>3f90b89397bf688eab59d4cf8785a40afb095d91</sha1>
+    <length>1.99</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="b2.png" source="derivative">
+    <format>PNG</format>
+    <original>b2.mp3</original>
+    <mtime>1451331243</mtime>
+    <size>2558</size>
+    <md5>067e543cbbdff73fc2bc90bc7591be52</md5>
+    <crc32>4f7ea32a</crc32>
+    <sha1>3440e378c298b05955a1dcc825fc163373e7c071</sha1>
+  </file>
+  <file name="b2_esshigh.json.gz" source="derivative">
+    <format>Essentia High GZ</format>
+    <original>b2_esslow.json.gz</original>
+    <mtime>1451331563</mtime>
+    <size>1881</size>
+    <md5>07c68211384801731741d0327a1d0ef3</md5>
+    <crc32>9ecc9784</crc32>
+    <sha1>2ee9d6efc3dc08fbc54459d5bb4be3302f3adc3b</sha1>
+  </file>
+  <file name="b2_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>b2.mp3</original>
+    <mtime>1451331266</mtime>
+    <size>20909</size>
+    <md5>a5341f6ce8c0068c82a32a14f7989b43</md5>
+    <crc32>1df256a5</crc32>
+    <sha1>1a9c03d2b9c8a193e0cd96c19d8fc1836293109f</sha1>
+  </file>
+  <file name="b2_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>b2.mp3</original>
+    <mtime>1451331255</mtime>
+    <size>224660</size>
+    <md5>82a0573b281f9896e0672faa23f2ada2</md5>
+    <crc32>854b986d</crc32>
+    <sha1>2ff66699e91ba240da108ff2a591e49a9a167090</sha1>
+  </file>
+  <file name="been_tree.mp3" source="original">
+    <mtime>1451331181</mtime>
+    <size>16093</size>
+    <md5>db184ac372f54226aecce5ab6c0852e0</md5>
+    <crc32>c7a6c56c</crc32>
+    <sha1>97c80b444d8adc10a95957354b12192aad13c3af</sha1>
+    <format>VBR MP3</format>
+    <length>0.55</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="been_tree.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>been_tree.mp3</original>
+    <mtime>1451331236</mtime>
+    <size>10609</size>
+    <md5>69792e860c6d1d5f5cbb1d223c62de47</md5>
+    <crc32>3cfbdc16</crc32>
+    <sha1>a7ea43b0ee33e07bb7dbf425ba3d5c372a6fb8f8</sha1>
+    <length>0.52</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="been_tree.png" source="derivative">
+    <format>PNG</format>
+    <original>been_tree.mp3</original>
+    <mtime>1451331249</mtime>
+    <size>5766</size>
+    <md5>025dbede37811a02b6649039a7fd748b</md5>
+    <crc32>6e7dfd4a</crc32>
+    <sha1>f07866e2a1a320c247aff043737ea59bdb4f89fe</sha1>
+  </file>
+  <file name="been_tree_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>been_tree.mp3</original>
+    <mtime>1451331269</mtime>
+    <size>20290</size>
+    <md5>2089187f12165be2a1237998bcd7d15c</md5>
+    <crc32>4643ab94</crc32>
+    <sha1>d25f922eb92dddbc8aed4534780163a43a43c4b2</sha1>
+  </file>
+  <file name="been_tree_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>been_tree.mp3</original>
+    <mtime>1451331254</mtime>
+    <size>265676</size>
+    <md5>3448f09b3c622dc5ef23551cca138e00</md5>
+    <crc32>e33219a3</crc32>
+    <sha1>588a818152d4619c16954e2a83d465360affa1ac</sha1>
+  </file>
+  <file name="complete_quest_requirement.mp3" source="original">
+    <mtime>1451331184</mtime>
+    <size>30578</size>
+    <md5>bf1d81a7a40c6d95f70854ad198fc5e9</md5>
+    <crc32>6492f26a</crc32>
+    <sha1>7c68e4b83e4299d9ae6ddd9a4747db944f06a43c</sha1>
+    <format>VBR MP3</format>
+    <length>1.59</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="complete_quest_requirement.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>complete_quest_requirement.mp3</original>
+    <mtime>1451331230</mtime>
+    <size>17055</size>
+    <md5>db38b07b2995dd195c6da76cfd4646ed</md5>
+    <crc32>92329dd4</crc32>
+    <sha1>9ef98686be3b574d345068b8cce70ab372f34745</sha1>
+    <length>1.57</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="complete_quest_requirement.png" source="derivative">
+    <format>PNG</format>
+    <original>complete_quest_requirement.mp3</original>
+    <mtime>1451331240</mtime>
+    <size>2884</size>
+    <md5>57fc67767f0a1d43ef086d35d61592c2</md5>
+    <crc32>456454cd</crc32>
+    <sha1>2e53ae9633e70007a5abbdd2ebce6ca8347181e4</sha1>
+  </file>
+  <file name="complete_quest_requirement_esshigh.json.gz" source="derivative">
+    <format>Essentia High GZ</format>
+    <original>complete_quest_requirement_esslow.json.gz</original>
+    <mtime>1451331570</mtime>
+    <size>1919</size>
+    <md5>7dc9ae39f30377225745a37383b28991</md5>
+    <crc32>ed27339c</crc32>
+    <sha1>8c8bbeea6a7d4c600bb4a21bba5fee5b7ce808d5</sha1>
+  </file>
+  <file name="complete_quest_requirement_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>complete_quest_requirement.mp3</original>
+    <mtime>1451331264</mtime>
+    <size>20961</size>
+    <md5>dc87ffe81896c58de515acfac0d21cbe</md5>
+    <crc32>bc113092</crc32>
+    <sha1>0cf54858bc3e7790ed6134a32ab6a785f6a9ce6b</sha1>
+  </file>
+  <file name="complete_quest_requirement_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>complete_quest_requirement.mp3</original>
+    <mtime>1451331258</mtime>
+    <size>201019</size>
+    <md5>7bbd92e0fe12df5310f66b662ce7d568</md5>
+    <crc32>4306ffe3</crc32>
+    <sha1>d74af075dc8440d68afdb213b0ea2ef380d6d9f0</sha1>
+  </file>
+  <file name="confirm_delivery.mp3" source="original">
+    <mtime>1451331189</mtime>
+    <size>20695</size>
+    <md5>cc98df71d6b8f82ed163602c101bcb11</md5>
+    <crc32>60f31c4b</crc32>
+    <sha1>6633f3c876423bcc584b306d3d89f7f5bb8d01f2</sha1>
+    <format>VBR MP3</format>
+    <length>0.71</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="confirm_delivery.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>confirm_delivery.mp3</original>
+    <mtime>1451331233</mtime>
+    <size>9184</size>
+    <md5>9086bd6524e9b3954588d9814c2ebfb4</md5>
+    <crc32>c529c97e</crc32>
+    <sha1>1567a73d278ac12d95f2622e2b714c61be520061</sha1>
+    <length>0.68</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="confirm_delivery.png" source="derivative">
+    <format>PNG</format>
+    <original>confirm_delivery.mp3</original>
+    <mtime>1451331251</mtime>
+    <size>4167</size>
+    <md5>f1f69e6789114529b4e88ef423ed25f0</md5>
+    <crc32>f9626983</crc32>
+    <sha1>d3e5dfd54a56d9e4bbb3678d2fe4092058d5d51e</sha1>
+  </file>
+  <file name="confirm_delivery_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>confirm_delivery.mp3</original>
+    <mtime>1451331267</mtime>
+    <size>20361</size>
+    <md5>38b4c4b6fae1fbe2eff02f5d1ecb28ab</md5>
+    <crc32>4907601b</crc32>
+    <sha1>9e6bcf2183a30b5311d39354ec15532a3f4cf20f</sha1>
+  </file>
+  <file name="confirm_delivery_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>confirm_delivery.mp3</original>
+    <mtime>1451331252</mtime>
+    <size>107470</size>
+    <md5>444dc21be0618ef453da77663e93be17</md5>
+    <crc32>af2b5a0a</crc32>
+    <sha1>f5494b49b4e7ff8b800658ce995fccc963ba19c1</sha1>
+  </file>
+  <file name="flitterbug.mp3" source="original">
+    <mtime>1451331192</mtime>
+    <size>44462</size>
+    <md5>7d3db0143c9cd1603761cb78413a3f67</md5>
+    <crc32>798a15a2</crc32>
+    <sha1>530d0cdb7e7ab50869553021a63c00fe92f3c847</sha1>
+    <format>VBR MP3</format>
+    <length>2.19</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="flitterbug.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>flitterbug.mp3</original>
+    <mtime>1451331228</mtime>
+    <size>27159</size>
+    <md5>0d57330ab7fae7e69c9088338ea13957</md5>
+    <crc32>070844d2</crc32>
+    <sha1>f62ed6bb590f333c2fde60b2a92747df4a632750</sha1>
+    <length>2.17</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="flitterbug.png" source="derivative">
+    <format>PNG</format>
+    <original>flitterbug.mp3</original>
+    <mtime>1451331246</mtime>
+    <size>7826</size>
+    <md5>58b0b4602db832578498b4b670285a92</md5>
+    <crc32>b8204e89</crc32>
+    <sha1>8e8cb304da42abcc70eb872c5d27e2066f8cda09</sha1>
+  </file>
+  <file name="flitterbug_esshigh.json.gz" source="derivative">
+    <format>Essentia High GZ</format>
+    <original>flitterbug_esslow.json.gz</original>
+    <mtime>1451331581</mtime>
+    <size>1915</size>
+    <md5>1cd0fd61bcafd566737a15a472d47838</md5>
+    <crc32>3c71fb12</crc32>
+    <sha1>ec62ceef891c424e5818d497bc72ca236c736788</sha1>
+  </file>
+  <file name="flitterbug_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>flitterbug.mp3</original>
+    <mtime>1451331273</mtime>
+    <size>21053</size>
+    <md5>8d7a9a30c380e7b6a6839fa2aa0c013c</md5>
+    <crc32>1d0d65e4</crc32>
+    <sha1>7b214366fc24580799b96c995116a5922aaec2e8</sha1>
+  </file>
+  <file name="flitterbug_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>flitterbug.mp3</original>
+    <mtime>1451331259</mtime>
+    <size>214010</size>
+    <md5>c4ac65eadf013d9a0c022d17eb6479d4</md5>
+    <crc32>1824c5e1</crc32>
+    <sha1>73105bbf176abb4c4a0c8f18d1da8e8c0425fbda</sha1>
+  </file>
+  <file name="here_you_go_lighter.mp3" source="original">
+    <mtime>1451331195</mtime>
+    <size>17157</size>
+    <md5>3c1f056325c23624546315fdc12d1274</md5>
+    <crc32>ae377fa1</crc32>
+    <sha1>bbe14932113a2431f6d24d88c32ce6782bea1207</sha1>
+    <format>VBR MP3</format>
+    <length>0.86</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="here_you_go_lighter.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>here_you_go_lighter.mp3</original>
+    <mtime>1451331231</mtime>
+    <size>10214</size>
+    <md5>6c786081d0d8f0acf621a8db21a4e3f3</md5>
+    <crc32>37d3aa61</crc32>
+    <sha1>53b88e38bcad2007b1b392e609f8c3cbee3012f0</sha1>
+    <length>0.65</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="here_you_go_lighter.png" source="derivative">
+    <format>PNG</format>
+    <original>here_you_go_lighter.mp3</original>
+    <mtime>1451331248</mtime>
+    <size>4753</size>
+    <md5>fc4aebb249e684d10640c079c0d1d356</md5>
+    <crc32>5a46fb5b</crc32>
+    <sha1>8956444c05e516bab78b92133f268250315e649b</sha1>
+  </file>
+  <file name="here_you_go_lighter_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>here_you_go_lighter.mp3</original>
+    <mtime>1451331263</mtime>
+    <size>20177</size>
+    <md5>be49e0fb2e9f4857dccbf70faf53530f</md5>
+    <crc32>637d9632</crc32>
+    <sha1>6b924ff4ee08a51b67757ec1ea8bde303a82cd60</sha1>
+  </file>
+  <file name="here_you_go_lighter_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>here_you_go_lighter.mp3</original>
+    <mtime>1451331253</mtime>
+    <size>285595</size>
+    <md5>9b9cfa0de109296ba055e28c32a550ed</md5>
+    <crc32>3e992f13</crc32>
+    <sha1>d9a423b647b23ceace54788b95d4cce8f7c76a19</sha1>
+  </file>
+  <file name="hi_flowers_hit.mp3" source="original">
+    <mtime>1451331199</mtime>
+    <size>23878</size>
+    <md5>a440d5b72d5c115bbed679418e9721c0</md5>
+    <crc32>e55c72d7</crc32>
+    <sha1>40eb97338f35aadd47453c7902740e5c03f63ebe</sha1>
+    <format>VBR MP3</format>
+    <length>1.96</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="hi_flowers_hit.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>hi_flowers_hit.mp3</original>
+    <mtime>1451331232</mtime>
+    <size>18818</size>
+    <md5>41e5f80f4d16ec665d66f1f640da86d6</md5>
+    <crc32>30b12681</crc32>
+    <sha1>06b5e16f265cc03343990e4263d54e7b962fa067</sha1>
+    <length>1.93</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="hi_flowers_hit.png" source="derivative">
+    <format>PNG</format>
+    <original>hi_flowers_hit.mp3</original>
+    <mtime>1451331247</mtime>
+    <size>4446</size>
+    <md5>0d8814dcf470e4fd66f6978050be0dfd</md5>
+    <crc32>229ed8ca</crc32>
+    <sha1>bd33d5f654379959a4783a42d430a5768729f132</sha1>
+  </file>
+  <file name="hi_flowers_hit_esshigh.json.gz" source="derivative">
+    <format>Essentia High GZ</format>
+    <original>hi_flowers_hit_esslow.json.gz</original>
+    <mtime>1451331576</mtime>
+    <size>1891</size>
+    <md5>85f8008dad2995078d19c09868f93b91</md5>
+    <crc32>10fa7690</crc32>
+    <sha1>14a21aaabd5c34196dcebf8bafeaf80c158696f7</sha1>
+  </file>
+  <file name="hi_flowers_hit_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>hi_flowers_hit.mp3</original>
+    <mtime>1451331271</mtime>
+    <size>21046</size>
+    <md5>8f416fb01c1c2ecc445cccc88615cb6c</md5>
+    <crc32>ac936cf9</crc32>
+    <sha1>8a08f2306cae1f574f5b12d68bc84913eaaa89ca</sha1>
+  </file>
+  <file name="hi_flowers_hit_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>hi_flowers_hit.mp3</original>
+    <mtime>1451331260</mtime>
+    <size>147602</size>
+    <md5>50c919b456c15f644f572a14121a161a</md5>
+    <crc32>8d72e692</crc32>
+    <sha1>7542e7a8f03e74106ea4c30f5c9cd929e02924cb</sha1>
+  </file>
+  <file name="item_pickup.mp3" source="original">
+    <mtime>1451331202</mtime>
+    <size>12455</size>
+    <md5>9eac57f227789b7ed69695820de633bf</md5>
+    <crc32>1ddd019f</crc32>
+    <sha1>f7c700f0126f41e6538e0a4fc8be345240951119</sha1>
+    <format>VBR MP3</format>
+    <length>0.62</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="item_pickup.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>item_pickup.mp3</original>
+    <mtime>1451331234</mtime>
+    <size>8306</size>
+    <md5>d98c9b63f9c980fc93bb3e893ad7ad40</md5>
+    <crc32>ba568bbc</crc32>
+    <sha1>21011af117bb55f764b62d5f14917d8aef00812f</sha1>
+    <length>0.42</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="item_pickup.png" source="derivative">
+    <format>PNG</format>
+    <original>item_pickup.mp3</original>
+    <mtime>1451331244</mtime>
+    <size>7499</size>
+    <md5>f1663bde86bfdd394287f91217302a2a</md5>
+    <crc32>c1fe915b</crc32>
+    <sha1>ee97be81a2b08ef6457c57eb5b61394bfcdd33b9</sha1>
+  </file>
+  <file name="item_pickup_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>item_pickup.mp3</original>
+    <mtime>1451331270</mtime>
+    <size>20148</size>
+    <md5>f0bf59d13ae0fc6ac550245fff7d2b85</md5>
+    <crc32>83609c86</crc32>
+    <sha1>c67d74bcfcdc83cc5ad5a91bbf7d9cbe30b7ac74</sha1>
+  </file>
+  <file name="item_pickup_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>item_pickup.mp3</original>
+    <mtime>1451331252</mtime>
+    <size>241958</size>
+    <md5>3308f85f03992f7a5a45114539ff722b</md5>
+    <crc32>8e7069c1</crc32>
+    <sha1>fe4eb7f21d2f6f862f583f25dad3c6d32b175d8d</sha1>
+  </file>
+  <file name="knock_brush.mp3" source="original">
+    <mtime>1451331205</mtime>
+    <size>15067</size>
+    <md5>bd6e16226815ac656fe37a4b27391b81</md5>
+    <crc32>de48b7bb</crc32>
+    <sha1>b5caa1bb1369b680f0b92da1c507305aa3e8fa51</sha1>
+    <format>VBR MP3</format>
+    <length>0.75</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="knock_brush.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>knock_brush.mp3</original>
+    <mtime>1451331234</mtime>
+    <size>9284</size>
+    <md5>311c91b15e3eb8830b157e5a0b3628f8</md5>
+    <crc32>78e9698f</crc32>
+    <sha1>2bcf6d2747db741c7f9a69a823eeb9b0da941549</sha1>
+    <length>0.55</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="knock_brush.png" source="derivative">
+    <format>PNG</format>
+    <original>knock_brush.mp3</original>
+    <mtime>1451331239</mtime>
+    <size>4060</size>
+    <md5>da0e6d74600dcceff6a44d29063224a8</md5>
+    <crc32>dc277914</crc32>
+    <sha1>fad88af29786deb2cdc001b14e1edeed4f55ad4b</sha1>
+  </file>
+  <file name="knock_brush_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>knock_brush.mp3</original>
+    <mtime>1451331274</mtime>
+    <size>20234</size>
+    <md5>ed7d32913f9a000710005d6131650064</md5>
+    <crc32>8ac263f4</crc32>
+    <sha1>cd8d7686b283ee40da35fd3bf71caaae60a7fb0c</sha1>
+  </file>
+  <file name="knock_brush_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>knock_brush.mp3</original>
+    <mtime>1451331257</mtime>
+    <size>150938</size>
+    <md5>5c1de3ba75ab53bc45e3642a129caf1b</md5>
+    <crc32>a6c217c7</crc32>
+    <sha1>1d8be5608bc5ccb0ba5cde9b028410ef09211435</sha1>
+  </file>
+  <file name="save_and_checkout.mp3" source="original">
+    <mtime>1451331208</mtime>
+    <size>37400</size>
+    <md5>1f16c1a6c079921c2d291f2828c45757</md5>
+    <crc32>86d04f01</crc32>
+    <sha1>25c2efb52634aa143c892825e26852ace94130e7</sha1>
+    <format>VBR MP3</format>
+    <length>1.23</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="save_and_checkout.ogg" source="derivative">
+    <format>Ogg Vorbis</format>
+    <original>save_and_checkout.mp3</original>
+    <mtime>1451331235</mtime>
+    <size>16882</size>
+    <md5>7a36b7f2a6230f5507f3b462f4151eb3</md5>
+    <crc32>3a8582d9</crc32>
+    <sha1>1f8f77ffdf1147f12ca49983e2b358b2635b9865</sha1>
+    <length>1.2</length>
+    <height>0</height>
+    <width>0</width>
+  </file>
+  <file name="save_and_checkout.png" source="derivative">
+    <format>PNG</format>
+    <original>save_and_checkout.mp3</original>
+    <mtime>1451331238</mtime>
+    <size>6413</size>
+    <md5>e4680f74960da5f8c03d0c72cd8f2171</md5>
+    <crc32>8203314a</crc32>
+    <sha1>8b5bba86609e99a0dc88e8c69be5f39a3d9b677b</sha1>
+  </file>
+  <file name="save_and_checkout_esshigh.json.gz" source="derivative">
+    <format>Essentia High GZ</format>
+    <original>save_and_checkout_esslow.json.gz</original>
+    <mtime>1451331556</mtime>
+    <size>1917</size>
+    <md5>56e88d801b789faaa69369ef587d673a</md5>
+    <crc32>35d4cc5a</crc32>
+    <sha1>54f869833f863055817835210d15f3fc001d70a8</sha1>
+  </file>
+  <file name="save_and_checkout_esslow.json.gz" source="derivative">
+    <format>Essentia Low GZ</format>
+    <original>save_and_checkout.mp3</original>
+    <mtime>1451331268</mtime>
+    <size>20574</size>
+    <md5>783fc98d64441c8d7b4351ef2ad9f0b3</md5>
+    <crc32>d47f79d8</crc32>
+    <sha1>1f361d5a8d1bd462f5d7cd430110ca0f9d970d94</sha1>
+  </file>
+  <file name="save_and_checkout_spectrogram.png" source="derivative">
+    <format>Spectrogram</format>
+    <original>save_and_checkout.mp3</original>
+    <mtime>1451331261</mtime>
+    <size>194053</size>
+    <md5>d7a20ab005dfd99b2392bc1feb9b975d</md5>
+    <crc32>42719748</crc32>
+    <sha1>dc92126f97b6cbe9cf7119572040ef4f90c79a55</sha1>
+  </file>
+  <file name="slack_sfx_archive.torrent" source="metadata">
+    <btih>7f5151f66e31eb97448b17b5e0347de140b48e0b</btih>
+    <mtime>1484688935</mtime>
+    <size>12137</size>
+    <md5>a4a5e1eb5468c34ac913903f1d440a42</md5>
+    <crc32>26669144</crc32>
+    <sha1>d686f60caa2ae33e24cabc64270a2e32a11a061f</sha1>
+    <format>Archive BitTorrent</format>
+  </file>
+  <file name="slack_sfx_files.xml" source="original">
+    <format>Metadata</format>
+    <md5>6de6d72b6a558e5434b996ec2e4c1c53</md5>
+  </file>
+  <file name="slack_sfx_meta.sqlite" source="original">
+    <mtime>1451331214</mtime>
+    <size>25600</size>
+    <md5>06f0a4018de8d2d5020594b150656a1f</md5>
+    <crc32>ba67f9fa</crc32>
+    <sha1>a2643dde42718ee68c83233294d356e8fc4a3d91</sha1>
+    <format>Metadata</format>
+  </file>
+  <file name="slack_sfx_meta.xml" source="original">
+    <mtime>1484688934</mtime>
+    <size>852</size>
+    <format>Metadata</format>
+    <md5>d547ac170c88d277c8bb9486ae6cf442</md5>
+    <crc32>722bb561</crc32>
+    <sha1>3dbe1d7291a5df6c127dc67d50980f95deb42177</sha1>
+  </file>
+</files>
