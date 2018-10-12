@@ -26,6 +26,7 @@ import brico.slack
 import humanize
 import datetime
 import re
+import math
 
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
@@ -95,6 +96,20 @@ for message in reversed(slack.messages('hackerspace', 11)):
     lstwhn = when
     lstwho = user
     hist.append( div(whn(when) + " &mdash; " +  who(user) + ": " + text) )
+
+###
+# Trim excess lines
+###
+def linecount(s): return math.ceil( len( tag.sub("", img.sub("[]", s)) ) / 80 )
+img = re.compile(r'<img[^>]+>')
+tag = re.compile(r'<[^>]+>')
+lines = 11
+
+while lines > 10:
+  lines = 0
+  for h in hist: lines += linecount(h)
+  if lines - linecount(hist[0]) > 11:     hist.pop(0)
+  else:                                   break
 
 ###
 # And dump it out for polling
