@@ -106,3 +106,17 @@ class Slack:
     else:
       emoji = emoji_data_python.replace_colons(":%s:" % name)
       return emoji if not 'emotag' in tags else tags['emotag']( emoji )
+
+  # not memoized because message
+  def attachments(self, message, imgtag=None, lnktag=None):
+    text = ""
+
+    for key in ['files', 'attachments']:
+      if key in message:
+        for file in message[key]:
+          for path in ['thumb_64', 'image_url', 'permalink']:
+            if path in file:
+              text += " %s" % self.link(file[path], imgtag, lnktag)
+              break # for path
+
+    return text

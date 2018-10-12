@@ -61,18 +61,7 @@ for message in reversed(slack.messages('hackerspace', 11)):
 
   text = message['text'];
   for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
-
-  if 'files' in message:
-    for file in message['files']:
-      if 'thumb_64' in file:
-        text += "%s " % slack.link(file['thumb_64'], html.logo, linky)
-      else:
-        text += "%s " % slack.link(file['permalink'], html.logo, linky)
-
-  if 'attachments' in message:
-    for file in message['attachments']:
-      if 'image_url' in file:
-        text += " %s" % slack.link(file['image_url'], html.logo, linky)
+  text += slack.attachments(message, html.logo, linky)
 
   def div(s): return html.div().clss("slacking").inner(s).str()
   def hid(s): return html.span().style("opacity: .25;").inner(s).str()
