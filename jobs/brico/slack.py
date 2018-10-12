@@ -19,7 +19,6 @@ from slacker import Slacker
 import emoji_data_python
 from vend.memoize import memoized
 import brico.common.thumb
-import brico.common.html as html
 
 import urllib.parse
 import re
@@ -84,10 +83,10 @@ class Slack:
   # Links
   ###
   @memoized
-  def link(self, u, imgtag=None, lnktag=None, slemoji=False):
+  def link(self, u, imgtag=None, lnktag=None, slemotag=None):
     parse = urllib.parse.urlparse(u)
-    if (slemoji):
-      return html.img().clss('slemoji').src( thumb.get(u) ).str()
+    if (slemotag):
+      return slemotag( thumb.get(u) )
     elif (parse.path.endswith( ('.gif', '.jpg', '.jpeg', '.png') )):
       headers = { "Authorization": "Bearer " + self.token }
       if (re_thumb.match(parse.path)):    file = thumb.get(u, headers)
@@ -102,7 +101,7 @@ class Slack:
       if self.emoji()[name].startswith("alias:"):
         return self.mojilink( self.emoji()[name].replace("alias:", ""), tags )
       else:
-        return self.link( self.emoji()[name], tags['imgtag'], tags['lnktag'], True )
+        return self.link( self.emoji()[name], None, None, tags['slemotag'] )
     else:
       emoji = emoji_data_python.replace_colons(":%s:" % name)
       return emoji if not 'emotag' in tags else tags['emotag']( emoji )

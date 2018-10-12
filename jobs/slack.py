@@ -23,18 +23,12 @@ import brico.common
 import brico.common.html as html
 import brico.slack
 
-import re
 import humanize
 import datetime
-import requests
-import os
+import re
 
 token = brico.common.get_token("slacker_token")
 slack = brico.slack.Slack( token )
-
-hist = []
-lstwhn = ""
-lstwho = ""
 
 durdict = { "second": "sec", "minute": "min", "hour": "hr",
             "day": "dy", "week": "wk", " ago": "" }
@@ -45,14 +39,21 @@ def linky(u):
   file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
   return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
 
+def slemoji(u): return html.img().clss('slemoji').src( u ).str()
+
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
 
-emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky }
+emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
+            'slemotag': slemoji }
 txtdict = [ ("<(http[^>]+)>",          lambda m: slack.link(m.group(1), html.logo) ),
             ("<#[^\|>]+\|([^>]+)?>",   lambda m: chn(m.group(1)) ),
             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
             (":([A-Za-z\-_]+):",       lambda m: slack.emoji(m.group(1), emotags) ) ]
+
+hist = []
+lstwhn = ""
+lstwho = ""
 
 for message in reversed(slack.messages('hackerspace', 11)):
   delta = datetime.datetime.now().timestamp() - float(message['ts'])
