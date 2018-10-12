@@ -119,3 +119,14 @@ class Slack:
               break # for path
 
     return text
+
+  def reactions(self, message, tags={}):
+    if 'reactions' not in message: return ""
+    text = []
+
+    for r in message['reactions']:
+      reaction = "%s%s" % (self.mojilink(r['name'], tags),
+                           tags['reactct'](str(r['count'])))
+      text.append( tags['reactdiv'](reaction) )
+
+    return text

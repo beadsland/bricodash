@@ -60,3 +60,21 @@
   color: #F09A67;
   letter-spacing: -.03em;
 }
+
+.reactji {
+  display: inline;
+  color: #F09A67;
+  font-size: 70%;
+  vertical-align: 20%;
+  border-radius: 5px;
+  border: 1px dotted #F09A67;
+  padding-left: .3em;
+  padding-right: .3em;
+  white-space: nowrap;
+}
+
+.reactct {
+  font-size: 70%;
+  vertical-align: 10%;
+  font-weight: bold;
+}

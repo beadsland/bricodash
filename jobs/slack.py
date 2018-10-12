@@ -45,14 +45,14 @@ def who(s): return html.span().clss("slackee").inner(s).str()
 ##
 @memoized
 def slemoji(u): return html.img().clss('slemoji').src( u ).str()
-
-# no memoize because links tend to be one-offs
+def reactji(s): return html.div().clss('reactji').inner( s ).str()
+def reactct(s): return html.span().clss('reactct').inner( s ).str()
 def linky(u):
   file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
   return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
 
 emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
-            'slemotag': slemoji }
+            'slemotag': slemoji, 'reactdiv': reactji, 'reactct': reactct }
 
 ###
 # Outer formatting
@@ -85,7 +85,9 @@ for message in reversed(slack.messages('hackerspace', 11)):
 
   text = message['text'];
   for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
-  text += " %s" % " ".join( slack.attachments(message, html.logo, linky) )
+  text = ' '.join([ text,
+                    ' '.join(slack.attachments(message, html.logo, linky)),
+                    ' '.join(slack.reactions(message, emotags)) ])
 
   if lstwhn == when and lstwho == user:
     hist.append( div(hid(whn(when) + " &mdash; " +  who(user) + ": ") + text) )
