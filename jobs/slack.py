@@ -86,6 +86,8 @@ for message in reversed(slack.messages('hackerspace', 11)):
 
   text = message['text'];
   for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
+  if 'edited' in message:
+    text += ' %s' % html.span().clss('sledited').inner("(edited)").str()
   text = ' '.join([ text,
                     ' '.join(slack.attachments(message, html.logo, linky)),
                     ' '.join(slack.reactions(message, emotags)) ])

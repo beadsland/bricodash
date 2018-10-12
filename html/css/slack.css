@@ -45,6 +45,12 @@
   overflow-wrap: break-word;
 }
 
+.sledited {
+  color: #668866;
+  font-size: 60%;
+  vertical-align: 20%;
+}
+
 .slacked {
   font-size: 80%;
   font-style: italic;
