@@ -9,10 +9,10 @@
     - [html/util/camera.php](#htmlutilcameraphp)
     - [html/js/clock.js](#htmljsclockjs)
     - [jobs/vend/memoize.py](#jobsvendmemoizepy)
-  - [jobs/vend/multisub.py](#jobsvendmultisubpy)
+    - [jobs/vend/multisub.py](#jobsvendmultisubpy)
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
-    - [jobs/slack.py](#jobsslackpy)
+    - [jobs/brico/slack.py](#jobsbricoslackpy)
     - [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
     - [jobs/brite.py](#jobsbritepy)
     - [jobs/wiki.py](#jobswikipy)
@@ -138,7 +138,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-## jobs/vend/multisub.py
+### jobs/vend/multisub.py
 
 Original recipes from "1.18. Replacing Multiple Patterns in a Single Pass",
 Python Cookbook™, Second Edition copyright (c) 2005, 2002 Xavier Defrang
@@ -172,7 +172,7 @@ Any rights in individual contents of the database are licensed under
 the Database Contents License: <http://opendatacommons.org/licenses/dbcl/1.0/>.
 
 
-### jobs/slack.py
+### jobs/brico/slack.py
 
 Slack Web API used under Slack's API Terms of Service.
 https://slack.com/terms-of-service/api
