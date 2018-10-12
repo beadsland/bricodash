@@ -13,8 +13,8 @@
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
     - [jobs/brico/slack.py](#jobsbricoslackpy)
-    - [jobs/events.py, jobs/photo.py, jobs/upmeet.py](#jobseventspy-jobsphotopy-jobsupmeetpy)
-    - [jobs/brite.py](#jobsbritepy)
+    - [jobs/brico/, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py](#jobsbrico-jobsphotopy-jobsbricoeventstoberpy-jobsbricoeventsupmeetpy)
+    - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/wiki.py](#jobswikipy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
@@ -192,7 +192,7 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 Source: https://archive.org/details/slack_sfx
 
 
-### jobs/events.py, jobs/photo.py, jobs/upmeet.py
+### jobs/brico/, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py
 
 Meetup API used under Meetup's Terms of Service and Meetup API License Guidelines.
 https://help.meetup.com/hc/en-us/articles/360001636711-Meetup-API-License-Guidelines
@@ -204,7 +204,7 @@ For Meetup's privacy policy, see: <https://www.meetup.com/privacy/>.
 The Meetup logo is a trademark of Meetup, Inc.
 
 
-### jobs/brite.py
+### jobs/brico/events/brite.py
 
 Eventbrite API used under Eventbrite's API Terms of Service.
 https://www.eventbrite.com/support/articles/en_US/Troubleshooting/eventbrite-api-terms-of-use
