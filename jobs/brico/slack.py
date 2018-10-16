@@ -115,7 +115,8 @@ class Slack:
         for file in message[key]:
           for path in ['thumb_64', 'image_url', 'permalink']:
             if path in file:
-              text.append( self.link(file[path], imgtag, lnktag) )
+              if file[path] not in message['text']:
+                text.append( self.link(file[path], imgtag, lnktag) )
               break # for path
 
     return text
