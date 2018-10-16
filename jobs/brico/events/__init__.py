@@ -31,29 +31,25 @@ import brico.common.html as html
 
 def main():
   pwd = os.path.dirname(sys.argv[0])
-  filename = pwd + "/../html/pull/brite.json"
-  with open(filename) as f: brite = json.load(f)
+  rel = os.path.join(pwd, "../html/pull"
 
-  filename = pwd + "/../html/pull/upmeet.json"
-  with open(filename) as f: upmeet = json.load(f)
+  # Building and community events
+  ratpark = []
+  for file in ["brite.json", "upmeet.json", "holiday.json", "tober.json"]:
+    path = os.path.join(rel, file)
+    with open(path) as f: ratpark = ratpark + json.load(f)
 
-  filename = pwd + "/../html/pull/holiday.json"
-  with open(filename) as f: holiday = json.load(f)
-
-  filename = pwd + "/../html/pull/tober.json"
-  with open(filename) as f: tober = json.load(f)
-
-
-  ratpark = brite + upmeet + holiday + tober;
+  def noisy(s):
+    return html.span().clss("noisy").inner(s)
+         + html.span().clss("noisemoji").inner(u"🔊🎶")
 
   d = datetime.date.today()
-  while d.weekday() != 4:
-    d += datetime.timedelta(1)
-  def noisy(s): return '<span class="noisy">' + s + '</span> <span class="noisemoji">' + u"🔊🎶" + "</span>"
+  while d.weekday() != 4:     d += datetime.timedelta(1)
   ratpark.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
-                    "event": noisy("Friday Night Live Music"), "venue": "Offside Tavern" } )
+                    "event": noisy("Friday Night Live Music"),
+                    "venue": "Offside Tavern" } )
 
-
+  # Space events
   sig_file = ".keys/meetup_events"
   with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
   query = "https://api.meetup.com/HackManhattan/events?photo-host=public&page=20&"
