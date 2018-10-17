@@ -42,7 +42,7 @@ for i in range(1, 60 * 10):
 
   result = str(sum(result))
   result = '<span id="veil" value="' + result + '"></span>'
-  result += '<span id="timestamp" epoch="' + str(time.time() + 1) + '"></span>'
+  result += '<span id="timestamp" epoch="' + str(time.time() + 2) + '"></span>'
 
   filename = os.path.join(pwd, "../../html/pull/sous.html")
 
