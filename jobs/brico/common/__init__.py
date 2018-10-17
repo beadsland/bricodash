@@ -28,8 +28,10 @@ import grp
 def pwd():      return os.path.dirname(sys.argv[0])
 
 @memoized
-def gid():      return  grp.getgrnam("hmweb").gr_gid
+def gid():      return grp.getgrnam("hmweb").gr_gid
 
+@memoized
+def pull():     return os.path.join( pwd(), "../html/pull" )
 
 ###
 # API access
@@ -52,7 +54,7 @@ def touch(f):
   with open(f, 'a'):    os.utime(f, None)
 
 def write_pull(filename, list):
-  filename = os.path.join( pwd(), "../html/pull", filename )
+  filename = os.path.join( pull(), filename )
   list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
   file = open(filename + ".new", "wb")
@@ -60,11 +62,12 @@ def write_pull(filename, list):
   file.close()
   os.rename(filename + ".new", filename)
 
-def write_json(filename, dict):
-  filename = os.path.join( pwd(), "../html/pull", filename )
-  dict['epoch'] = str(time.time())
+def write_json(filename, struct):
+  filename = os.path.join( pull(), filename )
+  if type(struct) is dict:
+    struct['epoch'] = str(time.time())
 
   file = open(filename + ".new", "w")
-  file.write( json.dumps(dict) )
+  file.write( json.dumps(struct) )
   file.close()
   os.rename(filename + ".new", filename)

@@ -20,10 +20,22 @@ import requests
 import json
 import sys
 import brico.common
+from vend.memoize import memoized
 
-def events(group, opt=""):
-  query = "https://api.meetup.com/" + group + "/events?"
-  query = "&".join([query, "sign=true&photo-host=public&page=20", opt])
+@memoized
+def grp(): return "HackManhattan"
+
+@memoized
+def events(group):
+  query = "/".join([ "https://api.meetup.com", group, "events?" ])
+  query = "&".join([query, "sign=true&photo-host=public&page=20"])
+  response = requests.get(query)
+  if response.status_code != 200:   sys.exit(response.status_code);
+  return json.loads(response.text)
+
+@memoized
+def rsvps(group, eid):
+  query = "/".join([ "https://api.meetup.com", group, "events", eid, "rsvps" ])
   response = requests.get(query)
   if response.status_code != 200:   sys.exit(response.status_code);
   return json.loads(response.text)

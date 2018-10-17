@@ -30,70 +30,45 @@ import dateutil.parser
 import brico.common
 import brico.common.html as html
 import brico.common.meetup
+from vend.memoize import memoized
 
-def main():
-  pwd = brico.common.pwd()
-  rel = os.path.join(pwd, "../html/pull")
+def noisy(s):
+  return html.span().clss("noisy").inner(s).str() \
+       + html.span().clss("noisemoji").inner(u"🔊🎶").str()
 
-  # Building and community events
-  ratpark = []
-  for file in ["brite.json", "upmeet.json", "holiday.json", "tober.json"]:
-    path = os.path.join(rel, file)
-    with open(path) as f: ratpark = ratpark + json.load(f)
-
-  def noisy(s):
-    return html.span().clss("noisy").inner(s).str() \
-         + html.span().clss("noisemoji").inner(u"🔊🎶").str()
+###
+# Events of other building tenants
+###
+def building():
+  list = []
+  for file in ["brite.json", "upmeet.json"]:
+    path = os.path.join(brico.common.pull(), file)
+    with open(path) as f: list = list + json.load(f)
 
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
-  ratpark.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
-                    "event": noisy("Friday Night Live Music"),
-                    "venue": "Offside Tavern" } )
+  list.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
+                 "event": noisy("Friday Night Live Music"),
+                 "venue": "Offside Tavern" } )
 
-  # Space events
-  data = brico.common.meetup.events("HackManhattan")
-  maths = brico.common.meetup.events("nyc-math")
-  maths = { e["name"]: (e["yes_rsvp_count"], e["id"]) for e in maths }
+  return list
 
-  today = datetime.date.today()
-  lasttuesday = max( week[calendar.TUESDAY]
-                     for week in calendar.monthcalendar(today.year, today.month) )
+###
+# Events relevant to our community
+###
+def community():
+  list = []
+  for file in ["space.json", "holiday.json", "tober.json"]:
+    path = os.path.join(brico.common.pull(), file)
+    with open(path) as f: list = list + json.load(f)
+  return list
 
-  for item in data[:8]:
-    dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
-
-    evt = item['name']
-    evt = re.sub(r' at Hack Manhattan', '', evt)
-    if (dt.day == lasttuesday) and (dt.month == today.month):
-      evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
-    evt = re.sub(r'(Open House)', r'\1 ' + html.logo("img/balloons.png"), evt)
-    evt = re.sub(r'(Fixers\' Collective)', r'\1 ' + html.logo("img/fixers.png"), evt)
-    if evt.startswith("Shakespeare Night"): evt += ' ' + html.emoji("🎭📖")
-    evt = re.sub(r'freeCodeCamp', '<img style="height:1.05em; vertical-align: bottom;" src="img/freeCodeCamp.png">', evt)
-    evt = re.sub(r'(Midnight Games)', r'\1 ' + html.emoji("🌌🎲"), evt)
-
-    if evt in maths:
-      rsvp = item['yes_rsvp_count'] + maths[evt][0] - 2
-      req = [ "http://api.meetup.com/hackmanhattan/events/" + item["id"] + "/rsvps",
-              "http://api.meetup.com/nyc-math/events/" + maths[evt][1] + "/rsvps" ]
-      rsvps = {};
-      for r in req:
-        resp = requests.get(r)
-        if resp.status_code != 200:   sys.exit(resp.status_code);
-        for ans in json.loads(resp.text):
-          id = ans["member"]["id"]
-          if id in rsvps and rsvps[id] > ans["guests"]:
-            pass
-          elif ans["response"] == "yes":
-            rsvps[id] = ans["guests"]
-      rsvp = len(rsvps) + sum(rsvps.values())
-      evt += ' ' + html.logo("img/math.png")
-    else:
-      rsvp = item['yes_rsvp_count']
-
-    ratpark.append( { "start": dt.isoformat(), "event":  evt,
-                      "venue": "Hack Manhattan", "rsvp": rsvp } )
+###
+# Cron job
+###
+def main():
+  pwd = brico.common.pwd()
+  ratpark = building() + community()
 
   ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"],
                                      e["rsvp"] if "rsvp" in e else 0) for e in ratpark ]
