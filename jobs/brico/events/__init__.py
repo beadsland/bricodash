@@ -15,33 +15,31 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-import json
-import requests
-import dateparser
-import humanize
-import re
-import os
-import json
-import sys
-import time
-import datetime
-import calendar
-import dateutil.parser
 import brico.common
 import brico.common.html as html
-import brico.common.meetup
 from vend.memoize import memoized
 
-def noisy(s):
-  return html.span().clss("noisy").inner(s).str() \
-       + html.span().clss("noisemoji").inner(u"🔊🎶").str()
+import os
+import json
+import dateutil
+import datetime
+import humanize
+import re
+
+@memoized
+def noisemoji(): return html.span().clss("noisemoji").inner(u"🔊🎶").str()
+def noisy(s): return html.span().clss("noisy").inner( s ).str() + noisemoji()
+
+@memoized
+def venue(s): return html.span().clss('venue').inner( s ).str()
+def line(s): return html.div().clss('event-line').inner( s ).str()
 
 ###
 # Events of other building tenants
 ###
 def building():
   list = []
-  for file in ["brite.json", "upmeet.json"]:
+  for file in ["space.json", "brite.json", "upmeet.json"]:
     path = os.path.join(brico.common.pull(), file)
     with open(path) as f: list = list + json.load(f)
 
@@ -51,7 +49,7 @@ def building():
                  "event": noisy("Friday Night Live Music"),
                  "venue": "Offside Tavern" } )
 
-  return list
+  return datesort(list)
 
 ###
 # Events relevant to our community
@@ -61,68 +59,50 @@ def community():
   for file in ["space.json", "holiday.json", "tober.json"]:
     path = os.path.join(brico.common.pull(), file)
     with open(path) as f: list = list + json.load(f)
+  return datesort(list)
+
+###
+# Sort event list by date
+###
+def datesort(list):
+  list = [ (dateutil.parser.parse(e["start"]),
+           e["event"],
+           e["venue"],
+           e["rsvp"] if "rsvp" in e else 0) for e in list ]
+  list.sort()
+  list = [ {"start": e[0].isoformat(),
+            "event": e[1],
+            "venue": e[2],
+            "rsvp": e[3]} for e in list ]
   return list
 
 ###
-# Cron job
+# Format each event line
 ###
-def main():
-  pwd = brico.common.pwd()
-  ratpark = building() + community()
+def format(item):
+  dt = format_dt(item["start"])
 
-  ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"],
-                                     e["rsvp"] if "rsvp" in e else 0) for e in ratpark ]
-  ratpark.sort()
-  ratpark = [ {"start": e[0].isoformat(), "event": e[1], "venue": e[2], "rsvp": e[3]} for e in ratpark ]
+  dd = item['event']
+  if item['rsvp'] > 4:  dd += " (%s)" % item['rsvp']
+  if item['venue'] == "Hack Manhattan":
+    dd = html.span().clss('hm-event').inner( dd ).str()
+  else:
+    dd = html.span().clss('event').inner( dd ).str()
 
-  def wdv(s): return "<span class='venue'>%s</span>" % (s)
-  def wdt(s): return "<span class='date'>%s</span>" % (s)
-  def wdd(s): return "<span class='event'>%s</span>" % (s)
-  def wddhm(s): return "<span class='hm-event'>%s</span>" % (s)
-  def evt(s): return "<div class='event-line'>%s</div>" % (s)
+  return " &mdash; ".join([ html.span().clss('date').inner( dt ).str(),
+                            dd ])
 
-  evtSpce = []
-  evtBldg = []
+@memoized
+def format_dt(start):
+  dt = dateutil.parser.parse(start)
+  today = datetime.datetime.combine(datetime.date.today(),
+                                    datetime.datetime.min.time())
+  if (today + datetime.timedelta(days=2,seconds=-1)) \
+                                < dt < (today + datetime.timedelta(days=7)):
+    date = dt.strftime('%a')
+  else:
+    date = humanize.naturalday(dt)
 
-  evtBldg.append( wdd('<span id="ratparkHdr">Rat Park Building Calendar</span>') )
-
-  for item in ratpark:
-    dt = dateutil.parser.parse(item["start"])
-    today = datetime.datetime.combine(datetime.date.today(), datetime.datetime.min.time())
-    if (today + datetime.timedelta(days=2,seconds=-1)) \
-                                  < dt < (today + datetime.timedelta(days=7)):
-      date = dt.strftime('%a')
-    else:
-      date = humanize.naturalday(dt)
-
-    start = dt.strftime("%-I:%M %p").lower()
-    start = re.sub(r':00', '', start)
-    dt = "%s, %s" % (date, start) if start != "12 am" else date
-
-    dd = item["event"];
-    if item["rsvp"] > 4:  dd += " (%s)" % item["rsvp"]
-
-    if item["venue"] == "Hack Manhattan":
-      evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wddhm(dd)) ) )
-      evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
-                                                  wdt(dt), wddhm(dd) ) )
-    elif item["venue"] == "Holiday":
-      evtSpce.append( evt("%s &mdash; %s" % (wdt(dt), wdd(dd)) ) )
-    else:
-      evtBldg.append( evt ("%s %s &mdash; %s") % (wdv(item["venue"]),
-                                                  wdt(dt), wdd(dd) ) )
-
-  evtSpce = evtSpce[:10]
-  evtBldg = evtBldg[:10]
-  evtSpce.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
-  evtBldg.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
-
-  filename = pwd + "/../html/pull/space_events.html"
-  file = open(filename + ".new", "wb")
-  file.write( u"\n".join(evtSpce[:11]).encode('utf-8') )
-  os.rename(filename + ".new", filename)
-
-  filename = pwd + "/../html/pull/building_events.html"
-  file = open(filename + ".new", "wb")
-  file.write( u"\n".join(evtBldg[:11]).encode('utf-8') )
-  os.rename(filename + ".new", filename)
+  start = dt.strftime("%-I:%M %p").lower()
+  start = re.sub(r':00', '', start)
+  return "%s, %s" % (date, start) if start != "12 am" else date

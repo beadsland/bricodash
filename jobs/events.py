@@ -23,9 +23,15 @@ import brico.events.upmeet
 import brico.events.holiday
 import brico.events.tober
 import brico.events.space
+
+import brico.common.html as html
 import datetime
 import os
 import sys
+
+###
+# Update event source files
+###
 
 min = datetime.datetime.now().minute
 hr  = datetime.datetime.now().hour
@@ -36,4 +42,21 @@ if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
 if min % 30 == 5 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
 if min % 5 == 0 or 'space' in sys.argv:       brico.events.space.main()
-if 1:                                         brico.events.main()
+
+###
+# Build events component divs
+###
+evtSpce = []
+for item in brico.events.community()[:10]:
+  evtSpce.append( brico.events.line(brico.events.format(item)) )
+
+evtBldg = []
+header = html.span().id('ratparkHdr').inner("Rat Park Building Calendar")
+evtBldg.append( html.span().clss('event').inner(header.str()).str() )
+for item in brico.events.building()[:10]:
+  venue = brico.events.venue(item['venue'])
+  event = brico.events.format(item)
+  evtBldg.append( brico.events.line("%s %s" % (venue, event)) )
+
+brico.common.write_pull("space_events.html", evtSpce)
+brico.common.write_pull("building_events.html", evtBldg)
