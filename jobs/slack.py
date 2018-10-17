@@ -62,8 +62,10 @@ emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
 def div(s): return html.div().clss("slacking").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
+def qut(s): return html.div().clss("slackquote").inner(s).str()
 
-txtdict = [ ("<(http[^>]+)>", lambda m: slack.link(m.group(1), html.logo) ),
+txtdict = [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
+            ("<(http[^>]+)>", lambda m: slack.link(m.group(1), html.logo) ),
             ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
             (":([A-Za-z\-_]+):", lambda m: slack.emoji(m.group(1), emotags) ) ]

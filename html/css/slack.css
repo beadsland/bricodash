@@ -45,6 +45,13 @@
   overflow-wrap: break-word;
 }
 
+.slackquote {
+  border-left: 3px solid #404040;
+  text-indent: 0;
+  padding-left: .5em;
+  font-size: 80%;
+}
+
 .sledited {
   color: #668866;
   font-size: 60%;
