@@ -15,50 +15,27 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-import os
-import sys
-import requests
-import json
 import dateutil.parser
 import re
 
+import brico.common
+import brico.common.meetup
+import brico.common.html as html
+
 def main():
-  pwd = os.path.dirname(sys.argv[0])
-  sig_file = ".keys/meetup_hacktoberfest"
-  with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
-  query = "https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&text=Hacktoberfest&sig_id=1998556&radius=5"
-  query = query + sig
+  events = brico.common.meetup.find("Hacktoberfest",
+                                    ".keys/meetup_hacktoberfest")
+  events += brico.common.meetup.find("Hacktober", ".keys/meetup_hacktober")
 
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code)
-  result = json.loads(response.text)
-  events = result['events']
+  def logoit(l): return html.img().clss('logo').src( l ).str()
+  def dateit(e): return ' '.join([ e['local_date'], e['local_time'] ])
+  def meetit(e): return '(%s)' % ' '.join([ e['group']['name'].strip(),
+                                            logoit("img/meetup.png") ])
+  def nameit(e): return u' '.join([ e['name'].strip(),
+                                    logoit("img/tober.png"),
+                                    meetit(e) ])
 
+  events = [ { 'start': dateit(e), 'event': nameit(e), 'venue': "Holiday" }
+             for e in events ]
 
-  pwd = os.path.dirname(sys.argv[0])
-  sig_file = ".keys/meetup_hacktober"
-  with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
-  query = "https://api.meetup.com/find/upcoming_events?photo-host=public&page=20&text=Hacktober&sig_id=1998556&radius=5"
-  query = query + sig
-
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code)
-  result = json.loads(response.text)
-  events = events + result['events']
-
-  def logoit(l): return '<img class="logo" src="' + l + '">'
-  def dateit(e): return " ".join([ e['local_date'], e['local_time'] ])
-  def nameit(e): return u"".join([ e['name'].strip(), " ",
-                                   logoit("img/tober.png"), " (",
-                                   e['group']['name'].strip(), " ",
-                                   logoit("img/meetup.png") + ")" ])
-
-  events = [ { "start": dateit(e), "event": nameit(e), "venue": "Holiday" } for e in events ]
-  events = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"]) for e in events ]
-  events.sort()
-  events = [ {"start": e[0].isoformat(), "event": e[1], "venue": e[2]} for e in events ]
-
-  filename = pwd + "/../html/pull/tober.json"
-  file = open(filename + ".new", "w")
-  file.write( json.dumps(events) )
-  os.rename(filename + ".new", filename)
+  brico.common.write_json("tober.json", brico.events.datesort(events))

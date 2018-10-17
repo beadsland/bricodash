@@ -38,7 +38,8 @@ def rsvps(group, eid):
 @memoized
 def find(text, sigfile):
   path = "https://api.meetup.com/find/upcoming_events"
-  params = { 'photo-host': "public", 'page': 20, 'text': text }
+  params = { 'photo-host': "public", 'page': 20, 'text': text, 'radius': 5,
+             'lat': brico.common.lat(), 'lon': brico.common.lon() }
   sigfile = os.path.join( brico.common.pwd(), sigfile )
   with open(sigfile) as x: sig = x.read().rstrip()
 
