@@ -27,11 +27,13 @@ import time
 import datetime
 import calendar
 import dateutil.parser
+import brico.common
 import brico.common.html as html
+import brico.common.meetup
 
 def main():
-  pwd = os.path.dirname(sys.argv[0])
-  rel = os.path.join(pwd, "../html/pull"
+  pwd = brico.common.pwd()
+  rel = os.path.join(pwd, "../html/pull")
 
   # Building and community events
   ratpark = []
@@ -40,8 +42,8 @@ def main():
     with open(path) as f: ratpark = ratpark + json.load(f)
 
   def noisy(s):
-    return html.span().clss("noisy").inner(s)
-         + html.span().clss("noisemoji").inner(u"🔊🎶")
+    return html.span().clss("noisy").inner(s).str() \
+         + html.span().clss("noisemoji").inner(u"🔊🎶").str()
 
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
@@ -50,18 +52,8 @@ def main():
                     "venue": "Offside Tavern" } )
 
   # Space events
-  sig_file = ".keys/meetup_events"
-  with open('/'.join([pwd, sig_file])) as x: sig = x.read().rstrip()
-  query = "https://api.meetup.com/HackManhattan/events?photo-host=public&page=20&"
-  query = query + sig
-
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code);
-  data = json.loads(response.text)
-
-
-  maths = requests.get("https://api.meetup.com/nyc-math/events?&sign=true&photo-host=public&page=20")
-  maths = json.loads(maths.text)
+  data = brico.common.meetup.events("HackManhattan")
+  maths = brico.common.meetup.events("nyc-math")
   maths = { e["name"]: (e["yes_rsvp_count"], e["id"]) for e in maths }
 
   today = datetime.date.today()

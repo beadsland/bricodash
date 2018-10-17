@@ -13,7 +13,7 @@
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
     - [jobs/brico/slack.py](#jobsbricoslackpy)
-    - [jobs/brico/, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py](#jobsbrico-jobsphotopy-jobsbricoeventstoberpy-jobsbricoeventsupmeetpy)
+    - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy-jobsbricoeventsupmeetpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/wiki.py](#jobswikipy)
     - [jobs/common/short.py](#jobscommonshortpy)
@@ -23,9 +23,7 @@
     - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
     - [html/css/font](#htmlcssfont)
     - [html/img](#htmlimg)
-
 <!-- TOC END -->
-
 
 ## bricodash
 
@@ -192,7 +190,7 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 Source: https://archive.org/details/slack_sfx
 
 
-### jobs/brico/, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py
+### jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py
 
 Meetup API used under Meetup's Terms of Service and Meetup API License Guidelines.
 https://help.meetup.com/hc/en-us/articles/360001636711-Meetup-API-License-Guidelines
