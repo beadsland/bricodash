@@ -1,24 +1,26 @@
-emoji_data_python>=1.1.0
+python_resize_image>=1.1.12
 
-PyChromecast>=2.3.0
-
-pipreqs>=0.4.9
+ics>=0.4
 
 daemonize>=2.4.7
 
-python_resize_image>=1.1.12
+cssutils>=1.0.2
 
-dateparser>=0.7.0
+PyChromecast>=2.3.0
 
-humanize>=0.5.1
-
-pip_tools>=3.0.0
-
-slacker>=0.9.65
+requests>=2.18.4
 
 eventbrite>=3.3.3
 
-cssutils>=1.0.2
+slacker>=0.9.65
 
-requests>=2.18.4
+pipreqs>=0.4.9
+
+dateparser>=0.7.0
+
+pip_tools>=3.0.0
+
+emoji_data_python>=1.1.0
+
+humanize>=0.5.1
 

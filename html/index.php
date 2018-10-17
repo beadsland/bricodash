@@ -29,6 +29,8 @@
 
     <title>Bricodash — Hack Manhattan Dashboard</title>
 
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Chivo" />
+
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/struct.css">

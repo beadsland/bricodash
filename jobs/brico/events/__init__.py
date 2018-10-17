@@ -56,7 +56,7 @@ def building():
 ###
 def community():
   list = []
-  for file in ["space.json", "holiday.json", "tober.json"]:
+  for file in ["space.json", "castles.json", "tober.json", "holiday.json"]:
     path = os.path.join(brico.common.pull(), file)
     with open(path) as f: list = list + json.load(f)
   return datesort(list)

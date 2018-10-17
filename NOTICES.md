@@ -15,6 +15,7 @@
     - [jobs/brico/slack.py](#jobsbricoslackpy)
     - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
+    - [jobs/brico/events/castles.py](#jobsbricoeventscastlespy)
     - [jobs/wiki.py](#jobswikipy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
@@ -215,6 +216,19 @@ For Eventbrite's privacy policy, see:
 <https://www.eventbrite.com/support/articles/en_US/Troubleshooting/eventbrite-privacy-policy?lg=en_US>.
 
 
+### jobs/brico/events/castles.py
+
+Google calendar ICS used under Google's Terms of Service.
+https://policies.google.com/terms?hl=en&gl=ZZ
+
+Babycastles neon sign photo
+<https://commons.wikimedia.org/wiki/File:Wikimedia_NYC_presentation_-_WikiPhotography_at_WikiWednesday_July_2015_3_crop.jpg>
+by BrillLyle. Cropped and transparency added by Beads Land-Trujillo.
+
+Used under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication.
+https://creativecommons.org/publicdomain/zero/1.0/deed.en
+
+
 ### jobs/wiki.py
 
 #### Mediawiki
@@ -296,7 +310,7 @@ Use of these names, logos, icons and brands does not imply endorsement.
 ### html/img/flickr_nalends_super_pop.png
 
 Super Pop B-Pop <https://www.flickr.com/photos/130475615@N06/17177586749>
-copyright © 2015 nalends @ Flickr. Transparency added.
+copyright © 2015 nalends @ Flickr. Transparency added by Beads Land-Trujillo.
 Used under a Attribution-NoDerivs 2.0 Generic (CC BY-ND 2.0) license
 <https://creativecommons.org/licenses/by-nd/2.0/>.
 

@@ -23,6 +23,7 @@ import brico.events.upmeet
 import brico.events.holiday
 import brico.events.tober
 import brico.events.space
+import brico.events.castles
 
 import brico.common.html as html
 import datetime
@@ -40,6 +41,7 @@ if min == 0 and hr % 12 == 0 or 'holiday' in sys.argv:
                                               brico.events.holiday.main()
 if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
+if min % 60 == 0 or 'castles' in sys.argv:    brico.events.castles.main()
 if min % 30 == 5 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
 if min % 5 == 0 or 'space' in sys.argv:       brico.events.space.main()
 
