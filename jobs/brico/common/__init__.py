@@ -47,7 +47,9 @@ def get_token(keyfile):
 def get_response(path, params={}, token=""):
   question = "&".join([ urllib.parse.urlencode(params), token ])
   response = requests.get( "?".join([path, question]) )
-  if response.status_code != 200:   sys.exit(response.status_code);
+  if response.status_code != 200:
+    write_pull("error.dump", response.text)
+    sys.exit(response.status_code);
   return response
 
 ###
