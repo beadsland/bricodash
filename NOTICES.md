@@ -13,7 +13,7 @@
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
     - [jobs/brico/slack.py](#jobsbricoslackpy)
-    - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy-jobsbricoeventsupmeetpy)
+    - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/wiki.py](#jobswikipy)
     - [jobs/common/short.py](#jobscommonshortpy)
@@ -23,6 +23,7 @@
     - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
     - [html/css/font](#htmlcssfont)
     - [html/img](#htmlimg)
+
 <!-- TOC END -->
 
 ## bricodash
@@ -136,6 +137,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+
 ### jobs/vend/multisub.py
 
 Original recipes from "1.18. Replacing Multiple Patterns in a Single Pass",
@@ -190,7 +192,7 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 Source: https://archive.org/details/slack_sfx
 
 
-### jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py, jobs/brico/events/upmeet.py
+### jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py
 
 Meetup API used under Meetup's Terms of Service and Meetup API License Guidelines.
 https://help.meetup.com/hc/en-us/articles/360001636711-Meetup-API-License-Guidelines

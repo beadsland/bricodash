@@ -16,9 +16,7 @@
 ####
 
 import os
-import requests
 import json
-import sys
 import brico.common
 from vend.memoize import memoized
 
@@ -27,15 +25,23 @@ def grp(): return "HackManhattan"
 
 @memoized
 def events(group):
-  query = "/".join([ "https://api.meetup.com", group, "events?" ])
-  query = "&".join([query, "sign=true&photo-host=public&page=20"])
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code);
+  path = "/".join([ "https://api.meetup.com", group, "events" ])
+  params = { 'sign': "true", 'photo-host': "public", 'page': 20 }
+  response = brico.common.get_response(path, params)
   return json.loads(response.text)
 
 @memoized
 def rsvps(group, eid):
-  query = "/".join([ "https://api.meetup.com", group, "events", eid, "rsvps" ])
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code);
-  return json.loads(response.text)
+  path = "/".join([ "https://api.meetup.com", group, "events", eid, "rsvps" ])
+  response = brico.common.get_response(path)
+
+@memoized
+def find(text, sigfile):
+  path = "https://api.meetup.com/find/upcoming_events"
+  params = { 'photo-host': "public", 'page': 20, 'text': text }
+  sigfile = os.path.join( brico.common.pwd(), sigfile )
+  with open(sigfile) as x: sig = x.read().rstrip()
+
+  response = brico.common.get_response(path, params, sig)
+  result = json.loads(response.text)
+  return result['events']

@@ -15,61 +15,74 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-from eventbrite import Eventbrite
 import os
-import sys
-import re
-import json
-import dateutil.parser
+import eventbrite
+import urllib.parse
+
+import brico.events
+import brico.common
 import brico.common.html as html
 from brico.common.short import shorten
+from vend.multisub import multiple_replace
 
+###
+# Collect events from our noisy neighbors
+###
 def main():
-  pwd = os.path.dirname(sys.argv[0])
-  token_file = ".keys/eventbrite_token"
-  with open('/'.join([pwd, token_file])) as x: token = x.read().rstrip()
-  eventbrite = Eventbrite(token)
-
-  venues = {}
+  brite = Brite()
+  tenants = [ "Offside Tavern", "Secret Loft" ]
+  replace = { "at %s" % t: "" for t in tenants }
   ratpark = []
 
-  def noisy(s):
-    return html.span().clss('noisy').inner(s).str() \
-           + html.span().clss('noisemoji').inner(u"🔊🎶").str()
+  for event in brite.events(tenants):
+    venue = brite.venue(event)
 
-  def linky(href, str):
-    return html.a().clss('linky').href(href).target('_blank').inner(str).str()
+    if venue['name'] in tenants:
+      name = multiple_replace(event['name']['text'], replace)
+      line = { "start": event['start']['local'],
+               "venue": venue['name'],
+               "event": "%s %s" % (brico.events.noisy(name),
+                                   short(event['url'])) }
+      ratpark.append( line )
 
-  def short(url):
-    h = shorten(url).replace("https://", "", 1).split("/")
-    return html.span().clss('thiny').inner(linky(url, "%s/" % h[0])).str() \
-           + html.span().clss('shorty').inner(linky(url, h[1])).str()
+  brico.common.write_json( "brite.json", brico.events.datesort(ratpark)[:5] )
 
-  query = '/events/search?q=Secret Loft&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
-  result = eventbrite.get(query)
-  events = result['events']
+###
+# API wrapper class
+###
+class Brite:
+  def __init__(self):
+    token_file = os.path.join(brico.common.pwd(), ".keys/eventbrite_token")
+    with open(token_file) as x: token = x.read().rstrip()
+    self.api = eventbrite.Eventbrite(token)
+    self.venues = {}
 
-  query = '/events/search?q=Offside Tavern&location.address=137 West 14th Street, New York, NY&location.within=1km&sort_by=date'
-  result = eventbrite.get(query)
-  events = events + result['events']
+  def events(self, tenants):
+    query = { 'location.address': "137 West 14th Street, New York, NY",
+              'location.within': "1km",
+              'sort_by': "date" }
+    evts = []
 
-  for event in events:
-    if event['venue_id'] not in venues:
-      venues[event['venue_id']] = eventbrite.get('/venues/' + event['venue_id'])
-    venue = venues[event['venue_id']]
-    if venue['name'] == "Offside Tavern" or venue['name'] == "Secret Loft":
-      name = event['name']['text']
-      name = name.replace("at Secret Loft", "")
-      name = name.replace("at Offside Tavern", "")
-      ratpark.append( {"start": event['start']['local'],
-                       "venue": venue['name'],
-                       "event": "%s %s" % (noisy(name), short(event['url'])) } )
+    for t in tenants:
+      query['q'] = t
+      route = "/events/search?%s" % urllib.parse.urlencode(query)
+      result = self.api.get( route )
+      evts += result['events']
+    return evts
 
-  ratpark = [ (dateutil.parser.parse(e["start"]), e["event"], e["venue"]) for e in ratpark ]
-  ratpark.sort()
-  ratpark = [ {"start": e[0].isoformat(), "event": e[1], "venue": e[2]} for e in ratpark ]
+  def venue(self, event):
+    vid = event['venue_id']
+    if vid not in self.venues:
+      self.venues[vid] = self.api.get('/venues/%s' % vid)
+    return self.venues[vid]
 
-  filename = pwd + "/../html/pull/brite.json"
-  file = open(filename + ".new", "w")
-  file.write( json.dumps(ratpark[:5]) )
-  os.rename(filename + ".new", filename)
+###
+# Short event links provided to comply with Eventbrite API license
+###
+def linky(href, str):
+  return html.a().clss('linky').href(href).target('_blank').inner(str).str()
+
+def short(url):
+  h = shorten(url).replace("https://", "", 1).split("/")
+  return html.span().clss('thiny').inner(linky(url, "%s/" % h[0])).str() \
+         + html.span().clss('shorty').inner(linky(url, h[1])).str()

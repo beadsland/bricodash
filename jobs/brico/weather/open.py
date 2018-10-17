@@ -59,7 +59,7 @@ def poll(zipcode):
   path = "http://api.openweathermap.org/data/2.5/weather"
   params = { "zip": zipcode, "units": "imperial" }
   token = brico.common.get_token("owm_key")
-  response = brico.common.get_result(path, params, token)
+  response = brico.common.get_response(path, params, token)
   data = json.loads(response.text)
 
   w = {}
