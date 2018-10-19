@@ -50,8 +50,8 @@ def slemoji(u): return html.img().clss('slemoji').src( u ).str()
 def reactji(s): return html.div().clss('reactji').inner( s ).str()
 def reactct(s): return html.span().clss('reactct').inner( s ).str()
 def linky(u):
-  file = u if len(u) < 55 else "%s…%s" % (u[:30], u[-20:])
-  return html.span().style("font-size: 75%;").inner("<%s>" % file).str()
+  file = u if len(u) < 40 else "%s…%s" % (u[:20], u[-15:])
+  return html.span().style("font-size: 75%;").inner("&lt;%s&gt;" % file).str()
 
 emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
             'slemotag': slemoji, 'reactdiv': reactji, 'reactct': reactct }
@@ -63,9 +63,10 @@ def div(s): return html.div().clss("slacking").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
 def qut(s): return html.div().clss("slackquote").inner(s).str()
+def lnk(s): return slack.link(s, html.logo, linky)
 
 txtdict = [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
-            ("<(http[^>]+)>", lambda m: slack.link(m.group(1), html.logo) ),
+            ("<(http[^>]+)>", lambda m: lnk(m.group(1)) ),
             ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
             (":([A-Za-z\-_]+):", lambda m: slack.emoji(m.group(1), emotags) ) ]
@@ -83,6 +84,7 @@ def hid(s): return html.span().style("opacity: .25;").inner(s).str()
 # Format each message
 ###
 for message in reversed(slack.messages('hackerspace', 11)):
+  print(message)
   ts = message['ts']
   delta = datetime.datetime.now().timestamp() - float(ts)
   when = multiple_replace( humanize.naturaltime(delta), durdict )
