@@ -85,6 +85,7 @@ def format(item):
   dd = item['event']
   if item['rsvp'] > 4:  dd += " (%s)" % item['rsvp']
   if item['venue'] == "Hack Manhattan":
+    dd = "%s %s" % ( dd, html.logo("img/hm_neg.png") )
     dd = html.span().clss('hm-event').inner( dd ).str()
   else:
     dd = html.span().clss('event').inner( dd ).str()
