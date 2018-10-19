@@ -91,3 +91,9 @@
   vertical-align: 10%;
   font-weight: bold;
 }
+
+.slink {  font-size: 75%; }
+
+.shide {  opacity: .25;   }
+
+.ssubt {  opacity: .5; font-size: 75%;  }

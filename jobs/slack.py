@@ -51,7 +51,7 @@ def reactji(s): return html.div().clss('reactji').inner( s ).str()
 def reactct(s): return html.span().clss('reactct').inner( s ).str()
 def linky(u):
   file = u if len(u) < 40 else "%s…%s" % (u[:20], u[-15:])
-  return html.span().style("font-size: 75%;").inner("&lt;%s&gt;" % file).str()
+  return html.span().clss('slink').inner("&lt;%s&gt;" % file).str()
 
 emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
             'slemotag': slemoji, 'reactdiv': reactji, 'reactct': reactct }
@@ -78,13 +78,12 @@ txtdict = [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
 hist = []
 lstwhn = ""
 lstwho = ""
-def hid(s): return html.span().style("opacity: .25;").inner(s).str()
-
+def hid(s): return html.span().clss('shide').inner(s).str()
+def sub(s): return html.span().clss('ssubt').inner(s).str()
 ###
 # Format each message
 ###
 for message in reversed(slack.messages('hackerspace', 11)):
-  print(message)
   ts = message['ts']
   delta = datetime.datetime.now().timestamp() - float(ts)
   when = multiple_replace( humanize.naturaltime(delta), durdict )
@@ -99,12 +98,15 @@ for message in reversed(slack.messages('hackerspace', 11)):
                     ' '.join(slack.reactions(message, emotags)) ])
 
   if lstwhn == when and lstwho == user:
-    line = div(hid(whn(when, ts) + " &mdash; " +  who(user) + ": ") + text)
+    line = div( "%s &mdash; %s: %s" % (hid(whn(when, ts)), who(user), text) )
+    hist.append( line )
+  elif 'subtype' in message:
+    line = div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), sub(text)) )
     hist.append( line )
   else:
     lstwhn = when
     lstwho = user
-    hist.append( div(whn(when, ts) + " &mdash; " +  who(user) + ": " + text) )
+    hist.append(div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), text) ))
 
 ###
 # Trim excess lines
