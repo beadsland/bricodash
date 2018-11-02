@@ -33,13 +33,12 @@ def main():
   ics = response.text.replace('BEGIN:VALARM\r\nACTION:NONE',
                               'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:')
 
-  today = str(datetime.date.today())
+  last = str(datetime.datetime.now() + datetime.timedelta(hours = +3))
   c = Calendar(ics)
 
   events = []
   for e in c.events:
-    if str(e.begin) > today:
-      events.append(e)
+    if str(e.begin) > last:       events.append(e)
 
   castles = html.img().clss('logo').style("margin-left: -.05em; vertical-align: -10%;").src("img/babycastles.png")
   events = [ { 'start': e.begin.to('local').format('YYYY-MM-DD HH:mm:ss'),

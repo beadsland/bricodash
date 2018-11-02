@@ -38,28 +38,30 @@ def line(s): return html.div().clss('event-line').inner( s ).str()
 # Events of other building tenants
 ###
 def building():
-  list = []
-  for file in ["space.json", "brite.json", "upmeet.json"]:
-    path = os.path.join(brico.common.pull(), file)
-    with open(path) as f: list = list + json.load(f)
-
+  list = load_cals([ "space.json", "brite.json", "upmeet.json" ])
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
   list.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
                  "event": noisy("Friday Night Live Music"),
                  "venue": "Offside Tavern" } )
-
   return datesort(list)
 
 ###
 # Events relevant to our community
 ###
 def community():
+  cals = [ "castles.json", "tober.json", "holiday.json" ]
+  return datesort( datesort(load_cals(cals))[:4] + load_cals(["space.json"]) )
+
+###
+# Load a list of calendars
+###
+def load_cals(files):
   list = []
-  for file in ["space.json", "castles.json", "tober.json", "holiday.json"]:
+  for file in files:
     path = os.path.join(brico.common.pull(), file)
     with open(path) as f: list = list + json.load(f)
-  return datesort(list)
+  return list
 
 ###
 # Sort event list by date
