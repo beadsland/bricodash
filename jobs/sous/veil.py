@@ -51,7 +51,7 @@ for i in range(1, 60 * 10):
   file.close()
   os.rename(filename + ".new", filename)
 
-  time.sleep(.1)
+  time.sleep(.5)
 
 #  time.sleep(5)
 
