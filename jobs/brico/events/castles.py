@@ -15,9 +15,8 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-from ics import Calendar
+from icalevents.icalevents import events
 import os
-import datetime
 
 import brico.common
 import brico.common.html as html
@@ -25,23 +24,17 @@ import brico.common.html as html
 calendar = "e5dh8b6plqo4sift6fbplkcqjg%40group.calendar.google.com"
 
 def main():
+  style = "margin-left: -.05em; vertical-align: -10%;"
+  castles = html.img().clss('logo').style(style).src("img/babycastles.png")
+
   path = os.path.join( "https://calendar.google.com/calendar/ical",
                        calendar, "public/basic.ics" )
-  response = brico.common.get_response(path)
-
-  # Bugfix https://github.com/C4ptainCrunch/ics.py/issues/127
-  ics = response.text.replace('BEGIN:VALARM\r\nACTION:NONE',
-                              'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:')
-
-  last = str(datetime.datetime.now() + datetime.timedelta(hours = +3))
-  c = Calendar(ics)
-
-  events = []
-  for e in c.events:
-    if str(e.begin) > last:       events.append(e)
-
-  castles = html.img().clss('logo').style("margin-left: -.05em; vertical-align: -10%;").src("img/babycastles.png")
-  events = [ { 'start': e.begin.to('local').format('YYYY-MM-DD HH:mm:ss'),
-               'event': "%s (%s)" % (e.name, castles),
-               'venue': "Babycastles" } for e in events ]
-  brico.common.write_json("castles.json", brico.events.datesort(events))
+  ev = []
+  for e in events(path):
+    if "Babycastles" in e.summary:
+      name = e.summary.replace("Babycastles", castles.str())
+    else:
+      name = "%s (%s)" % (e.summary, castles)
+    ev.append( { 'start': e.start.strftime("%Y-%m-%d %H:%M:%S"),
+                 'event': name, 'venue': "Babycastles" } )
+  brico.common.write_json("castles.json", brico.events.datesort(ev))
