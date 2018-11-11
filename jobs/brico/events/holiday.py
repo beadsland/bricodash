@@ -32,8 +32,8 @@ def main():
   usnat = "cal/usnat.cal"
   local = "cal/local.cal"
 
-  arr = sorted( parse_cal(birth, 1) + parse_cal(geek, 4) \
-                + parse_cal(usnat, 7) + parse_cal(local) )
+  arr = sorted( parse_cal(birth, 2) + parse_cal(geek, 7) \
+                + parse_cal(usnat, 14) + parse_cal(local) )
   arr = ( { 'start': t[0].decode('utf-8'),
             'venue': "Holiday",
             'event': t[1].encode().decode('utf-8') } for t in arr )
