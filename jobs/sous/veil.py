@@ -24,7 +24,9 @@ import sys
 pwd = os.path.dirname(sys.argv[0])
 pid = os.path.join(pwd, "pid")
 
-for i in range(1, 60 * 10):
+ival = 60 * 2;
+
+for i in range(1, ival):
   list = [ f for f in os.listdir(pid) if f.startswith("l") ]
   list = [ (os.path.join(pid, f.replace("l", "c")), os.path.join(pid, f)) for f in list ]
   list = [ t for t in list if os.path.isfile(t[0]) ]
@@ -51,7 +53,7 @@ for i in range(1, 60 * 10):
   file.close()
   os.rename(filename + ".new", filename)
 
-  time.sleep(.5)
+  time.sleep(60 / ival)
 
 #  time.sleep(5)
 
