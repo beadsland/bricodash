@@ -69,7 +69,7 @@ txtdict = [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
             ("<(http[^>]+)>", lambda m: lnk(m.group(1)) ),
             ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
-            (":([A-Za-z\-_]+):", lambda m: slack.emoji(m.group(1), emotags) ) ]
+            (":([A-Za-z\-_0-9]+):", lambda m: slack.emoji(m.group(1), emotags) ) ]
 
 ###
 #  Prettify sequential posts by same user
@@ -91,6 +91,7 @@ for message in reversed(slack.messages('hackerspace', 11)):
 
   text = message['text'];
   for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
+  text = slack.concat_emoji(text)
   if 'edited' in message:
     text += ' %s' % html.span().clss('sledited').inner("(edited)").str()
   text = ' '.join([ text,

@@ -51,6 +51,13 @@ class Slack:
     if not name:  return self.api.emoji.list().body['emoji']
     else:         return self.mojilink(name, tags);
 
+  # correctly handle combining characters
+  @memoized
+  def concat_emoji(self, str):
+    tag = '<span class="emoji"\ >'
+    patt = re.compile( "(%s[^<]+)</span>%s" % (tag, tag) )
+    return patt.sub(r'\g<1>', str)
+
   # not memoized 'cause kwargs'
   def history(self, **kwargs):  return self.api.channels.history(**kwargs)
 
