@@ -43,6 +43,7 @@ def main():
               ( '(Fixers\' Collective)', append(html.logo("img/fixers.png")) ),
               ( 'freeCodeCamp', freecode ),
               ( '(Midnight Games)', append(html.emoji("🌌🎲")) ),
+              ( '(Electronics Night)', append(html.emoji("💡")) ),
               ( '(Shakespeare Night.*$)', append(html.emoji("🎭📖")) ) ]
 
   ###
