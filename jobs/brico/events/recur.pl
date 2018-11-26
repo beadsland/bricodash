@@ -24,26 +24,19 @@ $str =~ s/Thurs?/Thur/;
 
 $m = new Date::Manip::Date();
 $m->parse($str);
-if ($m->value < Date::Manip::Date->new("today")->value) {
-  $m = $m->calc(Date::Manip::Delta->new("1 year"));
+if ((not $m->value) || $m->value < Date::Manip::Date->new("today")->value) {
+  $m = recur($str)
 }
-$m = recur(str) unless $m->value;
 
 print $m->printf("%Y/%m/%d %H:%M:%S");
-
-# print recur(str)->printf("%Y/%m/%d %H:%M:%S");
-
 
 sub recur(str) {
   $r = new Date::Manip::Recur;
 
   ($rec, $mod) = split(/\+/, $str);
   $mod =~ s/^\s+|\s+$//g;
+  $mod = "FD0" unless $mod;
 
-  $r->parse( $rec );
-  $r->modifiers( $mod ) if $mod;
-  $r->start("today");
-  $r->end("next year");
-
+  $err = $r->parse( $rec, "$mod", "", "today", "2 years from now" );
   return ( $r->dates() )[0];
 }
