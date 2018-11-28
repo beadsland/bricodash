@@ -105,7 +105,8 @@ def format_dt(start):
     date = dt.strftime('%a')
   else:
     date = humanize.naturalday(dt)
+  date = re.compile(r' 0').sub(' ', date)
 
   start = dt.strftime("%-I:%M %p").lower()
-  start = re.sub(r':00', '', start)
+  start = re.compile(r':00').sub('', start)
   return "%s, %s" % (date, start) if start != "12 am" else date
