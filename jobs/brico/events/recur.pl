@@ -24,8 +24,13 @@ $str =~ s/Thurs?/Thur/;
 
 $m = new Date::Manip::Date();
 $m->parse($str);
+if ($m->value < Date::Manip::Date->new("today")->value) {
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+  $year =1900 + $year + 1;
+  $m->parse("$str $year");
+}
 if ((not $m->value) || $m->value < Date::Manip::Date->new("today")->value) {
-  $m = recur($str)
+  $m = recur($str);
 }
 
 print $m->printf("%Y/%m/%d %H:%M:%S");
