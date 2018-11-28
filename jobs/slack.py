@@ -101,7 +101,7 @@ for message in reversed(slack.messages('hackerspace', 11)):
   if lstwhn == when and lstwho == user:
     line = div( "%s &mdash; %s: %s" % (hid(whn(when, ts)), who(user), text) )
     hist.append( line )
-  elif 'subtype' in message:
+  elif 'subtype' in message and message['subtype'] != 'thread_broadcast':
     line = div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), sub(text)) )
     hist.append( line )
   else:
