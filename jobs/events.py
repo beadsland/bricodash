@@ -20,6 +20,7 @@
 import brico.events
 import brico.events.brite
 import brico.events.upmeet
+import brico.events.multi
 import brico.events.holiday
 import brico.events.tober
 import brico.events.space
@@ -37,8 +38,17 @@ import sys
 min = datetime.datetime.now().minute
 hr  = datetime.datetime.now().hour
 
+sunset = brico.common.sunset(datetime.datetime.now().date())
+sunset = sunset + datetime.timedelta(minutes=1)
+if min == sunset.minute and hr == sunset.hour:
+                                              brico.events.holiday.main()
+                                              brico.events.multi.main()
+
 if min == 0 and hr % 12 == 0 or 'holiday' in sys.argv:
                                               brico.events.holiday.main()
+if min == 0 and hr % 12 == 0 or 'multi' in sys.argv:
+                                              brico.events.multi.main()
+
 if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
 if min % 60 == 0 or 'castles' in sys.argv:    brico.events.castles.main()

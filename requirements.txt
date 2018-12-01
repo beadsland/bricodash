@@ -4,6 +4,7 @@
 #
 #    util/genreqs.py
 #
+astral==1.7.1
 casttube==0.2.0           # via pychromecast
 certifi==2018.8.24        # via requests
 chardet==3.0.4            # via requests
@@ -29,7 +30,7 @@ protobuf==3.6.1           # via pychromecast
 pychromecast==2.3.0
 python-dateutil==2.7.3    # via dateparser, icalendar
 python-resize-image==1.1.12
-pytz==2018.5              # via dateparser, datetime, icalendar, icalevents, tzlocal
+pytz==2018.5              # via astral, dateparser, datetime, icalendar, icalevents, tzlocal
 regex==2018.8.29          # via dateparser
 requests==2.19.1
 six==1.11.0               # via pip-tools, protobuf, python-dateutil

@@ -50,7 +50,7 @@ def building():
 # Events relevant to our community
 ###
 def community():
-  cals = [ "castles.json", "tober.json", "holiday.json" ]
+  cals = [ "multi.json", "castles.json", "tober.json", "holiday.json" ]
   return datesort( datesort(load_cals(cals))[:4] + load_cals(["space.json"]) )
 
 ###

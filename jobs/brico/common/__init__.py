@@ -23,6 +23,7 @@ import urllib.parse
 import requests
 import json
 import grp
+from astral import Astral
 
 @memoized
 def pwd():      return os.path.dirname(sys.argv[0])
@@ -76,3 +77,16 @@ def write_json(filename, struct):
   file.write( json.dumps(struct) )
   file.close()
   os.rename(filename + ".new", filename)
+
+###
+# Sunset for holidays and triggering holiday cron
+###
+city_name = 'New York'
+
+def sunset(date):
+  a = Astral()
+  a.solar_depression = 'civil'
+  city = a[city_name]
+  sun = city.sun(date=date, local=True)
+
+  return sun['sunset']
