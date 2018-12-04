@@ -18,6 +18,7 @@
 import brico.common
 import brico.common.html
 
+import re
 import datetime
 
 def main():
@@ -31,7 +32,13 @@ def main():
     sunset = brico.common.sunset( first + datetime.timedelta(days=i) )
 
     menorah = "🕯" * (i+1) + " " * (8-i-1)
-    menorah = "%s%s%s" % (menorah[:4], shamash, menorah[4:])
+    left = menorah[:4]
+    right = menorah[4:]
+    unlit = brico.common.html.span().style("opacity: .15").inner("🕯").str()
+    space = re.compile(r' ')
+    left  = space.sub(unlit, left)
+    right = space.sub(unlit, right)
+    menorah = "%s%s%s" % (left, shamash, right)
 
     sets.append( { 'start': sunset.replace(tzinfo=None),
                    'venue': "Holiday",
