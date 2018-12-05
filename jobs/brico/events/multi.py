@@ -31,7 +31,7 @@ def main():
   for i in range(9):
     sunset = brico.common.sunset( first + datetime.timedelta(days=i) )
 
-    menorah = "🕯" * (i+1) + " " * (8-i-1)
+    menorah = " " * (8-i-1) + "🕯" * (i+1)
     left = menorah[:4]
     right = menorah[4:]
     unlit = brico.common.html.span().style("opacity: .15").inner("🕯").str()
