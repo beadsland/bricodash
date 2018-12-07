@@ -72,7 +72,8 @@ def datesort(list):
            e["venue"],
            e["rsvp"] if "rsvp" in e else 0) for e in list ]
   list.sort()
-  list = [ {"start": e[0].isoformat(),
+  patt = "%Y-%m-%d %H:%M"
+  list = [ {"start": (e[0] + datetime.timedelta(seconds=30)).strftime(patt),
             "event": e[1],
             "venue": e[2],
             "rsvp": e[3]} for e in list ]

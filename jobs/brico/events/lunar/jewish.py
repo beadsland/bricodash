@@ -72,5 +72,4 @@ def holiday(name, now, days=1):
 
 def holiday_eve(name, now):
   method = getattr( convertdate.holidays, name )
-  return datetime.date( *method(now.year) ) - datetime.timedelta(days=1) \
-                                            + datetime.timedelta(seconds=30)
+  return datetime.date(*method(now.year)) - datetime.timedelta(days=1)
