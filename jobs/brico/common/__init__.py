@@ -24,6 +24,18 @@ import requests
 import json
 import grp
 
+###
+# Locale constants
+###
+
+def lat():      return 40.7380441
+def lon():      return -73.9984966
+def city():     return "New York"
+
+###
+# System constants
+###
+
 @memoized
 def pwd():      return os.path.dirname(sys.argv[0])
 
@@ -32,10 +44,6 @@ def gid():      return grp.getgrnam("hmweb").gr_gid
 
 @memoized
 def pull():     return os.path.join( pwd(), "../html/pull" )
-
-def lat():      return 40.7380441
-def lon():      return -73.9984966
-def city():     return "New York"
 
 ###
 # API access
