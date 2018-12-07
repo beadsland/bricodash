@@ -25,6 +25,7 @@ import brico.events.holiday
 import brico.events.tober
 import brico.events.space
 import brico.events.castles
+import brico.events.lunar
 
 import brico.common.html as html
 import datetime
@@ -40,7 +41,7 @@ min = now.minute
 hr  = now.hour
 
 # Make sure sunset items actually update by firing 1 and 10 minutes after
-sunset = brico.common.sunset(datetime.datetime.now().date())
+sunset = brico.events.lunar.sunset(datetime.datetime.today())
 if datetime.timedelta(seconds=0) \
    < (datetime.datetime.now(datetime.timezone.utc) - sunset) \
    < datetime.timedelta(minutes=30):

@@ -15,10 +15,20 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-import brico.common
-import brico.common.html
-import brico.events.lunar.jewish
+###
+# Sunset for holidays and triggering holiday cron
+###
 
-def main():
- hols =  brico.events.lunar.jewish.hanukkah()
- brico.common.write_json("multi.json", hols)
+from vend.memoize import memoized
+import astral
+
+city_name = 'New York'
+
+@memoized
+def sunset(date):
+  a = astral.Astral()
+  a.solar_depression = 'civil'
+  city = a[city_name]
+  sun = city.sun(date=date, local=True)
+
+  return sun['sunset']
