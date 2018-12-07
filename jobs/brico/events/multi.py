@@ -26,8 +26,27 @@ import dateutil.tz as tz
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
-  hols = [ brico.events.lunar.jewish.hanukkah(now) ] + solar(now)
+  hols = [ brico.events.lunar.jewish.hanukkah(now), kwanzaa(now) ]
+  hols = hols + solar(now)
   brico.common.write_json("multi.json", hols)
+
+def kwanzaa(now):
+  days = { (12, 26): ("Umoja", "unity"),
+           (12, 27): ("Kujichagulia", "self-determination"),
+           (12, 28): ("Ujima", "collective work and responsibility"),
+           (12, 29): ("Ujamaa", "collective economics"),
+           (12, 30): ("Nia", "purpose"),
+           (12, 31): ("Kuumba", "creativity"),
+           (1, 1):   ("Imani", "faith") }
+  key = (now.month, now.day)
+  kinara = brico.common.html.logo("img/kwanzaa.png")
+  if key in days:
+    event = "<em>%s</em> (%s) %s" % (days[key][0], days[key][1], kinara)
+    start = now.date().isoformat()
+  else:
+    event = "Kwanzaa Begins %s" % kinara
+    start = datetime.date(now.year, 12, 26).isoformat()
+  return { 'start': start, 'venue': "Holiday", 'event': event }
 
 def solar(now):
   yester = now - datetime.timedelta(days=1)
