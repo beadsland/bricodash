@@ -19,6 +19,30 @@ import brico.common
 import brico.common.html
 import brico.events.lunar.jewish
 
+import ephem
+import datetime
+import dateutil.tz as tz
+
 def main():
- hols = [ brico.events.lunar.jewish.hanukkah() ]
+ hols = [ brico.events.lunar.jewish.hanukkah() ] + solar()
  brico.common.write_json("multi.json", hols)
+
+def solar():
+  yester = datetime.datetime.now() - datetime.timedelta(days=1)
+  return [ { 'start': toiso(ephem.next_spring_equinox(yester)),
+             'venue': "Holiday",
+             'event': "Vernal Equinox " + brico.common.html.emoji("♈︎") },
+           { 'start': toiso(ephem.next_autumn_equinox(yester)),
+             'venue': "Holiday",
+             'event': "Autumnal Equinox " + brico.common.html.emoji("♎︎") },
+           { 'start': toiso(ephem.next_summer_solstice(yester)),
+             'venue': "Holiday",
+             'event': "Summer Solstice " + brico.common.html.emoji("♋︎") },
+           { 'start': toiso(ephem.next_winter_solstice(yester)),
+             'venue': "Holiday",
+             'event': "Winter Solstice " + brico.common.html.emoji("♑︎") },
+         ]
+
+def toiso(edate):
+  utc = edate.datetime().replace(tzinfo=tz.UTC)
+  return utc.astimezone(tz.tzlocal()).replace(tzinfo=None).isoformat()
