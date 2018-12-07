@@ -26,11 +26,9 @@ def hanukkah():
   now = datetime.datetime.now(datetime.timezone.utc)
   today = datetime.datetime.today()
 
-  first = datetime.date( *convertdate.holidays.hanukkah(today.year) ) \
-          - datetime.timedelta(days=1)
-  if first + datetime.timedelta(days=10) < now.date():
-    first = datetime.date( *convertdate.holidays.hanukkah(today.year + 1) ) \
-            - datetime.timedelta(days=1)
+  # meh, now and today are both datetimes -- simplify this nonsense
+
+  first = holiday("hanukkah", today, 8)
 
   firsteve = brico.events.lunar.sunset( first )
   lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=8) )
@@ -68,3 +66,10 @@ def menorah(first, now, today):
   menorah = "%s%s%s" % (left, shamash, right)
 
   return (brico.common.html.emoji(menorah), sunset)
+
+def holiday(name, today, days=1):
+  method = getattr( convertdate.holidays, "hanukkah" )
+  when = datetime.date( *method(today.year) )
+  if when + datetime.timedelta(days=days) < today.date():
+    when = datetime.date( *method(today.year + 1) )
+  return when - datetime.timedelta(days=1)
