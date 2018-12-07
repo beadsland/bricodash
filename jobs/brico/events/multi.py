@@ -26,7 +26,7 @@ import dateutil.tz as tz
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
-  hols = [ brico.events.lunar.jewish.hanukkah(now), kwanzaa(now) ]
+  hols = [ brico.events.lunar.jewish.hanukkah(now), kwanzaa(now), twelve(now) ]
   hols = hols + solar(now)
   brico.common.write_json("multi.json", hols)
 
@@ -47,6 +47,29 @@ def kwanzaa(now):
     event = "Kwanzaa Begins %s" % kinara
     start = datetime.date(now.year, 12, 26).isoformat()
   return { 'start': start, 'venue': "Holiday", 'event': event }
+
+def twelve(now):
+  callout = "font-size: 150%"
+  partridge = brico.common.html.logo("img/partridge.png")
+  days = [ "", "%s&ensp;∈&ensp;🍐&ensp;🌳" % partridge, "🐢🕊️", "🤙🐦", "🇫🇷🐔",
+           brico.common.html.span().style(callout).inner("🏅&ensp;💍").str(),
+           "🦆🥚", "%s🏊🏿‍♀️" % brico.common.html.logo("img/swan.png"), "👧🥛",
+           "💃🏽👣", "🤴🐬", "🎺🎶", "🥁🥁" ]
+
+  adj = now - datetime.timedelta(days=12)
+  day = datetime.date(adj.year, adj.month, adj.day) \
+        - datetime.date(adj.year, 12, 12)
+  if day.days == 0 or day.days > 12:
+    return { 'start': datetime.date(3333, 3, 3).isoformat(),
+             'venue': "Holiday", 'event': "nothing to see here" }
+  else:
+    list = ["%s×%s" % (i, brico.common.html.emoji(days[i])) \
+                      for i in range(0,day.days+1)]
+    list = list[1:]
+    list.reverse()
+    love = "<b>⊤</b>%s" % brico.common.html.emoji("💖🎁🤳")
+    return { 'start': now.date().isoformat(), 'venue': "Holiday",
+             'event': "%s: %s" % (love, ", ".join( list )) }
 
 def solar(now):
   yester = now - datetime.timedelta(days=1)
