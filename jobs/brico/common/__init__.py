@@ -35,6 +35,7 @@ def pull():     return os.path.join( pwd(), "../html/pull" )
 
 def lat():      return 40.7380441
 def lon():      return -73.9984966
+def city():     return "New York"
 
 ###
 # API access

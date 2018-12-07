@@ -20,15 +20,14 @@
 ###
 
 from vend.memoize import memoized
+import brico.common
 import astral
-
-city_name = 'New York'
 
 @memoized
 def sunset(date):
   a = astral.Astral()
   a.solar_depression = 'civil'
-  city = a[city_name]
+  city = a[brico.common.city()]
   sun = city.sun(date=date, local=True)
 
   return sun['sunset']
