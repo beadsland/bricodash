@@ -34,14 +34,12 @@ def hanukkah():
 
   firsteve = brico.events.lunar.sunset( first )
   lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=8) )
-  thiseve = brico.events.lunar.sunset( today )
 
   if now < firsteve:
     event = "First Night of Hanukkah " + html.emoji("🕎");
     eve = firsteve
   elif now < lasteve:
-    event = menorah(first, thiseve, now)
-    eve = thiseve
+    (event, eve) = menorah(first, now, today)
 
   try:
     return [ { 'start': eve.replace(tzinfo=None).isoformat(),
@@ -49,13 +47,17 @@ def hanukkah():
   except:
     return []
 
-def menorah(first, sunset, now):
-  shamash = brico.common.html.span().style("font-size:150%").inner("🕯").str()
+def menorah(first, now, today):
+  sunset = brico.events.lunar.sunset( today )
 
   day = sunset.date() - first
-  if sunset > now:   day = day.days + 2
-  else:              day = day.days + 1
+  if sunset > now:
+    sunset = brico.events.lunar.sunset( today - datetime.timedelta(days=1) )
+    day = day.days
+  else:
+    day = day.days + 1
 
+  shamash = brico.common.html.span().style("font-size:150%").inner("🕯").str()
   menorah = " " * (8-day) + "🕯" * day
   left = menorah[:4]
   right = menorah[4:]
@@ -65,4 +67,4 @@ def menorah(first, sunset, now):
   right = space.sub(unlit, right)
   menorah = "%s%s%s" % (left, shamash, right)
 
-  return brico.common.html.emoji(menorah)
+  return (brico.common.html.emoji(menorah), sunset)
