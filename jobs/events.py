@@ -35,12 +35,15 @@ import sys
 # Update event source files
 ###
 
-min = datetime.datetime.now().minute
-hr  = datetime.datetime.now().hour
+now = datetime.datetime.now()
+min = now.minute
+hr  = now.hour
 
+# Make sure sunset items actually update by firing 1 and 10 minutes after
 sunset = brico.common.sunset(datetime.datetime.now().date())
-sunset = sunset + datetime.timedelta(minutes=1)
-if min == sunset.minute and hr == sunset.hour:
+if datetime.timedelta(seconds=0) \
+   < (datetime.datetime.now(datetime.timezone.utc) - sunset) \
+   < datetime.timedelta(minutes=30):
                                               brico.events.holiday.main()
                                               brico.events.multi.main()
 
@@ -53,7 +56,7 @@ if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
 if min % 60 == 0 or 'castles' in sys.argv:    brico.events.castles.main()
 if min % 30 == 0 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
-if min % 10 == 0 or 'space' in sys.argv:       brico.events.space.main()
+if min % 10 == 0 or 'space' in sys.argv:      brico.events.space.main()
 
 ###
 # Build events component divs
