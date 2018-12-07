@@ -20,5 +20,5 @@ import brico.common.html
 import brico.events.lunar.jewish
 
 def main():
- hols =  brico.events.lunar.jewish.hanukkah()
+ hols = [ brico.events.lunar.jewish.hanukkah() ]
  brico.common.write_json("multi.json", hols)

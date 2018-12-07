@@ -15,6 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import brico.common.html
 import brico.events.lunar
 
 import re
@@ -24,22 +25,19 @@ import dateutil.tz
 import convertdate
 
 def hanukkah():
-  now = datetime.datetime.now(dateutil.tz.tzlocal())
+  now = datetime.datetime.now(dateutil.tz.tzlocal());
   first = holiday("hanukkah", now, 8)
   firsteve = brico.events.lunar.sunset( first )
   lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=8) )
 
   if now < firsteve:
-    event = "First Night of Hanukkah " + html.emoji("🕎");
+    event = "First Night of Hanukkah " + brico.common.html.emoji("🕎");
     eve = firsteve
   elif now < lasteve:
     (event, eve) = menorah(first, now)
 
-  try:
-    return [ { 'start': eve.replace(tzinfo=None).isoformat(),
-               'venue': "Holiday", 'event': event } ]
-  except:
-    return []
+  return { 'start': eve.replace(tzinfo=None).isoformat(),
+           'venue': "Holiday", 'event': event }
 
 def menorah(first, now):
   sunset = brico.events.lunar.sunset( now.date() )
@@ -64,8 +62,14 @@ def menorah(first, now):
   return (brico.common.html.emoji(menorah), sunset)
 
 def holiday(name, now, days=1):
-  method = getattr( convertdate.holidays, "hanukkah" )
-  when = datetime.date( *method(now.year) )
-  if when + datetime.timedelta(days=days) < now.date():
-    when = datetime.date( *method(now.year + 1) )
-  return when - datetime.timedelta(days=1)
+  last = holiday_eve(name, now) + datetime.timedelta(days=days)
+  ends = brico.events.lunar.sunset( last )
+  if ends <= now:
+    then = now + datetime.timedelta(days=365)
+    return holiday_eve(name, then)
+  else:
+    return holiday_eve(name, now)
+
+def holiday_eve(name, now):
+  method = getattr( convertdate.holidays, name )
+  return datetime.date( *method(now.year) ) - datetime.timedelta(days=1)
