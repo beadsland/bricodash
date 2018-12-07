@@ -83,6 +83,7 @@ def write_json(filename, struct):
 ###
 city_name = 'New York'
 
+@memoized
 def sunset(date):
   a = Astral()
   a.solar_depression = 'civil'
