@@ -21,14 +21,16 @@ import brico.events.lunar.jewish
 
 import ephem
 import datetime
+import dateutil
 import dateutil.tz as tz
 
 def main():
- hols = [ brico.events.lunar.jewish.hanukkah() ] + solar()
- brico.common.write_json("multi.json", hols)
+  now = datetime.datetime.now(dateutil.tz.tzlocal());
+  hols = [ brico.events.lunar.jewish.hanukkah(now) ] + solar(now)
+  brico.common.write_json("multi.json", hols)
 
-def solar():
-  yester = datetime.datetime.now() - datetime.timedelta(days=1)
+def solar(now):
+  yester = now - datetime.timedelta(days=1)
   return [ { 'start': toiso(ephem.next_spring_equinox(yester)),
              'venue': "Holiday",
              'event': "Vernal Equinox " + brico.common.html.emoji("♈︎") },

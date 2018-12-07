@@ -20,12 +20,10 @@ import brico.events.lunar
 
 import re
 import datetime
-import dateutil
 import dateutil.tz
 import convertdate
 
-def hanukkah():
-  now = datetime.datetime.now(dateutil.tz.tzlocal());
+def hanukkah(now):
   first = holiday("hanukkah", now, 8)
   firsteve = brico.events.lunar.sunset( first )
   lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=8) )
