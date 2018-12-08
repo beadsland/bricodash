@@ -23,6 +23,7 @@ import ephem
 import datetime
 import dateutil
 import dateutil.tz as tz
+import re
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
@@ -51,10 +52,12 @@ def kwanzaa(now):
 def twelve(now):
   callout = "font-size: 150%"
   partridge = brico.common.html.logo("img/partridge.png")
-  days = [ "", "%s&ensp;∈&ensp;🍐&ensp;🌳" % partridge, "🐢🕊️", "🤙🐦", "🇫🇷🐔",
+  days = [ "", "&ensp;a&ensp;%s&ensp;∈&ensp;a&ensp;🍐&ensp;🌳" % partridge,
+           "🐢🕊️", "🤙🐦", "🇫🇷🐔",
            brico.common.html.span().style(callout).inner("🏅&ensp;💍").str(),
-           "🦆🥚", "%s🏊🏿‍♀️" % brico.common.html.logo("img/swan.png"), "👧🥛",
-           "💃🏽👣", "🤴🐬", "🎺🎶", "🥁🥁" ]
+           "🦆🥚",
+           "%s🏊🏿‍♀️" % brico.common.html.logo("img/swan.png"),
+           "👧🥛", "💃🏽👣", "🤴🐬", "🎺🎶", "🥁🥁" ]
 
   adj = now - datetime.timedelta(days=12)
   day = datetime.date(adj.year, adj.month, adj.day) \
@@ -68,8 +71,11 @@ def twelve(now):
     list = list[1:]
     list.reverse()
     love = "<b>⊤</b>%s" % brico.common.html.emoji("💖🎁🤳")
+    event = "%s:&nbsp;&nbsp;%s" % (love, ", ".join( list ))
+    event = re.sub(", 1×", " & 1×", event)
+    event = re.sub("1×", "", event)
     return { 'start': now.date().isoformat(), 'venue': "Holiday",
-             'event': "%s: %s" % (love, ", ".join( list )) }
+             'event': event }
 
 def solar(now):
   yester = now - datetime.timedelta(days=1)
