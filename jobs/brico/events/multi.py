@@ -59,7 +59,7 @@ def twelve(now):
   adj = now - datetime.timedelta(days=12)
   day = datetime.date(adj.year, adj.month, adj.day) \
         - datetime.date(adj.year, 12, 12)
-  if day.days == 0 or day.days > 12:
+  if day.days < 1 or day.days > 12:
     return { 'start': datetime.date(3333, 3, 3).isoformat(),
              'venue': "Holiday", 'event': "nothing to see here" }
   else:
