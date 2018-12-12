@@ -15,38 +15,26 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-from slacker import Slacker
 import emoji_data_python
 from vend.memoize import memoized
 import brico.common.thumb
+from brico.slack.slacker import Slack as BaseSlack
 
 import urllib.parse
 import re
 
+def bold(str):  return "*%s*" % str
+def ital(str):  return "_%s_" % str
+def quot(str):  return ">%s" % str
+
 thumb = brico.common.thumb.Cache()
 re_thumb = re.compile(r"/files-tmb/")
 
-class Slack:
-  def __init__(self, token):
-    self.api = Slacker( token )
-    self.token = token
+class Slack(BaseSlack):
 
   ###
-  # Retrieve messages from a channel
+  # Emoji
   ###
-  @memoized
-  def messages(self, channel, count):
-    history = self.history(channel = self.channels()[channel]['id'],
-                           latest = None, oldest = 0, count = count)
-    return history.body['messages']
-
-  ###
-  # Queries against result
-  ###
-  @memoized
-  def members(self):            return self.api.users.list().body['members']
-
-  # not memoized because tags
   def emoji(self, name=None, tags={}):
     if not name:  return self.api.emoji.list().body['emoji']
     else:         return self.mojilink(name, tags);
@@ -57,34 +45,6 @@ class Slack:
     tag = '<span class="emoji"\ >'
     patt = re.compile( "(%s[^<]+)</span>%s" % (tag, tag) )
     return patt.sub(r'\g<1>', str)
-
-  # not memoized 'cause kwargs'
-  def history(self, **kwargs):  return self.api.channels.history(**kwargs)
-
-  ###
-  # Generated lookup tables
-  ###
-  @memoized
-  def channels(self):
-    return { c['name']: c for c in self.api.channels.list().body['channels'] }
-
-  @memoized
-  def names(self, user=None):
-    if not user:
-      names = { u['id']: ( u['profile']['display_name'], u['name'] )
-                                                    for u in self.members() }
-      for id in names:
-        names[id] = names[id][1] if names[id][0] == "" else names[id][0]
-      return names
-    else:
-      return self.names()[user]
-
-  @memoized
-  def avatars(self, user=None, tag=None):
-    if not user:
-      return { u['id']: u['profile']['image_32'] for u in self.members() }
-    else:
-      return self.link( self.avatars()[user], tag )
 
   ###
   # Links
