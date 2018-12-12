@@ -56,7 +56,7 @@ def twelve(now):
            "🐢🕊️", "🤙🐦", "🇫🇷🐔",
            brico.common.html.span().style(callout).inner("🏅&ensp;💍").str(),
            "🦆🥚",
-           "%s🏊🏿‍♀️" % brico.common.html.logo("img/swan.png"),
+           "%s🏊🏿‍♀️" % brico.common.html.logo("img/ggl-swan.png"),
            "👧🥛", "💃🏽👣", "🤴🐬", "🎺🎶", "🥁🥁" ]
 
   adj = now - datetime.timedelta(days=12)
