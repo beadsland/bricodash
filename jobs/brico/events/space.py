@@ -37,8 +37,13 @@ def main():
   ###
   def append(s): return r'\1 ' + s
   freecodestyle = "height:1.05em; vertical-align: bottom;"
-  freecode = html.img().style(freecodestyle).src("img/freeCodeCamp.png").str()
-  toool = html.img().style(freecodestyle).src("img/toool.png").str()
+
+  freecode = html.img().style(freecodestyle).src("img/freeCodeCamp.png")
+  freecode = freecode.alt("freeCodeCamp").str()
+
+  toool = html.img().style(freecodestyle).src("img/toool.png")
+  toool = toool.alt("(TOOOL)").str()
+
   evtdict = [ ( ' at Hack Manhattan', '' ),
               ( '(Open House)', append(html.logo("img/balloons.png")) ),
               ( '(Fixers\' Collective)', append(html.logo("img/fixers.png")) ),

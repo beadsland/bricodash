@@ -31,6 +31,7 @@ import brico.common.html as html
 import datetime
 import os
 import sys
+import re
 
 ###
 # Update event source files
@@ -74,5 +75,27 @@ for item in brico.events.building()[:10]:
   event = brico.events.format(item)
   evtBldg.append( brico.events.line("%s %s" % (venue, event)) )
 
+evtThree = []
+slkThree = ["*_Bricodash Combined Three Day Calendar_*"]
+three = datetime.datetime.now() + datetime.timedelta(days=3)
+three = re.sub('T', ' ', three.isoformat())
+combo = brico.events.combo()
+for item in brico.events.combo():
+  if item['start'] < three:
+    venue = brico.events.venue(item['venue'])
+    event = brico.events.format(item)
+    evtThree.append( brico.events.line( "%s %s" % (venue, event)) )
+
+    start = brico.events.format_dt(item['start'])
+    event = item['event']
+    event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
+    event = re.sub(r'<[^>]+>', '', event)
+    event = re.sub(r'  ', ' ', event)
+    if item['venue'] == "Hack Manhattan":    event = "*%s*" % event
+    slkThree.append( "> *%s* — _%s_ — %s"
+                     % (item['venue'], start, event) )
+
 brico.common.write_pull("space_events.html", evtSpce)
 brico.common.write_pull("building_events.html", evtBldg)
+brico.common.write_pull("threeday_events.html", evtThree)
+brico.common.write_pull("threeday_events.slack", slkThree)

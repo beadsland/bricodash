@@ -35,6 +35,7 @@ class elem:
   def id(self, id):             return self.attr('id', id);
   def style(self, style):       return self.attr('style', style);
   def src(self, src):           return self.attr('src', src);
+  def alt(self, str):           return self.attr('alt', str);
   def href(self, href):         return self.attr('href', href);
   def target(self, target):     return self.attr('target', target);
 
@@ -47,5 +48,5 @@ class img(elem):
 class a(elem):
   def __init__(self):   elem.__init__(self, 'a')
 
-def logo(src):          return img().clss('logo').src(src).str();
+def logo(src, alt=""):  return img().clss('logo').src(src).alt(alt).str();
 def emoji(s):           return span().clss('emoji').inner(s).str();

@@ -54,6 +54,15 @@ def community():
   return datesort( datesort(load_cals(cals))[:4] + load_cals(["space.json"]) )
 
 ###
+# Combined calendar for next three days
+###
+def combo():
+  list = load_cals([ "space.json", "brite.json", "upmeet.json",
+                     "multi.json", "castles.json", "tober.json",
+                     "holiday.json" ])
+  return datesort(list)
+
+###
 # Load a list of calendars
 ###
 def load_cals(files):

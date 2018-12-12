@@ -18,40 +18,27 @@
 -->
 
 <html>
-  <head>
-    <?php
-      $pref = '192.168';
-      if (strrpos($_SERVER['REMOTE_ADDR'], $pref) === 0) {
-        print '<base href="http://' . $_SERVER['SERVER_ADDR']
-                                    . $_SERVER['REQUEST_URI'] . '">';
-      }
-    ?>
+<head>
+  <?php
+    $pref = '192.168';
+    if (strrpos($_SERVER['REMOTE_ADDR'], $pref) === 0) {
+      print '<base href="http://' . $_SERVER['SERVER_ADDR']
+                                  . $_SERVER['REQUEST_URI'] . '">';
+    }
+  ?>
 
-    <title>Bricodash — Hack Manhattan Dashboard</title>
+  <title>Bricodash — Hack Manhattan Dashboard</title>
 
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Chivo" />
+  <?php include "pane/css.html"?>
 
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="css/struct.css">
-    <link rel="stylesheet" type="text/css" href="css/events.css">
-    <link rel="stylesheet" type="text/css" href="css/weather.css">
-    <link rel="stylesheet" type="text/css" href="css/cloud.css">
-    <link rel="stylesheet" type="text/css" href="css/slack.css">
-    <link rel="stylesheet" type="text/css" href="css/misc.css">
-    <link rel="stylesheet" type="text/css" href="css/overlay.css">
-
-    <link href="prox/serviceStatusStyles1.css" rel="stylesheet" type="text/css"/>
-    <style>body { font: initial; }</style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
-    <script src="js/weather.js"></script>
-    <script src="js/clock.js"></script>
-    <script src="js/sous.js"></script>
-    <script src="js/apps.js"></script>
-    <script src="js/launch.js"></script>
-  </head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/sous.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/launch.js"></script>
+</head>
 <body>
 
 <div class="container" id="random_photo"><?php include "pull/photo.html"?></div>
@@ -71,7 +58,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan=2><?php include "pane/heads.html"?></td>
+      <td colspan=2><?php include "pane/headers.html"?></td>
     </tr>
   </table>
 </div>

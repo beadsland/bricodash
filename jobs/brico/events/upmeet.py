@@ -22,7 +22,7 @@ import brico.common.meetup
 import brico.common.html as html
 
 def meetup(s):
-  return "%s %s" % ( s, html.img().clss('logo').src("img/meetup.png").str() )
+  return "%s %s" % ( s, html.logo("img/meetup.png", "(Meetup)") )
 
 def main():
   events = brico.common.meetup.find("Offside Tavern", ".keys/meetup_upmeet")
