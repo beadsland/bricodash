@@ -351,7 +351,9 @@ The Hack Manhattan logo and gear icon are trademarks of Hack Manhattan, Inc.
 
 The Fixers Collective logo is a trademark of the Fixers' Collective.
 
-The freeCodeCamp logo and glyph are trademarks of freeCodeCamp.
+FreeCodeCamp logo and glyph are trademarks of freeCodeCamp.
+
+TOOOL logo is a trademark of The Open Organization Of Lockpickers.
 
 All product names, logos, brands, emoji glyphs, memes and other images are
 property of their respective owners. All company, product and service

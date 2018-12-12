@@ -38,9 +38,11 @@ def main():
   def append(s): return r'\1 ' + s
   freecodestyle = "height:1.05em; vertical-align: bottom;"
   freecode = html.img().style(freecodestyle).src("img/freeCodeCamp.png").str()
+  toool = html.img().style(freecodestyle).src("img/toool.png").str()
   evtdict = [ ( ' at Hack Manhattan', '' ),
               ( '(Open House)', append(html.logo("img/balloons.png")) ),
               ( '(Fixers\' Collective)', append(html.logo("img/fixers.png")) ),
+              ( '\(TOOOL\)', toool ),
               ( 'freeCodeCamp', freecode ),
               ( '(Midnight Games)', append(html.emoji("🌌🎲")) ),
               ( '(Electronics Night)', append(html.emoji("💡")) ),
@@ -54,7 +56,6 @@ def main():
   for item in brico.common.meetup.events(brico.common.meetup.grp())[:8]:
     evt = item['name']
     for tup in evtdict: evt = re.compile(tup[0]).sub(tup[1], evt)
-
     dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
     if (dt.day == lasttues) and (dt.month == today.month):
       evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
