@@ -26,6 +26,7 @@ import brico.events.tober
 import brico.events.space
 import brico.events.castles
 import brico.events.lunar
+import brico.slack
 
 import brico.common.html as html
 import datetime
@@ -75,27 +76,36 @@ for item in brico.events.building()[:10]:
   event = brico.events.format(item)
   evtBldg.append( brico.events.line("%s %s" % (venue, event)) )
 
-evtThree = []
-slkThree = ["*_Bricodash Combined Three Day Calendar_*"]
+slkThree = ["*_Bricodash Full Three Day Calendar_*"]
 three = datetime.datetime.now() + datetime.timedelta(days=3)
 three = re.sub('T', ' ', three.isoformat())
 combo = brico.events.combo()
 for item in brico.events.combo():
   if item['start'] < three:
-    venue = brico.events.venue(item['venue'])
-    event = brico.events.format(item)
-    evtThree.append( brico.events.line( "%s %s" % (venue, event)) )
+    venue = "(%s)" % brico.slack.bold(item['venue'])
+    if item['venue'] == "Hack Manhattan": venue = ":hm:"
+    start = brico.slack.ital( brico.events.format_dt(item['start']) )
 
-    start = brico.events.format_dt(item['start'])
     event = item['event']
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
-    event = re.sub(r'  ', ' ', event)
-    if item['venue'] == "Hack Manhattan":    event = "*%s*" % event
-    slkThree.append( "> *%s* — _%s_ — %s"
-                     % (item['venue'], start, event) )
+    event = re.sub(r'\(Meetup\)', ':meetup:', event)
+    event = re.sub(r'\(Babycastles\)', '', event)
+    event = re.sub(r'  +', ' ', event).rstrip()
+    if item['venue'] == "Hack Manhattan":
+      event = brico.slack.bold(event)
+
+    line = "%s: %s %s" % (start, event, venue)
+    slkThree.append( brico.slack.quot( line ) )
 
 brico.common.write_pull("space_events.html", evtSpce)
 brico.common.write_pull("building_events.html", evtBldg)
-brico.common.write_pull("threeday_events.html", evtThree)
-brico.common.write_pull("threeday_events.slack", slkThree)
+brico.common.write_text("threeday_events.slack", slkThree)
+
+token = brico.common.get_token("slacker_token")
+slack = brico.slack.Slack( token )
+
+#if min == 0 and hr % 12 == 0 or 'holiday' in sys.argv:
+channel = "bottest"
+#slack.post(channel, brico.common.slurp("threeday_events.slack"))
+#print(slack.messages(channel))

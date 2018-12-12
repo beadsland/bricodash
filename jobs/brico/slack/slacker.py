@@ -15,6 +15,12 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+###
+### Using legacy integrations. (deprecated)
+###
+### Replace with proper app.
+###
+
 from slacker import Slacker
 from vend.memoize import memoized
 

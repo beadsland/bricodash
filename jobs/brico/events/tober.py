@@ -27,12 +27,12 @@ def main():
                                     ".keys/meetup_hacktoberfest")
   events += brico.common.meetup.find("Hacktober", ".keys/meetup_hacktober")
 
-  def logoit(l): return html.img().clss('logo').src( l ).str()
   def dateit(e): return ' '.join([ e['local_date'], e['local_time'] ])
-  def meetit(e): return '(%s)' % ' '.join([ e['group']['name'].strip(),
-                                            logoit("img/meetup.png") ])
+  def meetit(e): return '(%s)' \
+                        % ' '.join([ e['group']['name'].strip(),
+                                     html.logo("img/meetup.png", "(Meetup)") ])
   def nameit(e): return u' '.join([ e['name'].strip(),
-                                    logoit("img/tober.png"),
+                                    html.logo("img/tober.png"),
                                     meetit(e) ])
 
   events = [ { 'start': dateit(e), 'event': nameit(e), 'venue': "Holiday" }

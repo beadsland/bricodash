@@ -26,13 +26,14 @@ calendar = "e5dh8b6plqo4sift6fbplkcqjg%40group.calendar.google.com"
 def main():
   style = "margin-left: -.05em; vertical-align: -10%;"
   castles = html.img().clss('logo').style(style).src("img/babycastles.png")
+  castles = castles.alt("Babycastles").str()
 
   path = os.path.join( "https://calendar.google.com/calendar/ical",
                        calendar, "public/basic.ics" )
   ev = []
   for e in events(path):
     if "Babycastles" in e.summary:
-      name = e.summary.replace("Babycastles", castles.str())
+      name = e.summary.replace("Babycastles", castles)
     else:
       name = "%s (%s)" % (e.summary, castles)
     ev.append( { 'start': e.start.strftime("%Y-%m-%d %H:%M:%S"),

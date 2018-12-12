@@ -67,14 +67,22 @@ def get_response(path, params={}, token=""):
 def touch(f):
   with open(f, 'a'):    os.utime(f, None)
 
-def write_pull(filename, list):
+def slurp(filename):
   filename = os.path.join( pull(), filename )
-  list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
+  with open(filename) as x: f = x.read()
+  return f
+
+def write_text(filename, list):
+  filename = os.path.join( pull(), filename )
 
   file = open(filename + ".new", "wb")
   file.write( u"\n".join(list).encode("utf-8") )
   file.close()
   os.rename(filename + ".new", filename)
+
+def write_pull(filename, list):
+  list.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
+  write_text(filename, list)
 
 def write_json(filename, struct):
   filename = os.path.join( pull(), filename )
