@@ -45,6 +45,22 @@ browser to poll for those files as needed.
 * Perl + Date::Manip
 * ImageMagick
 
+### API Credentials
+
+Most of the APIs used (see [NOTICES.md]) require some variation on tokens or
+keys, which may, in turn, represent apps registered with the developer tools
+for the respective API. These keys are stored as text files under `jobs/keys`
+(not checked into the repository).
+
+To get each script using an API begins by retrieving its key via the
+`brico.common.get_token` function. Each `get_token()` invocation represents
+a key, or token, string that needs to be obtained for the API in question and
+stored in a file under `jobs\keys`.
+
+Note that, given the way Meetup's API wizard works, we don't have a single
+token string used across queries. Instead, each query either uses a token
+string unique to it, or else doesn't require a token string at all.
+
 ## Kiosk Dependencies
 
 Developed for use under Chromecast or a single-board computer running

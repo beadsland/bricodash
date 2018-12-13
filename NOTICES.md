@@ -12,7 +12,7 @@
     - [jobs/vend/multisub.py](#jobsvendmultisubpy)
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
-    - [jobs/brico/slack.py](#jobsbricoslackpy)
+    - [jobs/brico/slack/](#jobsbricoslack)
     - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/brico/events/castles.py](#jobsbricoeventscastlespy)
@@ -173,7 +173,7 @@ Any rights in individual contents of the database are licensed under
 the Database Contents License: <http://opendatacommons.org/licenses/dbcl/1.0/>.
 
 
-### jobs/brico/slack.py
+### jobs/brico/slack/
 
 Slack Web API used under Slack's API Terms of Service.
 https://slack.com/terms-of-service/api
