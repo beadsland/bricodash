@@ -39,10 +39,10 @@ def main():
 
     if venue['name'] in tenants:
       name = multiple_replace(event['name']['text'], replace)
+      name = brico.events.noisy( brico.events.polite(name) )
       line = { "start": event['start']['local'],
                "venue": venue['name'],
-               "event": "%s %s" % (brico.events.noisy(name),
-                                   short(event['url'])) }
+               "event": "%s %s" % (name, short(event['url'])) }
       ratpark.append( line )
 
   brico.common.write_json( "brite.json", brico.events.datesort(ratpark)[:5] )

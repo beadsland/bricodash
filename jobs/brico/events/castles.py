@@ -32,10 +32,11 @@ def main():
                        calendar, "public/basic.ics" )
   ev = []
   for e in events(path):
+    name = brico.events.polite(e.summary)
     if "Babycastles" in e.summary:
-      name = e.summary.replace("Babycastles", castles)
+      name = name.replace("Babycastles", castles)
     else:
-      name = "%s (%s)" % (e.summary, castles)
+      name = "%s (%s)" % (name, castles)
     ev.append( { 'start': e.start.strftime("%Y-%m-%d %H:%M:%S"),
                  'event': name, 'venue': "Babycastles" } )
   brico.common.write_json("castles.json", brico.events.datesort(ev))

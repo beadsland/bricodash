@@ -29,6 +29,7 @@ import re
 @memoized
 def noisemoji(): return html.span().clss("noisemoji").inner(u"🔊🎶").str()
 def noisy(s): return html.span().clss("noisy").inner( s ).str() + noisemoji()
+def polite(s): return re.sub('/', "/&thinsp;", s)
 
 @memoized
 def venue(s): return html.span().clss('venue').inner( s ).str()
