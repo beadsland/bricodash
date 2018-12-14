@@ -91,6 +91,7 @@ for item in brico.events.combo():
     event = item['event']
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
+    event = re.sub(r'&thinsp;', "", event)
     event = re.sub(r'\(Meetup\)', ':meetup:', event)
     event = re.sub(r'\(Babycastles\)', '', event)
     event = re.sub(r'  +', ' ', event).rstrip()
