@@ -39,7 +39,7 @@ def line(s): return html.div().clss('event-line').inner( s ).str()
 # Events of other building tenants
 ###
 def building():
-  list = load_cals([ "space.json", "brite.json", "upmeet.json" ])
+  list = load_cals([ "space.json", "private.json", "brite.json", "upmeet.json" ])
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
   list.append( { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
@@ -52,15 +52,16 @@ def building():
 ###
 def community():
   cals = [ "multi.json", "castles.json", "tober.json", "holiday.json" ]
-  return datesort( datesort(load_cals(cals))[:4] + load_cals(["space.json"]) )
+  return datesort( datesort(load_cals(cals))[:4] \
+                            + load_cals(["space.json", "private.json"]) )
 
 ###
 # Combined calendar for next three days
 ###
 def combo():
-  list = load_cals([ "space.json", "brite.json", "upmeet.json",
-                     "multi.json", "castles.json", "tober.json",
-                     "holiday.json" ])
+  list = load_cals([ "space.json", "private.json", "brite.json",
+                     "upmeet.json", "multi.json", "castles.json",
+                     "tober.json", "holiday.json" ])
   return datesort(list)
 
 ###

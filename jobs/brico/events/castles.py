@@ -17,6 +17,7 @@
 
 from icalevents.icalevents import events
 import os
+import dateutil.tz as tz
 
 import brico.common
 import brico.common.html as html
@@ -37,6 +38,7 @@ def main():
       name = name.replace("Babycastles", castles)
     else:
       name = "%s (%s)" % (name, castles)
-    ev.append( { 'start': e.start.strftime("%Y-%m-%d %H:%M:%S"),
-                 'event': name, 'venue': "Babycastles" } )
+
+    start = e.start.asttimezone(tz.tzlocal).strftime("%Y-%m-%d %H:%M:%S")
+    ev.append( { 'start': start, 'event': name, 'venue': "Babycastles" } )
   brico.common.write_json("castles.json", brico.events.datesort(ev))

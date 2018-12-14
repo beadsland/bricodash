@@ -25,6 +25,7 @@ import brico.events.holiday
 import brico.events.tober
 import brico.events.space
 import brico.events.castles
+import brico.events.private
 import brico.events.lunar
 import brico.slack
 
@@ -56,10 +57,11 @@ if min == 0 and hr % 12 == 0 or 'multi' in sys.argv:
                                               brico.events.multi.main()
 
 if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
+if min % 30 == 0 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
 if min % 60 == 0 or 'castles' in sys.argv:    brico.events.castles.main()
-if min % 30 == 0 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
 if min % 10 == 0 or 'space' in sys.argv:      brico.events.space.main()
+if min % 60 == 0 or 'private' in sys.argv:    brico.events.private.main()
 
 ###
 # Build events component divs

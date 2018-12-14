@@ -15,7 +15,7 @@
     - [jobs/brico/slack/](#jobsbricoslack)
     - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
-    - [jobs/brico/events/castles.py](#jobsbricoeventscastlespy)
+    - [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
     - [jobs/wiki.py](#jobswikipy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
@@ -24,7 +24,6 @@
     - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
     - [html/css/font](#htmlcssfont)
     - [html/img](#htmlimg)
-
 <!-- TOC END -->
 
 ## bricodash
@@ -216,7 +215,7 @@ For Eventbrite's privacy policy, see:
 <https://www.eventbrite.com/support/articles/en_US/Troubleshooting/eventbrite-privacy-policy?lg=en_US>.
 
 
-### jobs/brico/events/castles.py
+### jobs/brico/events/castles.py, jobs/brico/events/private.py
 
 Google calendar ICS used under Google's Terms of Service.
 https://policies.google.com/terms?hl=en&gl=ZZ

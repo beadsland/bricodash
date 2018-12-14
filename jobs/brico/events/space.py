@@ -71,8 +71,11 @@ def main():
     else:
       rsvp = item['yes_rsvp_count']
 
-    events.append( { "start": dt.isoformat(), "event":  evt,
-                     "venue": "Hack Manhattan", "rsvp": rsvp } )
+    end = dt + datetime.timedelta(seconds = item['duration'] / 1000)
+
+    events.append( { "start": dt.isoformat(), "end": end.isoformat(),
+                     "event":  evt, "venue": "Hack Manhattan",
+                     "rsvp": rsvp } )
 
   brico.common.write_json("space.json", events)
 
