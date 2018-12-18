@@ -39,6 +39,6 @@ def main():
     else:
       name = "%s (%s)" % (name, castles)
 
-    start = e.start.asttimezone(tz.tzlocal).strftime("%Y-%m-%d %H:%M:%S")
+    start = e.start.astimezone(tz.tzlocal()).strftime("%Y-%m-%d %H:%M:%S")
     ev.append( { 'start': start, 'event': name, 'venue': "Babycastles" } )
   brico.common.write_json("castles.json", brico.events.datesort(ev))
