@@ -27,9 +27,16 @@
    var urlParams = new URLSearchParams(window.location.search);
    if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
      scheduleDiv("#sous", "pull/sous.html", 1000);
-     setInterval(eyeball, 500)
+     var i;
+     for (i=0; i<2000; i=i+250) {
+       setTimeout(rolleye, i)
+     }
    }
  }
+
+function rolleye() {
+  setInterval(eyeball, 2000)
+}
 
 function eyeball() {
   var veil = document.querySelector("#veil");

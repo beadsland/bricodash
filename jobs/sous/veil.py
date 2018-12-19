@@ -24,7 +24,7 @@ import sys
 pwd = os.path.dirname(sys.argv[0])
 pid = os.path.join(pwd, "pid")
 
-ival = 60 * 2;
+ival = 60 * 4;
 
 for i in range(1, ival):
   list = [ f for f in os.listdir(pid) if f.startswith("l") ]
