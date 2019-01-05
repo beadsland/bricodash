@@ -68,9 +68,10 @@ def main():
     if (dt.day == 8) and (dt.month == 1) and (dt.year == 2019):
       evt = re.sub(r'(Tech Tuesday)', r'\1 / Rescheduled General Meeting', evt)
 
-    if evt in colist("nyc-math"):
-      rsvp = colist_rsvps("nyc-math", item)
-      evt += ' ' + html.logo("img/math.png")
+    mevt = re.sub(r'Math talk: +', '', evt)
+    if mevt in colist("nyc-math"):
+      rsvp = colist_rsvps("nyc-math", item, mevt)
+      evt = '%s %s' % ( evt, html.logo("img/math.png") )
     else:
       rsvp = item['yes_rsvp_count']
 
@@ -89,9 +90,9 @@ def main():
 def colist(group):  # will break on identically named events -- not a problem
   return { e["name"]: e["id"] for e in brico.common.meetup.events(group) }
 
-def colist_rsvps(group, item):
+def colist_rsvps(group, item, mevt):
   us =   brico.common.meetup.rsvps( brico.common.meetup.grp(), item['id'] )
-  them = brico.common.meetup.rsvps( group, colist(group)[item['name']] )
+  them = brico.common.meetup.rsvps( group, colist(group)[mevt] )
 
   rsvps = {};
   for ans in us + them:

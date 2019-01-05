@@ -34,6 +34,7 @@ def events(group):
 def rsvps(group, eid):
   path = "/".join([ "https://api.meetup.com", group, "events", eid, "rsvps" ])
   response = brico.common.get_response(path)
+  return json.loads(response.text)
 
 @memoized
 def find(text, sigfile):
