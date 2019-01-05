@@ -30,7 +30,7 @@ def main():
   def dateit(e): return ' '.join([ e['local_date'], e['local_time'] ])
   def meetit(e): return '(%s)' \
                         % ' '.join([ e['group']['name'].strip(),
-                                     html.logo("img/meetup.png", "(Meetup)") ])
+                                     html.logo("img/meetup.png", ":meetup:") ])
   def nameit(e): return u' '.join([ e['name'].strip(),
                                     html.logo("img/tober.png"),
                                     meetit(e) ])

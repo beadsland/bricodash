@@ -51,12 +51,12 @@ def kwanzaa(now):
 
 def twelve(now):
   callout = "font-size: 150%"
-  partridge = brico.common.html.logo("img/partridge.png")
+  partridge = brico.common.html.logo("img/partridge.png", ":partridge:")
   days = [ "", "&ensp;a&ensp;%s&ensp;∈&ensp;a&ensp;🍐&ensp;🌳" % partridge,
            "🐢🕊️", "🇫🇷🐔", "🤙🐦",
            brico.common.html.span().style(callout).inner("🏅&ensp;💍").str(),
            "🦆🥚",
-           "%s🏊🏿‍♀️" % brico.common.html.logo("img/ggl-swan.png"),
+           "%s🏊🏿‍♀️" % brico.common.html.logo("img/ggl-swan.png", ":swan:"),
            "👧🥛", "💃🏽👣", "🤴🐬", "🎺🎶", "🥁🥁" ]
 
   adj = now - datetime.timedelta(days=12)
