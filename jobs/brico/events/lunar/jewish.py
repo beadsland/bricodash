@@ -37,6 +37,9 @@ def hanukkah(now):
   return { 'start': eve.replace(tzinfo=None).isoformat(),
            'venue': "Holiday", 'event': event }
 
+def unlit():
+  return brico.common.html.span().style("opacity: .15").inner("🕯").str()
+
 def menorah(first, now):
   sunset = brico.events.lunar.sunset( now.date() )
 
@@ -51,10 +54,9 @@ def menorah(first, now):
   menorah = " " * (8-day) + "🕯" * day
   left = menorah[:4]
   right = menorah[4:]
-  unlit = brico.common.html.span().style("opacity: .15").inner("🕯").str()
   space = re.compile(r' ')
-  left  = space.sub(unlit, left)
-  right = space.sub(unlit, right)
+  left  = space.sub(unlit(), left)
+  right = space.sub(unlit(), right)
   menorah = "%s%s%s" % (left, shamash, right)
 
   return (brico.common.html.emoji(menorah), sunset)
