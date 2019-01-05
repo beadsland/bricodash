@@ -72,8 +72,7 @@ def twelve(now):
     list.reverse()
     love = "<b>⊤</b>%s" % brico.common.html.emoji("💖🎁🤳")
     event = "%s:&nbsp;&nbsp;%s" % (love, ", ".join( list ))
-    event = re.sub(", 1×", " & 1×", event)
-    event = re.sub("1×", "", event)
+    event = re.sub(", 1×", " & ", event)
     return { 'start': now.date().isoformat(), 'venue': "Holiday",
              'event': event }
 
