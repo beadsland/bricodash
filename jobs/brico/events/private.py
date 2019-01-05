@@ -20,6 +20,7 @@ import os
 import dateparser
 import copy
 import dateutil.tz as tz
+import re
 
 import brico.common
 import brico.common.html as html
@@ -60,7 +61,6 @@ def main():
           new.append(e)
         else:
           f = copy.copy(e)
-          print(e.start, e.end)
           f.start = space[0]['end']
           e.end = space[0]['start']
           new.append(e)
@@ -70,6 +70,8 @@ def main():
 
   ev = []
   for e in private:
+    name = e.summary
+    name = re.sub(r'Potluck', "Potluck 🍲", name)
     ev.append( { 'start': e.start, 'end': e.end, 'venue': "Hack Manhattan",
-                 'event': "%s %s: %s" % (gcal, "Reserved for", e.summary) } )
+                 'event': "%s %s: %s" % (gcal, "Reserved for", name) } )
   brico.common.write_json("private.json", brico.events.datesort(ev))
