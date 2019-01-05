@@ -65,6 +65,9 @@ def main():
     if (dt.day == lasttues) and (dt.month == today.month):
       evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
 
+    if (dt.day == 8) and (dt.month == 1) and (dt.year == 2019):
+      evt = re.sub(r'(Tech Tuesday)', r'\1 / Rescheduled General Meeting', evt)
+
     if evt in colist("nyc-math"):
       rsvp = colist_rsvps("nyc-math", item)
       evt += ' ' + html.logo("img/math.png")
