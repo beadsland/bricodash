@@ -53,7 +53,7 @@ def twelve(now):
   callout = "font-size: 150%"
   partridge = brico.common.html.logo("img/partridge.png")
   days = [ "", "&ensp;a&ensp;%s&ensp;∈&ensp;a&ensp;🍐&ensp;🌳" % partridge,
-           "🐢🕊️", "🤙🐦", "🇫🇷🐔",
+           "🐢🕊️", "🇫🇷🐔", "🤙🐦",
            brico.common.html.span().style(callout).inner("🏅&ensp;💍").str(),
            "🦆🥚",
            "%s🏊🏿‍♀️" % brico.common.html.logo("img/ggl-swan.png"),
