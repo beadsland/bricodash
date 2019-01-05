@@ -23,6 +23,8 @@ import datetime
 import dateutil.tz
 import convertdate
 
+def main(now): return [ hanukkah(now) ]
+
 def hanukkah(now):
   first = holiday("hanukkah", now, 8)
   firsteve = brico.events.lunar.sunset( first )
