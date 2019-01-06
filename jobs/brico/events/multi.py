@@ -27,8 +27,9 @@ import dateutil.tz as tz
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
-  hols = brico.events.lunar.jewish.main(now) \
-         + brico.events.lunar.winter.main(now) + solar(now)
+  hols = skeptic(now) + solar(now) \
+         + brico.events.lunar.jewish.main(now) \
+         + brico.events.lunar.winter.main(now)
   brico.common.write_json("multi.json", hols)
 
 def solar(now):
@@ -50,3 +51,15 @@ def solar(now):
 def toiso(edate):
   utc = edate.datetime().replace(tzinfo=tz.UTC)
   return utc.astimezone(tz.tzlocal()).replace(tzinfo=None).isoformat()
+
+def skeptic(now):
+  firsts = (datetime.date(now.year, m, 1) for m in range(1, 13))
+  then = now + datetime.timedelta(days=365)
+  secnds = (datetime.date(then.year, m, 1) for m in range(1, 13))
+  thirts = (list(day for day in firsts if day.weekday() == 6)[0],
+            list(day for day in secnds if day.weekday() == 6)[0])
+  skeptc = thirts[1] if thirts[0] < now.date() else thirts[0]
+  skeptc = skeptc + datetime.timedelta(days=12)
+  return [ { 'start': skeptc.isoformat(), 'venue': 'Holiday',
+             'event': "International Skeptics Day "
+                      + brico.common.html.emoji("🤔") } ]
