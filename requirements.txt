@@ -16,7 +16,7 @@ dateparser==0.7.0
 datetime==4.3             # via icalevents
 docopt==0.6.2             # via pipreqs
 emoji-data-python==1.1.0
-ephem==3.7.6.0            # via convertdate
+ephem==3.7.6.0            # via convertdate, lunarcalendar
 eventbrite==3.3.3
 httplib2==0.11.3          # via icalevents
 humanize==0.5.1
@@ -25,18 +25,18 @@ icalevents==0.1.13
 idna==2.7                 # via requests
 ifaddr==0.1.4             # via zeroconf
 ipaddress==1.0.22         # via ifaddr
+lunarcalendar==0.0.9
 pillow==5.2.0             # via python-resize-image
 pip-tools==3.0.0
 pipreqs==0.4.9
 protobuf==3.6.1           # via pychromecast
 pychromecast==2.3.0
-python-dateutil==2.7.3    # via dateparser, icalendar
+python-dateutil==2.7.3    # via dateparser, icalendar, lunarcalendar
 python-resize-image==1.1.12
-pytz==2018.5              # via astral, convertdate, dateparser, datetime, icalendar, icalevents, tzlocal
+pytz==2018.5              # via astral, convertdate, dateparser, datetime, icalendar, icalevents, lunarcalendar, tzlocal
 regex==2018.8.29          # via dateparser
 requests==2.19.1
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
-slacker==0.9.65
 tzlocal==1.5.1            # via dateparser
 urllib3==1.23             # via requests
 yarg==0.1.9               # via pipreqs

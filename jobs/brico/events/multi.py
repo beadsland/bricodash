@@ -19,6 +19,7 @@ import brico.common
 import brico.common.html
 import brico.events.lunar.jewish
 import brico.events.lunar.winter
+import brico.events.lunar.chinese
 
 import ephem
 import datetime
@@ -29,7 +30,8 @@ def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
   hols = skeptic(now) + solar(now) \
          + brico.events.lunar.jewish.main(now) \
-         + brico.events.lunar.winter.main(now)
+         + brico.events.lunar.winter.main(now) \
+         + brico.events.lunar.chinese.main(now)
   brico.common.write_json("multi.json", hols)
 
 def solar(now):
