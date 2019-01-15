@@ -26,15 +26,26 @@ import ephem
 import datetime
 import dateutil
 import dateutil.tz as tz
+import calendar
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
-  hols = skeptic(now) + solar(now) \
+  hols = skeptic(now) + solar(now) + leap(now) \
          + brico.events.lunar.chinese.main(now) \
          + brico.events.lunar.jewish.main(now) \
          + brico.events.lunar.winter.main(now) \
          + brico.events.lunar.christian.main(now)
   brico.common.write_json("multi.json", hols)
+
+def leap(now):
+  if calendar.isleap(now.year) and now < datetime.date(now.year, 3, 1):
+    return [ { 'start': datetime.date(now.year, 2, 29).isoformat(),
+               'venue': "Holiday", 'event': "Leap Day 🤸‍♀️" } ]
+  elif calendar.isleap(now.year + 1):
+    return [ { 'start': datetime.date(now.year+1, 2, 29).isoformat(),
+               'venue': "Holiday", 'event': "Leap Day 🤸‍♀️" } ]
+  else:
+    return []
 
 def solar(now):
   yester = now - datetime.timedelta(days=1)
