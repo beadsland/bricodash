@@ -30,13 +30,18 @@ def calendar(year):
   easter = vend.easter.calc_easter(year)
   return [
           { 'start': (easter - datetime.timedelta(days = 47)).isoformat(),
-            'venue': "Holiday", 'event': "Mardis Gras 🎭⚜" },
+            'venue': "Holiday",
+            'event': "Mardis Gras " + brico.common.html.emoji("🎭⚜") },
           { 'start': (easter - datetime.timedelta(days = 46)).isoformat(),
-            'venue': "Holiday", 'event': "Ash Wednesday ⛪" },
+            'venue': "Holiday",
+            'event': "Ash Wednesday " + brico.common.html.emoji("⛪") },
           { 'start': (easter - datetime.timedelta(days = 7)).isoformat(),
-            'venue': "Holiday", 'event': "Palm Sunday 🌴" },
+            'venue': "Holiday",
+            'event': "Palm Sunday " + brico.common.html.emoji("🌴") },
           { 'start': (easter - datetime.timedelta(days = 2)).isoformat(),
-            'venue': "Holiday", 'event': "Good Friday ⛪" },
+            'venue': "Holiday",
+            'event': "Good Friday " + brico.common.html.emoji("⛪") },
           { 'start': easter.isoformat(),
-            'venue': "Holiday", 'event': "Easter Sunday 🐰"  },
+            'venue': "Holiday",
+            'event': "Easter Sunday " + brico.common.html.emoji("🐰") },
         ]

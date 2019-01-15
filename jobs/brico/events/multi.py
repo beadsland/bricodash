@@ -38,12 +38,13 @@ def main():
   brico.common.write_json("multi.json", hols)
 
 def leap(now):
+  lday = "Leap Day " + brico.common.html.emoji("🤸‍♀️")
   if calendar.isleap(now.year) and now < datetime.date(now.year, 3, 1):
     return [ { 'start': datetime.date(now.year, 2, 29).isoformat(),
-               'venue': "Holiday", 'event': "Leap Day 🤸‍♀️" } ]
+               'venue': "Holiday", 'event': lday } ]
   elif calendar.isleap(now.year + 1):
     return [ { 'start': datetime.date(now.year+1, 2, 29).isoformat(),
-               'venue': "Holiday", 'event': "Leap Day 🤸‍♀️" } ]
+               'venue': "Holiday", 'event': lday } ]
   else:
     return []
 
