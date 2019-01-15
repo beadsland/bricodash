@@ -33,6 +33,8 @@ def calendar(year):
             'venue': "Holiday", 'event': "Mardis Gras 🎭⚜" },
           { 'start': (easter - datetime.timedelta(days = 46)).isoformat(),
             'venue': "Holiday", 'event': "Ash Wednesday ⛪" },
+          { 'start': (easter - datetime.timedelta(days = 7)).isoformat(),
+            'venue': "Holiday", 'event': "Palm Sunday 🌴" },
           { 'start': (easter - datetime.timedelta(days = 2)).isoformat(),
             'venue': "Holiday", 'event': "Good Friday ⛪" },
           { 'start': easter.isoformat(),
