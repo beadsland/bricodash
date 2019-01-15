@@ -23,7 +23,33 @@ import datetime
 import dateutil.tz
 import convertdate
 
-def main(now): return [ hanukkah(now) ]
+def main(now): return passover(now) + [ purim(now), hanukkah(now) ]
+
+def iso(dt): return dt.replace(tzinfo=None).isoformat()
+
+def purim(now):
+  eve = brico.events.lunar.sunset( holiday("purim", now) )
+  return { 'start': iso(eve), 'venue': "Holiday",
+           'event': "Purim " + brico.common.html.emoji("🕍") }
+
+def passover(now):
+  first = holiday("passover", now, 8)
+  firsteve = brico.events.lunar.sunset( first )
+  lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=8) )
+
+  unlev = brico.common.html.emoji("🍞🚫")
+  if now < firsteve:
+    (event, eve) = ("First Night of Passover " + unlev, firsteve)
+  elif now < lasteve:
+    (event, eve) = ("Last Day of Passover " + unlev, lasteve)
+  bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
+
+  if firsteve < now < lasteve:
+    greet = "<em>Chag Kashruth Pesach</em> (Happy Kosher Passover) " + unlev
+    happy = { 'start': now.date().isoformat(), 'venue': "Holiday",
+              'event': greet }
+    return [ bound, happy ]
+  else: return [ bound ]
 
 def hanukkah(now):
   first = holiday("hanukkah", now, 8)
@@ -36,8 +62,7 @@ def hanukkah(now):
   elif now < lasteve:
     (event, eve) = menorah(first, now)
 
-  return { 'start': eve.replace(tzinfo=None).isoformat(),
-           'venue': "Holiday", 'event': event }
+  return { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
 def unlit():
   return brico.common.html.span().style("opacity: .15").inner("🕯").str()
