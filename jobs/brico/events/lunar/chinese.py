@@ -25,8 +25,7 @@ animals = ["🐉", "🐍", "🐎", "🐑", "🐒", "🐓", "🐕", "🐖", "🐀
 
 def main(now):
   event = "Chinese New Year"
-  then = now + datetime.timedelta(days=365)
-  dates = [holiday(now.year, event), holiday(then.year, event)]
+  dates = [holiday(now.year, event), holiday(now.year + 1, event)]
   date = dates[1] \
      if dates[0] < datetime.date(now.year, now.month, now.day) else dates[0]
   event = "%s %s" % (event, animals[ (date.year - 2000) % 12 ])
