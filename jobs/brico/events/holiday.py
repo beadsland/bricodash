@@ -26,9 +26,13 @@ import sys
 import brico.common
 import brico.common.html as html
 
+import brico.events.birth
+
 def main():
+  brico.events.birth.main()
+
   geek = "cal/geek.cal"
-  birth = "cal/birth.cal"
+  birth = "cal/birth.out"
   usnat = "cal/usnat.cal"
   local = "cal/local.cal"
   trivia = "cal/trivia.cal"

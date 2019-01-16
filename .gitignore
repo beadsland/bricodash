@@ -10,3 +10,4 @@ html/thmb/
 __pycache__/
 *.log
 *-dev.py
+*.out
