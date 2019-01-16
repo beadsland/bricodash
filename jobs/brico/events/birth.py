@@ -26,7 +26,7 @@ def main():
 
   d = defaultdict(list)
   for x in cal:
-    d[x[0]].insert( 0, re.compile(" ").sub("&nbsp;", x[1]) )
+    d[x[0]].append( re.compile(" ").sub("&nbsp;", x[1]) )
   d = {k: stringify(d[k]) for k in d.keys()}
 
   str = ""

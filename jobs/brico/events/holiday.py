@@ -78,7 +78,7 @@ def parse_cal(filename, days=30):
           arr.append( (spl[0], spl[1]) )
 
   arr = (( recur(t[0]), t[1].strip() ) for t in arr)
-  arr = sorted(arr)
+  arr = sorted(arr, key = lambda x: x[0])
 
   n = 0
   cap = datetime.datetime.now() + relativedelta(days = +days)
