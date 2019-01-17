@@ -1,48 +1,55 @@
-#
-# Tech
-#
-24 Jan :: Mac computer introduced (1984)
-26 Mar :: Melissa macro virus released (1999)
-3 Apr :: First mobile phone call made (1973)
-12 Apr :: Houston, we have a problem (1970)
-18 Apr :: First public laundromat opened (Fort Worth/1934)
-11 May :: First known, dated, printed book (China/868)
-24 May :: Samuel Morse's first telegraph message (1844)
-25 May :: First shave in space (1969)
-5 Jun :: Tetris video game released (1984)
-11 Jul :: Last slide rule manufactured in U.S. (1976)
-28 Jul :: Metric system became legal in U.S. (1866)
-16 Aug :: Element 110 named <em>darmstadtium</em> (2003)
-15 Aug :: First successful mp3 player (not Apple/1998)
-8 Sep :: Star Trek debuts (1966)
-15 Oct :: Edison Electric Co established (NYC/1878)
-10 Nov :: Sesame Street debuts (1969)
-19 Nov :: Patent for "registered pedigree stuffed animals" (2002)
-20 Nov :: Whirligig patented (1866)
+###
+# Tech and Nature facts curated from The Old Farmer's Almanac 2016-2019,
+# by Hack Manhattan member Charlie, and edited by Hack Manhattan member
+# beadsland. Dates for natural phenomena may vary--give or take a day--from
+# one year to the next.
+###
 
 #
-# Nature
+# Tech - Almanac
 #
-25 Jan :: January thaw begins about now
-29 Jan :: Raccoons mate now
-24 Feb :: Skunks mate now
-9 Mar :: Hummingbirds migrate north now
-27 Mar :: Chipmunks emerge from hibernation now
-29 Apr :: Poplars leaf out about now
-13 May :: Cranberries bud now
-11 Jul :: Black-eyed Susans bloom now
-18 Jul :: Armadillos mate now
-28 Jul :: Adult gypsy moths emerge
-7 Aug :: Grey squirrels have second litters now
-15 Aug :: Penguin Nils Olav is knighted (Edunburg Zoo/2008)
-20 Aug :: Ragweed in bloom
-28 Aug :: Hummingbirds migrate south now
-25 Sep :: Woodchucks hibernate now
-2 Oct :: Watch for banded wooly bear caterpillars now
-11 Oct :: Little brown bats hibernate now
-27 Oct :: Timber rattlers move to their winter dens
-7 Nov :: Black bears head to their dens about now
-13 Nov :: Lobsters head to deep offshore waters
-18 Nov :: Crabapples ripe about now
-8 Dec :: Winterberry fruits especially showy about now
-18 Dec :: Beware of Pogonip
+24 Jan :: Mac computer introduced (1984) :: img/almanac.png
+26 Mar :: Melissa macro virus released (1999) :: img/almanac.png
+3 Apr :: First mobile phone call made (1973) :: img/almanac.png
+12 Apr :: Houston, we have a problem (1970) :: img/almanac.png
+18 Apr :: First public laundromat opened (Fort Worth/1934) :: img/almanac.png
+11 May :: First known, dated, printed book (China/868) :: img/almanac.png
+24 May :: Samuel Morse's first telegraph message (1844) :: img/almanac.png
+25 May :: First shave in space (1969) :: img/almanac.png
+5 Jun :: Tetris video game released (1984) :: img/almanac.png
+11 Jul :: Last slide rule manufactured in U.S. (1976) :: img/almanac.png
+28 Jul :: Metric system became legal in U.S. (1866) :: img/almanac.png
+16 Aug :: Element 110 named <em>darmstadtium</em> (2003) :: img/almanac.png
+15 Aug :: First successful mp3 player (not Apple/1998) :: img/almanac.png
+8 Sep :: Star Trek debuts (1966) :: img/almanac.png
+15 Oct :: Edison Electric Co established (NYC/1878) :: img/almanac.png
+10 Nov :: Sesame Street debuts (1969) :: img/almanac.png
+19 Nov :: Patent for "registered pedigree stuffed animals" (2002) :: img/almanac.png
+20 Nov :: Whirligig patented (1866) :: img/almanac.png
+
+#
+# Nature - Almanac
+#
+25 Jan :: January thaw begins about now :: img/almanac.png
+29 Jan :: Raccoons mate now :: img/almanac.png
+24 Feb :: Skunks mate now :: img/almanac.png
+9 Mar :: Hummingbirds migrate north now :: img/almanac.png
+27 Mar :: Chipmunks emerge from hibernation now :: img/almanac.png
+29 Apr :: Poplars leaf out about now :: img/almanac.png
+13 May :: Cranberries bud now :: img/almanac.png
+11 Jul :: Black-eyed Susans bloom now :: img/almanac.png
+18 Jul :: Armadillos mate now :: img/almanac.png
+28 Jul :: Adult gypsy moths emerge :: img/almanac.png
+7 Aug :: Grey squirrels have second litters now :: img/almanac.png
+15 Aug :: Penguin Nils Olav is knighted (Edunburg Zoo/2008) :: img/almanac.png
+20 Aug :: Ragweed in bloom :: img/almanac.png
+28 Aug :: Hummingbirds migrate south now :: img/almanac.png
+25 Sep :: Woodchucks hibernate now :: img/almanac.png
+2 Oct :: Watch for banded wooly bear caterpillars now :: img/almanac.png
+11 Oct :: Little brown bats hibernate now :: img/almanac.png
+27 Oct :: Timber rattlers move to their winter dens :: img/almanac.png
+7 Nov :: Black bears head to their dens about now :: img/almanac.png
+13 Nov :: Lobsters head to deep offshore waters :: img/almanac.png
+18 Nov :: Crabapples ripe about now :: img/almanac.png
+8 Dec :: Winterberry fruits especially showy about now :: img/almanac.png
+18 Dec :: Beware of Pogonip :: img/almanac.png
