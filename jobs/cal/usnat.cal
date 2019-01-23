@@ -1,28 +1,57 @@
+#
+# Major Holidays
+#
 31 Dec :: New Year's Eve :: 🍾
 1 Jan :: New Year's Day :: 👶
+
+14 Feb :: Valentine's Day :: 💘
 4 Jul :: Independence Day :: 🇺🇸
 31 Oct :: Halloween :: 🎃
-14 Feb :: Valentine's Day :: 💘
 11 Nov :: Veterans' Day :: 🇺🇸
 
-3rd Mon in Jan :: Martin Luther King Jr. Day (observed)
-3rd Mon in Feb :: Presidents' Day :: 🇺🇸
-Last Mon in May :: Memorial Day :: 🇺🇸
-19 June :: Juneteenth :: ✊🏿
-1st Mon in Sept :: Labor Day :: 🇺🇸
-2nd Mon in Oct :: Columbus Day :: 🇺🇸
-9 Oct :: Leif Erikson Day :: ⛵
 4th Thurs in Nov :: Thanksgiving Day :: 🦃
 4th Thurs in Nov+FD1 :: Black Friday :: 🛍
 24 Dec :: Christmas Eve :: 🎅
 25 Dec :: Christmas Day :: 🎄
 
+#
+# Bank Holidays
+#
+3rd Mon in Jan :: Martin Luther King Jr. Day (observed) :: 🇺🇸
+3rd Mon in Feb :: Presidents' Day :: 🇺🇸
+Last Mon in May :: Memorial Day :: 🇺🇸
+1st Mon in Sept :: Labor Day :: 🇺🇸
+2nd Mon in Oct :: Columbus Day :: 🇺🇸
+
+#
+# Cultural Days
+#
+19 June :: Juneteenth :: ✊🏿
 1st Sun in Feb :: Super Bowl Sunday :: 🇺🇸🏈
 22 Apr :: Earth Day :: 🇺🇸🌎♻️
+9 Oct :: Leif Erikson Day :: ⛵
 
+#
+# Civic Days
+#
 2nd Sun in Mar :: Spring Forward :: 🕑↷🕒
 1st Sun in Nov :: Fall Back :: 🕐↶🕑
+1*4:0:15:0:0:0+NWD :: Tax Filing Deadline :: 🇺🇸
 
-2nd Sun in Jun :: Flag Day :: 🗽🏴󠁵󠁳󠁮󠁹󠁿
-3rd Mon in Feb :: Washington's Birthday (observed) :: 🗽🏴󠁵󠁳󠁮󠁹󠁿
+1st Mon in Nov+FD1 :: Election Day :: 🗳️🇺🇸
+1st Mon in Nov+FD1,BD25 :: General Election—Registration Deadline (NY) :: 🗳️🗽
+1st Mon in Nov+FD1,BD21 :: General Election—Registration Deadline (NJ) :: 🗳️
+1st Mon in Nov+FD1,BD7 :: General Election—Registration Deadline (CT) :: 🗳️
+
+4th Tue in Jun :: Federal Primary Election (NY) :: 🗳️🗽
+4th Tue in Jun+BD25 :: Federal Primary—Registration Deadline (NY) :: 🗳️🗽
+
+1st Mon in Sep+FD1 :: State Primary Election Date (NY) :: 🗳️🗽
+1st Mon in Sep+FD1,BD25 :: State Primary—Registration Deadline (NY) :: 🗳️🗽
+
+#
+# New York Days
+#
+2nd Sun in Jun :: Flag Day :: 🗽
+3rd Mon in Feb :: Washington's Birthday (observed) :: 🗽
 17 Mar :: St. Patrick's Day :: ☘️
