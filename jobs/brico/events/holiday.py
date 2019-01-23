@@ -37,7 +37,7 @@ def main():
   local = "cal/local.cal"
   trivia = "cal/trivia.cal"
 
-  arr = sorted( parse_cal(trivia, 1) \
+  arr = sorted( parse_cal(trivia, 0) \
                 + parse_cal(birth, 2) + parse_cal(geek, 7) \
                 + parse_cal(usnat, 14) + parse_cal(local) )
   arr = ( { 'start': t[0].decode('utf-8'),
