@@ -17,6 +17,7 @@
 
 import brico.events.holiday
 import brico.common.html
+import brico.common
 
 from collections import defaultdict
 import re
@@ -29,12 +30,8 @@ def main():
     d[x[0]].append( re.compile(" ").sub("&nbsp;", x[1]) )
   d = {k: stringify(d[k]) for k in d.keys()}
 
-  str = ""
-  for dt in d.keys():
-    str += "%s :: %s\n" % (dt.decode('utf-8'), d[dt])
-  f = open("cal/birth.out", "w")
-  f.write(str)
-  f.close()
+  out = ["%s :: %s\n" % (dt.decode('utf-8'), d[dt]) for dt in d.keys()]
+  brico.common.write_text("birth.cal", out)
 
 def stringify(names):
   cake = "birthday %s" % brico.common.html.emoji("🎂")

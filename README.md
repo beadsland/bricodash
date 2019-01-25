@@ -82,6 +82,5 @@ If running chromium in kiosk mode on Raspbian, install `fonts-noto` and
   - html/thmb
   - jobs/nap/sid
   - jobs/sous/pid
-  - jobs/cal
 * configure html/util/camera.php and camera.py to point to your local
 camera MJPG camera devices, as appropriate

@@ -32,7 +32,7 @@ def main():
   brico.events.birth.main()
 
   geek = "cal/geek.cal"
-  birth = "cal/birth.out"
+  birth = "../html/pull/birth.cal"
   usnat = "cal/usnat.cal"
   local = "cal/local.cal"
   trivia = "cal/trivia.cal"
@@ -82,7 +82,7 @@ def parse_cal(filename, days=30):
 
   n = 0
   cap = datetime.datetime.now() + relativedelta(days = +days)
-  while dateutil.parser.parse(arr[n][0]) < cap: n += 1
+  while len(arr) >= n and dateutil.parser.parse(arr[n][0]) < cap: n += 1
 
   return arr[:n]
 
