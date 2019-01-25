@@ -104,5 +104,9 @@ function position_header() {
 
 function renewCam() {
   var cam = document.querySelector("#door-cam");
-  cam.src = cam.src;
+  var src = cam.src;
+  src = src.replace(/#./, "")
+  var dat = new Date()
+  var mod = dat.getMinutes() % 2;
+  cam.src = src + "#" + mod;
 }
