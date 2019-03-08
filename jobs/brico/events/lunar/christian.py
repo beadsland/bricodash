@@ -23,7 +23,7 @@ import datetime
 def main(now):
   cal = calendar(now.year) + calendar(now.year + 1);
   while cal[0]['start'] < (now - datetime.timedelta(days=1)).isoformat():
-    pop(cal);
+    cal.pop(0)
   return cal;
 
 def calendar(year):
