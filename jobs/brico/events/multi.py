@@ -21,6 +21,7 @@ import brico.events.lunar.jewish
 import brico.events.lunar.winter
 import brico.events.lunar.chinese
 import brico.events.lunar.christian
+import brico.events.lunar.muslim
 
 import ephem
 import datetime
@@ -34,7 +35,8 @@ def main():
          + brico.events.lunar.chinese.main(now) \
          + brico.events.lunar.jewish.main(now) \
          + brico.events.lunar.winter.main(now) \
-         + brico.events.lunar.christian.main(now)
+         + brico.events.lunar.christian.main(now) \
+         + brico.events.lunar.muslim.main(now)
   brico.common.write_json("multi.json", hols)
 
 def leap(now):

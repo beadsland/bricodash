@@ -22,6 +22,7 @@
 from vend.memoize import memoized
 import brico.common
 import astral
+import ephem
 
 @memoized
 def sunset(date):
@@ -31,3 +32,19 @@ def sunset(date):
   sun = city.sun(date=date, local=True)
 
   return sun['sunset']
+
+@memoized
+def moonrise(date):
+  e = ephem.Observer()
+  e.lat = str(brico.common.lat())
+  e.lon = str(brico.common.lon())
+  e.date = date
+  return e.previous_rising(ephem.Moon())
+
+@memoized
+def moonset(date):
+  e = ephem.Observer()
+  e.lat = str(brico.common.lat())
+  e.lon = str(brico.common.lon())
+  e.date = date
+  return e.next_setting(ephem.Moon())

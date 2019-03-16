@@ -38,6 +38,7 @@ regex==2018.8.29          # via dateparser
 requests==2.19.1
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
 tzlocal==1.5.1            # via dateparser
+ummalqura==2.0.1
 urllib3==1.23             # via requests
 yarg==0.1.9               # via pipreqs
 zeroconf==0.21.3          # via pychromecast

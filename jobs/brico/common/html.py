@@ -50,3 +50,4 @@ class a(elem):
 
 def logo(src, alt=""):  return img().clss('logo').src(src).alt(alt).str();
 def emoji(s):           return span().clss('emoji').inner(s).str();
+def em(s):              return elem("em").inner(s).str();
