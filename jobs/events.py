@@ -106,11 +106,3 @@ for item in brico.events.combo():
 brico.common.write_pull("space_events.html", evtSpce)
 brico.common.write_pull("building_events.html", evtBldg)
 brico.common.write_text("threeday_events.slack", slkThree)
-
-token = brico.common.get_token("slacker_token")
-slack = brico.slack.Slack( token )
-
-#if min == 0 and hr % 12 == 0 or 'holiday' in sys.argv:
-channel = "bottest"
-#slack.post(channel, brico.common.slurp("threeday_events.slack"))
-#print(slack.messages(channel))
