@@ -34,6 +34,7 @@ import datetime
 import os
 import sys
 import re
+from vend.multisub import multiple_replace
 
 ###
 # Update event source files
@@ -78,6 +79,9 @@ for item in brico.events.building()[:10]:
   event = brico.events.format(item)
   evtBldg.append( brico.events.line("%s %s" % (venue, event)) )
 
+###
+# Build event list for posting to slack
+###
 slkThree = ["*_Bricodash Full Three Day Calendar_*"]
 three = datetime.datetime.now() + datetime.timedelta(days=3)
 three = re.sub('T', ' ', three.isoformat())
@@ -92,11 +96,12 @@ for item in brico.events.combo():
     event = re.sub(brico.events.lunar.jewish.unlit(), " ", event)
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
-    event = re.sub(r'&thinsp;', "", event)
-    event = re.sub(r'&ensp;', " ", event)
-    event = re.sub(r'&nbsp;', " ", event)
-    event = re.sub(r'\(Babycastles\)', '', event)
+
+    cleandict = [ ('&mdash;', "—"), ('\(Babycastles\)', ""),
+                  ('&thinsp;', ""), ('&ensp;', " "), ('&nbsp;', " ") ]
+    event = multiple_replace( event, cleandict )
     event = re.sub(r'  +', ' ', event).rstrip()
+
     if item['venue'] == "Hack Manhattan":
       event = brico.slack.bold(event)
 
