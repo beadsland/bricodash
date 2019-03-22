@@ -17,12 +17,25 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import datetime
+
 import brico.slack
 
-token = brico.common.get_token("slacker_token")
-slack = brico.slack.Slack( token )
+token = brico.common.get_token("slack_bot_token")
+bot = brico.slack.Slack( token )
 
-#if min == 0 and hr % 12 == 0 or 'holiday' in sys.argv:
-channel = "bottest"
+token = brico.common.get_token("slack_app_token")
+slack = brico.slack.Slack( token )
+channel = "thehaps"
+user = "Bricodash" # API does not provide for discovery of bot's own name or ID
+
+epoch = datetime.datetime(1970,1,1)
+i = datetime.datetime.now()
+delta_time = (i - epoch - datetime.timedelta(days = 3)).total_seconds()
+recent = slack.messages(channel, 100, delta_time)
+recent = (m for m in recent if 'username' in m.keys() and m['username'] == user)
+
+
+cid = slack.channels()[channel]["id"]
+for r in recent: slack.api.chat.delete(cid, r['ts'])
 slack.post(channel, brico.common.slurp("threeday_events.slack"))
-print(slack.messages(channel)[0])

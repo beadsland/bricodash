@@ -39,9 +39,9 @@ class Slack:
   # Retrieve messages from a channel
   ###
   @memoized
-  def messages(self, channel, count=10):
+  def messages(self, channel, count=10, oldest=0):
     history = self.history(channel = self.channels()[channel]['id'],
-                           latest = None, oldest = 0, count = count)
+                           latest = None, oldest = oldest, count = count)
     return history.body['messages']
 
   ###
