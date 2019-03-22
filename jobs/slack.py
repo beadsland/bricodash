@@ -29,6 +29,7 @@ import re
 import math
 
 token = brico.common.get_token("slacker_token")
+#token = brico.common.get_token("slack_bot_token")
 slack = brico.slack.Slack( token )
 
 ##

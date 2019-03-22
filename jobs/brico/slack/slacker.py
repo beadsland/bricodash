@@ -25,9 +25,14 @@ from slacker import Slacker
 from vend.memoize import memoized
 
 class Slack:
-  def __init__(self, token):
-    self.api = Slacker( token )
-    self.token = token
+  def __init__(self, app_token, bot_token=None):
+    self.api = Slacker( app_token )   # self.api deprecated
+
+    self.app = Slacker( app_token )
+    self.bot = Slacker( bot_token )
+
+    self.app_token = app_token
+    self.bot_token = bot_token
 
   ###
   # Post a message to a channel

@@ -55,7 +55,7 @@ class Slack(BaseSlack):
     if (slemotag):
       return slemotag( thumb.get(u) )
     elif (parse.path.endswith( ('.gif', '.jpg', '.jpeg', '.png') )):
-      headers = { "Authorization": "Bearer " + self.token }
+      headers = { "Authorization": "Bearer " + self.app_token }
       if (re_thumb.match(parse.path)):    file = thumb.get(u, headers)
       else:                               file = thumb.get_thumb(u)
       return file if not imgtag else imgtag( file )
