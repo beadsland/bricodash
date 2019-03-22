@@ -35,5 +35,5 @@ recent = slack.messages(channel, 100, delta_time)
 recent = (m for m in recent if 'username' in m.keys() and m['username'] == user)
 
 cid = slack.channels()[channel]["id"]
-for r in recent: slack.api.chat.delete(cid, r['ts'])
+for r in recent: slack.app.chat.delete(cid, r['ts'])
 slack.post(channel, brico.common.slurp("threeday_events.slack"))

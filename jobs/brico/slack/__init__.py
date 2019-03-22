@@ -36,7 +36,7 @@ class Slack(BaseSlack):
   # Emoji
   ###
   def emoji(self, name=None, tags={}):
-    if not name:  return self.api.emoji.list().body['emoji']
+    if not name:  return self.app.emoji.list().body['emoji']
     else:         return self.mojilink(name, tags);
 
   # correctly handle combining characters

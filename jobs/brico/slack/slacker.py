@@ -26,8 +26,6 @@ from vend.memoize import memoized
 
 class Slack:
   def __init__(self, app_token, bot_token=None):
-    self.api = Slacker( app_token )   # self.api deprecated
-
     self.app = Slacker( app_token )
     self.bot = Slacker( bot_token )
 
@@ -38,7 +36,7 @@ class Slack:
   # Post a message to a channel
   ###
   def post(self, channel, str):
-    self.api.chat.post_message("#%s" % channel, str)
+    self.app.chat.post_message("#%s" % channel, str)
 
   ###
   # Retrieve messages from a channel
@@ -53,17 +51,17 @@ class Slack:
   # Queries against result
   ###
   @memoized
-  def members(self):            return self.api.users.list().body['members']
+  def members(self):            return self.bot.users.list().body['members']
 
   # not memoized 'cause kwargs'
-  def history(self, **kwargs):  return self.api.channels.history(**kwargs)
+  def history(self, **kwargs):  return self.app.channels.history(**kwargs)
 
   ###
   # Generated lookup tables
   ###
   @memoized
   def channels(self):
-    return { c['name']: c for c in self.api.channels.list().body['channels'] }
+    return { c['name']: c for c in self.app.channels.list().body['channels'] }
 
   @memoized
   def names(self, user=None):
