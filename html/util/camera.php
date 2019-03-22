@@ -38,10 +38,10 @@ SOFTWARE. */
 
 // config:
 $mjpg = array(
-        'space' => "http://192.168.43.125:8080/",
-        'door' => "http://192.168.42.157:8080/",
-        'cr10' => "http://192.168.43.166:8080/",
-        'hydro' => "http://192.168.42.173:8081/"
+          'space' => "http://wrtnode-webcam:8080/",
+          'door' => "http://rfid-access-building:8080/",
+          'cr10' => "http://octoprint-main:8080/",
+          'hydro' => "http://hydrocontroller:8081/"
         );
 
 if ( !isset($_GET["view"]) ) {
