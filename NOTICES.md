@@ -3,6 +3,7 @@
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [Notices](#notices)
   - [bricodash](#bricodash)
+  - [Public Use Caveat](#public-use-caveat)
   - [Software](#software)
     - [LICENSE.md](#licensemd)
     - [sysd/app.py](#sysdapppy)
@@ -50,6 +51,20 @@ Contact info:
 * @beadsland@hackmanhattan.slack.com
 * @beadsland@mastodon.social
 * @beadsland@twitter.com
+
+## Public Use Caveat
+
+Bricodash incorporates features from a wide variety of sources, many of
+which have specific requirements for use under their respective licenses.
+In particular, some of the APIs used by Bricodash require that any public
+Web site that integrates with each such API must have a published privacy
+policy congruent with that governing such API's Web service.
+At present, no such privacy policy has been created for Bricodash.
+
+Therefore, to remain in compliance with those licenses, Bricodash is only
+to be used for the on-site displays within Hack Manhattan, and not displayed
+on any public Web site. (At least until such time as an appropriate privacy
+policy has been published for Bricodash).
 
 
 ## Software
