@@ -34,12 +34,14 @@ pychromecast==2.3.0
 python-dateutil==2.7.3    # via dateparser, icalendar, lunarcalendar
 python-resize-image==1.1.12
 pytz==2018.5              # via astral, convertdate, dateparser, datetime, icalendar, icalevents, lunarcalendar, tzlocal
-regex==2018.8.29          # via dateparser
+regex==2018.8.29          # via dateparser, wikitextparser
 requests==2.19.1
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
 tzlocal==1.5.1            # via dateparser
 ummalqura==2.0.1
 urllib3==1.23             # via requests
+wcwidth==0.1.7            # via wikitextparser
+wikitextparser==0.23.0
 yarg==0.1.9               # via pipreqs
 zeroconf==0.21.3          # via pychromecast
 zope.interface==4.6.0     # via datetime

@@ -27,18 +27,21 @@ import brico.common
 import brico.common.html as html
 
 import brico.events.birth
+import brico.events.extra
 
 def main():
   brico.events.birth.main()
+  brico.events.extra.main()
 
   geek = "cal/geek.cal"
   birth = "../html/pull/birth.cal"
   usnat = "cal/usnat.cal"
   local = "cal/local.cal"
+  extra = "../html/pull//extra.cal"
   trivia = "cal/trivia.cal"
 
-  arr = sorted( parse_cal(trivia, 0) \
-                + parse_cal(birth, 2) + parse_cal(geek, 7) \
+  arr = sorted( parse_cal(trivia, 0) + parse_cal(birth, 2) \
+                + parse_cal(geek, 4) + parse_cal(extra, 7) \
                 + parse_cal(usnat, 14) + parse_cal(local) )
   arr = ( { 'start': t[0].decode('utf-8'),
             'venue': "Holiday",
