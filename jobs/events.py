@@ -90,6 +90,7 @@ for item in brico.events.combo():
   if item['start'] < three:
     venue = "(%s)" % brico.slack.bold(item['venue'])
     if item['venue'] == "Hack Manhattan": venue = ":hm:"
+    elif item['venue'] == "Holiday": venue = ""
     start = brico.slack.ital( brico.events.format_dt(item['start']) )
 
     event = item['event']
