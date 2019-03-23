@@ -40,8 +40,8 @@ def main():
   extra = "../html/pull//extra.cal"
   trivia = "cal/trivia.cal"
 
-  arr = sorted( parse_cal(trivia, 0) + parse_cal(birth, 2) \
-                + parse_cal(geek, 4) + parse_cal(extra, 7) \
+  arr = sorted( parse_cal(trivia, 0) + parse_cal(birth, 1) \
+                + parse_cal(geek, 3) + parse_cal(extra, 7) \
                 + parse_cal(usnat, 14) + parse_cal(local) )
   arr = ( { 'start': t[0].decode('utf-8'),
             'venue': "Holiday",
