@@ -6,7 +6,6 @@ This project draws together a number of resources from other creators,
 used under various licenses. Please see [NOTICES.md](NOTICES.md) for
 more details.
 
-
 ## Status
 
 This project is a work-in-progress. Worse than that, it's a messy hack.
@@ -36,6 +35,9 @@ is especially so. The goal has been to provide as much functionality as
 possible while keeping client load to a minimum. With this in mind, we rely
 heavily on server-side jobs to update various HTML components, allowing the
 browser to poll for those files as needed.
+
+For more discussion, see:
+[Hack Manhattan Wiki&mdash;Bricodash](https://wiki.hackmanhattan.com/Bricodash).
 
 ## Server Dependencies
 
