@@ -82,7 +82,7 @@ for item in brico.events.building()[:10]:
 ###
 # Build event list for posting to slack
 ###
-slkThree = ["*_Bricodash Full Three Day Calendar_*"]
+slkThree = ["*_Full 72-Hour Calendar_*"]
 three = datetime.datetime.now() + datetime.timedelta(days=3)
 three = re.sub('T', ' ', three.isoformat())
 combo = brico.events.combo()
@@ -97,10 +97,10 @@ for item in brico.events.combo():
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
 
-    cleandict = [ ('&mdash;', "—"), ('\(Babycastles\)', ""),
-                  ('&thinsp;', ""), ('&ensp;', " "), ('&nbsp;', " ") ]
+    cleandict = [ ("&mdash;", "—"), ("(Babycastles)", ""),
+                  ("&thinsp;", ""), ("&ensp;", " "), ("&nbsp;", " ") ]
     event = multiple_replace( event, cleandict )
-    event = re.sub(r'  +', ' ', event).rstrip()
+    event = re.sub(r'  +', ' ', event).rstrip().lstrip()
 
     if item['venue'] == "Hack Manhattan":
       event = brico.slack.bold(event)

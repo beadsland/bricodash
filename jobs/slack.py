@@ -102,16 +102,17 @@ for message in reversed(slack.messages('hackerspace', 11)):
                     ' '.join(slack.attachments(message, html.logo, linky)),
                     ' '.join(slack.reactions(message, emotags)) ])
 
-  if lstwhn == when and lstwho == user:
-    line = div( "%s &mdash; %s: %s" % (hid(whn(when, ts)), who(user), text) )
-    hist.append( line )
-  elif 'subtype' in message and message['subtype'] != 'thread_broadcast':
+  if 'subtype' in message and message['subtype'] != 'thread_broadcast':
     line = div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), sub(text)) )
     hist.append( line )
   else:
-    lstwhn = when
-    lstwho = user
-    hist.append(div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), text) ))
+    if lstwhn == when and lstwho == user:
+      line = div( "%s &mdash; %s: %s" % (hid(whn(when, ts)), who(user), text) )
+      hist.append( line )
+    else:
+      lstwhn = when
+      lstwho = user
+      hist.append(div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), text) ))
 
 ###
 # Trim excess lines
