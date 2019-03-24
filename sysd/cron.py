@@ -39,7 +39,7 @@ if 1:                os.system(pwd + "/../jobs/weather.py &")
 if 1:                os.system(pwd + "/../jobs/slack.py &")
 if 1:                os.system(pwd + "/../jobs/mta.py &")
 if min % 5 == 0:     os.system(pwd + "/../jobs/photo.py &")
-if min % 60 == 0:    os.system(pwd + "/../jobs/wiki.py &")
+if min % 60 == 0:    os.system(pwd + "/../jobs/cloud.py &")
 if min % 10 == 0:    os.system(pwd + "/../jobs/events.py &")
 if min == 0 and (hr+6) % 12 == 0:
                      os.system(pwd + "/../jobs/thehaps.py &")
