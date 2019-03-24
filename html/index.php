@@ -63,7 +63,7 @@
   </table>
 </div>
 
-<div id="wiki-edits"><?php include "pull/wiki.html"?></div>
+<div id="cloud-log"><?php include "pull/cloud.html"?></div>
 <div id="src_info">
   <span class="thiny">src & notices:</span>
   <span class="shorty">

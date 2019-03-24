@@ -34,9 +34,9 @@ def main():
       path = edit["title"].split("/")
       for i in range(len(path)):
         if path[i].find(":") > -1:
-          path[i] = '<span class="wiki-special">' + path[i] + "</span>"
+          path[i] = '<span class="cloud-special">' + path[i] + "</span>"
       title = wlogo + "/&#x200a;".join(path)
-      html = '<div class="wiki-line">' + title + "</div>"
+      html = '<div class="cloud-line">' + title + "</div>"
       report.append( (edit["timestamp"], html) )
       seen.append( edit["title"] )
 

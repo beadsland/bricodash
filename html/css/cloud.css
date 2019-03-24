@@ -21,11 +21,11 @@
  Wiki
  */
 
-#wiki_td {
+#cloud_td {
   width: 250px;
 }
 
-#wiki_head {
+#cloud_head {
   font-family: Raleway, sans-serif;
   font-size: 150%;   /* experiment with changing this */
   padding: 8px;
@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-#wiki-edits {
+#cloud-log {
   width: 244px;
   position: absolute;
   bottom: 1em;
@@ -43,7 +43,7 @@
   background: #111111;
 }
 
-.wiki-line {
+.cloud-line {
   font-family: Georgia, serif;
   font-size: 120%;
   overflow-wrap: break-word;
@@ -52,6 +52,6 @@
   text-indent: -1em;
 }
 
-.wiki-special {
+.cloud-special {
   font-size: 85%;
 }

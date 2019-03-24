@@ -19,20 +19,10 @@
 
 import brico.cloud.wiki
 import brico.cloud.github
-
-import time
-import os
-import sys
+import brico.common
 
 report = brico.cloud.wiki.main() + brico.cloud.github.main()
-
 report = sorted(report)
 report = list(s for (t,s) in report)[-10:]
 
-report.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
-
-pwd = os.path.dirname(sys.argv[0])
-filename = pwd + "/../html/pull/wiki.html"
-file = open(filename + ".new", "w")
-file.write( u"\n".join(report) )
-os.rename(filename + ".new", filename)
+brico.common.write_text("cloud.html", report)

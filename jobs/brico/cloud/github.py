@@ -34,7 +34,7 @@ def main():
       if push["repo"]["name"] not in seen:
         repo = push["repo"]["name"].replace("hackmanhattan/", "")
         title = glogo + repo
-        html = '<div class="wiki-line">' + title + "</div>"
+        html = '<div class="cloud-line">' + title + "</div>"
         report.append( (push["created_at"], html) )
         seen.append( push["repo"]["name"] )
 
