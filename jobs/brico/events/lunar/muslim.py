@@ -38,9 +38,9 @@ def ramadan(now):
   then = now - datetime.timedelta(days = 31)
   um = HijriDate(then.year, then.month, then.day, gr=True)
   if (um.month < 9):
-    um = HijriDate.get_georing_date('%s-08-28' % um.year)
+    um = HijriDate.get_georing_date('%d-08-28' % um.year)
   else:
-    um = HijriDate.get_georing_date('%s-08-28' % um.year + 1)
+    um = HijriDate.get_georing_date('%d-08-28' % (um.year + 1))
 
   events = []
 
