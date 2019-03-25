@@ -18,26 +18,36 @@
 import requests
 import json
 
-def main():
-  query = "https://wiki.hackmanhattan.com/api.php?action=query&list=recentchanges&rcprop=title%7Cids%7Csizes%7Cflags%7Cuser%7Ctimestamp&rclimit=200&rcshow=!minor&format=json"
-  response = requests.get(query)
-  if response.status_code != 200:   sys.exit(response.status_code);
-  result = json.loads(response.text)
+import brico.cloud
+import brico.common.html
+import brico.common
 
+def main():
+  path = "https://wiki.hackmanhattan.com/api.php"
+  props = ['title', 'flags', 'user', 'timestamp']
+  params = { 'action': "query", 'list': "recentchanges",
+              'rcprop': "|".join(props),
+              'rclimit': "200", 'rcshow': "!minor", 'format': "json" }
+  response = brico.common.get_response(path, params)
+  result = json.loads(response.text)
   recent = result["query"]["recentchanges"]
+
   seen = []
   report = []
-  wlogo = '<img class="logo" src="img/mediawiki.png">&thinsp;'
+  wlogo = "%s%s" % (brico.common.html.logo("img/mediawiki.png"), '&thinsp;')
+  hairspace = "&#x200a;"
+  unsticky_slash = "/%s" % hairspace
 
   for edit in recent:
     if edit["title"] not in seen:
       path = edit["title"].split("/")
       for i in range(len(path)):
         if path[i].find(":") > -1:
-          path[i] = '<span class="cloud-special">' + path[i] + "</span>"
-      title = wlogo + "/&#x200a;".join(path)
-      html = '<div class="cloud-line">' + title + "</div>"
+          path[i] = brico.cloud.special(path[i])
+      title = wlogo + unsticky_slash.join(path)
+      html = brico.cloud.line(title)
       report.append( (edit["timestamp"], html) )
       seen.append( edit["title"] )
 
+  brico.common.write_json("wiki.json", report)
   return report
