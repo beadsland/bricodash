@@ -30,29 +30,7 @@ def main():
   glogo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
 
   for p in range(1,10):
-    cache = "github_hm_%02d.json" % p
-    try:
-      old = json.loads(brico.common.slurp(cache))
-      etag = old['etag']
-    except:
-      etag = None
-
-    response = brico.common.get_response(query + str(p), etag=etag)
-    if response.status_code == 304:
-      result = old['result']
-    else:
-      result = json.loads(response.text)
-      etag = response.headers['ETag'] #[3:-1]   # arrives as: 'W/"(.*)"''
-      print(etag)
-      save = { 'etag': etag, 'result': result }
-      brico.common.write_json(cache, save)
-
-    print(response.headers['X-RateLimit-Remaining'])
-    try:
-      sleep = int(response.headers['X-Poll-Interval'])
-    except:
-      sleep = 1
-    time.sleep(sleep)
+    result = get_events("hackmanhattan", "hm", p)
 
     for push in result:
       if push["repo"]["name"] not in seen:
@@ -64,3 +42,33 @@ def main():
 
   brico.common.write_json("github.json", report)
   return report
+
+###
+# Request a page of events, using Etags to cache and respecting X-Poll-Interval
+###
+def get_events(user, short=None, page=1):
+  query = "https://api.github.com/users/%s/events?page=%d" % (user, page)
+
+  if short is not None:  cache = "github_%s.json" % user
+  else:                  cache = "github_%s_%02d.json" % (short, page)
+  try:
+    old = json.loads(brico.common.slurp(cache))
+    etag = old['etag']
+  except:
+    etag = None
+
+  response = brico.common.get_response(query + str(page), etag=etag)
+  if response.status_code == 304:
+    result = old['result']
+  else:
+    result = json.loads(response.text)
+    etag = response.headers['ETag']
+    save = { 'etag': etag, 'result': result }
+    brico.common.write_json(cache, save)
+
+  try:     sleep = int(response.headers['X-Poll-Interval'])
+  except:  sleep = 1
+  print(sleep)
+  time.sleep(sleep)
+
+  return result
