@@ -23,11 +23,18 @@ import time
 import brico.cloud
 
 def main():
-  query = "https://api.github.com/users/hackmanhattan/events?page="
+  glogo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
 
   seen = []
   report = []
-  glogo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
+
+  for n in ["beadsland"]:
+    result = get_events(n)
+    push = result[0]
+    repo = brico.cloud.format_title(push["repo"]["name"])
+    title = ''.join([ glogo, repo ])
+    html = brico.cloud.line(title)
+    report.append( (push["created_at"], html) )
 
   for p in range(1,10):
     result = get_events("hackmanhattan", "hm", p)
@@ -49,8 +56,8 @@ def main():
 def get_events(user, short=None, page=1):
   query = "https://api.github.com/users/%s/events?page=%d" % (user, page)
 
-  if short is not None:  cache = "github_%s.json" % user
-  else:                  cache = "github_%s_%02d.json" % (short, page)
+  if short is None:  cache = "github_%s.json" % user
+  else:              cache = "github_%s_%02d.json" % (short, page)
   try:
     old = json.loads(brico.common.slurp(cache))
     etag = old['etag']
@@ -68,7 +75,6 @@ def get_events(user, short=None, page=1):
 
   try:     sleep = int(response.headers['X-Poll-Interval'])
   except:  sleep = 1
-  print(sleep)
   time.sleep(sleep)
 
   return result
