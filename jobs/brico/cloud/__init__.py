@@ -19,6 +19,27 @@ import brico.common.html
 
 def line(s):
   return brico.common.html.div().clss("cloud-line").inner(s).str()
-  
+
 def special(s):
   return brico.common.html.span().clss("cloud-special").inner(s).str()
+
+
+###
+# Shrink special parts of titles (Wiki namespaces, repository usernames)
+# to reduce necessity of line-wrapping. Also, provide for line-breaks on
+# embedded title delimiters (slashes and colons).
+###
+hairspace = "&#x200a;"
+unsticky_slash = "/%s" % hairspace
+unsticky_colon = ":%s" % hairspace
+
+def format_title(s):
+  path = s.split("/")
+  for i in range(len(path)):
+    if path[i].find(":") > -1:
+      path[i] = unsticky_colon.join( path[i].split(":") )
+      path[i] = brico.cloud.special(path[i])
+    elif len(path) > 1 and i == 0:
+      path[i] = brico.cloud.special(path[i])
+
+  return unsticky_slash.join(path)

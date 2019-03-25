@@ -35,16 +35,10 @@ def main():
   seen = []
   report = []
   wlogo = "%s%s" % (brico.common.html.logo("img/mediawiki.png"), '&thinsp;')
-  hairspace = "&#x200a;"
-  unsticky_slash = "/%s" % hairspace
 
   for edit in recent:
     if edit["title"] not in seen:
-      path = edit["title"].split("/")
-      for i in range(len(path)):
-        if path[i].find(":") > -1:
-          path[i] = brico.cloud.special(path[i])
-      title = wlogo + unsticky_slash.join(path)
+      title = ''.join([ wlogo, brico.cloud.format_title(edit["title"]) ])
       html = brico.cloud.line(title)
       report.append( (edit["timestamp"], html) )
       seen.append( edit["title"] )

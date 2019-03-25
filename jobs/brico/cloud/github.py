@@ -34,8 +34,8 @@ def main():
 
     for push in result:
       if push["repo"]["name"] not in seen:
-        repo = push["repo"]["name"].replace("hackmanhattan/", "")
-        title = glogo + repo
+        repo = brico.cloud.format_title(push["repo"]["name"])
+        title = ''.join([ glogo, repo ])
         html = brico.cloud.line(title)
         report.append( (push["created_at"], html) )
         seen.append( push["repo"]["name"] )
