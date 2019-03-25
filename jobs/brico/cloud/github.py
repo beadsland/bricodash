@@ -17,6 +17,7 @@
 
 import requests
 import json
+import sys
 
 def main():
   query = "https://api.github.com/users/hackmanhattan/events?page="
