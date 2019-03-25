@@ -53,7 +53,7 @@ def get_token(keyfile):
   with open( os.path.join( pwd(), ".keys", keyfile ) ) as x:
     return x.read().rstrip()
 
-def get_response(path, params={}, token="", etag=None):
+def get_response(path, params={}, token="", etag=None, bail=True):
   question = "&".join([ urllib.parse.urlencode(params), token ])
   if etag is not None:  headers = { 'If-None-Match': etag }
   else:                 headers = {}
@@ -62,7 +62,8 @@ def get_response(path, params={}, token="", etag=None):
     return response
   elif response.status_code != 200:
     write_pull("error.dump", [response.text])
-    sys.exit(response.status_code);
+    if bail:
+      sys.exit(response.status_code)
   return response
 
 ###

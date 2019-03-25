@@ -34,13 +34,14 @@ def main():
 
   for n in ["beadsland"]:
     result = get_events(n)
-    push = result[0]
-    repo = brico.cloud.format_title(push["repo"]["name"])
-#    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
-#    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
-    title = ''.join([ glogo, repo ])
-    html = brico.cloud.line(title)
-    report.append( (push["created_at"], html) )
+    if result:
+      push = result[0]
+      repo = brico.cloud.format_title(push["repo"]["name"])
+  #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
+  #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
+      title = ''.join([ glogo, repo ])
+      html = brico.cloud.line(title)
+      report.append( (push["created_at"], html) )
 
   for p in range(1,10):
     result = get_events("hackmanhattan", "hm", p)
@@ -83,14 +84,16 @@ def get_result(query, cache):
   except:
     etag = None
 
-  response = brico.common.get_response(query, etag=etag)
+  response = brico.common.get_response(query, etag=etag, bail=False)
   if response.status_code == 304:
     result = old['result']
-  else:
+  elif response.status_code == 200:
     result = json.loads(response.text)
     etag = response.headers['ETag']
     save = { 'etag': etag, 'result': result }
     brico.common.write_json(cache, save)
+  else:
+    result = None
 
   try:     sleep = int(response.headers['X-Poll-Interval'])
   except:  sleep = 1
