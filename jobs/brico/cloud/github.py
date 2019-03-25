@@ -18,25 +18,49 @@
 import requests
 import json
 import sys
+import time
+
+import brico.cloud
 
 def main():
   query = "https://api.github.com/users/hackmanhattan/events?page="
 
   seen = []
   report = []
-  glogo = '<img class="logo" src="img/github.png">&thinsp;'
-
+  glogo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
 
   for p in range(1,10):
-    response = requests.get(query + str(p))
-    if response.status_code != 200:   sys.exit(response.status_code);
-    result = json.loads(response.text)
+    cache = "github_hm_%02d.json" % p
+    try:
+      old = json.loads(brico.common.slurp(cache))
+      etag = old['etag']
+    except:
+      etag = None
+
+    response = brico.common.get_response(query + str(p), etag=etag)
+    if response.status_code == 304:
+      result = old['result']
+    else:
+      result = json.loads(response.text)
+      etag = response.headers['ETag'] #[3:-1]   # arrives as: 'W/"(.*)"''
+      print(etag)
+      save = { 'etag': etag, 'result': result }
+      brico.common.write_json(cache, save)
+
+    print(response.headers['X-RateLimit-Remaining'])
+    try:
+      sleep = int(response.headers['X-Poll-Interval'])
+    except:
+      sleep = 1
+    time.sleep(sleep)
+
     for push in result:
       if push["repo"]["name"] not in seen:
         repo = push["repo"]["name"].replace("hackmanhattan/", "")
         title = glogo + repo
-        html = '<div class="cloud-line">' + title + "</div>"
+        html = brico.cloud.line(title)
         report.append( (push["created_at"], html) )
         seen.append( push["repo"]["name"] )
 
+  brico.common.write_json("github.json", report)
   return report
