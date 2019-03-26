@@ -82,7 +82,7 @@ def get_events(user, serv="github", short=None, page=1):
   if short is None:  cache = "%s_%s.json" % (serv, user)
   else:              cache = "%s_%s_%02d.json" % (serv, short, page)
 
-  result = get_result(query, cache)
+  result = get_result(query, cache, serv)
   if serv == "gitlab":
     result[0]["project_name"] = get_project_name(user, serv, result[0]["project_id"])
   return result
@@ -93,13 +93,13 @@ def get_events(user, serv="github", short=None, page=1):
 def get_project_name(user, serv, proj):
   query = "https://gitlab.com/api/v4/projects/%s" % (proj)
   cache = "%s_%s_%s.json" % (serv, user, proj)
-  result = get_result(query, cache)
+  result = get_result(query, cache, serv)
   return '/'.join([ user, result["name"] ])
 
 ###
 # Query an API using using Etags to cache and respecting X-Poll-Interval
 ###
-def get_result(query, cache):
+def get_result(query, cache, serv):
   try:
     old = json.loads(brico.common.slurp(cache))
     etag = old['etag']
@@ -117,8 +117,15 @@ def get_result(query, cache):
   else:
     result = None
 
-  try:     sleep = int(response.headers['X-Poll-Interval'])
-  except:  sleep = 1
+  try:
+    sleep = int(response.headers['X-Poll-Interval'])
+  except:
+    if serv == "gitlab":
+      sleep = 6 # gitlab throttles at 10 hits / minute
+                # per @mkozono
+                # https://gitlab.com/gitlab-org/gitlab-ce/issues/41308
+    else:
+      sleep = 1
   time.sleep(sleep)
 
   return result

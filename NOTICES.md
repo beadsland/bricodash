@@ -18,7 +18,8 @@
     - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
-    - [jobs/wiki.py](#jobswikipy)
+    - [jobs/brico/cloud/wiki.py](#jobsbricocloudwikipy)
+    - [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
     - [img/fog.png](#imgfogpng)
@@ -269,7 +270,7 @@ Used under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication.
 https://creativecommons.org/publicdomain/zero/1.0/deed.en
 
 
-### jobs/wiki.py
+### jobs/brico/cloud/wiki.py
 
 #### Mediawiki
 
@@ -294,16 +295,30 @@ No warranties are given. The license may not give you all of the permissions
 necessary for your intended use. For example, other rights such as publicity,
 privacy, or moral rights may limit how you use the material.
 
+### jobs/brico/cloud/github.py
 
 #### Github
 
 Github's API used under Github's Terms of Service.
-https://help.github.com/articles/github-terms-of-service/
+https://help.github.com/en/articles/github-terms-of-service#h-api-terms
 
 For Github's privacy statement, see:
 https://help.github.com/articles/github-privacy-statement/
 
 The Github mark is a trademark of Github, Inc.
+
+
+#### Gitlab
+
+Gitlab's API used under Gitlab's Terms of Service.
+https://about.gitlab.com/terms/
+
+As no specific terms are invoked with respect to an API, and not clearly
+articulated policy of rate limits are documented, our scripts make a best
+effort to adhere to know rate limit requirements.
+https://gitlab.com/gitlab-org/gitlab-ce/issues/41308
+
+The Gitlab mark is a trademark of Gitlab Inc.
 
 
 ### jobs/common/short.py
