@@ -18,7 +18,7 @@
     - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
-    - [jobs/brico/cloud/wiki.py](#jobsbricocloudwikipy)
+    - [jobs/brico/cloud/wiki.py, jobs/brico/events/extra.py](#jobsbricocloudwikipy-jobsbricoeventsextrapy)
     - [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
@@ -270,7 +270,7 @@ Used under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication.
 https://creativecommons.org/publicdomain/zero/1.0/deed.en
 
 
-### jobs/brico/cloud/wiki.py
+### jobs/brico/cloud/wiki.py, jobs/brico/events/extra.py
 
 #### Mediawiki
 
