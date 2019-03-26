@@ -32,11 +32,10 @@ def main():
   seen = []
   report = []
 
-  for n in [("beadsland", "github")]    #, ("mprasoon", "gitlab")]:
+  for n in [("beadsland", "github")]:    #, ("mprasoon", "gitlab")]:
     result = get_events(n[0], n[1])
     if result:
       push = result[0]
-      print(result[0])
       if n[1] == "github":
         repo = brico.cloud.format_title(push["repo"]["name"])
       elif n[1] == "gitlab":
