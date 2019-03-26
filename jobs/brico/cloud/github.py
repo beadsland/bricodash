@@ -19,6 +19,7 @@ import requests
 import json
 import sys
 import time
+import re
 
 import brico.cloud
 import brico.common.thumb
@@ -30,12 +31,18 @@ def main():
   hub_logo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
   lab_logo = "%s%s" % (brico.common.html.logo("img/gitlab.png"), '&thinsp;')
 
+  repos = []
+  for l in brico.common.wiki.parse("Bricodash/Extra:Repos").lists():
+    for i in l.items:
+      r = re.compile("#.*$").sub("", i).split("::")
+      repos.append( ( r[0].rstrip().lstrip(), r[1].rstrip().lstrip() ) )
+  print(repos)
+
   seen = []
   report = []
-
-  for n in [("beadsland", "github")]:    #, ("mprasoon", "gitlab")]:
+  for n in repos:    #, ("mprasoon", "gitlab")]:
     result = get_events(n[0], n[1])
-    if result:
+    if result is not None:
       push = result[0]
       if n[1] == "github":
         repo = brico.cloud.format_title(push["repo"]["name"])
@@ -45,6 +52,8 @@ def main():
       elif n[1] == "gitlab":
         repo = brico.cloud.format_title(push["project_name"])
         title = ''.join([ lab_logo, repo ])
+      else:
+        continue  # just move on if bad service name
       html = brico.cloud.line(title)
       report.append( (push["created_at"], html) )
 
@@ -79,12 +88,14 @@ def get_events(user, serv="github", short=None, page=1):
     query = "https://api.github.com/users/%s/events?page=%d" % (user, page)
   elif serv == "gitlab":
     query = "https://gitlab.com/api/v4/users/%s/events" % (user)
+  else:
+    return None
 
   if short is None:  cache = "%s_%s.json" % (serv, user)
   else:              cache = "%s_%s_%02d.json" % (serv, short, page)
 
   result = get_result(query, cache, serv)
-  if serv == "gitlab":
+  if serv == "gitlab" and result is not None:
     result[0]["project_name"] = get_project_name(user, serv, result[0]["project_id"])
   return result
 
