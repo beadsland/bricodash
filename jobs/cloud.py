@@ -25,4 +25,4 @@ report = brico.cloud.wiki.main() + brico.cloud.github.main()
 report = sorted(report)
 report = list(s for (t,s) in report)[-10:]
 
-brico.common.write_text("cloud.html", report)
+brico.common.write_pull("cloud.html", report)
