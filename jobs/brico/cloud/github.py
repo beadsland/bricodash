@@ -27,7 +27,8 @@ import brico.common.html
 thumb = brico.common.thumb.Cache()
 
 def main():
-  glogo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
+  hub_logo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
+  lab_logo = "%s%s" % (brico.common.html.logo("img/gitlab.png"), '&thinsp;')
 
   seen = []
   report = []
@@ -38,11 +39,12 @@ def main():
       push = result[0]
       if n[1] == "github":
         repo = brico.cloud.format_title(push["repo"]["name"])
-      elif n[1] == "gitlab":
-        repo = brico.cloud.format_title(push["project_name"])
+        title = ''.join([ hub_logo, repo ])
   #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
   #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
-      title = ''.join([ glogo, repo ])
+      elif n[1] == "gitlab":
+        repo = brico.cloud.format_title(push["project_name"])
+        title = ''.join([ lab_logo, repo ])
       html = brico.cloud.line(title)
       report.append( (push["created_at"], html) )
 
@@ -52,7 +54,7 @@ def main():
     for push in result:
       if push["repo"]["name"] not in seen:
         repo = brico.cloud.format_title(push["repo"]["name"])
-        title = ''.join([ glogo, repo ])
+        title = ''.join([ hub_logo, repo ])
         html = brico.cloud.line(title)
         report.append( (push["created_at"], html) )
         seen.append( push["repo"]["name"] )
