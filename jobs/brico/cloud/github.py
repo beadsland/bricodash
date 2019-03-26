@@ -32,11 +32,15 @@ def main():
   seen = []
   report = []
 
-  for n in ["beadsland"]:
-    result = get_events(n)
+  for n in [("beadsland", "github")]    #, ("mprasoon", "gitlab")]:
+    result = get_events(n[0], n[1])
     if result:
       push = result[0]
-      repo = brico.cloud.format_title(push["repo"]["name"])
+      print(result[0])
+      if n[1] == "github":
+        repo = brico.cloud.format_title(push["repo"]["name"])
+      elif n[1] == "gitlab":
+        repo = brico.cloud.format_title(push["project_name"])
   #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
   #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
       title = ''.join([ glogo, repo ])
@@ -44,7 +48,7 @@ def main():
       report.append( (push["created_at"], html) )
 
   for p in range(1,10):
-    result = get_events("hackmanhattan", "hm", p)
+    result = get_events("hackmanhattan", "github", "hm", p)
 
     for push in result:
       if push["repo"]["name"] not in seen:
@@ -57,6 +61,9 @@ def main():
   brico.common.write_json("github.json", report)
   return report
 
+###
+# Request user info to obtain avatar -- EXPERIMENTAL
+###
 def get_user(user):
   query = "https://api.github.com/users/%s" % user
   cache = "github_%s_user.json" % user
@@ -66,13 +73,28 @@ def get_user(user):
 ###
 # Request a page of events
 ###
-def get_events(user, short=None, page=1):
-  query = "https://api.github.com/users/%s/events?page=%d" % (user, page)
+def get_events(user, serv="github", short=None, page=1):
+  if serv == "github":
+    query = "https://api.github.com/users/%s/events?page=%d" % (user, page)
+  elif serv == "gitlab":
+    query = "https://gitlab.com/api/v4/users/%s/events" % (user)
 
-  if short is None:  cache = "github_%s.json" % user
-  else:              cache = "github_%s_%02d.json" % (short, page)
+  if short is None:  cache = "%s_%s.json" % (serv, user)
+  else:              cache = "%s_%s_%02d.json" % (serv, short, page)
 
-  return get_result(query, cache)
+  result = get_result(query, cache)
+  if serv == "gitlab":
+    result[0]["project_name"] = get_project_name(user, serv, result[0]["project_id"])
+  return result
+
+###
+# Request gitlab project name
+###
+def get_project_name(user, serv, proj):
+  query = "https://gitlab.com/api/v4/projects/%s" % (proj)
+  cache = "%s_%s_%s.json" % (serv, user, proj)
+  result = get_result(query, cache)
+  return '/'.join([ user, result["name"] ])
 
 ###
 # Query an API using using Etags to cache and respecting X-Poll-Interval

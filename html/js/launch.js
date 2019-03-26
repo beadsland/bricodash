@@ -31,7 +31,7 @@ window.onload = function() {
   setInterval(updateTime, 500);
   launch_weather();
 
-  scheduleDiv("#wiki-edits", "pull/wiki.html", 30 * 60 * 1000);
+  scheduleDiv("#cloud-log", "pull/cloud.html", 30 * 60 * 1000);
   scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
 
   scheduleDiv("#slack-chat", "pull/slack.html", 30 * 1000);
