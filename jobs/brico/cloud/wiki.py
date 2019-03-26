@@ -21,17 +21,10 @@ import json
 import brico.cloud
 import brico.common.html
 import brico.common
+import brico.common.wiki
 
 def main():
-  path = "https://wiki.hackmanhattan.com/api.php"
-  props = ['title', 'flags', 'user', 'timestamp']
-  params = { 'action': "query", 'list': "recentchanges",
-              'rcprop': "|".join(props),
-              'rclimit': "200", 'rcshow': "!minor", 'format': "json" }
-  response = brico.common.get_response(path, params)
-  result = json.loads(response.text)
-  recent = result["query"]["recentchanges"]
-
+  recent = brico.common.wiki.recent()
   seen = []
   report = []
   wlogo = "%s%s" % (brico.common.html.logo("img/mediawiki.png"), '&thinsp;')
