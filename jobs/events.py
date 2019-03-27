@@ -52,9 +52,9 @@ if datetime.timedelta(seconds=0) \
                                               brico.events.holiday.main()
                                               brico.events.multi.main()
 
-if min == 5 and hr % 12 == 0 or 'holiday' in sys.argv:
+if min == 10 and hr % 12 == 0 or 'holiday' in sys.argv:
                                               brico.events.holiday.main()
-if min == 5 and hr % 12 == 0 or 'multi' in sys.argv:
+if min == 10 and hr % 12 == 0 or 'multi' in sys.argv:
                                               brico.events.multi.main()
 
 if min % 60 == 0 or 'brite' in sys.argv:      brico.events.brite.main()
