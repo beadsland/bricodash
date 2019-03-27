@@ -40,11 +40,10 @@ def main():
                       edit["timestamp"] )
       else:
         title = ''.join([ wlogo, brico.cloud.format_title(edit["title"]) ])
-        html = brico.cloud.line(title)
-        report.append( (edit["timestamp"], html) )
+        report.append( (edit["timestamp"], title) )
         seen.append( edit["title"] )
 
-  report.append( (gallery.timestamp,
-                  brico.cloud.line( ''.join([ wlogo, gallery.str() ]) ) ))
+  report.append( (gallery.timestamp, ''.join([ wlogo, gallery.str() ]) ))
 
   brico.common.write_json("wiki.json", report)
+  return report

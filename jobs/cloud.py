@@ -17,13 +17,13 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import brico.cloud
 import brico.cloud.wiki
 import brico.cloud.github
 import brico.common
 
 report = brico.cloud.wiki.main() + brico.cloud.github.main()
 report = sorted(report)
-print(report)
-report = list(s for (t,s) in report)[-10:]
+report = list(brico.cloud.line(s) for (t,s) in report)[-10:]
 
 brico.common.write_pull("cloud.html", report)

@@ -53,8 +53,7 @@ def main():
         title = ''.join([ lab_logo, repo ])
       else:
         continue  # just move on if bad service name
-      html = brico.cloud.line(title)
-      report.append( (push["created_at"], html) )
+      report.append( (push["created_at"], title) )
 
   for p in range(1,10):
     result = get_events("hackmanhattan", "github", "hm", p)
@@ -63,8 +62,7 @@ def main():
       if push["repo"]["name"] not in seen:
         repo = brico.cloud.format_title(push["repo"]["name"])
         title = ''.join([ hub_logo, repo ])
-        html = brico.cloud.line(title)
-        report.append( (push["created_at"], html) )
+        report.append( (push["created_at"], title) )
         seen.append( push["repo"]["name"] )
 
   brico.common.write_json("github.json", report)
