@@ -25,7 +25,7 @@ import time
 import brico.common
 import brico.common.meetup
 
-data = brico.common.meetup.photos(brico.common.grp())
+data = brico.common.meetup.photos(brico.common.group())
 img = random.choice(data)['photo_link']
 html = ['<img id="peekaboo" style="display: none" src="' + img + '">']
 

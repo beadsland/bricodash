@@ -32,7 +32,7 @@ def lat():      return 40.7380441
 def lon():      return -73.9984966
 def city():     return "New York"
 def wiki():     return "https://wiki.hackmanhattan.com"
-def grp():      return "HackManhattan"
+def group():    return "HackManhattan"
 
 ###
 # System constants
