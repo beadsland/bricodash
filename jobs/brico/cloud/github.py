@@ -36,7 +36,6 @@ def main():
     for i in l.items:
       r = re.compile("#.*$").sub("", i).split("::")
       repos.append( ( r[0].rstrip().lstrip(), r[1].rstrip().lstrip() ) )
-  print(repos)
 
   seen = []
   report = []
