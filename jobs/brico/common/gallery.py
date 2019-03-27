@@ -24,10 +24,10 @@ thumb = brico.common.thumb.Cache()
 # Thumbnail image gallery
 ###
 class Line:
-  def __init__(self, cap=5):
+  def __init__(self, cap=7):
     self.images = []
     self.timestamp = None
-    self.cap = cap
+    self.cap = cap - 1
 
   def push(self, image, timestamp):
     if len(self.images) <= self.cap:
@@ -36,7 +36,7 @@ class Line:
         self.timestamp = timestamp
 
   def str(self):
-    line = [ thumb.get_thumb(i) for i in self.images ]
+    line = [ thumb.get_thumb(i) for i in reversed(self.images) ]
     line = [ brico.common.html.logo(i) for i in line ]
 
-    return "…%s" % ''.join(line)
+    return "…&thinsp;%s" % '&thinsp;'.join(line)

@@ -23,9 +23,9 @@ from vend.memoize import memoized
 API = "https://api.meetup.com"
 
 @memoized
-def events(group):
+def events(group, count=20):
   path = "/".join([API , group, "events" ])
-  params = { 'sign': "true", 'photo-host': "public", 'page': 20 }
+  params = { 'sign': "true", 'photo-host': "public", 'page': count }
   response = brico.common.get_response(path, params)
   return json.loads(response.text)
 
@@ -47,8 +47,12 @@ def find(text, sigfile):
   result = json.loads(response.text)
   return result['events']
 
-def photos(group, count="100"):
+def photos(group, offset=0):
   path = "/".join([ API, group, "photos" ])
-  params = { 'sign': "true", 'photo-host': "public", 'page': count }
+  params = { 'sign': "true", 'photo-host': "public",
+             'page': 200, 'offset': offset  }
   response = brico.common.get_response(path, params)
-  return json.loads(response.text)
+  if ((offset+1)*200) < int(response.headers['X-Total-Count']):
+    return json.loads(response.text) + photos(group, offset+1)
+  else:
+    return json.loads(response.text)

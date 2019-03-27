@@ -15,6 +15,8 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import re
+
 import brico.common.html
 
 def line(s):
@@ -22,7 +24,6 @@ def line(s):
 
 def special(s):
   return brico.common.html.span().clss("cloud-special").inner(s).str()
-
 
 ###
 # Shrink special parts of titles (Wiki namespaces, repository usernames)
@@ -33,6 +34,9 @@ hairspace = "&#x200a;"
 unsticky_slash = "/%s" % hairspace
 unsticky_colon = ":%s" % hairspace
 
+def super(s):
+  return brico.cloud.special( brico.common.html.elem("sub").inner(s).str() )
+
 def format_title(s):
   path = s.split("/")
   for i in range(len(path)):
@@ -41,5 +45,8 @@ def format_title(s):
       path[i] = brico.cloud.special(path[i])
     elif len(path) > 1 and i == 0:
       path[i] = brico.cloud.special(path[i])
+
+    path[i] = re.sub(r"(\([0-9]{1,2})\-([0-9]{1,2}\))",
+                     lambda m: super("%s/%s" % (m[1], m[2])), path[i] )
 
   return unsticky_slash.join(path)

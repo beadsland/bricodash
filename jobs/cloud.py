@@ -20,10 +20,12 @@
 import brico.cloud
 import brico.cloud.wiki
 import brico.cloud.github
+import brico.cloud.meetup
 import brico.common
 
-report = brico.cloud.wiki.main() + brico.cloud.github.main()
+report = brico.cloud.wiki.main() + brico.cloud.github.main() \
+         + brico.cloud.meetup.main()
 report = sorted(report)
-report = list(brico.cloud.line(s) for (t,s) in report)[-10:]
+report = list(brico.cloud.line(s) for (t,s) in report)[-40:]
 
 brico.common.write_pull("cloud.html", report)
