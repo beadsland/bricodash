@@ -35,8 +35,16 @@ def parse(title):
 def recent():
   props = ['title', 'flags', 'user', 'timestamp']
   params = { 'action': "query", 'list': "recentchanges",
-              'rcprop': "|".join(props),
-              'rclimit': "200", 'rcshow': "!minor", 'format': "json" }
+              'rcprop': "|".join(props), 'format': "json",
+              'rclimit': "200", 'rcshow': "!minor" }
   response = brico.common.get_response(API_URL, params)
   result = json.loads(response.text)
   return result["query"]["recentchanges"]
+
+def iinfo(title):
+  props = ['url']
+  params = { 'action': "query", 'titles': title, 'prop': "imageinfo",
+             'iiprop': "|".join(props), 'format': "json" }
+  response = brico.common.get_response(API_URL, params)
+  result = json.loads(response.text)
+  return list(result['query']['pages'].values())[0]['imageinfo'][0]

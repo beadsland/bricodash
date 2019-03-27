@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 ####
 ## Copyright © 2018 Beads Land-Trujillo.
 ##
@@ -17,13 +15,28 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-import brico.cloud.wiki
-import brico.cloud.github
-import brico.common
+import brico.common.html
+import brico.common.thumb
 
-report = brico.cloud.wiki.main() + brico.cloud.github.main()
-report = sorted(report)
-print(report)
-report = list(s for (t,s) in report)[-10:]
+thumb = brico.common.thumb.Cache()
 
-brico.common.write_pull("cloud.html", report)
+###
+# Thumbnail image gallery
+###
+class Line:
+  def __init__(self, cap=5):
+    self.images = []
+    self.timestamp = None
+    self.cap = cap
+
+  def push(self, image, timestamp):
+    if len(self.images) <= self.cap:
+      self.images.append(image)
+      if self.timestamp is None:
+        self.timestamp = timestamp
+
+  def str(self):
+    line = [ thumb.get_thumb(i) for i in self.images ]
+    line = [ brico.common.html.logo(i) for i in line ]
+
+    return "…%s" % ''.join(line)

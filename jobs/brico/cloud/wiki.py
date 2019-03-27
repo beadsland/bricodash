@@ -17,11 +17,15 @@
 
 import requests
 import json
+import datetime
 
 import brico.cloud
-import brico.common.html
 import brico.common
+import brico.common.html
 import brico.common.wiki
+import brico.common.gallery
+
+gallery = brico.common.gallery.Line()
 
 def main():
   recent = brico.common.wiki.recent()
@@ -31,10 +35,16 @@ def main():
 
   for edit in recent:
     if edit["title"] not in seen:
-      title = ''.join([ wlogo, brico.cloud.format_title(edit["title"]) ])
-      html = brico.cloud.line(title)
-      report.append( (edit["timestamp"], html) )
-      seen.append( edit["title"] )
+      if edit["title"].startswith("File:"):
+        gallery.push( brico.common.wiki.iinfo(edit["title"])['url'],
+                      edit["timestamp"] )
+      else:
+        title = ''.join([ wlogo, brico.cloud.format_title(edit["title"]) ])
+        html = brico.cloud.line(title)
+        report.append( (edit["timestamp"], html) )
+        seen.append( edit["title"] )
+
+  report.append( (gallery.timestamp,
+                  brico.cloud.line( ''.join([ wlogo, gallery.str() ]) ) ))
 
   brico.common.write_json("wiki.json", report)
-  return report
