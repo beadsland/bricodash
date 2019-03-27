@@ -21,9 +21,6 @@ import brico.common
 from vend.memoize import memoized
 
 @memoized
-def grp(): return "HackManhattan"
-
-@memoized
 def events(group):
   path = "/".join([ "https://api.meetup.com", group, "events" ])
   params = { 'sign': "true", 'photo-host': "public", 'page': 20 }

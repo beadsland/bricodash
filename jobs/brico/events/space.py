@@ -16,6 +16,7 @@
 ####
 
 import brico.common.html as html
+import brico.common
 import brico.common.meetup
 from vend.memoize import memoized
 
@@ -58,7 +59,7 @@ def main():
   ###
   events = []
 
-  for item in brico.common.meetup.events(brico.common.meetup.grp())[:8]:
+  for item in brico.common.meetup.events(brico.common.grp())[:8]:
     evt = item['name']
     for tup in evtdict: evt = re.compile(tup[0]).sub(tup[1], evt)
     dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
@@ -91,7 +92,7 @@ def colist(group):  # will break on identically named events -- not a problem
   return { e["name"]: e["id"] for e in brico.common.meetup.events(group) }
 
 def colist_rsvps(group, item, mevt):
-  us =   brico.common.meetup.rsvps( brico.common.meetup.grp(), item['id'] )
+  us =   brico.common.meetup.rsvps( brico.common.grp(), item['id'] )
   them = brico.common.meetup.rsvps( group, colist(group)[mevt] )
 
   rsvps = {};
