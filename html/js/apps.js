@@ -26,18 +26,22 @@
 
 function notifySlack() {
   var slack = document.querySelector("#slack-chat")
+  if (slack.getAttribute("notifystamp") === null) {
+    slack.setAttribute("notifystamp", 0);
+  }
   forEach( slack.querySelectorAll(".slacked"), function(index, node) {
+    var last = slack.getAttribute("notifystamp");
     var stamp = node.getAttribute("timestamp");
-    if (slack.getAttribute("notifstamp") < stamp) {
-      slack.setAttribute("notifstamp", stamp)
+    if (last < stamp) {
+      slack.setAttribute("notifystamp", stamp);
       if (slack.getAttribute("firstpass") === "done") {
-        var audio = new Audio('snd/slack_sfx/knock_brush.mp3');
+        var audio = document.getElementById("knock_brush");
         audio.loop = false;
         audio.play();
       }
     }
   } )
-  slack.setAttribute("firstpass", "done")
+  slack.setAttribute("firstpass", "done");
 }
 
 // https://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/

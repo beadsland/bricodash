@@ -38,6 +38,10 @@
   <script src="js/sous.js"></script>
   <script src="js/apps.js"></script>
   <script src="js/launch.js"></script>
+
+  <audio preload="auto" id="knock_brush">
+    <source src="snd/slack_sfx/knock_brush.mp3" type="audio/mp3">
+  </audio>
 </head>
 <body>
 
