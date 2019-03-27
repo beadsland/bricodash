@@ -19,23 +19,19 @@
 
 import os
 import sys
-import json
-import requests
 import random
 import time
 
-pwd = os.path.dirname(sys.argv[0])
-query = "https://api.meetup.com/HackManhattan/photos?&sign=true&photo-host=public&page=100"
+import brico.common
+import brico.common.meetup
 
-response = requests.get(query)
-if response.status_code != 200:   sys.exit(response.status_code);
-data = json.loads(response.text)
-
+data = brico.common.meetup.photos(brico.common.grp())
 img = random.choice(data)['photo_link']
 html = ['<img id="peekaboo" style="display: none" src="' + img + '">']
 
 html.append( '<span id="timestamp" epoch="' + str(time.time()) + '"></span>' )
 
+pwd = os.path.dirname(sys.argv[0])
 filename = pwd + "/../html/pull/photo.html"
 file = open(filename + ".new", "w")
 file.write( '<div class="centered">' + "\n".join(html) + '</div>')

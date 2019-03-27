@@ -20,22 +20,24 @@ import json
 import brico.common
 from vend.memoize import memoized
 
+API = "https://api.meetup.com"
+
 @memoized
 def events(group):
-  path = "/".join([ "https://api.meetup.com", group, "events" ])
+  path = "/".join([API , group, "events" ])
   params = { 'sign': "true", 'photo-host': "public", 'page': 20 }
   response = brico.common.get_response(path, params)
   return json.loads(response.text)
 
 @memoized
 def rsvps(group, eid):
-  path = "/".join([ "https://api.meetup.com", group, "events", eid, "rsvps" ])
+  path = "/".join([ API, group, "events", eid, "rsvps" ])
   response = brico.common.get_response(path)
   return json.loads(response.text)
 
 @memoized
 def find(text, sigfile):
-  path = "https://api.meetup.com/find/upcoming_events"
+  path = "/".join([ API, "find", "upcoming_events" ])
   params = { 'photo-host': "public", 'page': 20, 'text': text, 'radius': 5,
              'lat': brico.common.lat(), 'lon': brico.common.lon() }
   sigfile = os.path.join( brico.common.pwd(), sigfile )
@@ -44,3 +46,9 @@ def find(text, sigfile):
   response = brico.common.get_response(path, params, sig)
   result = json.loads(response.text)
   return result['events']
+
+def photos(group, count="100"):
+  path = "/".join([ API, group, "photos" ])
+  params = { 'sign': "true", 'photo-host': "public", 'page': count }
+  response = brico.common.get_response(path, params)
+  return json.loads(response.text)

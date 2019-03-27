@@ -15,7 +15,7 @@
   - [APIs](#apis)
     - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
     - [jobs/brico/slack/](#jobsbricoslack)
-    - [jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py](#jobsbricocommonmeetuppy-jobsphotopy-jobsbricoeventstoberpy)
+    - [jobs/brico/common/meetup.py](#jobsbricocommonmeetuppy)
     - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
     - [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
     - [jobs/brico/common/wiki.py](#jobsbricocommonwikipy)
@@ -234,7 +234,7 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 Source: https://archive.org/details/slack_sfx
 
 
-### jobs/brico/common/meetup.py, jobs/photo.py, jobs/brico/events/tober.py
+### jobs/brico/common/meetup.py
 
 Meetup API used under Meetup's Terms of Service and Meetup API License Guidelines.
 https://help.meetup.com/hc/en-us/articles/360001636711-Meetup-API-License-Guidelines
