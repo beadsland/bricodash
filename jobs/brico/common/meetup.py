@@ -17,6 +17,9 @@
 
 import os
 import json
+import datetime
+import time
+
 import brico.common
 from vend.memoize import memoized
 
@@ -48,11 +51,24 @@ def find(text, sigfile):
   return result['events']
 
 def photos(group, offset=0):
-  path = "/".join([ API, group, "photos" ])
-  params = { 'sign': "true", 'photo-host': "public",
-             'page': 200, 'offset': offset  }
-  response = brico.common.get_response(path, params)
-  if ((offset+1)*200) < int(response.headers['X-Total-Count']):
-    return json.loads(response.text) + photos(group, offset+1)
+  file = "meetup_photos.json"
+
+  diff = (datetime.datetime.now() - brico.common.mtime(file))
+  if diff < datetime.timedelta(minutes = 15):
+    result = json.loads(brico.common.slurp(file))
   else:
-    return json.loads(response.text)
+    page = 200
+    path = "/".join([ API, group, "photos" ])
+    params = { 'sign': "true", 'photo-host': "public",
+               'page': page, 'offset': offset  }
+    response = brico.common.get_response(path, params)
+
+    if ((offset+1)*page) < int(response.headers['X-Total-Count']):
+      time.sleep(1)
+      result = json.loads(response.text) + photos(group, offset+1)
+    else:
+      result = json.loads(response.text)
+
+    brico.common.write_json(file, result)
+
+  return result

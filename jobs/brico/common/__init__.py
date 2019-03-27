@@ -23,6 +23,7 @@ import urllib.parse
 import requests
 import json
 import grp
+import datetime
 
 ###
 # Locale constants
@@ -73,6 +74,11 @@ def get_response(path, params={}, token="", etag=None, bail=True):
 ###
 def touch(f):
   with open(f, 'a'):    os.utime(f, None)
+
+def mtime(filename):
+  filename = os.path.join( pull(), filename )
+  mtime = os.path.getmtime(filename)
+  return datetime.datetime.fromtimestamp(mtime)
 
 def slurp(filename):
   filename = os.path.join( pull(), filename )
