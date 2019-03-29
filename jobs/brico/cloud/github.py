@@ -25,6 +25,11 @@ import brico.common.html
 
 thumb = brico.common.thumb.Cache()
 
+def hubpush(r): return True if 'type' in r.keys() \
+                           and r['type'] == "PushEvent" else False
+def labpush(r): return True if 'action_name' in r.keys() \
+                           and r['action_name'] == "pushed to" else False
+
 def main():
   hub_logo = "%s%s" % (brico.common.html.logo("img/github.png"), '&thinsp;')
   lab_logo = "%s%s" % (brico.common.html.logo("img/gitlab.png"), '&thinsp;')
@@ -37,21 +42,25 @@ def main():
 
   seen = []
   report = []
-  for n in repos:    #, ("mprasoon", "gitlab")]:
+  for n in repos:
     result = get_events(n[0], n[1])
     if result is not None:
-      push = result[0]
-      if n[1] == "github":
-        repo = brico.cloud.format_title(push["repo"]["name"])
-        title = ''.join([ hub_logo, repo ])
-  #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
-  #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
-      elif n[1] == "gitlab":
-        repo = brico.cloud.format_title(push["project_name"])
-        title = ''.join([ lab_logo, repo ])
-      else:
-        continue  # just move on if bad service name
-      report.append( (push["created_at"], title) )
+      while len(result) > 0 and not (hubpush(result[0]) or labpush(result[0])):
+        result.pop(0)
+      if len(result) > 0:
+        push = result[0]
+        if n[1] == "github":
+          repo = brico.cloud.format_title(push["repo"]["name"])
+          title = ''.join([ hub_logo, repo ])
+    #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
+    #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
+        elif n[1] == "gitlab":
+          name = get_project_name(n[0], n[1], push["project_id"])
+          repo = brico.cloud.format_title(name)
+          title = ''.join([ lab_logo, repo ])
+        else:
+          continue  # just move on if bad service name
+        report.append( (push["created_at"], title) )
 
   for p in range(1,10):
     result = get_events("hackmanhattan", "github", "hm", p)
@@ -89,10 +98,7 @@ def get_events(user, serv="github", short=None, page=1):
   if short is None:  cache = "%s_%s.json" % (serv, user)
   else:              cache = "%s_%s_%02d.json" % (serv, short, page)
 
-  result = get_result(query, cache, serv)
-  if serv == "gitlab" and result is not None:
-    result[0]["project_name"] = get_project_name(user, serv, result[0]["project_id"])
-  return result
+  return get_result(query, cache, serv)
 
 ###
 # Request gitlab project name
