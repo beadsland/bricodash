@@ -30,6 +30,10 @@ import logging
 from PIL import Image
 import io
 
+SWEET = .15  # This value is the time to sleep between frames, to avoid
+             # flooding the chromecast. Sweet spot depends on local network
+             # conditions and performance of source camera.
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 handler = logging.FileHandler('hello.log')
@@ -100,7 +104,7 @@ elif action == "stream":
   print('Expires: Mon, 3 Jan 2000 12:34:56 GMT')
   print('Pragma: no-cache')
   while 1:
-    time.sleep(.1)
+    time.sleep(SWEET)
 #    logger.info(time.time())
     handler.flush()
     print("")
