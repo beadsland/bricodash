@@ -55,7 +55,7 @@ def main():
     #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
     #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
         elif n[1] == "gitlab":
-          name = get_project_name(n[0], n[1], push["project_id"])
+          name = get_project_path(n[0], n[1], push["project_id"])
           repo = brico.cloud.format_title(name)
           title = ''.join([ lab_logo, repo ])
         else:
@@ -103,11 +103,11 @@ def get_events(user, serv="github", short=None, page=1):
 ###
 # Request gitlab project name
 ###
-def get_project_name(user, serv, proj):
+def get_project_path(user, serv, proj):
   query = "https://gitlab.com/api/v4/projects/%s" % (proj)
   cache = "%s_%s_%s.json" % (serv, user, proj)
   result = get_result(query, cache, serv)
-  return '/'.join([ user, result["name"] ])
+  return result["path_with_namespace"]
 
 ###
 # Query an API using using Etags to cache and respecting X-Poll-Interval
