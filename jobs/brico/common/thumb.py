@@ -21,11 +21,14 @@ import requests
 from resizeimage import resizeimage
 from PIL import Image
 import time
+import datetime
 import re
 
 import urllib.parse
 import brico.common
 from vend.memoize import memoized
+
+INVALID = datetime.timedelta(minutes = 150).total_seconds()
 
 class Cache():
   def __init__(self):
@@ -38,7 +41,7 @@ class Cache():
     dir = self.paths('')['local']['full']
     for f in os.listdir(dir):
       f = os.path.join(dir, f)
-      if os.stat(f).st_mtime < time.time() - 10 * 60:
+      if os.stat(f).st_mtime < time.time() - INVALID:
         if os.path.isfile(f):
           os.remove(f)
 
