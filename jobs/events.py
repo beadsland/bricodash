@@ -44,6 +44,11 @@ now = datetime.datetime.now()
 min = now.minute
 hr  = now.hour
 
+# IMPORTANT:
+# This script is fired off at interval specified in sysd/cron.py
+# Be sure than any interval defined below will occur coincident with the
+# master cron.py interval. Otherwise the rule in question below won't fire.
+
 # Make sure sunset items actually update by firing 1 and 10 minutes after
 sunset = brico.events.lunar.sunset(datetime.datetime.today())
 if datetime.timedelta(seconds=0) \
