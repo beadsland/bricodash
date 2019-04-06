@@ -31,15 +31,15 @@
 }
 
 .tab-topper {
-  height: 1%;
-}
-
-.tab-spacer {
   height: 2%;
 }
 
+.tab-spacer {
+  height: 4%;
+}
+
 .tab-box, .tab-box-active {
-  height: 31%;
+  height: 29%;
   width: 100%;
   border: 1px dotted white;
   border-right: none;
@@ -52,7 +52,7 @@
 
 .tab-box-active {
   color: black;
-  background: #88bb88;
+  background: #99bb99;
   opacity: 1.0;
 }
 
