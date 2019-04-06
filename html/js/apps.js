@@ -64,7 +64,7 @@ function buildingCal() {
 function spaceCal() {
   $("#upper_left_column_alt").hide()
   $("#upper_left_column").show()
-  setTimeout(buildingCal, 4*60000)
+  setTimeout(buildingCal, 1*60000)
 }
 
 /*

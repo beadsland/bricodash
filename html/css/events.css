@@ -18,6 +18,57 @@
 */
 
 /*
+ Context-indicator tabs
+*/
+
+.tab-container {
+  float: left;
+  width: 1.75em;
+}
+
+.tabbed-container {
+  margin-left: 2.5em;
+}
+
+.tab-topper {
+  height: 1%;
+}
+
+.tab-spacer {
+  height: 2%;
+}
+
+.tab-box, .tab-box-active {
+  height: 31%;
+  width: 100%;
+  border: 1px dotted white;
+  border-right: none;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  opacity: 0.2;
+}
+
+.tab-box-active {
+  color: black;
+  background: #88bb88;
+  opacity: 1.0;
+}
+
+.tab-text {
+  font: Raleway;
+  font-size: 1.5em;
+  display: inline-block;
+}
+
+.tab-logo {
+  display: inline-block;
+  width: .85em;
+  padding-bottom: .2em;
+}
+
+/*
  Events
 */
 
