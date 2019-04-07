@@ -40,15 +40,23 @@ def main():
   extra = "../html/pull//extra.cal"
   trivia = "cal/trivia.cal"
 
-  arr = sorted( parse_cal(extra, 7) + parse_cal(local) \
-                + parse_cal(usnat, 14) )
-  arr = ( { 'start': t[0].decode('utf-8'),
-            'venue': "Holiday",
-            'event': t[1].encode().decode('utf-8') } for t in arr )
+  ###
+  # Holidays and Special Events
+  ###
+  arr = [ (evt, 'Special') for evt in parse_cal(extra) ] \
+          + [ (evt, 'Local') for evt in parse_cal(local) ] \
+          + [ (evt, 'Holiday') for evt in parse_cal(usnat) ]
+  arr = sorted(arr)
+  arr = ( { 'start': t[0][0].decode('utf-8'),
+            'venue': t[1],
+            'event': t[0][1].encode().decode('utf-8') } for t in arr )
   arr = list(arr)
 
   brico.common.write_json("holiday.json", arr[:10])
 
+  ###
+  # Geek holidays, birthdays and trivia
+  ###
   arr = sorted( parse_cal(trivia, 1) + parse_cal(birth, 3) \
                 + parse_cal(geek, 7) )
   arr = ( { 'start': t[0].decode('utf-8'),

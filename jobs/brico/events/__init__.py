@@ -108,7 +108,7 @@ def datesort(list):
 ###
 # Format each event line
 ###
-def format(item):
+def format(item, clss='event'):
   dt = format_dt(item["start"])
 
   dd = item['event']
@@ -117,7 +117,7 @@ def format(item):
     dd = "%s %s" % ( dd, html.logo("img/hm_neg.png") )
     dd = html.span().clss('hm-event').inner( dd ).str()
   else:
-    dd = html.span().clss('event').inner( dd ).str()
+    dd = html.span().clss(clss).inner( dd ).str()
 
   return " &mdash; ".join([ html.span().clss('date').inner( dt ).str(),
                             dd ])

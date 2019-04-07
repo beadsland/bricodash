@@ -79,15 +79,25 @@
   text-indent: -9.6em ;
 }
 
-.event, .hm-event {
+.event, .hm-event, .nyc-event, .nys-event {
   font-family: Merriweather, serif;
   font-size: 140%;
   color: #ccffcc;
 }
 
 .hm-event {
+  font-weight: 450;
+  color: #ddff00;
+}
+
+.nyc-event {
   font-weight: normal;
-  color: #dddd00;
+  color: #f86300;
+}
+
+.nys-event {
+  font-weight: normal;
+  color: #ffd700;
 }
 
 .noisy {

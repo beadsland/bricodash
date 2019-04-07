@@ -80,7 +80,12 @@ evtCity = []
 header = html.span().id('ratparkHdr').inner("NYC / Community Calendar")
 evtCity.append( html.span().clss('event').inner(header.str()).str() )
 for item in brico.events.community()[:10]:
-  evtCity.append( brico.events.line(brico.events.format(item)) )
+  if item['venue'] == "Local":
+    evtCity.append( brico.events.line(brico.events.format(item, 'nys-event')) )
+  elif item['venue'] == "Special":
+    evtCity.append( brico.events.line(brico.events.format(item, 'nyc-event')) )
+  else:
+    evtCity.append( brico.events.line(brico.events.format(item)) )
 
 evtBldg = []
 header = html.span().id('ratparkHdr').inner("Rat Park Building Calendar")
