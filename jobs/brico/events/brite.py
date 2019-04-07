@@ -19,6 +19,7 @@ import os
 import eventbrite
 import urllib.parse
 import dateutil
+import difflib
 
 import brico.events
 import brico.common
@@ -49,6 +50,7 @@ def main():
         if name[:50] == up['event'][:50] \
             and dateutil.parser.parse(start) == dateutil.parser.parse(up['start']):
           isup = brico.common.html.logo("img/meetup.png")
+          name = common(name, up['event'])
           upmeet.remove(up)
           brico.common.write_json("upmeet.json", upmeet)
           break
@@ -61,6 +63,29 @@ def main():
       ratpark.append( line )
 
   brico.common.write_json( "brite.json", brico.events.datesort(ratpark)[:5] )
+
+###
+# Match common string parts
+###
+def common(str1, str2):
+  str1 = "%s " % str1
+  str2 = "%s " % str2
+  parts = []
+  l1 = 0
+  l2 = 0
+
+  while len(str1) > 0 and len(str2) > 0:
+    m = longest(str1, str2)
+    if m.size < 3 or " " not in str1[m.a:m.size]:         break
+    parts.append(str1[m.a:m.a+m.size].lstrip().rstrip())
+    str1 = " %s" % str1[m.a+m.size:]
+    str2 = " %s" % str2[m.b+m.size:]
+
+  return '…'.join(parts).rstrip()
+
+def longest(str1, str2):
+  matcher = difflib.SequenceMatcher(None, str1, str2, autojunk=False)
+  return matcher.find_longest_match(0, len(str1), 0, len(str2))
 
 ###
 # API wrapper class

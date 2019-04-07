@@ -29,7 +29,7 @@ import re
 @memoized
 def noisemoji(): return html.span().clss("noisemoji").inner(u"🔊🎶").str()
 def noisy(s): return html.span().clss("noisy").inner( s ).str() + noisemoji()
-def polite(s): return re.sub('/', "/&thinsp;", s)
+def polite(s): return re.sub('/', "/&thinsp;", re.sub('…', "…&thinsp;", s))
 
 @memoized
 def venue(s): return html.span().clss('venue').inner( s ).str()
@@ -40,7 +40,7 @@ def line(s): return html.div().clss('event-line').inner( s ).str()
 ###
 def building():
   list = load_cals([ "space.json", "private.json", "brite.json", "upmeet.json" ])
-  list.append(livemusic())
+  list = list + livemusic()
   return datesort(list)
 
 ###
@@ -66,7 +66,7 @@ def combo():
   list = load_cals([ "space.json", "private.json", "brite.json",
                      "upmeet.json", "multi.json", "castles.json",
                      "tober.json", "holiday.json", "geekday.json" ])
-  list.append(livemusic())
+  list = list + livemusic()
   return datesort(list)
 
 ###
@@ -75,9 +75,15 @@ def combo():
 def livemusic():
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
-  return { "start": " ".join( [d.isoformat(), "8:00 pm"] ),
-           "event": noisy("Friday Night Live Music"),
-           "venue": "Offside Tavern" }
+  start = " ".join( [d.isoformat(), "8:00 pm"] )
+
+  for b in brico.events.load_cals( ["brite.json"] ):
+    if b['event'].startswith("Friday Night Live") \
+        and dateutil.parser.parse(start) == dateutil.parser.parse(b['start']):
+      return []
+
+  return [{ "start": start, "event": noisy("Friday Night Live Music"),
+            "venue": "Offside Tavern" }]
 
 ###
 # Load a list of calendars
