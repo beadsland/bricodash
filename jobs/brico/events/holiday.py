@@ -40,28 +40,23 @@ def main():
   extra = "../html/pull//extra.cal"
   trivia = "cal/trivia.cal"
 
-  arr = sorted( parse_cal(trivia, 0) + parse_cal(birth, 1) \
-                + parse_cal(geek, 3) + parse_cal(extra, 7) \
-                + parse_cal(usnat, 14) + parse_cal(local) )
+  arr = sorted( parse_cal(extra, 7) + parse_cal(local) \
+                + parse_cal(usnat, 14) )
   arr = ( { 'start': t[0].decode('utf-8'),
             'venue': "Holiday",
             'event': t[1].encode().decode('utf-8') } for t in arr )
   arr = list(arr)
 
-  # Three events minimum.
-  n = 3
-  # Grab all events for today...
-  tomorrow = datetime.datetime.now() + relativedelta(days = +1)
-  while n < len(arr) and \
-                         dateutil.parser.parse(arr[n]['start']) < tomorrow:
-    n += 1
-  # ...and up to max 6 total events through tomorrow.
-  nextday = tomorrow + relativedelta(days = +1)
-  while n < len(arr) < 6 and \
-                         dateutil.parser.parse(arr[n]['start']) < nextday:
-    n += 1
+  brico.common.write_json("holiday.json", arr[:10])
 
-  brico.common.write_json("holiday.json", arr[:n])
+  arr = sorted( parse_cal(trivia, 1) + parse_cal(birth, 3) \
+                + parse_cal(geek, 7) )
+  arr = ( { 'start': t[0].decode('utf-8'),
+            'venue': "Holiday",
+            'event': t[1].encode().decode('utf-8') } for t in arr )
+  arr = list(arr)
+
+  brico.common.write_json("geekday.json", arr[:10])
 
 ###
 # Process a human-readable calendar file

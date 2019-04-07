@@ -39,7 +39,8 @@ window.onload = function() {
 
   scheduleDiv("#space-events", "pull/space_events.html", 10 * 60 * 1000);
   scheduleDiv("#building-events", "pull/building_events.html", 10 * 60 * 1000);
-  buildingCal()
+  scheduleDiv("#city-events", "pull/city_events.html", 10 * 60 * 1000);
+  spaceCal()
 
   scheduleDiv("#random_photo", "pull/photo.html", 10 * 60 * 1000);
   peekawait();

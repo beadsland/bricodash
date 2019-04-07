@@ -44,12 +44,20 @@ def building():
   return datesort(list)
 
 ###
-# Events relevant to our community
+# Events relevant to our hackerspace
 ###
-def community():
-  cals = [ "multi.json", "castles.json", "tober.json", "holiday.json" ]
+def ourspace():
+  cals = [ "geekday.json" ]
   return datesort( datesort(load_cals(cals))[:4] \
                             + load_cals(["space.json", "private.json"]) )
+
+###
+# Events relevant to broader community
+###
+def community():
+  cals = [ "multi.json", "castles.json", "tober.json", "holiday.json",
+            "space.json", "private.json", "brite.json", "upmeet.json" ]
+  return datesort( datesort(load_cals(cals)) )
 
 ###
 # Combined calendar for next three days
@@ -57,7 +65,7 @@ def community():
 def combo():
   list = load_cals([ "space.json", "private.json", "brite.json",
                      "upmeet.json", "multi.json", "castles.json",
-                     "tober.json", "holiday.json" ])
+                     "tober.json", "holiday.json", "geekday.json" ])
   list.append(livemusic())
   return datesort(list)
 

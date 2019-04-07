@@ -48,7 +48,7 @@ table, tr, td {
   background-image: url('../img/black1x1.png');
 }
 
-#upper_left_column, #upper_left_column_alt {
+#upper_left_column_tab1, #upper_left_column_tab2, #upper_left_column_tab3 {
   height: 340.8px;
   padding-left: 5px;
   overflow: hidden;

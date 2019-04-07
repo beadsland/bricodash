@@ -73,8 +73,14 @@ if min % 10 == 0 or 'space' in sys.argv:      brico.events.space.main()
 # Build events component divs
 ###
 evtSpce = []
-for item in brico.events.community()[:10]:
+for item in brico.events.ourspace()[:10]:
   evtSpce.append( brico.events.line(brico.events.format(item)) )
+
+evtCity = []
+header = html.span().id('ratparkHdr').inner("NYC / Community Calendar")
+evtCity.append( html.span().clss('event').inner(header.str()).str() )
+for item in brico.events.community()[:10]:
+  evtCity.append( brico.events.line(brico.events.format(item)) )
 
 evtBldg = []
 header = html.span().id('ratparkHdr').inner("Rat Park Building Calendar")
@@ -116,4 +122,5 @@ for item in brico.events.combo():
 
 brico.common.write_pull("space_events.html", evtSpce)
 brico.common.write_pull("building_events.html", evtBldg)
+brico.common.write_pull("city_events.html", evtCity)
 brico.common.write_text("threeday_events.slack", slkThree)

@@ -55,16 +55,25 @@ var forEach = function (array, callback, scope) {
  Alternate between building and space calendars.
  */
 
-function buildingCal() {
-  $("#upper_left_column").hide()
-  $("#upper_left_column_alt").show()
-  setTimeout(spaceCal, .5*60000)
+function spaceCal() {
+ $("#upper_left_column_tab2").hide()
+ $("#upper_left_column_tab3").hide()
+ $("#upper_left_column_tab1").show()
+ setTimeout(buildingCal, .5*60000)
 }
 
-function spaceCal() {
-  $("#upper_left_column_alt").hide()
-  $("#upper_left_column").show()
-  setTimeout(buildingCal, .5*60000)
+function buildingCal() {
+  $("#upper_left_column_tab1").hide()
+  $("#upper_left_column_tab3").hide()
+  $("#upper_left_column_tab2").show()
+  setTimeout(cityCal, .5*60000)
+}
+
+function cityCal() {
+  $("#upper_left_column_tab2").hide()
+  $("#upper_left_column_tab1").hide()
+  $("#upper_left_column_tab3").show()
+  setTimeout(spaceCal, .5*60000)
 }
 
 /*
