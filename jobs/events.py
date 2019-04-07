@@ -88,7 +88,7 @@ for item in brico.events.community()[:10]:
     evtCity.append( brico.events.line(brico.events.format(item)) )
 
 evtBldg = []
-header = html.span().id('ratparkHdr').inner("Rat Park Building Calendar")
+header = html.span().id('ratparkHdr').inner("Rat Park — Building Calendar")
 evtBldg.append( html.span().clss('event').inner(header.str()).str() )
 for item in brico.events.building()[:10]:
   venue = brico.events.venue(item['venue'])
