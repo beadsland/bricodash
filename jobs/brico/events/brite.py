@@ -18,6 +18,7 @@
 import os
 import eventbrite
 import urllib.parse
+import dateutil
 
 import brico.events
 import brico.common
@@ -34,15 +35,29 @@ def main():
   replace = { "at %s" % t: "" for t in tenants }
   ratpark = []
 
+  upmeet = brico.events.load_cals( ["upmeet.json"] )
+
   for event in brite.events(tenants):
     venue = brite.venue(event)
 
     if venue['name'] in tenants:
+      start = event['start']['local']
       name = multiple_replace(event['name']['text'], replace)
+
+      isup = ""
+      for up in upmeet:
+        if name[:50] == up['event'][:50] \
+            and dateutil.parser.parse(start) == dateutil.parser.parse(up['start']):
+          isup = brico.common.html.logo("img/meetup.png")
+          upmeet.remove(up)
+          brico.common.write_json("upmeet.json", upmeet)
+          break
+
       name = brico.events.noisy( brico.events.polite(name) )
+
       line = { "start": event['start']['local'],
                "venue": venue['name'],
-               "event": "%s %s" % (name, short(event['url'])) }
+               "event": "%s %s %s" % (name, short(event['url']), isup) }
       ratpark.append( line )
 
   brico.common.write_json( "brite.json", brico.events.datesort(ratpark)[:5] )
