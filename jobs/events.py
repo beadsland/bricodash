@@ -83,8 +83,13 @@ for item in brico.events.ourspace()[:10]:
 evtCity = []
 header = html.span().id('ratparkHdr').inner("NYC / Community Calendar")
 evtCity.append( html.span().clss('event').inner(header.str()).str() )
-for item in brico.events.community()[:10]:
-  if item['venue'] == "Local":
+
+events = brico.events.community()[:10]
+for item in events:
+  if item['venue'] in ["Offside Tavern", "Secret Loft"]:
+    item['event'] = "%s (%s)" % (item['event'], item['venue'])
+    evtCity.append( brico.events.line(brico.events.format(item)) )
+  elif item['venue'] == "Local":
     evtCity.append( brico.events.line(brico.events.format(item, 'nys-event')) )
   elif item['venue'] == "Special":
     evtCity.append( brico.events.line(brico.events.format(item, 'nyc-event')) )
