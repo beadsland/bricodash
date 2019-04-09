@@ -87,7 +87,8 @@ evtCity.append( html.span().clss('event').inner(header.str()).str() )
 events = brico.events.community()[:10]
 for item in events:
   if item['venue'] in ["Offside Tavern", "Secret Loft"]:
-    item['event'] = "%s (%s)" % (item['event'], item['venue'])
+    venue = item['venue'].replace(" ", "&nbsp;")
+    item['event'] = "%s (%s)" % (item['event'], venue)
     evtCity.append( brico.events.line(brico.events.format(item)) )
   elif item['venue'] == "Local":
     evtCity.append( brico.events.line(brico.events.format(item, 'nys-event')) )
