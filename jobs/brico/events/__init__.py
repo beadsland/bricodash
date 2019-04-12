@@ -57,7 +57,7 @@ def ourspace():
 def community():
   cals = [ "multi.json", "castles.json", "tober.json", "holiday.json",
             "space.json", "private.json", "brite.json", "upmeet.json" ]
-  return datesort( datesort(load_cals(cals)) )
+  return datesort( datesort( load_cals(cals) + livemusic() ) )
 
 ###
 # Combined calendar for next three days
@@ -78,8 +78,9 @@ def livemusic():
   start = " ".join( [d.isoformat(), "8:00 pm"] )
 
   for b in brico.events.load_cals( ["brite.json"] ):
-    if b['event'].startswith("Friday Night Live") \
-        and dateutil.parser.parse(start) == dateutil.parser.parse(b['start']):
+    if ("Friday Night Live" in b['event'] or
+        "Friday Nights Live" in b['event']) \
+          and dateutil.parser.parse(start) == dateutil.parser.parse(b['start']):
       return []
 
   return [{ "start": start, "event": noisy("Friday Night Live Music"),
