@@ -30,7 +30,7 @@ import logging
 from PIL import Image
 import io
 
-SWEET = .20  # This value is the time to sleep between frames, to avoid
+SWEET = .30  # This value is the time to sleep between frames, to avoid
              # flooding the chromecast. Sweet spot depends on local network
              # conditions and performance of source camera.
 
