@@ -42,7 +42,6 @@ def div(s): return html.div().clss("slacking").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
 def qut(s): return html.div().clss("slackquote").inner(s).str()
-def lnk(s): return slack.link(s, html.logo, linky)
 
 ###
 # Link, image and emoji formatting
@@ -83,7 +82,8 @@ class Slack(BaseSlack):
   @memoized
   def txtdict(self):
     return [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
-             ("<(http[^>]+)>", lambda m: lnk(m.group(1)) ),
+             ("<(http[^>]+)>", lambda m: self.link(m.group(1), html.logo,
+                                                   linky) ),
              ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
              ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(self.names(m.group(1))) ),
              (":([A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
@@ -142,11 +142,10 @@ class Slack(BaseSlack):
   # not memoized because message
   def attachments(self, message, imgtag=None, lnktag=None):
     text = []
-
     for key in ['files', 'attachments']:
       if key in message:
         for file in message[key]:
-          if 'fallback' in file:
+          if 'author_icon' in file:
             if 'text' not in file: file['text'] = ""
             footer = "(%s ago on #%s)" % ( self.human_time(file['ts']),
                                            file['channel_name'] )
