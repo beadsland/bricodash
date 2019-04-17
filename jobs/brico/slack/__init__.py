@@ -17,12 +17,16 @@
 
 import emoji_data_python
 from vend.memoize import memoized
+from vend.multisub import multiple_replace
+
 import brico.common.thumb
 from brico.slack.slacker import Slack as BaseSlack
 import brico.common.html as html
 
 import urllib.parse
 import re
+import humanize
+import datetime
 
 def bold(str):  return "*%s*" % str
 def ital(str):  return "_%s_" % str
@@ -76,7 +80,6 @@ class Slack(BaseSlack):
   ###
   # Format text and attachments part of message
   ###
-
   @memoized
   def txtdict(self):
     return [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
@@ -96,6 +99,18 @@ class Slack(BaseSlack):
                       ' '.join(self.attachments(message, html.logo, linky)),
                       ' '.join(self.reactions(message, emotags)) ])
     return text
+
+  ###
+  # Format timestamp as duration
+  ###
+  @memoized
+  def durdict(self):
+    return { "second": "sec", "minute": "min", "hour": "hr",
+             "day": "dy", "week": "wk", " ago": "" }
+
+  def human_time(self, ts):
+    delta = datetime.datetime.now().timestamp() - float(ts)
+    return multiple_replace( humanize.naturaltime(delta), self.durdict() )
 
   ###
   # Links
@@ -133,9 +148,12 @@ class Slack(BaseSlack):
         for file in message[key]:
           if 'fallback' in file:
             if 'text' not in file: file['text'] = ""
-            return [ "&gt; %s: %s" \
+            footer = "(%s ago on #%s)" % ( self.human_time(file['ts']),
+                                           file['channel_name'] )
+            footer = html.span().clss('sledited').inner(footer).str()
+            return [ "&gt; %s: %s %s" \
                      % (html.logo(thumb.get(file['author_icon'])),
-                        self.format_text(file)) ]
+                        self.format_text(file), footer) ]
           for path in ['thumb_64', 'thumb_url', 'image_url', 'permalink']:
             if path in file:
               if file[path] not in message['text']:

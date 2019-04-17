@@ -18,13 +18,10 @@
 ####
 
 from vend.memoize import memoized
-from vend.multisub import multiple_replace
 import brico.common
 import brico.common.html as html
 import brico.slack
 
-import humanize
-import datetime
 import re
 import math
 
@@ -38,8 +35,6 @@ slack = brico.slack.Slack( app_token, bot_token )
 ##
 # Time and user
 ##
-durdict = { "second": "sec", "minute": "min", "hour": "hr",
-            "day": "dy", "week": "wk", " ago": "" }
 @memoized
 def avuser(u): return "%s %s" % (slack.avatars(u, html.logo), slack.names(u));
 def whn(s, ts):
@@ -59,29 +54,25 @@ def sub(s): return html.span().clss('ssubt').inner(s).str()
 # Format each message
 ###
 for message in reversed(slack.messages('hackerspace', 11)):
-  print(message)
-  print("")
-
-  ts = message['ts']
-  delta = datetime.datetime.now().timestamp() - float(ts)
-  when = multiple_replace( humanize.naturaltime(delta), durdict )
+  when = slack.human_time( message['ts'] )
   user = avuser(message['user']) if 'user' in message else message['username'];
 
   text = slack.format_text(message)
 
   if 'subtype' in message and message['subtype'] != 'thread_broadcast':
-    line = brico.slack.div( "%s &mdash; %s: %s" % (whn(when, ts), who(user),
+    line = brico.slack.div( "%s &mdash; %s: %s" % (whn(when, message['ts']),
+                                                   who(user),
                                                    sub(text)) )
     hist.append( line )
   else:
     if lstwhn == when and lstwho == user:
-      line = brico.slack.div( "%s &mdash; %s: %s" % (hid(whn(when, ts)),
+      line = brico.slack.div( "%s &mdash; %s: %s" % (hid(whn(when, message['ts'])),
                                                      who(user), text) )
       hist.append( line )
     else:
       lstwhn = when
       lstwho = user
-      hist.append(brico.slack.div( "%s &mdash; %s: %s" % (whn(when, ts),
+      hist.append(brico.slack.div( "%s &mdash; %s: %s" % (whn(when, message['ts']),
                                                           who(user), text) ))
 
 ###
