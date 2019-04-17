@@ -50,6 +50,8 @@ lstwhn = ""
 lstwho = ""
 def hid(s): return html.span().clss('shide').inner(s).str()
 def sub(s): return html.span().clss('ssubt').inner(s).str()
+def huh(s): return html.span().clss('slacktext').inner(s).str()
+
 ###
 # Format each message
 ###
@@ -62,18 +64,18 @@ for message in reversed(slack.messages('hackerspace', 11)):
   if 'subtype' in message and message['subtype'] != 'thread_broadcast':
     line = brico.slack.div( "%s &mdash; %s: %s" % (whn(when, message['ts']),
                                                    who(user),
-                                                   sub(text)) )
+                                                   sub(huh(text))) )
     hist.append( line )
   else:
     if lstwhn == when and lstwho == user:
       line = brico.slack.div( "%s &mdash; %s: %s" % (hid(whn(when, message['ts'])),
-                                                     who(user), text) )
+                                                     who(user), huh(text)) )
       hist.append( line )
     else:
       lstwhn = when
       lstwho = user
       hist.append(brico.slack.div( "%s &mdash; %s: %s" % (whn(when, message['ts']),
-                                                          who(user), text) ))
+                                                          who(user), huh(text)) ))
 
 ###
 # Trim excess lines

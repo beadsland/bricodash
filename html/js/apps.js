@@ -24,23 +24,35 @@
  Play slack notification when new message.
  */
 
+function knockBrush(slack, node, stamp) {
+  slack.setAttribute("notifystamp", stamp);
+  if (slack.getAttribute("firstpass") === "done") {
+    var audio = document.getElementById("knock_brush");
+    audio.loop = false;
+    audio.play();
+    node.insertAdjacentHTML('afterend',
+                            '<span class="emoji">&thinsp;✊🏽🖌</span>')
+  }
+}
+
 function notifySlack() {
   var slack = document.querySelector("#slack-chat")
   if (slack.getAttribute("notifystamp") === null) {
     slack.setAttribute("notifystamp", 0);
   }
-  forEach( slack.querySelectorAll(".slacked"), function(index, node) {
+  var brushed = 0
+  forEach( slack.querySelectorAll(".slacking"), function(index, node) {
     var last = slack.getAttribute("notifystamp");
-    var stamp = node.getAttribute("timestamp");
-    if (last < stamp) {
-      slack.setAttribute("notifystamp", stamp);
-      if (slack.getAttribute("firstpass") === "done") {
-        var audio = document.getElementById("knock_brush");
-        audio.loop = false;
-        audio.play();
-      }
+    var stamp = node.querySelector('.slacked').getAttribute("timestamp");
+    var text = node.querySelector('.slacktext').innerHTML;
+    if ((parseFloat(last) + 5*60) < parseFloat(stamp)) {
+      knockBrush(slack, node, stamp);
+      brushed = 1;
+    } else if ((parseFloat(last) < parseFloat(stamp))
+               && text.includes("space")) {
+      knockBrush(slack, node, stamp);
     }
-  } )
+  })
   slack.setAttribute("firstpass", "done");
 }
 
