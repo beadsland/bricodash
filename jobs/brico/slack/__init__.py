@@ -19,6 +19,7 @@ import emoji_data_python
 from vend.memoize import memoized
 import brico.common.thumb
 from brico.slack.slacker import Slack as BaseSlack
+import brico.common.html as html
 
 import urllib.parse
 import re
@@ -30,6 +31,32 @@ def quot(str):  return ">%s" % str
 thumb = brico.common.thumb.Cache()
 re_thumb = re.compile(r"/files-tmb/")
 
+###
+# Outer formatting
+###
+def div(s): return html.div().clss("slacking").inner(s).str()
+def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
+def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
+def qut(s): return html.div().clss("slackquote").inner(s).str()
+def lnk(s): return slack.link(s, html.logo, linky)
+
+###
+# Link, image and emoji formatting
+##
+@memoized
+def slemoji(u): return html.img().clss('slemoji').src( u ).str()
+def reactji(s): return html.div().clss('reactji').inner( s ).str()
+def reactct(s): return html.span().clss('reactct').inner( s ).str()
+def linky(u):
+  file = u if len(u) < 40 else "%s…%s" % (u[:20], u[-15:])
+  return html.span().clss('slink').inner("&lt;%s&gt;" % file).str()
+
+emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
+            'slemotag': slemoji, 'reactdiv': reactji, 'reactct': reactct }
+
+###
+# Slack API wrapper
+###
 class Slack(BaseSlack):
 
   ###
@@ -45,6 +72,30 @@ class Slack(BaseSlack):
     tag = '<span class="emoji"\ >'
     patt = re.compile( "(%s[^<]+)</span>%s" % (tag, tag) )
     return patt.sub(r'\g<1>', str)
+
+  ###
+  # Format text and attachments part of message
+  ###
+
+  @memoized
+  def txtdict(self):
+    return [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
+             ("<(http[^>]+)>", lambda m: lnk(m.group(1)) ),
+             ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
+             ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(self.names(m.group(1))) ),
+             (":([A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
+                                                          emotags) ) ]
+
+  def format_text(self, message):
+    text = message['text']
+    for tup in self.txtdict(): text = re.compile(tup[0]).sub(tup[1], text)
+    text = self.concat_emoji(text)
+    if 'edited' in message:
+      text += ' %s' % html.span().clss('sledited').inner("(edited)").str()
+    text = ' '.join([ text,
+                      ' '.join(self.attachments(message, html.logo, linky)),
+                      ' '.join(self.reactions(message, emotags)) ])
+    return text
 
   ###
   # Links
@@ -80,12 +131,16 @@ class Slack(BaseSlack):
     for key in ['files', 'attachments']:
       if key in message:
         for file in message[key]:
+          if 'fallback' in file:
+            if 'text' not in file: file['text'] = ""
+            return [ "&gt; %s: %s" \
+                     % (html.logo(thumb.get(file['author_icon'])),
+                        self.format_text(file)) ]
           for path in ['thumb_64', 'thumb_url', 'image_url', 'permalink']:
             if path in file:
               if file[path] not in message['text']:
                 text.append( self.link(file[path], imgtag, lnktag) )
               break # for path
-
     return text
 
   def reactions(self, message, tags={}):

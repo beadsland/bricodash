@@ -47,35 +47,6 @@ def whn(s, ts):
 def who(s): return html.span().clss("slackee").inner( s ).str()
 
 ###
-# Link, image and emoji formatting
-##
-@memoized
-def slemoji(u): return html.img().clss('slemoji').src( u ).str()
-def reactji(s): return html.div().clss('reactji').inner( s ).str()
-def reactct(s): return html.span().clss('reactct').inner( s ).str()
-def linky(u):
-  file = u if len(u) < 40 else "%s…%s" % (u[:20], u[-15:])
-  return html.span().clss('slink').inner("&lt;%s&gt;" % file).str()
-
-emotags = { 'emotag': html.emoji, 'imgtag': html.logo, 'lnktag': linky,
-            'slemotag': slemoji, 'reactdiv': reactji, 'reactct': reactct }
-
-###
-# Outer formatting
-###
-def div(s): return html.div().clss("slacking").inner(s).str()
-def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
-def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
-def qut(s): return html.div().clss("slackquote").inner(s).str()
-def lnk(s): return slack.link(s, html.logo, linky)
-
-txtdict = [ ("^&gt; (.*)\n", lambda m: qut(m.group(1)) ),
-            ("<(http[^>]+)>", lambda m: lnk(m.group(1)) ),
-            ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
-            ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(slack.names(m.group(1))) ),
-            (":([A-Za-z\-_0-9]+):", lambda m: slack.emoji(m.group(1), emotags) ) ]
-
-###
 #  Prettify sequential posts by same user
 ###
 
@@ -88,31 +59,30 @@ def sub(s): return html.span().clss('ssubt').inner(s).str()
 # Format each message
 ###
 for message in reversed(slack.messages('hackerspace', 11)):
+  print(message)
+  print("")
+
   ts = message['ts']
   delta = datetime.datetime.now().timestamp() - float(ts)
   when = multiple_replace( humanize.naturaltime(delta), durdict )
   user = avuser(message['user']) if 'user' in message else message['username'];
 
-  text = message['text'];
-  for tup in txtdict: text = re.compile(tup[0]).sub(tup[1], text)
-  text = slack.concat_emoji(text)
-  if 'edited' in message:
-    text += ' %s' % html.span().clss('sledited').inner("(edited)").str()
-  text = ' '.join([ text,
-                    ' '.join(slack.attachments(message, html.logo, linky)),
-                    ' '.join(slack.reactions(message, emotags)) ])
+  text = slack.format_text(message)
 
   if 'subtype' in message and message['subtype'] != 'thread_broadcast':
-    line = div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), sub(text)) )
+    line = brico.slack.div( "%s &mdash; %s: %s" % (whn(when, ts), who(user),
+                                                   sub(text)) )
     hist.append( line )
   else:
     if lstwhn == when and lstwho == user:
-      line = div( "%s &mdash; %s: %s" % (hid(whn(when, ts)), who(user), text) )
+      line = brico.slack.div( "%s &mdash; %s: %s" % (hid(whn(when, ts)),
+                                                     who(user), text) )
       hist.append( line )
     else:
       lstwhn = when
       lstwho = user
-      hist.append(div( "%s &mdash; %s: %s" % (whn(when, ts), who(user), text) ))
+      hist.append(brico.slack.div( "%s &mdash; %s: %s" % (whn(when, ts),
+                                                          who(user), text) ))
 
 ###
 # Trim excess lines
