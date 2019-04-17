@@ -40,14 +40,12 @@ function notifySlack() {
   if (slack.getAttribute("notifystamp") === null) {
     slack.setAttribute("notifystamp", 0);
   }
-  var brushed = 0
   forEach( slack.querySelectorAll(".slacking"), function(index, node) {
     var last = slack.getAttribute("notifystamp");
     var stamp = node.querySelector('.slacked').getAttribute("timestamp");
     var text = node.querySelector('.slacktext').innerHTML;
     if ((parseFloat(last) + 5*60) < parseFloat(stamp)) {
       knockBrush(slack, node, stamp);
-      brushed = 1;
     } else if ((parseFloat(last) < parseFloat(stamp))
                && text.includes("space")) {
       knockBrush(slack, node, stamp);
