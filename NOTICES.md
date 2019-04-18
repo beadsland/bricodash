@@ -6,7 +6,7 @@
   - [Public Use Caveat](#public-use-caveat)
   - [Software](#software)
     - [LICENSE.md](#licensemd)
-    - [sysd/app.py](#sysdapppy)
+    - [sysd/app/](#sysdapp)
     - [html/util/camera.php](#htmlutilcameraphp)
     - [html/js/clock.js](#htmljsclockjs)
     - [jobs/vend/memoize.py](#jobsvendmemoizepy)
@@ -88,7 +88,7 @@ wording identical to the originals, we are not responsible for any legal
 implications caused by discrepancies in the licenses.
 
 
-### sysd/app.py
+### sysd/app/
 
 Based on <https://github.com/madmod/dashcast-docker>.
 Copyright © 2017 John Wells. Used and adapted in good faith.
