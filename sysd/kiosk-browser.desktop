@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=stream
-Exec=bash -c 'unclutter & chromium-browser --disable-infobars --kiosk --app=htt$
+Exec=bash -c 'unclutter & chromium-browser --disable-infobars --kiosk --app=http://bricolage.hackmanhattan.com:8888/hm/dash/
 StartupNotify=true
 Terminal=false
 Type=Application

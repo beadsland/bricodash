@@ -1,3 +1,3 @@
 DISPLAY_NAME=Hackerspace TV
-DASHBOARD_URL=http://hackmanhattan.duckdns.org:8888/hm/dash/?whoami=chromecast
+DASHBOARD_URL=http://bricolage.hackmanhattan.com:8888/hm/dash/?whoami=chromecast
 IGNORE_CEC=True
