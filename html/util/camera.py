@@ -36,12 +36,12 @@ SWEET = .30  # This value is the time to sleep between frames, to avoid
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-handler = logging.FileHandler('hello.log')
-handler.setLevel(logging.WARN)
-logger.addHandler(handler)
+#handler = logging.FileHandler('hello.log')
+#handler.setLevel(logging.WARN)
+#logger.addHandler(handler)
 
 logger.info('Handle request.')
-handler.flush()
+#handler.flush()
 
 filename = "../img/ceilingcat.jpg"
 
@@ -59,7 +59,7 @@ action =  "stream"  if not 'action' in form   else form['action'].value
 logger.info(action)
 query = mjpg[view] + "?action=snapshot"
 logger.info(query)
-handler.flush()
+#handler.flush()
 
 def catsnap():
   sys.stdout.flush()
@@ -106,7 +106,7 @@ elif action == "stream":
   while 1:
     time.sleep(SWEET)
 #    logger.info(time.time())
-    handler.flush()
+#    handler.flush()
     print("")
     print(boundary)
     print('X-Timestamp: %s' % time.time())
