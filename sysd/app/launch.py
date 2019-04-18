@@ -10,8 +10,6 @@ Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
 import logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.propagate = True
 
 import time
 

@@ -5,15 +5,12 @@ After=network-online.target
 [Service]
 User=nobody
 Group=nogroup
-Type=forking
+Type=simple
 GuessMainPID=yes
 KillMode=mixed
-Environment="DISPLAY_NAME=Hackerspace TV"
-Environment="DASHBOARD_URL=http://hackmanhattan.duckdns.org:8888/hm/dash/?whoami=chromecast"
-Environment="IGNORE_CEC=True"
-Environment="DEBUG_FILE=/opt/bricodash/html/pull/app.log"
+EnvironmentFile=/opt/bricodash/sysd/environment.file
 WorkingDirectory=/opt/bricodash/sysd/
-ExecStart=/usr/bin/python3 /opt/bricodash/sysd/app.py
+ExecStart=/usr/bin/python3 -u /opt/bricodash/sysd/app.py
 
 [Install]
 WantedBy=multi-user.target
