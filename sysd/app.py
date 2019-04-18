@@ -10,9 +10,12 @@ Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 """
 
 import os
-from daemonize import Daemonize
+import daemonize
+import sys
 
-import app
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 DASHBOARD_URL = os.getenv('DASHBOARD_URL', 'https://home-assistant.io')
 DISPLAY_NAME = os.getenv('DISPLAY_NAME')
@@ -24,10 +27,22 @@ if DEBUG_FILE:
     fh = logging.FileHandler(DEBUG_FILE, "w")
     fh.setLevel(logging.DEBUG)
     logger.addHandler(fh)
+    logger.info("Hello")
     keep_fds.append(fh.stream.fileno())
 
-app.main(DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC)
+import app  # import here to enforce logging
 
-# We'll let systemd handle pid
-#daemon = Daemonize(app="defaultcast", pid="/dev/null", action=main, keep_fds=keep_fds)
-#daemon.start()
+import sys
+sys.stdout = open(DEBUG_FILE, 'w')
+print('test')
+
+def daemon():
+  app.main(DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC)
+
+if len(sys.argv) > 1:
+  daemon()
+else:
+  # We'll let systemd handle pid
+  daemon = daemonize.Daemonize(app="defaultcast", pid="/dev/null",
+                               action=daemon, keep_fds=keep_fds)
+  daemon.start()

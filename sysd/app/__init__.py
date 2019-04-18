@@ -10,7 +10,7 @@ Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-logger.propagate = False
+logger.propagate = True
 
 import pychromecast
 import time
@@ -39,14 +39,18 @@ def main(DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC):
             attempt += 1
             time.sleep(30)
 
-    cast = next(cc for cc in casts if DISPLAY_NAME in (None, '') \
-                                      or cc.device.friendly_name == DISPLAY_NAME)
+    cast = (cc for cc in casts if DISPLAY_NAME in (None, '') \
+                                  or cc.device.friendly_name == DISPLAY_NAME)
+    cast = list(cast)
 
-    if not cast:
+    if not len(cast):
         logger.debug('Chromecast with name ' + DISPLAY_NAME + ' not found')
         exit()
+    else:
+      cast = cast[0]
 
     defaultcast = app.launch.DashboardLauncher(cast, dashboard_url=DASHBOARD_URL)
+    logger.info('Chromecast identified: %s' % defaultcast)
 
     try:
         while True:
