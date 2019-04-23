@@ -46,5 +46,5 @@ if min == 0 and (hr+6) % 12 == 0:
 if 1:                os.system(pwd + "/../jobs/sous/veil.py &")
 
 if 1:                os.system(pwd + "/../jobs/nap/upt.py &")
-if min == 0 and hr % 6 == 0:
+if min == 0 and (hr + 2) % 4 == 0:
                      os.system(pwd + "/../jobs/nap/chk.py &")
