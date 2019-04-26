@@ -67,7 +67,7 @@ def catsnap():
   sys.stdout.flush()
 
 def snap():
-  response = requests.get(query, stream=True)
+  response = requests.get(query, stream=True, timeout=5)
   if response.status_code != 200:   sys.exit(response.status_code);
 
   sys.stdout.flush()
