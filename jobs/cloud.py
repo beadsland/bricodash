@@ -26,6 +26,6 @@ import brico.common
 report = brico.cloud.wiki.main() + brico.cloud.github.main() \
          + brico.cloud.meetup.main()
 report = sorted(report)
-report = list(brico.cloud.line(s) for (t,s) in report)[-40:]
+report = list(brico.cloud.line(s) for (t,s) in report)[-10:]
 
 brico.common.write_pull("cloud.html", report)
