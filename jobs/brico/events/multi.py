@@ -15,69 +15,22 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-import brico.common
-import brico.common.html
 import brico.events.lunar.jewish
 import brico.events.lunar.winter
 import brico.events.lunar.chinese
 import brico.events.lunar.christian
 import brico.events.lunar.muslim
+import brico.events.lunar.sciencey
 
-import ephem
 import datetime
 import dateutil
-import dateutil.tz as tz
-import calendar
 
 def main():
   now = datetime.datetime.now(dateutil.tz.tzlocal());
-  hols = skeptic(now) + solar(now) + leap(now) \
-         + brico.events.lunar.chinese.main(now) \
+  hols =  brico.events.lunar.chinese.main(now) \
          + brico.events.lunar.jewish.main(now) \
          + brico.events.lunar.winter.main(now) \
          + brico.events.lunar.christian.main(now) \
-         + brico.events.lunar.muslim.main(now)
+         + brico.events.lunar.muslim.main(now) \
+         + brico.events.lunar.sciencey.main(now)
   brico.common.write_json("multi.json", hols)
-
-def leap(now):
-  lday = "Leap Day " + brico.common.html.emoji("🤸‍♀️")
-  if calendar.isleap(now.year) and now < datetime.date(now.year, 3, 1):
-    return [ { 'start': datetime.date(now.year, 2, 29).isoformat(),
-               'venue': "Holiday", 'event': lday } ]
-  elif calendar.isleap(now.year + 1):
-    return [ { 'start': datetime.date(now.year+1, 2, 29).isoformat(),
-               'venue': "Holiday", 'event': lday } ]
-  else:
-    return []
-
-def solar(now):
-  yester = now - datetime.timedelta(days=1)
-  return [ { 'start': toiso(ephem.next_spring_equinox(yester)),
-             'venue': "Holiday",
-             'event': "Vernal Equinox " + brico.common.html.emoji("♈︎") },
-           { 'start': toiso(ephem.next_autumn_equinox(yester)),
-             'venue': "Holiday",
-             'event': "Autumnal Equinox " + brico.common.html.emoji("♎︎") },
-           { 'start': toiso(ephem.next_summer_solstice(yester)),
-             'venue': "Holiday",
-             'event': "Summer Solstice " + brico.common.html.emoji("♋︎") },
-           { 'start': toiso(ephem.next_winter_solstice(yester)),
-             'venue': "Holiday",
-             'event': "Winter Solstice " + brico.common.html.emoji("♑︎") },
-         ]
-
-def toiso(edate):
-  utc = edate.datetime().replace(tzinfo=tz.UTC)
-  return utc.astimezone(tz.tzlocal()).replace(tzinfo=None).isoformat()
-
-def skeptic(now):
-  firsts = (datetime.date(now.year, m, 1) for m in range(1, 13))
-  then = now + datetime.timedelta(days=365)
-  secnds = (datetime.date(then.year, m, 1) for m in range(1, 13))
-  thirts = (list(day for day in firsts if day.weekday() == 6)[0],
-            list(day for day in secnds if day.weekday() == 6)[0])
-  skeptc = thirts[1] if thirts[0] < now.date() else thirts[0]
-  skeptc = skeptc + datetime.timedelta(days=12)
-  return [ { 'start': skeptc.isoformat(), 'venue': 'Holiday',
-             'event': "International Skeptics Day "
-                      + brico.common.html.emoji("🤔") } ]
