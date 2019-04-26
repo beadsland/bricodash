@@ -150,9 +150,10 @@ class Slack(BaseSlack):
             footer = "(%s ago on #%s)" % ( self.human_time(file['ts']),
                                            file['channel_name'] )
             footer = html.span().clss('sledited').inner(footer).str()
-            return [ "&gt; %s: %s %s" \
+            quote = "%s: %s %s" \
                      % (html.logo(thumb.get(file['author_icon'])),
-                        self.format_text(file), footer) ]
+                        self.format_text(file), footer)
+            return [ qut(quote) ]
           for path in ['thumb_64', 'thumb_url', 'image_url', 'permalink']:
             if path in file:
               if file[path] not in message['text']:
