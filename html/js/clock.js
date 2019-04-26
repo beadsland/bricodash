@@ -5,6 +5,8 @@
 // Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 // https://creativecommons.org/licenses/by-sa/3.0/
 
+'use strict';
+
 function checkTime(i) { return (i < 10) ? "0" + i : i; }
 
 function updateTime() {
@@ -15,22 +17,32 @@ function updateTime() {
   h = parseInt(h % 12, 10);
   if (h == 0) { h = 12 };
   var str = "&thinsp;" + h + ":" + m + ":" + s + "&thinsp;";
-  node = document.getElementById('clock')
+  var node = document.getElementById('clock')
   node.innerHTML = str;
 
+  /* Added by beadsland, 2019: */
+
   if (document.getElementById('testing').innerHTML.startsWith("true")) {
-    pass = document.getElementById('testpass')
-    half = (parseInt( pass.innerHTML ) + 1) % 2
+    var pass = document.getElementById('testpass')
+    var half = (parseInt( pass.innerHTML ) + 1) % 2
     pass.innerHTML = half
 
     if (half == 0) {
       var audio = document.getElementById("clock_tick");
+      var diag = document.getElementById("diagnostics")
       audio.loop = false;
+
       var promise = audio.play();
       if (promise) {
-          promise.catch(function(error) { console.error("play error: ", error); });
-          node.insertAdjacentHTML('afterbegin',
-                                  '<span class="emoji">&thinsp;🕰️</span>')
+          promise.then(function() {
+            diag.innerHTML = ""
+            node.insertAdjacentHTML('afterbegin',
+                                    '<span class="emoji">&thinsp;🕰️</span>')}
+                       ).catch(function(error) {
+            diag.innerHTML = "!" + error;
+          });
+      } else {
+          diag.innerHTML = "no promise"
       }
     }
   }
