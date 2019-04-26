@@ -21,6 +21,12 @@
 'use strict';
 
 /*
+window.onerror = function(e){
+  document.getElementById('cloud-log').append("<div>" + e.toString() + "</div>");
+}
+*/
+
+/*
  Start polling for back-end content.
  */
 window.onload = function() {
