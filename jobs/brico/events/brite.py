@@ -47,7 +47,7 @@ def main():
 
       isup = ""
       for up in upmeet:
-        if name[:50] == up['event'][:50] \
+        if name[:25] == up['event'][:25] \
             and dateutil.parser.parse(start) == dateutil.parser.parse(up['start']):
           isup = brico.common.html.logo("img/meetup.png")
           name = common(name, up['event'])
