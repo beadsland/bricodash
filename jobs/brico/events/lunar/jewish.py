@@ -41,7 +41,7 @@ def passover(now):
   if now < firsteve:
     (event, eve) = ("First Night of Passover " + unlev, firsteve)
   elif now < lasteve:
-    (event, eve) = ("Last Day of Passover " + unlev, lasteve)
+    (event, eve) = ("Passover Ends" + unlev, lasteve)
   bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
   if firsteve < now < lasteve:
