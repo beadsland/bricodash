@@ -22,11 +22,12 @@
     - [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
     - [jobs/common/short.py](#jobscommonshortpy)
   - [Assets](#assets)
-    - [img/fog.png](#imgfogpng)
+    - [html/img/fog.png](#htmlimgfogpng)
     - [html/prox/mta](#htmlproxmta)
     - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
     - [html/css/font](#htmlcssfont)
     - [html/img](#htmlimg)
+    - [html/snd/tick.mp3](#htmlsndtickmp3)
 
 <!-- TOC END -->
 
@@ -329,7 +330,7 @@ for Firebase Services. https://firebase.google.com/terms/
 
 ## Assets
 
-### img/fog.png
+### html/img/fog.png
 
 Fog/mist glyph copyright © 2016 Emoji One.
 Used under Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license.
@@ -365,8 +366,8 @@ Use of these names, logos, icons and brands does not imply endorsement.
 ### html/img/flickr_nalends_super_pop.png
 
 Super Pop B-Pop <https://www.flickr.com/photos/130475615@N06/17177586749>
-copyright © 2015 nalends @ Flickr. Transparency added by Beads Land-Trujillo.
-Used under a Attribution-NoDerivs 2.0 Generic (CC BY-ND 2.0) license
+copyright © 2015 nalends. Transparency added by Beads Land-Trujillo.
+Used under Attribution-NoDerivs 2.0 Generic (CC BY-ND 2.0) license
 <https://creativecommons.org/licenses/by-nd/2.0/>.
 
 You do not have to comply with the license for elements of the material
@@ -414,3 +415,17 @@ All product names, logos, brands, emoji glyphs, memes and other images are
 property of their respective owners. All company, product and service
 identifiers used in this application are for identification purposes only.
 Use of any such names, logos, and brands does not imply endorsement.
+
+### html/snd/tick.mp3
+
+Tick <http://soundbible.com/2044-Tick.html> is copyright © 2012 DeepFrozenApps.
+Used under Creative Commons Attribution 3.0 license
+<https://creativecommons.org/licenses/by/3.0/>.
+
+You do not have to comply with the license for elements of the material in
+the public domain or where your use is permitted by an applicable exception
+or limitation.
+
+No warranties are given. The license may not give you all of the permissions
+necessary for your intended use. For example, other rights such as publicity,
+privacy, or moral rights may limit how you use the material.

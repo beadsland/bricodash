@@ -30,6 +30,7 @@ window.onload = function() {
   setInterval(renewCam, 60000);
   setInterval(updateTime, 500);
   launch_weather();
+  scheduleDiv("#testing", "pane/tick.bool", 60 * 1000, false);
 
   scheduleDiv("#cloud-log", "pull/cloud.html", 30 * 60 * 1000);
   scheduleDiv("#mta-widget", "pull/mta.html", 45 * 1000);
@@ -51,10 +52,10 @@ window.onload = function() {
  Load a text file from server.
 */
 
-function scheduleDiv(divID, pullPath, interval) {
+function scheduleDiv(divID, pullPath, interval, warn=true) {
   document.querySelector(divID).addEventListener('error', fixImage, true);
-  updateDiv(divID, pullPath, interval);
-  setInterval(function() { updateDiv(divID, pullPath, interval); }, interval);
+  updateDiv(divID, pullPath, interval, warn);
+  setInterval(function() { updateDiv(divID, pullPath, interval, warn); }, interval);
 }
 
 /* Chrome disregards padding-left if inline image errors out rather than load.
@@ -66,7 +67,7 @@ function fixImage(event) {
   if( event.target.tagName == 'IMG') { event.target.src = "img/broken.png"; }
 }
 
-function updateDiv(divID, pullPath, interval) {
+function updateDiv(divID, pullPath, interval, warn) {
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "text";
   xhttp.onreadystatechange = function() {
@@ -75,7 +76,7 @@ function updateDiv(divID, pullPath, interval) {
       var div = document.querySelector(divID);
       div.innerHTML = xhttp.response;
     };
-    checkStale(divID, interval);
+    if (warn) { checkStale(divID, interval); }
   }
   xhttp.open("GET", pullPath, true);
   xhttp.send();

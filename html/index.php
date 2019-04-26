@@ -42,6 +42,9 @@
   <audio preload="auto" id="knock_brush">
     <source src="snd/slack_sfx/knock_brush.mp3" type="audio/mp3">
   </audio>
+  <audio preload="auto" id="clock_tick">
+    <source src="snd/tick.mp3" type="audio/mp3">
+  </audio>
 </head>
 <body>
 

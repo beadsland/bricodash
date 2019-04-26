@@ -24,6 +24,10 @@
   <img id="door-cam" src="util/camera.py?view=door">
 
   <div class="top-right"><?php include "weather.html"?></div>
-  <div class="bottom-right"><span id="clock"></span></div>
+  <div class="bottom-right">
+    <span style="display: none;" id="testpass">0</span>
+    <span style="display: none;" id="testing"><?php include "pane/tick.bool"?></span>
+    <span id="clock"></span>
+  </div>
   <div class="bottom-left"><span id="diagnostics" style="color: red;"></span></div>
 </div>
