@@ -49,7 +49,7 @@ def main():
       for up in upmeet:
         if name[:25] == up['event'][:25] \
             and dateutil.parser.parse(start) == dateutil.parser.parse(up['start']):
-          isup = brico.common.html.logo("img/meetup.png")
+          isup = brico.common.html.logo("img/meetup.png", ":meetup:")
           name = common(name, up['event'])
           upmeet.remove(up)
           brico.common.write_json("upmeet.json", upmeet)
