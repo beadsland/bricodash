@@ -46,10 +46,17 @@ logger.info('Handle request.')
 filename = "../img/ceilingcat.jpg"
 
 mjpg = {
-        'space': "http://wrtnode-webcam:8080/",
-        'door': "http://rfid-access-building:8080/",
-        'cr10': "http://octoprint-main:8080/",
-        'hydro': "http://hydrocontroller:8081/"
+        'space': "http://192.168.42.22:8080/",
+        'door': "http://192.168.42.21:8080/",
+        'cr10': "http://192.168.42.19:8080/",
+        'hydro': "http://192.168.42.18:8081/"
+      }
+
+mjpg = {
+        'space': "http://wrtnode-webcam.lan:8080/",
+        'door': "http://rfid-access-building.lan:8080/",
+        'cr10': "http://octoprint-main.lan:8080/",
+        'hydro': "http://hydrocontroller.lan:8081/"
       }
 
 form = cgi.FieldStorage()
