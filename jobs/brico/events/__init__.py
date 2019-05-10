@@ -47,9 +47,13 @@ def building():
 # Events relevant to our hackerspace
 ###
 def ourspace():
-  cals = [ "geekday.json" ]
-  return datesort( datesort(load_cals(cals))[:4] \
-                            + load_cals(["space.json", "private.json"]) )
+  cals = datesort(load_cals([ "space.json", "private.json" ]))
+  geek = datesort(load_cals([ "geekday.json" ]))[:4]
+  week = datetime.datetime.now() + datetime.timedelta(days = 6, hours = 18)
+  week = week.isoformat().replace("T", " ")
+  while len(geek) > 0 and cals[6]['start'] > week:
+    cals = datesort( cals + [geek.pop(0)] )
+  return cals
 
 ###
 # Events relevant to broader community
