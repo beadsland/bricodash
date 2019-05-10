@@ -62,8 +62,7 @@ if min == 10 and hr % 12 == 0 or 'holiday' in sys.argv:
 if min == 10 and hr % 12 == 0 or 'multi' in sys.argv:
                                               brico.events.multi.main()
 
-if min % 30 == 0 or 'upmeet' in sys.argv:     brico.events.upmeet.main()
-if min % 60 == 0 or 'brite' in sys.argv:
+if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
                                               brico.events.upmeet.main()
                                               brico.events.brite.main()
 if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
@@ -112,7 +111,7 @@ slkThree = ["*_Full 72-Hour Calendar_*"]
 three = datetime.datetime.now() + datetime.timedelta(days=3)
 three = re.sub('T', ' ', three.isoformat())
 combo = brico.events.combo()
-for item in brico.events.combo():
+for item in combo:
   if item['start'] < three:
     venue = "(%s)" % brico.slack.bold(item['venue'])
     if item['venue'] == "Hack Manhattan": venue = ":hm:"
