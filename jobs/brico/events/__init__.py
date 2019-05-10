@@ -75,15 +75,16 @@ def combo():
 def livemusic():
   d = datetime.date.today()
   while d.weekday() != 4:     d += datetime.timedelta(1)
-  start = " ".join( [d.isoformat(), "8:00 pm"] )
+  start7 = dateutil.parser.parse(" ".join( [d.isoformat(), "7:00 pm"] ))
+  start8 = dateutil.parser.parse(" ".join( [d.isoformat(), "8:00 pm"] ))
 
   for b in brico.events.load_cals( ["brite.json"] ):
-    if ("Friday Night Live" in b['event'] or
-        "Friday Nights Live" in b['event']) \
-          and dateutil.parser.parse(start) == dateutil.parser.parse(b['start']):
+    bstart = dateutil.parser.parse(b['start'])
+    if ("Friday Night Live" in b['event'] or "Friday Nights Live" in b['event']) \
+          and (bstart == start7 or bstart == start8):
       return []
 
-  return [{ "start": start, "event": noisy("Friday Night Live Music"),
+  return [{ "start": start8.isoformat(), "event": noisy("Friday Night Live Music"),
             "venue": "Offside Tavern" }]
 
 ###
