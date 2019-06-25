@@ -11,3 +11,4 @@ __pycache__/
 *.log
 *-dev.py
 *.out
+test/
