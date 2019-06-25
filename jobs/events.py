@@ -35,6 +35,7 @@ import os
 import sys
 import re
 from vend.multisub import multiple_replace
+import importlib
 
 ###
 # Update event source files
@@ -49,28 +50,35 @@ hr  = now.hour
 # Be sure than any interval defined below will occur coincident with the
 # master cron.py interval. Otherwise the rule in question below won't fire.
 
+def trymain(mod):
+  try:
+    mod = importlib.import_module("brico.events.%s" % mod)
+    getattr(mod, 'main')()
+  except:
+    pass
+
 # Make sure sunset items actually update by firing 1 and 10 minutes after
 sunset = brico.events.lunar.sunset(datetime.datetime.today())
 if datetime.timedelta(seconds=0) \
    < (datetime.datetime.now(datetime.timezone.utc) - sunset) \
    < datetime.timedelta(minutes=30):
-                                              brico.events.holiday.main()
-                                              brico.events.multi.main()
+                                              trymain("holiday")
+                                              trymain("multi")
 
 if min == 10 and hr % 12 == 0 or 'holiday' in sys.argv:
-                                              brico.events.holiday.main()
+                                              trymain("holiday")
 if min == 10 and hr % 12 == 0 or 'multi' in sys.argv:
-                                              brico.events.multi.main()
+                                              trymain("multi")
 
 if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
-                                              brico.events.upmeet.main()
-                                              brico.events.brite.main()
-if min % 60 == 0 or 'tober' in sys.argv:      brico.events.tober.main()
-if min % 60 == 0 or 'castles' in sys.argv:    brico.events.castles.main()
-if min % 10 == 0 or 'space' in sys.argv:      brico.events.space.main()
+                                              trymain("upmeet")
+                                              trymain("brite")
+if min % 60 == 0 or 'tober' in sys.argv:      trymain("tober")
+if min % 60 == 0 or 'castles' in sys.argv:    trymain("castles")
+if min % 10 == 0 or 'space' in sys.argv:      trymain("space")
 if min % 60 == 0 or 'private' in sys.argv:
-                                              brico.events.space.main()
-                                              brico.events.private.main()
+                                              trymain("space")
+                                              trymain("private")
 
 ###
 # Build events component divs
