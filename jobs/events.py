@@ -36,6 +36,7 @@ import sys
 import re
 from vend.multisub import multiple_replace
 import importlib
+import traceback
 
 ###
 # Update event source files
@@ -50,12 +51,17 @@ hr  = now.hour
 # Be sure than any interval defined below will occur coincident with the
 # master cron.py interval. Otherwise the rule in question below won't fire.
 
+EXC = False
+
 def trymain(mod):
   try:
     mod = importlib.import_module("brico.events.%s" % mod)
     getattr(mod, 'main')()
   except:
-    pass
+    if EXC:
+      exc_info = sys.exc_info()
+      traceback.print_exception(*exc_info)
+      del exc_info
 
 # Make sure sunset items actually update by firing 1 and 10 minutes after
 sunset = brico.events.lunar.sunset(datetime.datetime.today())

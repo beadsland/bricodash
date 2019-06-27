@@ -21,6 +21,7 @@ import dateparser
 import copy
 import dateutil.tz as tz
 import re
+import requests
 
 import brico.common
 import brico.common.html as html
@@ -36,7 +37,10 @@ def main():
                        calendar, "public/basic.ics" )
   space = brico.events.load_cals(["space.json"])
 
-  private = icalevents.icalevents.events(path)
+  file = requests.get(path).text
+  file = re.sub(r'(UNTIL=[0-9]+);', r'\1T000000Z;', file)
+
+  private = icalevents.icalevents.events(string_content = file.encode('utf-8'))
   for i, e in enumerate(private):
     e.start = e.start.astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")
     e.end = e.end.astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")

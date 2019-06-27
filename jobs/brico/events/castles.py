@@ -20,6 +20,8 @@ import os
 import dateutil.tz as tz
 import datetime
 import json
+import requests
+import re
 
 import brico.common
 import brico.common.html as html
@@ -33,8 +35,12 @@ def main():
 
   path = os.path.join( "https://calendar.google.com/calendar/ical",
                        calendar, "public/basic.ics" )
+
+  file = requests.get(path).text
+  file = re.sub(r'(UNTIL=[0-9]+);', r'\1T000000Z;', file)
+
   ev = []
-  for e in events(path):
+  for e in events(string_content = file.encode('utf-8')):
     name = brico.events.polite(e.summary)
     if "Babycastles" in e.summary:
       name = name.replace("Babycastles", castles)
