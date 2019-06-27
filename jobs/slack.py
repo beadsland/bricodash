@@ -60,6 +60,7 @@ for message in reversed(slack.messages('hackerspace', 11)):
   user = avuser(message['user']) if 'user' in message else message['username'];
 
   text = slack.format_text(message)
+  if 'thread_ts' in message:  text = "%s %s" % (html.logo("img/ggl-thread.png"), text)
 
   if 'subtype' in message and message['subtype'] != 'thread_broadcast':
     line = brico.slack.div( "%s &mdash; %s: %s" % (whn(when, message['ts']),
