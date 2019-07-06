@@ -39,7 +39,6 @@ def stringify(names):
   if len(names) == 1:
     s = "%s's %s" % (names[0], cake)
   else:
-    s = random.suffle(s)
     s = "'s, ".join(names)
     s = "%s's %s" % (s, cake)
 
