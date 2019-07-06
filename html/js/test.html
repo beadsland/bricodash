@@ -1,0 +1,45 @@
+<html>
+<head>
+</head>
+<body>
+
+<img src="">
+
+
+<script type="text/javascript">
+  snap = "../util/camera.php?view=door&action=snapshot"
+
+  var myImage = document.querySelector('img');
+
+  async function update_frame(myImage, snap, oldObjectURL) {
+    var response = await fetch(snap);
+
+    if (!response.ok) {
+      myImage.src = "";
+      return null;
+    }
+
+    var blob = await response.blob();
+    var newObjectURL = URL.createObjectURL(blob);
+    myImage.src = newObjectURL;
+    URL.revokeObjectURL(oldObjectURL);
+    return newObjectURL;
+  };
+
+  async function loop(myImage, snap) {
+    var oldObjectURL;
+    var newObjectURL;
+    while(true) {
+      newObjectURL = await update_frame(myImage, snap, oldObjectURL);
+      oldObjectURL = newObjectURL;
+    }
+  };
+
+  loop(myImage, snap);
+
+
+</script>
+
+
+</body>
+</html>
