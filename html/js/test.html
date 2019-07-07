@@ -7,44 +7,39 @@
 
 
 <script type="text/javascript">
+
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
   var snap = "../util/camera.php?view=door&action=snapshot"
   var myImage = document.querySelector('img')
 
-  async function update_frame(myImage, snap, hook, oldObjectURL, down = false) {
+  async function update_frame(myImage, snap, hook, oldObjectURL) {
     var urlParams = new URLSearchParams(window.location.search);
     whoami = urlParams.has("whoami");
     if (!whoami) { whoami = "unknown client"}
-    device = `Test door camera (${whoami})`;
+    device = `Door camera feed (${whoami})`;
 
     var response = await fetch(snap);
 
     if (!response.ok) {
       myImage.src = "";
+      var msg = device +  " has gone offline :'("
+      await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
 
-      if (!down) {
-        await fetch(hook, {
-          method: 'POST',
-          body: JSON.stringify( { text: device +  " has gone offline :'(" } )
-        });
-      }
+      while (!response.ok) { response = await fetch(snap); await sleep(1000); }
 
-      return update_frame(myImage, snap, hook, oldObjectURL, true);
-
-    } else {
-      var blob = await response.blob();
-      var newObjectURL = URL.createObjectURL(blob);
-      myImage.src = newObjectURL;
-      URL.revokeObjectURL(oldObjectURL);
-
-      if (down) {
-        await fetch(hook, {
-          method: 'POST',
-          body: JSON.stringify( { text: device + " is online again :)" } )
-        });
-      }
-
-      return newObjectURL;
+      msg = device + " is online again :)"
+      await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
     }
+
+    var blob = await response.blob();
+    var newObjectURL = URL.createObjectURL(blob);
+    myImage.src = newObjectURL;
+    URL.revokeObjectURL(oldObjectURL);
+
+    return newObjectURL;
   };
 
   async function loop(myImage, snap) {
