@@ -37,6 +37,7 @@
   <script src="js/clock.js"></script>
   <script src="js/sous.js"></script>
   <script src="js/apps.js"></script>
+  <script src="js/camera.js"></script>
   <script src="js/launch.js"></script>
 
   <audio preload="auto" id="knock_brush">

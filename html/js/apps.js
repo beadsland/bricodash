@@ -120,16 +120,3 @@ function position_header() {
     document.querySelector("#inner_h1").innerHTML = h1;
   }
 }
-
-/*
- Reload camera feed if broken.
-*/
-
-function renewCam() {
-  var cam = document.querySelector("#door-cam");
-  var src = cam.src;
-  src = src.replace(/#./, "")
-  var dat = new Date()
-  var mod = dat.getMinutes() % 2;
-  cam.src = src + "#" + mod;
-}

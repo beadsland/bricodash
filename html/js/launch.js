@@ -33,7 +33,7 @@ window.onload = function() {
   position_header();
   sousveil()
 
-  setInterval(renewCam, 60000);
+  launch_doorcam();
   setInterval(updateTime, 500);
   launch_weather();
   scheduleDiv("#testing", "pane/tick.bool", 60 * 1000, false);
