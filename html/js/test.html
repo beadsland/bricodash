@@ -7,30 +7,55 @@
 
 
 <script type="text/javascript">
-  snap = "../util/camera.php?view=door&action=snapshot"
+  var snap = "../util/camera.php?view=door&action=snapshot"
+  var myImage = document.querySelector('img')
 
-  var myImage = document.querySelector('img');
+  async function update_frame(myImage, snap, hook, oldObjectURL, down = false) {
+    var urlParams = new URLSearchParams(window.location.search);
+    whoami = urlParams.has("whoami");
+    if (!whoami) { whoami = "unknown client"}
+    device = `Test door camera (${whoami})`;
 
-  async function update_frame(myImage, snap, oldObjectURL) {
     var response = await fetch(snap);
 
     if (!response.ok) {
       myImage.src = "";
-      return null;
-    }
 
-    var blob = await response.blob();
-    var newObjectURL = URL.createObjectURL(blob);
-    myImage.src = newObjectURL;
-    URL.revokeObjectURL(oldObjectURL);
-    return newObjectURL;
+      if (!down) {
+        await fetch(hook, {
+          method: 'POST',
+          body: JSON.stringify( { text: device +  " has gone offline :'(" } )
+        });
+      }
+
+      return update_frame(myImage, snap, hook, oldObjectURL, true);
+
+    } else {
+      var blob = await response.blob();
+      var newObjectURL = URL.createObjectURL(blob);
+      myImage.src = newObjectURL;
+      URL.revokeObjectURL(oldObjectURL);
+
+      if (down) {
+        await fetch(hook, {
+          method: 'POST',
+          body: JSON.stringify( { text: device + " is online again :)" } )
+        });
+      }
+
+      return newObjectURL;
+    }
   };
 
   async function loop(myImage, snap) {
+    hook_url = "../.keys/netops_hook"
+    response = await fetch(hook_url)
+    hook = await response.text()
+
     var oldObjectURL;
     var newObjectURL;
     while(true) {
-      newObjectURL = await update_frame(myImage, snap, oldObjectURL);
+      newObjectURL = await update_frame(myImage, snap, hook, oldObjectURL);
       oldObjectURL = newObjectURL;
     }
   };

@@ -1,8 +1,8 @@
-.keys/
+*/.keys/*
+!html/.keys/.htaccess
 cron.err
 *.pyc
-html/next.php
-html/pull/
+html/pull/*
 jobs/sous/pid/
 jobs/nap/sid/
 html/thmb/
