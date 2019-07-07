@@ -21,7 +21,7 @@
      style="background-size: contain; background-image: url('img/ceilingcat.jpg');">
 
   <!-- doorcam: 640 x 480 -->
-  <img id="door-cam" src="util/camera.py?view=door">
+  <img id="door-cam" failover="util/camera.py?view=door" src="util/camera.py?view=door">
 
   <div class="top-right"><?php include "weather.html"?></div>
   <div class="bottom-right">
