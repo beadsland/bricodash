@@ -30,28 +30,51 @@ if (!whoami) { whoami = "unknown client"};
 var device = `Door camera feed (${whoami})`;
 
 /*
+  Wrapper for axios get to give us cleaner, fetch-like response as result.
+*/
+
+async function fetchlike(url, opt) {
+  try {
+    var response = await axios.get(url, opt);
+    response['ok'] = true;
+    return response;
+  } catch (error) {
+    if (error.response) {
+      error.response['ok'] = false;
+      return error.response;
+    } else {
+      return { ok: false }
+    }
+  }
+}
+
+/*
  Load camera snapshot, calling slack webhook when down and up again.
  */
 
 async function update_frame(node, snap, hook, oldObjectURL) {
-  var response = await fetch(snap);
+  var opt =  {
+    responseType: 'blob',
+    timeout: 2000,
+  };
 
-  var debug = document.querySelector(".bottom-left")
-  debug.textContent = "Hello"
+  var response = await fetchlike(snap, opt);
 
   if (!response.ok) {
-    debug.textContent = "Down :'("
     node.src = "";
     var msg = device +  " has gone offline :'("
     await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
 
-    while (!response.ok) { response = await fetch(snap); await sleep(1000); }
+    while (!response.ok) {
+      response = await fetchlike(snap, opt);
+      await sleep(100);
+    }
 
     msg = device + " is online again :)"
     await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
   }
 
-  var blob = await response.blob();
+  var blob = new Blob([response.data]);
   var newObjectURL = URL.createObjectURL(blob);
   node.src = newObjectURL;
   URL.revokeObjectURL(oldObjectURL);
