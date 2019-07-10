@@ -55,7 +55,7 @@ async function fetchlike(url, opt) {
 async function update_frame(node, snap, hook, oldObjectURL) {
   var opt =  {
     responseType: 'blob',
-    timeout: 2000,
+    timeout: 10000,
   };
 
   var response = await fetchlike(snap, opt);
