@@ -52,7 +52,7 @@ async function fetchlike(url, opt) {
  Load camera snapshot, calling slack webhook when down and up again.
  */
 
-async function update_frame(node, snap, hook, oldObjectURL) {
+async function update_frame(node, snap, hook, oldObjectURL, down = false) {
   var opt =  {
     responseType: 'blob',
     timeout: 10000,
@@ -61,17 +61,33 @@ async function update_frame(node, snap, hook, oldObjectURL) {
   var response = await fetchlike(snap, opt);
 
   if (!response.ok) {
-    node.src = "";
-    var msg = device +  " has gone offline :'("
-    await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
+    var cool = null
+
+    if (!down) {
+      cool = new Date() / 1000 + (10 * 60);
+      node.src = "";
+      var msg = device +  " has gone offline :'("
+      await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
+      console.log(msg);
+      down = true;
+    }
 
     while (!response.ok) {
       response = await fetchlike(snap, opt);
       await sleep(100);
     }
 
-    msg = device + " is online again :)"
-    await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
+    while (cool && cool > new Date () / 1000) {
+      newObjectURL = await update_frame(node, snap, hook, oldObjectURL, down);
+      oldObjectURL = newObjectURL;
+    }
+
+    if (cool && cool <= new Date() / 1000) {
+      msg = device + " is online again :)"
+      await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
+      console.log(msg)
+    }
+
   }
 
   var blob = new Blob([response.data]);
