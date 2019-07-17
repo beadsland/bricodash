@@ -130,6 +130,11 @@ async function flipshow_loop(node, snap) {
 
   var oldObjectURL;
   var newObjectURL;
+
+  var msg = device + " launching on dashcast reload =D"
+  await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
+  console.log(msg)
+
   while(true) {
     newObjectURL = await update_frame(node, snap, hook, oldObjectURL);
     oldObjectURL = newObjectURL;
