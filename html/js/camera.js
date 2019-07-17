@@ -102,18 +102,12 @@ async function update_frame(node, snap, hook, oldObjectURL) {
   var newObjectURL = insert_blob(node, response, oldObjectURL);
 
   if (response.cool) {
-    var msg = device + " is wonky :'("
-    await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
-    console.log(msg)
-
+    throwhook( hook, device + " is wonky :'(" );
     while(response.cool) {
       response = await fetch_frame(node, snap, hook, response.cool);
       newObjectURL = insert_blob(node, response, newObjectURL);
     }
-
-    msg = device + " is steady again :)"
-    await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
-    console.log(msg)
+    throwhook( hook, device + " is steady again :)" );
   }
 
   return newObjectURL;
@@ -124,16 +118,11 @@ async function update_frame(node, snap, hook, oldObjectURL) {
  */
 
 async function flipshow_loop(node, snap) {
-  var hook_url = ".keys/netops_hook"
-  var response = await fetch(hook_url)
-  var hook = await response.text()
-
   var oldObjectURL;
   var newObjectURL;
 
-  var msg = device + " launching on dashcast reload =D"
-  await fetch(hook, { method: 'POST', body: JSON.stringify( { text: msg } ) });
-  console.log(msg)
+  var hook = await gethook(".keys/netops_hook")
+  throwhook( hook, device + " launching on dashcast reload =D" )
 
   while(true) {
     newObjectURL = await update_frame(node, snap, hook, oldObjectURL);

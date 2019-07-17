@@ -234,7 +234,7 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 
 Source: https://archive.org/details/slack_sfx
 
-#### html/js/camera.js
+#### html/js/webhook.js
 
 incoming-webhooks App API was made by a member of the Slack team to help
 connect Slack with a third-party service; these apps may not be tested,
