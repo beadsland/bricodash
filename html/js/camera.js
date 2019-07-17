@@ -20,6 +20,9 @@
 
 'use strict';
 
+var cooldown =  10 * 60
+var timeout = 10
+
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
@@ -29,13 +32,11 @@ var whoami = urlParams.get("whoami");
 if (!whoami) { whoami = "unknown client"};
 var device = `Door camera feed (${whoami})`;
 
-var cooldown =  10 * 60
-
 /*
   Grab responses until you can update feed with a good frame.
 */
 async function fetch_frame(node, snap, hook, cool = null) {
-  var opt =  { responseType: 'blob', timeout: 10000 };
+  var opt =  { responseType: 'blob', timeout: timeout * 1000 };
   var response = await coolfetch(snap, opt, cooldown, cool);
 
   while (!response.ok) {
