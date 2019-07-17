@@ -29,54 +29,18 @@ var whoami = urlParams.get("whoami");
 if (!whoami) { whoami = "unknown client"};
 var device = `Door camera feed (${whoami})`;
 
-/*
-  Wrapper for axios get to give us cleaner, fetch-like response as result.
-*/
-
-async function fetchlike(url, opt) {
-  try {
-    var response = await axios.get(url, opt);
-    response['ok'] = true;
-    return response;
-  } catch (error) {
-    if (error.response) {
-      error.response['ok'] = false;
-      return error.response;
-    } else {
-      return { ok: false }
-    }
-  }
-}
-
-/*
-  Wrapper to track cooldown on bad requests.
-  */
-
-async function coolfetch(snap, opt, cool = null) {
-  var response = await fetchlike(snap, opt);
-  if (!response.ok) {
-    response['cool'] = new Date() / 1000 + (10 * 60);
-  } else {
-    if (cool > new Date() / 1000) {
-      response['cool'] = cool
-    }
-  }
-  return response
-}
+var cooldown =  10 * 60
 
 /*
   Grab responses until you can update feed with a good frame.
-  */
-
+*/
 async function fetch_frame(node, snap, hook, cool = null) {
   var opt =  { responseType: 'blob', timeout: 10000 };
-  var response = await coolfetch(snap, opt, cool);
+  var response = await coolfetch(snap, opt, cooldown, cool);
 
-  if (!response.ok) {
-    while (!response.ok) {
-      response = await coolfetch(snap, opt, response.cool);
-      await sleep(100);
-    }
+  while (!response.ok) {
+    response = await coolfetch(snap, opt, cooldown, response.cool);
+    await sleep(100);
   }
 
   return response
@@ -94,9 +58,8 @@ function insert_blob(node, response, oldObjectURL) {
 }
 
 /*
- Load camera snapshot, calling slack webhook when down and up again.
+ Load camera snapshot, calling slack webhook when down, and cycling until up again.
  */
-
 async function update_frame(node, snap, hook, oldObjectURL) {
   var response = await fetch_frame(node, snap, hook);
   var newObjectURL = insert_blob(node, response, oldObjectURL);
@@ -116,7 +79,6 @@ async function update_frame(node, snap, hook, oldObjectURL) {
 /*
   Pull frames of feed one at a time, rather than MJPEG.
  */
-
 async function flipshow_loop(node, snap) {
   var oldObjectURL;
   var newObjectURL;
