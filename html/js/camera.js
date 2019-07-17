@@ -20,9 +20,9 @@
 
 'use strict';
 
-var cooldown =  10 * 60
-var timeout = 10
-var greycap = 10
+var cooldown =  5 * 60
+var timeout = 5
+var greycap = 20
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -49,51 +49,57 @@ async function fetch_frame(node, snap, hook, cool = null) {
 }
 
 /*
- Convert blob to frame.
+ Convert blob to frame unless tossed.
  */
-async function insert_blob(node, blob) {
-  var objectURL = URL.createObjectURL(blob);
-  node.onload = function() { URL.revokeObjectURL(objectURL); }
-  node.src = objectURL;
+async function update_blob(node, snap, hook, toss = 0, cool = null) {
+  var response = await fetch_frame(node, snap, hook, cool);
+  var blob = new Blob([response.data]);
+  var grey = await greytoss(blob);
+
+  if (!grey) {
+    var objectURL = URL.createObjectURL(blob);
+    node.onload = function() { URL.revokeObjectURL(objectURL); }
+    node.src = objectURL;
+  } else {
+    response['toss'] = toss + 1
+    if (response.toss > greycap) {
+      response['cool'] = new Date() / 1000 + cooldown
+    }
+  }
+
+  return response
 }
 
 /*
  Load camera snapshot, calling slack webhook when down, and cycling until up again.
  */
-async function update_frame(node, snap, hook) {
-  var response = await fetch_frame(node, snap, hook);
-  var blob = new Blob([response.data]);
-  var toss = await greytoss(blob);
-  if (!toss) {
-    await insert_blob(node, blob);
-  }
+async function update_frame(node, snap, hook, toss = 0) {
+  var response = await update_blob(node, snap, hook, toss);
 
   if (response.cool) {
-    throwhook( hook, device + " is wonky :'(" );
+    if (response.toss) {
+      throwhook( hook, device + " is wonky (corrupt frames) :'(" );
+    } else {
+      throwhook( hook, device + " is wonky (request timeout) :'(" );
+    }
     while(response.cool) {
-      response = await fetch_frame(node, snap, hook, response.cool);
-      var blob = new Blob([response.data]);
-      var toss = await greytoss(blob);
-      if (!toss) {
-        await insert_blob(node, blob);
-      }
+      response = await update_blob(node, snap, hook, response.toss, response.cool);
     }
     throwhook( hook, device + " is steady again :)" );
   }
+  return response;
 };
-
+``
 /*
   Pull frames of feed one at a time, rather than MJPEG.
  */
 async function flipshow_loop(node, snap) {
-  var oldObjectURL;
-  var newObjectURL;
-
   var hook = await gethook(".keys/netops_hook")
-  //throwhook( hook, device + " launching on dashcast reload =D" )
+  throwhook( hook, device + " launching on Bricodash reload =D" )
 
+  var response = {};
   while(true) {
-    await update_frame(node, snap, hook, oldObjectURL);
+    response = await update_frame(node, snap, hook, response.toss);
   }
 };
 

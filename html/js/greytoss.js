@@ -21,7 +21,7 @@
 'use strict';
 
 function testgray(pixel) {
-  if (pixel[3] == 0) return true;
+//  if (pixel[3] == 0) return true; // <-- these are artefacts only??
   if (pixel[0] == 128 && pixel[1] == 128 && pixel[2] == 128) return true;
 }
 
