@@ -22,6 +22,7 @@
 
 var cooldown =  10 * 60
 var timeout = 10
+var greycap = 10
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -50,22 +51,21 @@ async function fetch_frame(node, snap, hook, cool = null) {
 /*
  Convert blob to frame.
  */
-async function insert_blob(node, blob, oldObjectURL) {
-  var newObjectURL = URL.createObjectURL(blob);
-  node.src = newObjectURL;
-  URL.revokeObjectURL(oldObjectURL);
-  return newObjectURL
+async function insert_blob(node, blob) {
+  var objectURL = URL.createObjectURL(blob);
+  node.onload = function() { URL.revokeObjectURL(objectURL); }
+  node.src = objectURL;
 }
 
 /*
  Load camera snapshot, calling slack webhook when down, and cycling until up again.
  */
-async function update_frame(node, snap, hook, oldObjectURL) {
+async function update_frame(node, snap, hook) {
   var response = await fetch_frame(node, snap, hook);
   var blob = new Blob([response.data]);
   var toss = await greytoss(blob);
   if (!toss) {
-    var newObjectURL = await insert_blob(node, blob, oldObjectURL);
+    await insert_blob(node, blob);
   }
 
   if (response.cool) {
@@ -75,13 +75,11 @@ async function update_frame(node, snap, hook, oldObjectURL) {
       var blob = new Blob([response.data]);
       var toss = await greytoss(blob);
       if (!toss) {
-        newObjectURL = insert_blob(node, blob, newObjectURL);
+        await insert_blob(node, blob);
       }
     }
     throwhook( hook, device + " is steady again :)" );
   }
-
-  return newObjectURL;
 };
 
 /*
@@ -95,8 +93,7 @@ async function flipshow_loop(node, snap) {
   //throwhook( hook, device + " launching on dashcast reload =D" )
 
   while(true) {
-    newObjectURL = await update_frame(node, snap, hook, oldObjectURL);
-    oldObjectURL = newObjectURL;
+    await update_frame(node, snap, hook, oldObjectURL);
   }
 };
 
