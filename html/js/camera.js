@@ -20,7 +20,7 @@
 
 'use strict';
 
-var cooldown =  5 * 60
+var cooldown =  10 * 60
 var timeout = 5
 var greycap = 20
 
