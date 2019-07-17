@@ -234,6 +234,19 @@ Public Domain Dedication. https://creativecommons.org/publicdomain/zero/1.0/
 
 Source: https://archive.org/details/slack_sfx
 
+#### html/js/camera.js
+
+incoming-webhooks App API was made by a member of the Slack team to help
+connect Slack with a third-party service; these apps may not be tested,
+documented, or supported by Slack in the way we support our core offerings,
+like Slack Enterprise Grid and Slack for Teams. You may provide feedback
+about these apps at <mailto:feedback@slack.com>.
+
+It only uses data Slack already has access to (view our Privacy Policy to
+learn more). By enabling and/or using this app, you may be connecting with
+a service that is not part of Slack.
+
+Getting started: https://api.slack.com/incoming-webhooks
 
 ### jobs/brico/common/meetup.py
 
