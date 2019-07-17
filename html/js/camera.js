@@ -49,8 +49,7 @@ async function fetch_frame(node, snap, hook, cool = null) {
 /*
  Convert blob to frame.
  */
-function insert_blob(node, response, oldObjectURL) {
-  var blob = new Blob([response.data]);
+async function insert_blob(node, blob, oldObjectURL) {
   var newObjectURL = URL.createObjectURL(blob);
   node.src = newObjectURL;
   URL.revokeObjectURL(oldObjectURL);
@@ -62,13 +61,21 @@ function insert_blob(node, response, oldObjectURL) {
  */
 async function update_frame(node, snap, hook, oldObjectURL) {
   var response = await fetch_frame(node, snap, hook);
-  var newObjectURL = insert_blob(node, response, oldObjectURL);
+  var blob = new Blob([response.data]);
+  var toss = await greytoss(blob);
+  if (!toss) {
+    var newObjectURL = await insert_blob(node, blob, oldObjectURL);
+  }
 
   if (response.cool) {
     throwhook( hook, device + " is wonky :'(" );
     while(response.cool) {
       response = await fetch_frame(node, snap, hook, response.cool);
-      newObjectURL = insert_blob(node, response, newObjectURL);
+      var blob = new Blob([response.data]);
+      var toss = await greytoss(blob);
+      if (!toss) {
+        newObjectURL = insert_blob(node, blob, newObjectURL);
+      }
     }
     throwhook( hook, device + " is steady again :)" );
   }
@@ -84,7 +91,7 @@ async function flipshow_loop(node, snap) {
   var newObjectURL;
 
   var hook = await gethook(".keys/netops_hook")
-  throwhook( hook, device + " launching on dashcast reload =D" )
+  //throwhook( hook, device + " launching on dashcast reload =D" )
 
   while(true) {
     newObjectURL = await update_frame(node, snap, hook, oldObjectURL);

@@ -90,7 +90,8 @@ def snap():
   except Exception as e:
     if str(e).startswith("broken data stream"):
       logging.error(e)
-      snap()
+#      snap()
+      sys.stdout.buffer.write(bstr)
     else:
       sys.stdout.buffer.write(bstr)
   else:
