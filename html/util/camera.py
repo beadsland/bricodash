@@ -86,16 +86,19 @@ def snap():
     bstr += block
   img = Image.open(io.BytesIO(bstr))
   try:
-    img.getpixel( (img.width-1, img.height-1) )
+    pix = img.getpixel( (img.width-1, img.height-1) )
   except Exception as e:
     if str(e).startswith("broken data stream"):
       logging.error(e)
-#      snap()
-      sys.stdout.buffer.write(bstr)
+      snap()
     else:
       sys.stdout.buffer.write(bstr)
   else:
-    sys.stdout.buffer.write(bstr)
+    if (pix == (128,128,128)):
+      logging.error('good data stream, but greytoss')
+      snap()
+    else:
+      sys.stdout.buffer.write(bstr)
 
 boundary = '--SNAP-HACKLE-STOP--'
 
