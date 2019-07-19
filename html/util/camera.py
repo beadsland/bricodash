@@ -30,15 +30,14 @@ import logging
 from PIL import Image
 import io
 
-SWEET = .10  # This value is the time to sleep between frames, to avoid
-             # flooding the chromecast. Sweet spot depends on local network
-             # conditions and performance of source camera.
+TIMEOUT = 2
 
-logging.basicConfig(level=logging.INFO)
+SWEET = 1   # This value is the time to sleep between frame requests, to
+              # avoid flooding either a camera source or client device.
+
+format = '[%(asctime)s] %(levelname)s %(message)s'
+logging.basicConfig(level=logging.INFO, format=format)
 logger = logging.getLogger(__name__)
-#handler = logging.FileHandler('hello.log')
-#handler.setLevel(logging.WARN)
-#logger.addHandler(handler)
 
 logger.info('Handle request.')
 #handler.flush()
@@ -73,16 +72,20 @@ def catsnap():
   sys.stdout.buffer.write(open(filename, "rb").read())
   sys.stdout.flush()
 
+def sweet():
+  time.sleep(SWEET)
+  snap()
+
 def snap():
   try:
-    response = requests.get(query, stream=True, timeout=5)
+    response = requests.get(query, stream=True, timeout=TIMEOUT)
   except Exception as e:
     logging.error(e)
-    snap()
+    sweet()
   else:
     if response.status_code != 200:
       logging.error('http error %d' % response.status_code)
-      snap()
+      sweet()
     else:
       do_snap(response)
 
@@ -100,13 +103,13 @@ def do_snap(response):
   except Exception as e:
     if str(e).startswith("broken data stream"):
       logging.error(e)
-      snap()
+      sweet()
     else:
       sys.stdout.buffer.write(bstr)
   else:
     if (pix == (128,128,128)):
       logging.error('good data stream, but greytoss')
-      snap()
+      sweet()
     else:
       sys.stdout.buffer.write(bstr)
 

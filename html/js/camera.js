@@ -20,8 +20,8 @@
 
 'use strict';
 
-var cooldown =  10 * 60
-var timeout = 5
+var cooldown =  5 * 60
+var timeout = 1
 var greycap = 20
 
 const sleep = (milliseconds) => {
