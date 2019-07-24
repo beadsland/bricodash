@@ -46,6 +46,7 @@ For more discussion, see:
 * python3 + [requirements.txt](requirements.txt)
 * Perl + Date::Manip
 * ImageMagick
+* [Elixir](https://elixir-lang.org/install.html)
 
 ### API Credentials
 
