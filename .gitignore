@@ -13,3 +13,4 @@ __pycache__/
 *.out
 test/
 !sysd/relay/test
+sysd/relay/.vscode/launch.json
