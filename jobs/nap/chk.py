@@ -21,10 +21,14 @@ import pychromecast
 import os
 import sys
 import time
+import configparser
+
+config = configparser.ConfigParser()
+config.read('../sysd/environment.file')
+device = config['DEFAULT']['DISPLAY_NAME']
 
 chromecasts = pychromecast.get_chromecasts()
-
-cast = next(cc for cc in chromecasts if cc.device.friendly_name == "Hackerspace")
+cast = next(cc for cc in chromecasts if cc.device.friendly_name == device)
 cast.wait()
 
 if cast.status.display_name == "DashCast":
