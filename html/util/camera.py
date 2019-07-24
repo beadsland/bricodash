@@ -30,12 +30,12 @@ import logging
 from PIL import Image
 import io
 
-TIMEOUT = 2
+TIMEOUT = 1.0
 
-SWEET = 1   # This value is the time to sleep between frame requests, to
+SWEET = 0.5   # This value is the time to sleep between frame requests, to
               # avoid flooding either a camera source or client device.
 
-format = '[%(asctime)s] %(levelname)s %(message)s'
+format = '[%(asctime)s] %(process)d %(levelname)s %(message)s'
 logging.basicConfig(level=logging.INFO, format=format)
 logger = logging.getLogger(__name__)
 

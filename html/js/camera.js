@@ -20,12 +20,15 @@
 
 'use strict';
 
-var cooldown =  5 * 60
-var timeout = 1
-var greycap = 20
+var COOLDOWN =  5 * 60  // seconds
+var TIMEOUT = 5 // seconds
+var GREYCAP = 10 // dropped frames
+var SWEET = 100 // milliseconds
 
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
+async function sleep(milliseconds) {
+  var prom = new Promise(resolve => setTimeout(resolve, milliseconds))
+  var resp = await prom
+  return resp
 }
 
 var urlParams = new URLSearchParams(window.location.search);
@@ -37,12 +40,12 @@ var device = `Door camera feed (${whoami})`;
   Grab responses until you can update feed with a good frame.
 */
 async function fetch_frame(node, snap, hook, cool = null) {
-  var opt =  { responseType: 'blob', timeout: timeout * 1000 };
-  var response = await coolfetch(snap, opt, cooldown, cool);
+  var opt =  { responseType: 'blob', timeout: TIMEOUT * 1000 };
+  var response = await coolfetch(snap, opt, COOLDOWN, cool);
 
   while (!response.ok) {
-    response = await coolfetch(snap, opt, cooldown, response.cool);
-    await sleep(100);
+    await sleep(SWEET);
+    response = await coolfetch(snap, opt, COOLDOWN, response.cool);
   }
 
   return response
@@ -62,8 +65,8 @@ async function update_blob(node, snap, hook, toss = 0, cool = null) {
     node.src = objectURL;
   } else {
     response['toss'] = toss + 1
-    if (response.toss > greycap) {
-      response['cool'] = new Date() / 1000 + cooldown
+    if (response.toss > GREYCAP) {
+      response['cool'] = new Date() / 1000 + COOLDOWN
     }
   }
 
@@ -83,6 +86,7 @@ async function update_frame(node, snap, hook, toss = 0) {
       throwhook( hook, device + " is wonky (request timeout) :'(" );
     }
     while(response.cool) {
+      await sleep(SWEET);
       response = await update_blob(node, snap, hook, response.toss, response.cool);
     }
     throwhook( hook, device + " is steady again :)" );
@@ -94,11 +98,13 @@ async function update_frame(node, snap, hook, toss = 0) {
   Pull frames of feed one at a time, rather than MJPEG.
  */
 async function flipshow_loop(node, snap) {
+  await sleep(2*SWEET)
   var hook = await gethook(".keys/netops_hook")
   throwhook( hook, device + " launching on Bricodash reload =D" )
 
   var response = {};
   while(true) {
+    await sleep(SWEET)
     response = await update_frame(node, snap, hook, response.toss);
   }
 };
