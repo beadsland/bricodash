@@ -43,3 +43,10 @@ for f in os.listdir(path):
   if os.stat(f).st_mtime < time.time() - 60 * 60 * 24:
     if os.path.isfile(f):
       os.remove(f)
+
+if cast.status.display_name == "DashCast":
+  touch = pwd + "/../../html/pull/doorcam.touch"
+  if os.path.exists(touch):
+    stall = time.time() - os.path.getmtime(touch)
+    if stall > 3:
+      cast.quit_app()

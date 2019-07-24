@@ -29,6 +29,9 @@ import time
 import logging
 from PIL import Image
 import io
+import pathlib
+
+pathlib.Path('../pull/doorcam.touch').touch()
 
 TIMEOUT = 1.0
 
