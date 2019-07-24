@@ -23,8 +23,10 @@ import sys
 import time
 import configparser
 
+pwd = os.path.dirname(sys.argv[0])
+
 config = configparser.ConfigParser()
-config.read('../sysd/environment.file')
+config.read(pwd + '/../../sysd/environment.file')
 device = config['DEFAULT']['DISPLAY_NAME']
 
 chromecasts = pychromecast.get_chromecasts()
@@ -32,7 +34,6 @@ cast = next(cc for cc in chromecasts if cc.device.friendly_name == device)
 cast.wait()
 sid = cast.status.session_id
 
-pwd = os.path.dirname(sys.argv[0])
 path = pwd + "/sid"
 sid = os.path.join(path, sid)
 if not os.path.exists(sid):

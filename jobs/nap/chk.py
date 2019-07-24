@@ -23,8 +23,10 @@ import sys
 import time
 import configparser
 
+pwd = os.path.dirname(sys.argv[0])
+
 config = configparser.ConfigParser()
-config.read('../sysd/environment.file')
+config.read(pwd + '/../../sysd/environment.file')
 device = config['DEFAULT']['DISPLAY_NAME']
 
 chromecasts = pychromecast.get_chromecasts()
@@ -33,7 +35,6 @@ cast.wait()
 
 if cast.status.display_name == "DashCast":
   sid = cast.status.session_id
-  pwd = os.path.dirname(sys.argv[0])
   path = pwd + "/sid/" + sid
   if os.path.exists(path):
     up = time.time() - os.path.getmtime(path)
