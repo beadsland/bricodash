@@ -29,13 +29,9 @@ class DashboardLauncher():
         self.dashboard_url = dashboard_url
         self.dashboard_app_name = dashboard_app_name
 
-        self.launch_checked = 0
-
     def check(self):
         """ Called when a new cast status has been received."""
-        self.launch_checked += 1
-        logger.debug('Checking if we should launch. (i: {})'
-                     .format(self.launch_checked))
+        logger.debug('Checking if we should launch.')
         if self.device.status is not None:
             logger.debug('Current app: {}'
                          .format(repr(self.device.status.display_name)))
@@ -53,18 +49,13 @@ class DashboardLauncher():
 
     def should_launch(self):
         """ If the device is active, the dashboard is not already active, and no other app is active."""
-        return ((self.device.status is not None and
-                 self.device.status.display_name in ('Backdrop',)) or
-                (self.launch_checked > 2880 and
-                 time.localtime().tm_hour == 3 and
-                 self.device.status is not None and
-                 self.device.status.display_name in ('DashCast',)))
+        return (self.device.status is not None and
+                self.device.status.display_name in ('Backdrop',))
 
     def launch_dashboard(self):
         logger.debug('Launching dashboard on Chromecast ' + self.device.name)
         try:
             self.controller.load_url(self.dashboard_url)
-            self.launch_checked = 0
         except Exception as e:
             logger.debug(e)
             pass
