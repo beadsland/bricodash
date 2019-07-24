@@ -12,3 +12,4 @@ __pycache__/
 *-dev.py
 *.out
 test/
+!sysd/relay/test

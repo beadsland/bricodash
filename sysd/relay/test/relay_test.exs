@@ -3,6 +3,6 @@ defmodule RelayTest do
   doctest Relay
 
   test "greets the world" do
-    assert Relay.hello() == :world
+    assert Relay.camera() == :ok
   end
 end
