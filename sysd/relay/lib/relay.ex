@@ -43,14 +43,36 @@ defmodule Relay do
     {:ok, conn} = Mint.HTTP.connect(scheme, uri.host, uri.port)
     {:ok, conn, _request_ref} = Mint.HTTP.request(conn, "GET", path, [])
 
+    recv_snapshot(conn)
+  end
+
+  defp recv_snapshot(conn, status \\ nil, data \\ nil) do
     receive do
       message ->
         IO.inspect(message, label: :message)
-        {:ok, _conn, responses} = Mint.HTTP.stream(conn, message)
+        {:ok, conn, responses} = Mint.HTTP.stream(conn, message)
         IO.inspect(responses, label: :responses)
-    end
 
-    :ok
+        case parse_responses(responses, status, data) do
+          {:fail, status, headers}  -> {:fail, status, headers}
+          {:fail, status}           -> recv_snapshot(conn, status)
+          {:ok, status, data}       -> recv_snapshot(conn, status, data)
+          {:done, data}             -> {:ok, data}
+        end
+    end
+  end
+
+  defp parse_responses([], 200, data), do:          {:ok, 200, data}
+  defp parse_responses([], status, nil), do:        {:fail, status}
+
+  defp parse_responses([head | tail], status, data) do
+    case head do
+      {:status, _ref, status}                       -> parse_responses(tail, status, data)
+      {:headers, _ref, headers} when status != 200  -> {:fail, status, headers}
+      {:headers, _ref, _headers}                    -> parse_responses(tail, status, [])
+      {:data, _ref, new_data}                       -> parse_responses(tail, status, data ++ [new_data])
+      {:done, _ref}                                 -> {:done, data}
+    end
   end
 
 end
