@@ -30,8 +30,10 @@ import logging
 from PIL import Image
 import io
 import pathlib
+import urllib
+import re
 
-pathlib.Path('../pull/doorcam.touch').touch()
+filename = "../img/ceilingcat.jpg"
 
 TIMEOUT = 1.0
 
@@ -45,7 +47,17 @@ logger = logging.getLogger(__name__)
 logger.info('Handle request.')
 #handler.flush()
 
-filename = "../img/ceilingcat.jpg"
+###
+# Update tracker for detecting stalled clients
+###
+referer = os.getenv('HTTP_REFERER')
+parsed = urllib.parse.urlparse(referer)
+whoami = urllib.parse.parse_qs(parsed.query)['whoami'][0]
+regex = re.compile('[^a-zA-Z]')
+cleanami = regex.sub('', whoami)
+if cleanami:
+  pathlib.Path("../pull/doorcam_%s.touch" % cleanami).touch()
+
 
 mjpg = {
         'space': "http://192.168.42.22:8080/",

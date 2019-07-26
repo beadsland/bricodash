@@ -46,8 +46,8 @@ for f in os.listdir(path):
       os.remove(f)
 
 if cast.status.display_name == "DashCast":
-  touch = pwd + "/../../html/pull/doorcam.touch"
+  touch = pwd + "/../../html/pull/doorcam_chromecast.touch"
   if os.path.exists(touch):
     stall = time.time() - os.path.getmtime(touch)
-    if stall > 10:
+    if stall > 5:
       cast.quit_app()
