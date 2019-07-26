@@ -49,5 +49,5 @@ if cast.status.display_name == "DashCast":
   touch = pwd + "/../../html/pull/doorcam.touch"
   if os.path.exists(touch):
     stall = time.time() - os.path.getmtime(touch)
-    if stall > 3:
+    if stall > 10:
       cast.quit_app()
