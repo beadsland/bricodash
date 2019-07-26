@@ -23,21 +23,33 @@ defmodule Relay do
   """
 
   @doc """
-  Assemble camera URL.
+  Retrieve camera URL by name from config.
   """
-
   def get_camera(name) do
     cameras = Application.fetch_env!(:relay, :cameras)
-    IO.inspect(cameras)
     cameras[name]
   end
 
-  def poke_camera do
-    camera = "http://rfid-access-building.lan:8080/"
-    params = %{"action" => "stream"}
-    camera = URI.parse(camera) |> Map.put(:query, URI.encode_query(params))
-      |> URI.to_string()
-    IO.puts(camera)
+  @doc """
+  Obtain snapshot JPEG from camera by name.
+  """
+  def get_snapshot(name) do
+    uri = URI.parse( get_camera(name) )
+    params = URI.encode_query( %{"action" => "snapshot"} )
+
+    scheme = String.to_existing_atom( uri.scheme )
+    path = Enum.join( [uri.path, params], "?" )
+
+    {:ok, conn} = Mint.HTTP.connect(scheme, uri.host, uri.port)
+    {:ok, conn, _request_ref} = Mint.HTTP.request(conn, "GET", path, [])
+
+    receive do
+      message ->
+        IO.inspect(message, label: :message)
+        {:ok, _conn, responses} = Mint.HTTP.stream(conn, message)
+        IO.inspect(responses, label: :responses)
+    end
+
     :ok
   end
 

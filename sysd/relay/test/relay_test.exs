@@ -23,7 +23,7 @@ defmodule RelayTest do
     assert Relay.get_camera(:test) == "http://192.168.42.22:8080/"
   end
 
-  test "greets the world" do
-    assert Relay.poke_camera() == :ok
+  test "grab a snapshot" do
+    assert Relay.get_snapshot(:test) == :ok
   end
 end
