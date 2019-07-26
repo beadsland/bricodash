@@ -24,6 +24,7 @@ defmodule RelayTest do
   end
 
   test "grab a snapshot" do
-    assert Relay.get_snapshot(:test) == :ok
+    {:ok, data} = Relay.get_snapshot(:test)
+    assert is_binary(data)
   end
 end
