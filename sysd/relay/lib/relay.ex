@@ -9,7 +9,13 @@ defmodule Relay do
   Assemble camera URL.
   """
 
-  def camera do
+  def get_camera(name) do
+    cameras = Application.fetch_env!(:relay, :cameras)
+    IO.inspect(cameras)
+    cameras[name]
+  end
+
+  def poke_camera do
     camera = "http://rfid-access-building.lan:8080/"
     params = %{"action" => "stream"}
     camera = URI.parse(camera) |> Map.put(:query, URI.encode_query(params))
