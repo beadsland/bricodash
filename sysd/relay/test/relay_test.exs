@@ -18,19 +18,20 @@
 defmodule RelayTest do
   use ExUnit.Case
   doctest Relay
+  doctest Relay.Snapshot
 
   test "get :test camera path" do
     assert Relay.get_camera(:test) == "http://192.168.42.22:8080/"
   end
 
   test "grab a snapshot" do
-    {:ok, data} = Relay.get_snapshot(:test)
+    {:ok, data} = Relay.Snapshot.get_snapshot( Relay.get_camera(:test) )
     assert is_binary(data)
   end
 
   test "validate a snapshot" do
-    {:ok, data} = Relay.get_valid_snapshot(:test)
+    {:ok, data} = Relay.Snapshot.get_valid_snapshot( Relay.get_camera(:test) )
     assert is_binary(data)
   end
-  
+
 end
