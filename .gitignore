@@ -14,3 +14,4 @@ __pycache__/
 test/
 !sysd/relay/test
 sysd/relay/.vscode/launch.json
+erl_crash.dump
