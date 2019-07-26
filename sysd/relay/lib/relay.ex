@@ -78,4 +78,18 @@ defmodule Relay do
     end
   end
 
+  @doc """
+  Obtain snapshot JPEG from camera by name, and confirm that it is valid.
+  """
+  def get_valid_snapshot(name) do
+    snapshot = get_snapshot(name)
+    case snapshot do
+      {:fail, _, _} -> snapshot
+      {:ok, data}   -> case ExImageInfo.info(data) do
+                         {"image/jpeg", _, _, _} -> snapshot
+                        _                        -> {:fail, :corrupt_frame}
+                       end
+    end
+  end
+
 end

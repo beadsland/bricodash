@@ -39,7 +39,8 @@ defmodule Relay.MixProject do
   defp deps do
     [
       {:castore, "~> 0.1.0"},
-      {:mint, "~> 0.2.0"}
+      {:mint, "~> 0.2.0"},
+      {:ex_image_info, "~> 0.2.4"},
     ]
   end
 end
