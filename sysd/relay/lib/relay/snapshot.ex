@@ -19,6 +19,9 @@ defmodule Relay.Snapshot do
   @doc """
   Obtain snapshot JPEG from camera by name.
   """
+  def snap(url), do: get_snapshot(url)
+
+  # Make request for snapshot and begin reading incoming stream.
   def get_snapshot(url) do
     uri = URI.parse( url )
     params = URI.encode_query( %{"action" => "snapshot"} )
