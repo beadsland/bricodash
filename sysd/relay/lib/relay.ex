@@ -25,7 +25,7 @@ defmodule Relay do
   @doc """
   Retrieve camera URL by name from config.
   """
-  def get_camera(name) do
+  def get_camera_url(name) do
     cameras = Application.fetch_env!(:relay, :cameras)
     cameras[name]
   end

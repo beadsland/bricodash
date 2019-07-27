@@ -21,16 +21,16 @@ defmodule RelayTest do
   doctest Relay.Snapshot
 
   test "get :test camera path" do
-    assert Relay.get_camera(:test) == "http://192.168.42.22:8080/"
+    assert Relay.get_camera_url(:test) == "http://192.168.42.22:8080/"
   end
 
   test "grab a snapshot" do
-    {:ok, data} = Relay.Snapshot.get_snapshot( Relay.get_camera(:test) )
+    {:ok, data} = Relay.Snapshot.get_snapshot( Relay.get_camera_url(:test) )
     assert is_binary(data)
   end
 
   test "validate a snapshot" do
-    {:ok, data} = Relay.Snapshot.snap( Relay.get_camera(:test) )
+    {:ok, data} = Relay.Snapshot.snap( Relay.get_camera_url(:test) )
     assert Relay.validate_frame(data) == :ok
   end
 
