@@ -30,8 +30,8 @@ defmodule RelayTest do
   end
 
   test "validate a snapshot" do
-    {:ok, data} = Relay.Snapshot.get_valid_snapshot( Relay.get_camera(:test) )
-    assert is_binary(data)
+    {:ok, data} = Relay.Snapshot.get_snapshot( Relay.get_camera(:test) )
+    assert Relay.validate_frame(data) == :ok
   end
 
 end
