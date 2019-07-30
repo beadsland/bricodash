@@ -1,2 +1,4 @@
-0 5 0 0 0 /sbin/shutdown -r now
+# Also, bump swapfile to 1024
+
+0 6,18 0 0 0 /sbin/shutdown -r now
 @reboot rm /home/pi/.cache/chromium/Default/Cache/*
