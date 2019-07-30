@@ -21,7 +21,6 @@ defmodule PlugTest do
 
   doctest Relay.WebAPI.Server
   doctest Relay.WebAPI.Router
-  doctest Relay.WebAPI.Handler
 
   alias Relay.WebAPI.Router
 
@@ -36,6 +35,17 @@ defmodule PlugTest do
     assert conn.state == :sent
     assert conn.status == 200
   end
+
+  test "returns jpg" do
+    conn =
+      :get
+      |> conn("/test/snapshot", "")
+      |> Router.call(@opts)
+
+      assert conn.state == :sent
+      assert conn.status == 200
+      assert Relay.validate_frame(conn.resp_body) == :ok
+    end
 
   test "returns 404" do
     conn =

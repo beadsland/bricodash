@@ -20,13 +20,20 @@ defmodule Relay.WebAPI.Router do
 
   plug :match
   plug :dispatch
-  
+
   get "/" do
     send_resp(conn, 200, "Howdy!")
   end
 
+  get "/test/snapshot" do
+    {:ok, frame} = Relay.Snapshot.get_snapshot( Relay.get_camera_url(:test) )
+    conn
+      |> put_resp_content_type("image/jpg")
+      |> send_resp(200, frame)
+  end
+
   match _ do
-    send_resp(conn, 404, "Don’t take any wooden nickels.")
+    send_resp(conn, 404, "Don't take any wooden nickels.")
   end
 
 end
