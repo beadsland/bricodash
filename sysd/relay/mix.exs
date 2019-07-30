@@ -31,6 +31,7 @@ defmodule Relay.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: {Relay.WebAPI.Server, []},
       extra_applications: [:logger]
     ]
   end
@@ -41,6 +42,8 @@ defmodule Relay.MixProject do
       {:castore, "~> 0.1.0"},
       {:mint, "~> 0.2.0"},
       {:ex_image_info, "~> 0.2.4"},
+      {:cowboy, "~> 2.6.3"},
+      {:plug_cowboy, "~> 2.1.0"}
     ]
   end
 end
