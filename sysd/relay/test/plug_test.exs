@@ -15,21 +15,36 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.WebAPI.Server do
-  require Logger
-  use Application
+defmodule PlugTest do
+  use ExUnit.Case
+  use Plug.Test
 
-  def start(_type, _args) do
-    port = Application.get_env(:relay, :port)
+  doctest Relay.WebAPI.Server
+  doctest Relay.WebAPI.Router
+  doctest Relay.WebAPI.Handler
 
-    children = [
-      {Plug.Cowboy, scheme: :http, plug: Relay.WebAPI.Router, options: [port: port]}
-    ]
-    opts = [strategy: :one_for_one, name: Relay.WebAPI.Supervisor]
+  alias Relay.WebAPI.Router
 
-    Logger.info("Starting camera relay...")
+  @opts Router.init([])
 
-    Supervisor.start_link(children, opts)
+  test "returns 200" do
+    conn =
+      :get
+      |> conn("/", "")
+      |> Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 200
+  end
+
+  test "returns 404" do
+    conn =
+      :get
+      |> conn("/missing", "")
+      |> Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 404
   end
 
 end

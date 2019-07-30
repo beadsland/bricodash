@@ -15,21 +15,18 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.WebAPI.Server do
-  require Logger
-  use Application
+defmodule Relay.WebAPI.Router do
+  use Plug.Router
 
-  def start(_type, _args) do
-    port = Application.get_env(:relay, :port)
+  plug :match
+  plug :dispatch
+  
+  get "/" do
+    send_resp(conn, 200, "Howdy!")
+  end
 
-    children = [
-      {Plug.Cowboy, scheme: :http, plug: Relay.WebAPI.Router, options: [port: port]}
-    ]
-    opts = [strategy: :one_for_one, name: Relay.WebAPI.Supervisor]
-
-    Logger.info("Starting camera relay...")
-
-    Supervisor.start_link(children, opts)
+  match _ do
+    send_resp(conn, 404, "Don’t take any wooden nickels.")
   end
 
 end

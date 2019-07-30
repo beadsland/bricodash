@@ -10,7 +10,7 @@ defmodule Relay.WebAPI.Handler do
       request2 = :cowboy_req.reply(200, headers, body, request)
       {:ok, request2, options}
     else
-      Relay.WebAPI.Goodbye.init(request, options)
+#      Relay.WebAPI.Goodbye.init(options)
     end
   end
 end
