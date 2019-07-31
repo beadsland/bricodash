@@ -19,6 +19,9 @@ defmodule Relay.WebAPI.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
+  cameras = Application.get_env(:relay, :cameras) |> Map.keys()
+
+  plug Relay.WebAPI.Verify, cameras: cameras, actions: [:snapshot]
   plug :match
   plug :dispatch
 
@@ -26,7 +29,7 @@ defmodule Relay.WebAPI.Router do
     send_resp(conn, 200, "Howdy!")
   end
 
-  get "/test/snapshot" do
+  get "/:camera/snapshot" do
     {:ok, frame} = Relay.Snapshot.get_snapshot( Relay.get_camera_url(:test) )
     conn
       |> put_resp_content_type("image/jpg")
@@ -37,11 +40,11 @@ defmodule Relay.WebAPI.Router do
     send_resp(conn, 404, "Don't take any wooden nickels.")
   end
 
-  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    IO.inspect(kind, label: :kind)
-    IO.inspect(reason, label: :reason)
-    IO.inspect(stack, label: :stack)
-    send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+  defp handle_errors(conn, %{kind: _kind, reason: reason, stack: _stack}) do
+    case reason.type do
+      :unknown_camera -> send_resp(conn, reason.plug_status, reason.message)
+      _ -> send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+    end
   end
 
 end
