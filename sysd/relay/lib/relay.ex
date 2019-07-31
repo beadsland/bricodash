@@ -25,7 +25,7 @@ defmodule Relay do
   def start(type, args) do
     {:ok, hostname} = :inet.gethostname()
     nodename = String.to_atom( "relay@#{hostname}" )
-    {:ok, _pid} = :net_kernel.start([nodename])
+    #{:ok, _pid} = :net_kernel.start([nodename])
     Relay.WebAPI.Server.start(type, args)
   end
 
