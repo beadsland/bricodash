@@ -20,10 +20,6 @@ defmodule Relay.WebAPI.Server do
   use Application
 
   def start(_type, _args) do
-    {:ok, hostname} = :inet.gethostname()
-    nodename = String.to_atom( "relay@#{hostname}" )
-    {:ok, _pid} = :net_kernel.start([nodename])
-
     transport = if Mix.env == :dev, do: [num_acceptors: 5], else: []
 
     port = Application.get_env(:relay, :port)
