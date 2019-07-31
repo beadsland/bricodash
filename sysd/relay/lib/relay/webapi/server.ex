@@ -20,10 +20,16 @@ defmodule Relay.WebAPI.Server do
   use Application
 
   def start(_type, _args) do
-    port = Application.get_env(:relay, :port)
+    {:ok, hostname} = :inet.gethostname()
+    nodename = String.to_atom( "relay@#{hostname}" )
+    {:ok, _pid} = :net_kernel.start([nodename])
 
+    transport = if Mix.env == :dev, do: [num_acceptors: 5], else: []
+
+    port = Application.get_env(:relay, :port)
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Relay.WebAPI.Router, options: [port: port]}
+      { Plug.Cowboy, scheme: :http, plug: Relay.WebAPI.Router,
+                     options: [port: port, transport_options: transport] }
     ]
     opts = [strategy: :one_for_one, name: Relay.WebAPI.Supervisor]
 
