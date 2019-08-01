@@ -30,7 +30,8 @@ defmodule Relay.WebAPI.Router do
   end
 
   get "/:camera/snapshot" do
-    {:ok, frame} = Relay.Snapshot.get_snapshot( Relay.get_camera_url(:test) )
+    {:ok, frame} = camera |> String.to_atom |> Relay.get_camera_url
+      |> Relay.Snapshot.get_snapshot
     conn
       |> put_resp_content_type("image/jpg")
       |> send_resp(200, frame)
@@ -40,10 +41,18 @@ defmodule Relay.WebAPI.Router do
     send_resp(conn, 404, "Don't take any wooden nickels.")
   end
 
-  defp handle_errors(conn, %{kind: _kind, reason: reason, stack: _stack}) do
-    case reason.type do
-      :unknown_camera -> send_resp(conn, reason.plug_status, reason.message)
-      _ -> send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
+    IO.inspect(kind, label: :kind)
+    IO.inspect(reason, label: :reason)
+    IO.inspect(stack, label: :stack)
+
+    if Map.has_key?(reason, :type) do
+      case reason.type do
+        :unknown_camera -> send_resp(conn, reason.plug_status, reason.message)
+        _               -> send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+      end
+    else
+      send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
     end
   end
 
