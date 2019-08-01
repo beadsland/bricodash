@@ -25,11 +25,18 @@ defmodule Relay.Snapshot do
   def get_snapshot(url) do
     uri = URI.parse( url )
     params = URI.encode_query( %{"action" => "snapshot"} )
-
     scheme = String.to_existing_atom( uri.scheme )
     path = Enum.join( [uri.path, params], "?" )
 
-    {:ok, conn} = Mint.HTTP.connect(scheme, uri.host, uri.port)
+    # Force Mint to handle ipv6 hostnames.
+    opts = [transport_opts: [{:tcp_module, :inet6_tcp}]]
+
+    {:ok, conn} = case Mint.HTTP.connect(scheme, uri.host, uri.port, opts) do
+      {:ok, conn} -> {:ok, conn}
+                     # Fail-over to ipv4 gracefully.
+      _           -> Mint.HTTP.connect(scheme, uri.host, uri.port, [])
+    end
+
     {:ok, conn, _request_ref} = Mint.HTTP.request(conn, "GET", path, [])
 
     recv_snapshot(conn)
