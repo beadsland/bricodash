@@ -27,7 +27,9 @@ defmodule BindSight.WebAPI.Verify do
       components = path |> String.trim("/") |> String.split("/")
         |> Enum.map(fn x -> String.to_existing_atom(x) end)
 
-      verify_request!(opts[:cameras], opts[:actions], components)
+      if length(components) == 2 do
+        verify_request!(opts[:cameras], opts[:actions], components)
+      end
       conn
     rescue
       _ -> raise(BadDogError)
