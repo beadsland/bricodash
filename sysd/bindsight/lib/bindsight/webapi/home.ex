@@ -15,37 +15,26 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.MixProject do
-  use Mix.Project
+defmodule BindSight.WebAPI.Home do
+  import Plug.Conn
+  import Phoenix.HTML
+  import Phoenix.HTML.Tag
+  use Memoize
 
-  def project do
-    [
-      app: :bindsight,
-      version: "0.1.0",
-      elixir: "~> 1.9",
-      start_permanent: Mix.env() == :prod,
-      deps: deps()
-    ]
+  def send(conn, opts) do
+    divs = links(opts[:cameras])
+    body = content_tag(:body, [content_tag(:h1, "Howdy!"), divs])
+    conn |> send_resp(200, body |> safe_to_string)
   end
 
-  # Run "mix help compile.app" to learn about applications.
-  def application do
-    [
-      mod: {BindSight, []},
-      extra_applications: [:logger]
-    ]
+  defp links([]), do: []
+  defp links([head | tail]) do
+    [camera(head), rest(head, :snapshot), rest(head, :stream), tag(:hr), links(tail)]
   end
 
-  # Run "mix help deps" to learn about dependencies.
-  defp deps do
-    [
-      {:castore, "~> 0.1.0"},
-      {:mint, "~> 0.2.0"},
-      {:ex_image_info, "~> 0.2.4"},
-      {:cowboy, "~> 2.6.3"},
-      {:plug_cowboy, "~> 2.1.0"},
-      {:phoenix_html, "~> 2.13.3"},
-      {:memoize, "~> 1.2"},
-    ]
-  end
+  defp spacer(), do: raw(" &mdash; ")
+  defp camera(text), do: content_tag(:h2, text, [style: "display:inline"])
+  defp rest(camera, action), do: [spacer(), anchor(action, "#{camera}/#{action}")]
+  defp anchor(text, url), do: content_tag(:a, text, [href: url])
+
 end

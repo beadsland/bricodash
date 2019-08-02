@@ -19,14 +19,14 @@ defmodule BindSight.WebAPI.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
-  cameras = Application.get_env(:bindsight, :cameras) |> Map.keys()
+  @cameras Application.get_env(:bindsight, :cameras) |> Map.keys()
 
-  plug BindSight.WebAPI.Verify, cameras: cameras, actions: [:snapshot]
+  plug BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot]
   plug :match
   plug :dispatch
 
   get "/" do
-    send_resp(conn, 200, "Howdy!")
+    BindSight.WebAPI.Home.send(conn, [cameras: @cameras])
   end
 
   # Note, cache-control defaults to "max-age=0, private, must-revalidate",

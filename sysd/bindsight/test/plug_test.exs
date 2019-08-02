@@ -26,11 +26,13 @@ defmodule PlugTest do
 
   @opts Router.init([])
 
-  test "returns 200" do
+  test "returns home page" do
     conn = :get |> conn("/", "") |> Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200
+    assert conn.resp_body =~ "<a href=\"test/snapshot\">snapshot</a>"
+    assert conn.resp_body =~ "<a href=\"test/stream\">stream</a>"
   end
 
   test "returns jpg" do
