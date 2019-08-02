@@ -29,7 +29,9 @@ defmodule BindSight.WebAPI.Home do
 
   defp links([]), do: []
   defp links([head | tail]) do
-    [camera(head), rest(head, :snapshot), rest(head, :stream), tag(:hr), links(tail)]
+    html = [camera(head), rest(head, :snapshot), rest(head, :stream), tag(:hr)]
+    html = if head == :test, do: [raw("<!--"), html, raw("-->")], else: html
+    [html, links(tail)]
   end
 
   defp spacer(), do: raw(" &mdash; ")
