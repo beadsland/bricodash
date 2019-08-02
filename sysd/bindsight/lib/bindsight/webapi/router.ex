@@ -29,6 +29,8 @@ defmodule BindSight.WebAPI.Router do
     send_resp(conn, 200, "Howdy!")
   end
 
+  # Note, cache-control defaults to "max-age=0, private, must-revalidate",
+  # per https://hexdocs.pm/plug/Plug.Conn.html -- so we needn't do anything.
   get "/:camera/snapshot" do
     {:ok, frame} = camera |> String.to_existing_atom
       |> BindSight.get_camera_url |> BindSight.Snapshot.get_snapshot
