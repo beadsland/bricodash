@@ -49,15 +49,7 @@ defmodule BindSight.WebAPI.Router do
     IO.inspect(kind, label: :kind)
     IO.inspect(reason, label: :reason)
     IO.inspect(stack, label: :stack)
-
-    if Map.has_key?(reason, :type) do
-      case reason.type do
-        :unknown_camera -> send_resp(conn, reason.plug_status, reason.message)
-        _               -> send_resp(conn, conn.status, @error_msg)
-      end
-    else
-      send_resp(conn, conn.status, @error_msg)
-    end
+    send_resp(conn, conn.status, @error_msg)
   end
 
 end

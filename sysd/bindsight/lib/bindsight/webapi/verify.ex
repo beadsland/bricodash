@@ -16,10 +16,7 @@
 ####
 
 defmodule BindSight.WebAPI.Verify do
-  defmodule BadDogError do
-    defexception message: "That dog won't hunt (unknown camera).",
-                 type: :unknown_camera, plug_status: 404
-  end
+  import Plug.Conn
 
   def init(options), do: options
 
@@ -33,7 +30,8 @@ defmodule BindSight.WebAPI.Verify do
       end
       conn
     rescue
-      _ -> raise(BadDogError)
+      _ in ArgumentError ->
+          conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
     end
   end
 

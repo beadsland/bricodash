@@ -27,31 +27,29 @@ defmodule PlugTest do
   @opts Router.init([])
 
   test "returns 200" do
-    conn =
-      :get
-      |> conn("/", "")
-      |> Router.call(@opts)
+    conn = :get |> conn("/", "") |> Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200
   end
 
   test "returns jpg" do
-    conn =
-      :get
-      |> conn("/test/snapshot", "")
-      |> Router.call(@opts)
+    conn = :get |> conn("/test/snapshot", "") |> Router.call(@opts)
 
-      assert conn.state == :sent
-      assert conn.status == 200
-      assert BindSight.validate_frame(conn.resp_body) == :ok
-    end
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert BindSight.validate_frame(conn.resp_body) == :ok
+  end
 
-  test "returns 404" do
-    conn =
-      :get
-      |> conn("/missing", "")
-      |> Router.call(@opts)
+  test "returns I'm a teapot" do
+    conn = :get |> conn("/cuppa/snapshot", "") |> Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 418
+  end
+
+  test "returns Not found" do
+    conn = :get |> conn("/missing", "") |> Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 404
