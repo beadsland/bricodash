@@ -18,10 +18,14 @@
 import brico.common
 import brico.common.wiki
 
+import re
+
 def main():
   cal = []
   for l in brico.common.wiki.parse("Bricodash/Extra:Calendar").lists():
     for i in l.items:
-      cal.append(i.lstrip())
+      cols = i.lstrip().split("::")
+      cols[0] = re.sub(r'[^A-Za-z0-9:\ +-,#]', '', cols[0])
+      cal.append("::".join(cols))
 
   brico.common.write_text("extra.cal", cal)

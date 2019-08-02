@@ -113,6 +113,8 @@ def get_project_path(user, serv, proj):
 # Query an API using using Etags to cache and respecting X-Poll-Interval
 ###
 def get_result(query, cache, serv):
+  cache = re.sub(r'[^A-Za-z0-9-_\.\/]', '', cache)
+
   try:
     old = json.loads(brico.common.slurp(cache))
     etag = old['etag']
