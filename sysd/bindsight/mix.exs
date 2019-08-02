@@ -15,23 +15,35 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule RelayTest do
-  use ExUnit.Case
-  doctest Relay
-  doctest Relay.Snapshot
+defmodule BindSight.MixProject do
+  use Mix.Project
 
-  test "get :test camera path" do
-    assert Relay.get_camera_url(:test) == "http://192.168.42.22:8080/"
+  def project do
+    [
+      app: :bindsight,
+      version: "0.1.0",
+      elixir: "~> 1.9",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
   end
 
-  test "grab a snapshot" do
-    {:ok, data} = Relay.Snapshot.get_snapshot( Relay.get_camera_url(:test) )
-    assert is_binary(data)
+  # Run "mix help compile.app" to learn about applications.
+  def application do
+    [
+      mod: {BindSight, []},
+      extra_applications: [:logger]
+    ]
   end
 
-  test "validate a snapshot" do
-    {:ok, data} = Relay.Snapshot.snap( Relay.get_camera_url(:test) )
-    assert Relay.validate_frame(data) == :ok
+  # Run "mix help deps" to learn about dependencies.
+  defp deps do
+    [
+      {:castore, "~> 0.1.0"},
+      {:mint, "~> 0.2.0"},
+      {:ex_image_info, "~> 0.2.4"},
+      {:cowboy, "~> 2.6.3"},
+      {:plug_cowboy, "~> 2.1.0"}
+    ]
   end
-
 end

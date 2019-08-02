@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay do
+defmodule BindSight do
   @moduledoc """
   Service to relay MJPEG camera streams to one or more clients as streams or
   snapshots. Proactively checks for corrupt frames and drops them before
@@ -25,17 +25,17 @@ defmodule Relay do
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])
     {:ok, hostname} = :inet.gethostname()
-    nodename = String.to_atom( "relay@#{hostname}" )
+    nodename = String.to_atom( "bindsight@#{hostname}" )
     {:ok, _pid} = :net_kernel.start([nodename])
 
-    Relay.WebAPI.Server.start(type, args)
+    BindSight.WebAPI.Server.start(type, args)
   end
 
   @doc """
   Retrieve camera URL by name from config.
   """
   def get_camera_url(name) do
-    cameras = Application.fetch_env!(:relay, :cameras)
+    cameras = Application.fetch_env!(:bindsight, :cameras)
     cameras[name]
   end
 

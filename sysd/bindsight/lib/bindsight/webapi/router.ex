@@ -15,13 +15,13 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.WebAPI.Router do
+defmodule BindSight.WebAPI.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
-  cameras = Application.get_env(:relay, :cameras) |> Map.keys()
+  cameras = Application.get_env(:bindsight, :cameras) |> Map.keys()
 
-  plug Relay.WebAPI.Verify, cameras: cameras, actions: [:snapshot]
+  plug BindSight.WebAPI.Verify, cameras: cameras, actions: [:snapshot]
   plug :match
   plug :dispatch
 
@@ -30,8 +30,8 @@ defmodule Relay.WebAPI.Router do
   end
 
   get "/:camera/snapshot" do
-    {:ok, frame} = camera |> String.to_atom |> Relay.get_camera_url
-      |> Relay.Snapshot.get_snapshot
+    {:ok, frame} = camera |> String.to_atom |> BindSight.get_camera_url
+      |> BindSight.Snapshot.get_snapshot
     conn
       |> put_resp_content_type("image/jpg")
       |> send_resp(200, frame)

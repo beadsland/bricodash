@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.WebAPI.Verify do
+defmodule BindSight.WebAPI.Verify do
   defmodule BadDogError do
     defexception message: "That dog won't hunt (unknown camera).", type: :unknown_camera, plug_status: 404
   end

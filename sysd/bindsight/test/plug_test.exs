@@ -19,10 +19,10 @@ defmodule PlugTest do
   use ExUnit.Case
   use Plug.Test
 
-  doctest Relay.WebAPI.Server
-  doctest Relay.WebAPI.Router
+  doctest BindSight.WebAPI.Server
+  doctest BindSight.WebAPI.Router
 
-  alias Relay.WebAPI.Router
+  alias BindSight.WebAPI.Router
 
   @opts Router.init([])
 
@@ -44,7 +44,7 @@ defmodule PlugTest do
 
       assert conn.state == :sent
       assert conn.status == 200
-      assert Relay.validate_frame(conn.resp_body) == :ok
+      assert BindSight.validate_frame(conn.resp_body) == :ok
     end
 
   test "returns 404" do

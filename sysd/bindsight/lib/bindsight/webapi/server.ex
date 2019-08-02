@@ -15,19 +15,19 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.WebAPI.Server do
+defmodule BindSight.WebAPI.Server do
   require Logger
   use Application
 
   def start(_type, _args) do
     transport = if Mix.env == :dev, do: [num_acceptors: 5], else: []
 
-    port = Application.get_env(:relay, :port)
+    port = Application.get_env(:bindsight, :port)
     children = [
-      { Plug.Cowboy, scheme: :http, plug: Relay.WebAPI.Router,
+      { Plug.Cowboy, scheme: :http, plug: BindSight.WebAPI.Router,
                      options: [port: port, transport_options: transport] }
     ]
-    opts = [strategy: :one_for_one, name: Relay.WebAPI.Supervisor]
+    opts = [strategy: :one_for_one, name: BindSight.WebAPI.Supervisor]
 
     Logger.info("Starting camera relay...")
 

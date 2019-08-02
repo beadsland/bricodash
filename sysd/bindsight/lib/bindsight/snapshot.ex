@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule Relay.Snapshot do
+defmodule BindSight.Snapshot do
   @doc """
   Obtain snapshot JPEG from camera by name.
   """

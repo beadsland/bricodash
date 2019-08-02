@@ -12,6 +12,6 @@ __pycache__/
 *-dev.py
 *.out
 test/
-!sysd/relay/test
-sysd/relay/.vscode/launch.json
+!sysd/bindsight/test
+sysd/bindsight/.vscode/launch.json
 erl_crash.dump
