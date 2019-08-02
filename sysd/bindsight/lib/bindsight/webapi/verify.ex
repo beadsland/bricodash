@@ -21,22 +21,30 @@ defmodule BindSight.WebAPI.Verify do
   def init(options), do: options
 
   def call(%Plug.Conn{request_path: path} = conn, opts) do
-    try do
-      components = path |> String.trim("/") |> String.split("/")
-        |> Enum.map(fn x -> String.to_existing_atom(x) end)
+    components = path |> String.trim("/") |> String.split("/")
+                      |> Enum.map(fn x -> atomize(x) end)
 
-      if length(components) == 2 do
-        verify_request!(opts[:cameras], opts[:actions], components)
-      end
+    if length(components) == 2 do
+      verify_request(conn, opts[:cameras], opts[:actions], components)
+    else
       conn
-    rescue
-      _ in ArgumentError ->
-          conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
     end
   end
 
-  defp verify_request!(_cameras, _actions, [_cam, _act]) do
-    nil # we can test for correct syntax on later iteration
+  defp atomize(s) do
+    try do
+      String.to_existing_atom(s)
+    rescue
+      _ in ArgumentError -> nil
+    end
+  end
+
+  defp verify_request(conn, _cameras, _actions, components) do #[_cam, _act]) do
+    if Enum.member?(components, nil) do
+      conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
+    else
+      conn
+    end
   end
 
 end
