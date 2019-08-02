@@ -41,6 +41,8 @@ defmodule BindSight.WebAPI.Router do
     send_resp(conn, 404, "Don't take any wooden nickels.")
   end
 
+  @error_msg "Ditty's gone catawampous, it has."
+
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
     IO.inspect(kind, label: :kind)
     IO.inspect(reason, label: :reason)
@@ -49,10 +51,10 @@ defmodule BindSight.WebAPI.Router do
     if Map.has_key?(reason, :type) do
       case reason.type do
         :unknown_camera -> send_resp(conn, reason.plug_status, reason.message)
-        _               -> send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+        _               -> send_resp(conn, conn.status, @error_msg)
       end
     else
-      send_resp(conn, conn.status, "Ditty's gone catawampous, it has.")
+      send_resp(conn, conn.status, @error_msg)
     end
   end
 
