@@ -21,7 +21,7 @@ defmodule BindSightTest do
   doctest BindSight.Snapshot
 
   test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) == "http://192.168.42.22:8080/"
+    assert BindSight.get_camera_url(:test) == "http://wrtnode-webcam.lan:8080/"
   end
 
   test "grab a snapshot" do
