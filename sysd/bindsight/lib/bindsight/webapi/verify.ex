@@ -24,11 +24,7 @@ defmodule BindSight.WebAPI.Verify do
     components = path |> String.trim("/") |> String.split("/")
                       |> Enum.map(fn x -> atomize(x) end)
 
-    if length(components) == 2 do
-      verify_request(conn, opts[:cameras], opts[:actions], components)
-    else
-      conn
-    end
+    verify_request(conn, opts[:cameras], opts[:actions], components)
   end
 
   defp atomize(s) do
@@ -39,12 +35,18 @@ defmodule BindSight.WebAPI.Verify do
     end
   end
 
-  defp verify_request(conn, _cameras, _actions, components) do #[_cam, _act]) do
-    if Enum.member?(components, nil) do
-      conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
-    else
-      conn
+  defp verify_request(conn, _, _, comps) when length(comps) != 2, do: conn
+
+  defp verify_request(conn, cameras, actions, [cam, act]) do
+    cond do
+      cam not in cameras ->
+        conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
+      act not in actions ->
+        conn |> send_resp(400, "All down but nine (unknown action).") |> halt
+      true ->
+        conn
     end
+
   end
 
 end

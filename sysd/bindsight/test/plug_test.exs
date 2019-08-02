@@ -48,6 +48,13 @@ defmodule PlugTest do
     assert conn.status == 418
   end
 
+  test "returns Bad request" do
+    conn = :get |> conn("/test/dance", "") |> Router.call(@opts)
+
+    assert conn.state == :sent
+    assert conn.status == 400
+  end
+
   test "returns Not found" do
     conn = :get |> conn("/missing", "") |> Router.call(@opts)
 
