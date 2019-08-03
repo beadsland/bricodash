@@ -28,7 +28,15 @@ defmodule BindSight do
     nodename = String.to_atom( "bindsight@#{hostname}" )
     {:ok, _pid} = :net_kernel.start([nodename])
 
+    children = Application.get_env(:bindsight, :cameras) |> Map.keys()
+               |> Enum.map(fn x -> speccer(x) end)
+    Supervisor.start_link(children, strategy: :one_for_one)
+
     BindSight.WebAPI.Server.start(type, args)
+  end
+
+  defp speccer(camera) do
+    Supervisor.child_spec({BindSight.Stage.Spigot, camera}, id: camera)
   end
 
   @doc """

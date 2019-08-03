@@ -15,22 +15,22 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule StageTest do
-  use ExUnit.Case
+defmodule BindSight.Stage.Spigot do
+  use GenServer
 
-  test "grab snapshot from SnapSource" do
-    {:ok, _pid} = BindSight.Stage.SnapSource.start_link(camera: :test)
-    subscriptions = [{BindSight.Stage.SnapSource, max_demand: 1}]
-    [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
+  def tap(camera), do: name(:snapsource, camera)
 
-    assert is_binary(data)
+  def start_link(camera \\ :test) do
+    children = [
+      {BindSight.Stage.SnapSource, [camera: camera,
+                                    name: name(:snapsource, camera)]}
+    ]
+
+    Supervisor.start_link(children, strategy: :rest_for_one)
   end
 
-  test "grab snapshot from Spigot" do
-    subscriptions = [{BindSight.Stage.Spigot.tap(:test), max_demand: 1}]
-    [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
+  defp name(mod, cam), do: "#{mod}:#{cam}" |> String.to_atom
 
-    assert BindSight.validate_frame(data) == :ok
-  end
+  def init(camera), do: tap(camera).init(camera)
 
 end
