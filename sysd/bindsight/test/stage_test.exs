@@ -19,8 +19,8 @@ defmodule StageTest do
   use ExUnit.Case
 
   test "grab snapshot from SnapSource" do
-    {:ok, _pid, name} = BindSight.Stage.SnapSource.start_link(:test)
-    subscriptions = [{name, max_demand: 1}]
+    {:ok, _pid} = BindSight.Stage.SnapSource.start_link(camera: :test)
+    subscriptions = [{BindSight.Stage.SnapSource, max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
 
     assert BindSight.validate_frame(data) == :ok

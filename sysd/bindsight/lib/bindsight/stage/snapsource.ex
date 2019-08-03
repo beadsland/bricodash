@@ -18,10 +18,11 @@
 defmodule BindSight.Stage.SnapSource do
   use GenStage
 
-  def start_link(camera \\ :test) do
-    name = String.to_atom("#{__MODULE__}:#{camera}")
-    {:ok, pid} = GenStage.start_link(__MODULE__, camera, name: name)
-    {:ok, pid, name}
+  @defaults %{camera: :test, name: __MODULE__}
+
+  def start_link(opts \\ []) do
+    %{camera: camera, name: name} = Enum.into(opts, @defaults)
+    GenStage.start_link(__MODULE__, camera, name: name)
   end
 
   def init(camera), do: {:producer, camera}
