@@ -15,25 +15,14 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSightTest do
+defmodule StageTest do
   use ExUnit.Case
-  doctest BindSight
-  doctest BindSight.Snapshot
 
-  test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) == "http://wrtnode-webcam.lan:8080/"
-  end
+  test "grab snapshot from SnapSource" do
+    {:ok, _pid, name} = BindSight.Stage.SnapSource.start_link(:test)
+    subscriptions = [{name, max_demand: 1}]
+    [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
 
-  test "grab a raw snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
-    assert is_binary(data)
-  end
-
-  test "validate a snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
     assert BindSight.validate_frame(data) == :ok
   end
-
 end

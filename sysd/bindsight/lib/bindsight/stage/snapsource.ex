@@ -15,25 +15,27 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSightTest do
-  use ExUnit.Case
-  doctest BindSight
-  doctest BindSight.Snapshot
+defmodule BindSight.Stage.SnapSource do
+  use GenStage
 
-  test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) == "http://wrtnode-webcam.lan:8080/"
+  def start_link(camera \\ :test) do
+    name = String.to_atom("#{__MODULE__}:#{camera}")
+    {:ok, pid} = GenStage.start_link(__MODULE__, camera, name: name)
+    {:ok, pid, name}
   end
 
-  test "grab a raw snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
-    assert is_binary(data)
+  def init(camera), do: {:producer, camera}
+
+  def handle_demand(_demand, camera) do
+    task = Task.async(fn -> handler_task(camera) end)
+    data = Task.await(task)
+    {:noreply, [data], camera}
   end
 
-  test "validate a snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
-    assert BindSight.validate_frame(data) == :ok
+  def handler_task(camera) do
+    {:ok, data} = camera |> BindSight.get_camera_url
+                         |> BindSight.Snapshot.get_snapshot
+    data
   end
 
 end
