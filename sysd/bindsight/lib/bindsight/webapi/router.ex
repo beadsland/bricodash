@@ -43,13 +43,8 @@ defmodule BindSight.WebAPI.Router do
     send_resp(conn, 404, "Don't take any wooden nickels.")
   end
 
-  @error_msg "Ditty's gone catawampous, it has."
-
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    IO.inspect(kind, label: :kind)
-    IO.inspect(reason, label: :reason)
-    IO.inspect(stack, label: :stack)
-    send_resp(conn, conn.status, @error_msg)
+    BindSight.WebAPI.Error.send(conn, [kind: kind, reason: reason, stack: stack])
   end
 
 end
