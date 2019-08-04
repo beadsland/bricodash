@@ -19,6 +19,7 @@ defmodule BindSightTest do
   use ExUnit.Case
   doctest BindSight
   doctest BindSight.Snapshot
+  doctest BindSight.CameraSupervisor
 
   test "get :test camera path" do
     assert BindSight.get_camera_url(:test) == "http://wrtnode-webcam.lan:8080/"

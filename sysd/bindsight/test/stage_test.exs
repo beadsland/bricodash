@@ -17,6 +17,8 @@
 
 defmodule StageTest do
   use ExUnit.Case
+  doctest BindSight.Stage.SnapSource
+  doctest BindSight.Stage.Spigot
 
   test "grab snapshot from SnapSource" do
     {:ok, _pid} = BindSight.Stage.SnapSource.start_link(camera: :test)

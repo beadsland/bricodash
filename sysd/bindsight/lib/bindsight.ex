@@ -25,18 +25,11 @@ defmodule BindSight do
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])
     {:ok, hostname} = :inet.gethostname()
-    nodename = String.to_atom( "bindsight@#{hostname}" )
-    {:ok, _pid} = :net_kernel.start([nodename])
+    {:ok, _pid} = [String.to_atom("bindsight@#{hostname}")]
+                  |> :net_kernel.start
 
-    children = Application.get_env(:bindsight, :cameras) |> Map.keys()
-               |> Enum.map(fn x -> speccer(x) end)
-    Supervisor.start_link(children, strategy: :one_for_one)
-
+    BindSight.CameraSupervisor.start_link([])
     BindSight.WebAPI.Server.start(type, args)
-  end
-
-  defp speccer(camera) do
-    Supervisor.child_spec({BindSight.Stage.Spigot, camera}, id: camera)
   end
 
   @doc """

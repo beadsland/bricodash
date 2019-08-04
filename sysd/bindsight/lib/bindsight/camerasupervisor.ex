@@ -15,26 +15,23 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Spigot do
+defmodule BindSight.CameraSupervisor do
   use Supervisor
 
-  def tap(camera), do: name(:snapsource, camera)
-
-  def start_link(camera \\ :test) do
-    Supervisor.start_link(__MODULE__, camera,
-                          name: "spigot:#{camera}" |> String.to_atom)
+  def start_link(_opts) do
+    Supervisor.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
   @impl true
-  def init(camera) do
-    children = [
-      {BindSight.Stage.SnapSource, [camera: camera,
-                                    name: name(:snapsource, camera)]}
-    ]
+  def init(_opts) do
+    children = Application.get_env(:bindsight, :cameras) |> Map.keys()
+               |> Enum.map(fn x -> speccer(x) end)
 
-    Supervisor.init(children, strategy: :rest_for_one)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 
-  defp name(mod, cam), do: "#{mod}:#{cam}" |> String.to_atom
+  defp speccer(camera) do
+    Supervisor.child_spec({BindSight.Stage.Spigot, camera}, id: camera)
+  end
 
 end
