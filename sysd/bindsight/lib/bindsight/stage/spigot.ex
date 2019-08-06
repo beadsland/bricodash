@@ -28,7 +28,9 @@ defmodule BindSight.Stage.Spigot do
     children = [
       {BindSight.Stage.SnapSource, [camera: camera,
                                     name: name(:snapsource, camera)]},
-      {BindSight.Stage.Broadcast, [source: name(:snapsource, camera),
+      {BindSight.Stage.Validate, [source: name(:snapsource, camera),
+                                    name: name(:validate, camera)]},
+      {BindSight.Stage.Broadcast, [source: name(:validate, camera),
                                     name: name(:broadcast, camera)]}
     ]
     Supervisor.init(children, strategy: :rest_for_one)

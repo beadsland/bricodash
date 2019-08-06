@@ -17,7 +17,9 @@
 
 defmodule StageTest do
   use ExUnit.Case
+  
   doctest BindSight.Stage.SnapSource
+  doctest BindSight.Stage.Validate
   doctest BindSight.Stage.Broadcast
   doctest BindSight.Stage.Spigot
 
