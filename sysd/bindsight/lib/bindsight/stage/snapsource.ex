@@ -17,6 +17,7 @@
 
 defmodule BindSight.Stage.SnapSource do
   use GenStage
+  require Logger
 
   @defaults %{camera: :test, name: __MODULE__}
 
@@ -62,7 +63,7 @@ defmodule BindSight.Stage.SnapSource do
     catch
       :exit, {:noproc, msg} ->
         if Application.get_env(:bindsight, :ignore_noproc) do
-          IO.puts("Ignoring noproc race condition on #{name}")
+          Logger.log(:debug, "Ignoring noproc race condition on #{name}")
         else
           throw({:exit, {:noproc, msg}})
         end
