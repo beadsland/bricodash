@@ -48,8 +48,11 @@ defmodule BindSight.Stage.SnapSource do
 
   defp do_task_cycle(name, url) do
     Process.sleep(100)
-    {:ok, data} = url |> BindSight.Snapshot.get_snapshot
-    sync_notify(name, data)
+    case BindSight.Snapshot.get_snapshot(url) do
+      {:ok, data} -> sync_notify(name, data)
+      _           -> Process.sleep(60 * 1000)
+    end
+
     do_task_cycle(name, url)
   end
 

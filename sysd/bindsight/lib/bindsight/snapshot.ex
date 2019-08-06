@@ -28,18 +28,23 @@ defmodule BindSight.Snapshot do
     scheme = String.to_existing_atom( uri.scheme )
     path = Enum.join( [uri.path, params], "?" )
 
-    # Force Mint to handle ipv6 hostnames.
+    case mint_connect(scheme, uri.host, uri.port) do
+      {:ok, conn} ->
+          {:ok, conn, _req} = Mint.HTTP.request(conn, "GET", path, [])
+          recv_snapshot(conn)
+      {:error, err} ->
+          {:fail, :mint, err}
+    end
+  end
+
+  # Try ipv6 by default, but fail-over to ipv4 gracefully.
+  defp mint_connect(scheme, host, port) do
     opts = [transport_opts: [{:tcp_module, :inet6_tcp}]]
 
-    {:ok, conn} = case Mint.HTTP.connect(scheme, uri.host, uri.port, opts) do
+    case Mint.HTTP.connect(scheme, host, port, opts) do
       {:ok, conn} -> {:ok, conn}
-                     # Fail-over to ipv4 gracefully.
-      _           -> Mint.HTTP.connect(scheme, uri.host, uri.port, [])
+      _           -> Mint.HTTP.connect(scheme, host, port, [])
     end
-
-    {:ok, conn, _request_ref} = Mint.HTTP.request(conn, "GET", path, [])
-
-    recv_snapshot(conn)
   end
 
   # Receive messages responding to our request until done.
