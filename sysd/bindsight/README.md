@@ -1,6 +1,6 @@
 # BindSight
 
-Concurrent frame-scrubbing webcam broadcast gateway daemon.
+_Concurrent frame-scrubbing webcam broadcast gateway daemon._
 
 Devoted service to stream doorcam and spacecam to Bricodash and public
 gateway, respectively, while tracking activity and performance of these
