@@ -22,21 +22,36 @@ defmodule BindSight.Stage.SnapSource do
 
   def start_link(opts \\ []) do
     %{camera: camera, name: name} = Enum.into(opts, @defaults)
-    GenStage.start_link(__MODULE__, camera, name: name)
+    GenStage.start_link(__MODULE__, [camera: camera, name: name], name: name)
   end
 
-  def init(camera), do: {:producer, camera}
+  def init(opts) do
+    url = opts[:camera] |> BindSight.get_camera_url
 
-  def handle_demand(_demand, camera) do
-    task = Task.async(fn -> handler_task(camera) end)
-    data = Task.await(task)
-    {:noreply, [data], camera}
+    Task.Supervisor.start_child(BindSight.TaskSupervisor, fn ->
+      task_cycle(opts[:name], url)
+    end, name: "#{opts[:name]}:task" |> String.to_atom, restart: :permanent)
+
+    {:producer, []}
   end
 
-  def handler_task(camera) do
-    {:ok, data} = camera |> BindSight.get_camera_url
-                         |> BindSight.Snapshot.get_snapshot
-    data
+  def task_cycle(name, url) do
+    Process.sleep(100)
+    {:ok, data} = url |> BindSight.Snapshot.get_snapshot
+    sync_notify(name, data)
+    task_cycle(name, url)
+  end
+
+  def sync_notify(name, event, timeout \\ 5000) do
+    GenStage.call(name, {:notify, event}, timeout)
+  end
+
+  def handle_call({:notify, event}, _from, state) do
+    {:reply, :ok, [event], state} # Dispatch immediately
+  end
+
+  def handle_demand(_demand, state) do
+    {:noreply, [], state} # We don't care about the demand
   end
 
 end

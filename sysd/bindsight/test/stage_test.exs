@@ -35,4 +35,12 @@ defmodule StageTest do
     assert BindSight.validate_frame(data) == :ok
   end
 
+  test "grab multiple snapshots from Spigot" do
+    subscriptions = [{BindSight.Stage.Spigot.tap(:test), max_demand: 10}]
+    result = subscriptions |> GenStage.stream |> Enum.take(10)
+              |> Enum.map(fn x -> BindSight.validate_frame(x) end)
+
+    assert result == List.duplicate(:ok, 10)
+  end
+
 end

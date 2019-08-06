@@ -28,6 +28,8 @@ defmodule BindSight do
     {:ok, _pid} = [String.to_atom("bindsight@#{hostname}")]
                   |> :net_kernel.start
 
+    Task.Supervisor.start_link(name: BindSight.TaskSupervisor,
+                               strategy: :one_for_one)
     BindSight.CameraSupervisor.start_link([])
     BindSight.WebAPI.Server.start(type, args)
   end
