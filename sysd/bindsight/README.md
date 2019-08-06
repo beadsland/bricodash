@@ -1,5 +1,11 @@
 # BindSight
 
-Service to relay MJPEG camera streams to one or more clients as streams or
-snapshots. Proactively checks for corrupt frames and drops them before
-forwarding to clients.
+Concurrent frame-scrubbing multiplexing webcam gateway daemon.
+
+Devoted service to stream doorcam and spacecam to Bricodash and public
+gateway, respectively, while tracking activity and performance of these
+and other webcams at the space. Will be more efficient and reliable than
+spawning PHP and Python processes on an as-they-come basis.
+
+For documentation and project status,
+see https://wiki.hackmanhattan.com/BindSight
