@@ -26,15 +26,11 @@ defmodule BindSight.Stage.Broadcast do
   end
 
   def init(source) do
-    IO.inspect(source)
-    {:producer_consumer, 0, subscribe_to: [source], #[{source, max_demand: 1}], #<----- problem
-                              dispatcher: GenStage.BroadcastDispatcher}
+    {:producer_consumer, 0, subscribe_to: [source],
+                            dispatcher: GenStage.BroadcastDispatcher}
   end
 
   def handle_events(events, _from, count) do
-    IO.inspect("#{inspect self()} handle #{count}")
-    IO.inspect(events)
-    count = count + 1
     {:noreply, events, count}
   end
 end
