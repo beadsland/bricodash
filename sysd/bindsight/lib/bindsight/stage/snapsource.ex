@@ -28,18 +28,29 @@ defmodule BindSight.Stage.SnapSource do
   def init(opts) do
     url = opts[:camera] |> BindSight.get_camera_url
 
-    Task.Supervisor.start_child(BindSight.TaskSupervisor, fn ->
-      task_cycle(opts[:name], url)
-    end, name: "#{opts[:name]}:task" |> String.to_atom, restart: :permanent)
+    fun = fn -> task_cycle(opts[:name], url) end
+    Task.Supervisor.start_child(BindSight.TaskSupervisor, fun,
+                                restart: :permanent)
 
     {:producer, []}
   end
 
-  def task_cycle(name, url) do
+  defp task_cycle(name, url) do
+    try do
+      Process.register(self(), "#{name}:task" |> String.to_atom)
+    rescue
+      _ in ArgumentError -> Process.sleep(10)
+                            task_cycle(name, url)
+    else
+      _ -> do_task_cycle(name, url)
+    end
+  end
+
+  defp do_task_cycle(name, url) do
     Process.sleep(100)
     {:ok, data} = url |> BindSight.Snapshot.get_snapshot
     sync_notify(name, data)
-    task_cycle(name, url)
+    do_task_cycle(name, url)
   end
 
   def sync_notify(name, event, timeout \\ 5000) do
