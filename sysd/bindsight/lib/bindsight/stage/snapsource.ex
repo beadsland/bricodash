@@ -57,7 +57,16 @@ defmodule BindSight.Stage.SnapSource do
   end
 
   def sync_notify(name, event, timeout \\ 5000) do
-    GenStage.call(name, {:notify, event}, timeout)
+    try do
+      GenStage.call(name, {:notify, event}, timeout)
+    catch
+      :exit, {:noproc, msg} ->
+        if Application.get_env(:bindsight, :ignore_noproc) do
+          IO.puts("Ignoring noproc race condition on #{name}")
+        else
+          throw({:exit, {:noproc, msg}})
+        end
+    end
   end
 
   def handle_call({:notify, event}, _from, state) do
