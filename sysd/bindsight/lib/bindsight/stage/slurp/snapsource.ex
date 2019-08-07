@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.Stage.Slurp.SnapSource do
+  @moduledoc "Slurp spigot producer to dispatch frames pulled via a task loop."
+
   use GenStage
   require Logger
 

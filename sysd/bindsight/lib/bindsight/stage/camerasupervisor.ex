@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.Stage.CameraSupervisor do
+  @moduledoc "Supervise slurp spigot (camera pipeline segment) for each camera."
+
   use Supervisor
 
   def start_link(_opts) do

@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.WebAPI.Server do
+  @moduledoc "Cowboy server instance for BindSight WebAPI."
+
   require Logger
   use Application
 

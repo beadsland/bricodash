@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.WebAPI.Home do
+  @moduledoc "Plug for BindSight WebAPI service home page."
+
   import Plug.Conn
   import Phoenix.HTML
   import Phoenix.HTML.Tag

@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.WebAPI.Error do
+  @moduledoc "Plug for generic 500 status error message."
+
   import Plug.Conn
   import Phoenix.HTML
   import Phoenix.HTML.Tag

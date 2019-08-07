@@ -16,6 +16,8 @@
 ####
 
 defmodule PlugTest do
+  @moduledoc "Test cowboy plug functionality."
+  
   use ExUnit.Case
   use Plug.Test
 

@@ -16,6 +16,8 @@
 ####
 
 defmodule StageTest do
+  @moduledoc "Test GenStage pipeline functionality."
+  
   use ExUnit.Case
 
   doctest BindSight.Stage.Slurp.SnapSource

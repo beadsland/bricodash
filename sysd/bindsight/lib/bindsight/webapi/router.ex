@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.WebAPI.Router do
+  @moduledoc "Router for BindSight WebAPI."
+
   use Plug.Router
   use Plug.ErrorHandler
 

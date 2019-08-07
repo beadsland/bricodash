@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.Stage.Slurp.Broadcast do
+  @moduledoc "Slurp spigot endpoint to serve arbitrary number of clients."
+
   use GenStage
 
   @defaults %{source: :producer_not_specified, name: __MODULE__}

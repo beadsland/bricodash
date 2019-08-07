@@ -16,6 +16,10 @@
 ####
 
 defmodule BindSight.Stage.Slurp.Validate do
+  @moduledoc """
+  Slurp spigot consumer-producer to check for corrupt and greytoss frames.
+  """
+
   use GenStage
   require Logger
 

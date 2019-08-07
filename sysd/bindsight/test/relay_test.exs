@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSightTest do
+  @moduledoc "Test basic utility functions used by other modules."
+
   use ExUnit.Case
   doctest BindSight
   doctest BindSight.Snapshot

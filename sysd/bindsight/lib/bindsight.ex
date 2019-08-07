@@ -16,11 +16,7 @@
 ####
 
 defmodule BindSight do
-  @moduledoc """
-  Service to relay MJPEG camera streams to one or more clients as streams or
-  snapshots. Proactively checks for corrupt frames and drops them before
-  forwarding to clients.
-  """
+  @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
 
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])

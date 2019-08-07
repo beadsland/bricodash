@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.WebAPI.Verify do
+  @moduledoc "Plug to check syntax and terms of WebAPI requests."
+
   import Plug.Conn
 
   def init(options), do: options

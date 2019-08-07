@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.Stage.Slurp.Spigot do
+  @moduledoc "GenStage pipeline segment for processing a single camera feed."
+
   use Supervisor
 
   def start_link(camera \\ :test) do

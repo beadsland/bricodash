@@ -16,6 +16,8 @@
 ####
 
 defmodule BindSight.Snapshot do
+  @moduledoc "Retrieving a single snapshot from a specified camera."
+
   @doc """
   Obtain snapshot JPEG from camera by name.
   """
