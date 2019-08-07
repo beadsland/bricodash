@@ -2,7 +2,6 @@ import Config
 
 config :bindsight,
   cameras: %{
-    test: "http://wrtnode-webcam.lan:8080/",
     space: "http://wrtnode-webcam.lan:8080/",
     door: "http://rfid-access-building.lan:8080/",
     cr10: "http://octoprint-main.lan:8080/",
