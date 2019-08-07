@@ -27,8 +27,8 @@ defmodule BindSight.WebAPI.Server do
     transport = [num_acceptors: acceptors]
 
     children = [
-      { Plug.Cowboy, scheme: :http, plug: BindSight.WebAPI.Router,
-                     options: [port: port, transport_options: transport] }
+      {Plug.Cowboy, scheme: :http, plug: BindSight.WebAPI.Router,
+                     options: [port: port, transport_options: transport]}
     ]
     opts = [strategy: :one_for_one, name: BindSight.WebAPI.Supervisor]
 
