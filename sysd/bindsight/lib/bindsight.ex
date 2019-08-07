@@ -19,7 +19,7 @@ defmodule BindSight do
   @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
 
   alias BindSight.Stage.CameraSupervisor
-  alias Bindsight.WebAPI.Server
+  alias BindSight.WebAPI.Server
 
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])

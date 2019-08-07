@@ -33,7 +33,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
     visor = BindSight.TaskSupervisor
     fun = fn -> task_cycle(opts[:name], url) end
-    visor = Task.Supervisor.start_child(visor, fun, restart: :permanent)
+    Task.Supervisor.start_child(visor, fun, restart: :permanent)
 
     {:producer, []}
   end
