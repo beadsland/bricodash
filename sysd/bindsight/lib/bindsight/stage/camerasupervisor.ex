@@ -15,22 +15,23 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Broadcast do
-  use GenStage
+defmodule BindSight.Stage.CameraSupervisor do
+  use Supervisor
 
-  @defaults %{source: :producer_not_specified, name: __MODULE__}
-
-  def start_link(opts \\ []) do
-    %{source: source, name: name} = Enum.into(opts, @defaults)
-    GenStage.start_link(__MODULE__, source, name: name)
+  def start_link(_opts) do
+    Supervisor.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
-  def init(source) do
-    {:producer_consumer, 0, subscribe_to: [source],
-                            dispatcher: GenStage.BroadcastDispatcher}
+  @impl true
+  def init(_opts) do
+    children = Application.get_env(:bindsight, :cameras) |> Map.keys()
+               |> Enum.map(fn x -> speccer(x) end)
+
+    Supervisor.init(children, strategy: :one_for_one)
   end
 
-  def handle_events(events, _from, count) do
-    {:noreply, events, count}
+  defp speccer(camera) do
+    Supervisor.child_spec({BindSight.Stage.Slurp.Spigot, camera}, id: camera)
   end
+
 end

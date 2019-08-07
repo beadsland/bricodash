@@ -17,29 +17,29 @@
 
 defmodule StageTest do
   use ExUnit.Case
-  
-  doctest BindSight.Stage.SnapSource
-  doctest BindSight.Stage.Validate
-  doctest BindSight.Stage.Broadcast
-  doctest BindSight.Stage.Spigot
+
+  doctest BindSight.Stage.Slurp.SnapSource
+  doctest BindSight.Stage.Slurp.Validate
+  doctest BindSight.Stage.Slurp.Broadcast
+  doctest BindSight.Stage.Slurp.Spigot
 
   test "grab snapshot from SnapSource" do
-    {:ok, _pid} = BindSight.Stage.SnapSource.start_link(camera: :test)
-    subscriptions = [{BindSight.Stage.SnapSource, max_demand: 1}]
+    {:ok, _pid} = BindSight.Stage.Slurp.SnapSource.start_link(camera: :test)
+    subscriptions = [{BindSight.Stage.Slurp.SnapSource, max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
 
     assert is_binary(data)
   end
 
   test "grab snapshot from Spigot" do
-    subscriptions = [{BindSight.Stage.Spigot.tap(:test), max_demand: 1}]
+    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream |> Enum.take(1)
 
     assert BindSight.validate_frame(data) == :ok
   end
 
   test "grab multiple snapshots from Spigot" do
-    subscriptions = [{BindSight.Stage.Spigot.tap(:test), max_demand: 10}]
+    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 10}]
     result = subscriptions |> GenStage.stream |> Enum.take(10)
               |> Enum.map(fn x -> BindSight.validate_frame(x) end)
 
@@ -47,7 +47,7 @@ defmodule StageTest do
   end
 
   test "grab broadcast frame across three clients" do
-    subscriptions = [{BindSight.Stage.Spigot.tap(:test), max_demand: 1}]
+    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 1}]
     t1 = Task.async(fn -> subscriptions |> GenStage.stream |> Enum.take(5) end)
     t2 = Task.async(fn -> subscriptions |> GenStage.stream |> Enum.take(5) end)
     t3 = Task.async(fn -> subscriptions |> GenStage.stream |> Enum.take(5) end)
@@ -58,6 +58,5 @@ defmodule StageTest do
     assert length(data1 -- data2) < 2
     assert length(data2 -- data3) < 2
   end
-
 
 end

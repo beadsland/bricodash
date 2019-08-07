@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Validate do
+defmodule BindSight.Stage.Slurp.Validate do
   use GenStage
   require Logger
 

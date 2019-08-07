@@ -30,7 +30,7 @@ defmodule BindSight do
 
     Task.Supervisor.start_link(name: BindSight.TaskSupervisor,
                                strategy: :one_for_one)
-    BindSight.CameraSupervisor.start_link([])
+    BindSight.Stage.CameraSupervisor.start_link([])
     BindSight.WebAPI.Server.start(type, args)
   end
 

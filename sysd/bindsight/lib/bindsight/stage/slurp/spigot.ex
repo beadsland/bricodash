@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Spigot do
+defmodule BindSight.Stage.Slurp.Spigot do
   use Supervisor
 
   def start_link(camera \\ :test) do
@@ -26,12 +26,12 @@ defmodule BindSight.Stage.Spigot do
   @impl true
   def init(camera) do
     children = [
-      {BindSight.Stage.SnapSource, [camera: camera,
-                                    name: name(:snapsource, camera)]},
-      {BindSight.Stage.Validate, [source: name(:snapsource, camera),
-                                    name: name(:validate, camera)]},
-      {BindSight.Stage.Broadcast, [source: name(:validate, camera),
-                                    name: name(:broadcast, camera)]}
+      {BindSight.Stage.Slurp.SnapSource, [camera: camera,
+                                          name: name(:snapsource, camera)]},
+      {BindSight.Stage.Slurp.Validate, [source: name(:snapsource, camera),
+                                        name: name(:validate, camera)]},
+      {BindSight.Stage.Slurp.Broadcast, [source: name(:validate, camera),
+                                         name: name(:broadcast, camera)]}
     ]
     Supervisor.init(children, strategy: :rest_for_one)
   end
