@@ -31,10 +31,10 @@ defmodule BindSight.Stage.Slurp.Validate do
   end
 
   def init(source) do
-    {:producer_consumer, 0, subscribe_to: [source]}
+    {:producer_consumer, :stateless, subscribe_to: [source]}
   end
 
-  def handle_events(events, _from, count) do
+  def handle_events(events, _from, :stateless) do
     fun = fn x -> BindSight.validate_frame(x) == :ok end
     checks = events |> Task.async_stream(fun) |> Enum.map(fn {:ok, x} -> x end)
 
@@ -47,6 +47,6 @@ defmodule BindSight.Stage.Slurp.Validate do
     discard = length(events) - length(good)
     if discard > 0, do: Logger.warn("Discarding #{discard} bad frames")
 
-    {:noreply, good, count}
+    {:noreply, good, :stateless}
   end
 end

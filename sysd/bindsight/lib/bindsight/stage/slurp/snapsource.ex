@@ -35,7 +35,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
     fun = fn -> task_cycle(opts[:name], url) end
     Task.Supervisor.start_child(visor, fun, restart: :permanent)
 
-    {:producer, []}
+    {:producer, :stateless}
   end
 
   defp task_cycle(name, url) do
@@ -70,13 +70,13 @@ defmodule BindSight.Stage.Slurp.SnapSource do
       end
   end
 
-  def handle_call({:notify, event}, _from, state) do
+  def handle_call({:notify, event}, _from, :stateless) do
     # Dispatch immediately
-    {:reply, :ok, [event], state}
+    {:reply, :ok, [event], :stateless}
   end
 
-  def handle_demand(_demand, state) do
+  def handle_demand(_demand, :stateless) do
     # We don't care about the demand
-    {:noreply, [], state}
+    {:noreply, [], :stateless}
   end
 end
