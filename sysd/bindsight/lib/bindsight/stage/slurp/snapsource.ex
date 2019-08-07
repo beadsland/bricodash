@@ -29,10 +29,11 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   end
 
   def init(opts) do
-    url = opts[:camera] |> BindSight.get_camera_url()
+    %{camera: camera, name: name} = Enum.into(opts, @defaults)
+    url = camera |> BindSight.get_camera_url()
 
     visor = BindSight.TaskSupervisor
-    fun = fn -> task_cycle(opts[:name], url) end
+    fun = fn -> task_cycle(name, url) end
     Task.Supervisor.start_child(visor, fun, restart: :permanent)
 
     {:producer, :stateless}
