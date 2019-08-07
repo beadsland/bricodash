@@ -35,17 +35,13 @@ defmodule BindSight do
     BindSight.WebAPI.Server.start(type, args)
   end
 
-  @doc """
-  Retrieve camera URL by name from config.
-  """
+  @doc "Retrieve camera URL by name from config."
   def get_camera_url(name) do
     cameras = Application.fetch_env!(:bindsight, :cameras)
     cameras[name]
   end
 
-  @doc """
-  Confirm binary is valid JPEG.
-  """
+  @doc "Confirm binary is valid JPEG."
   def validate_frame(binary) do
     case ExImageInfo.info(binary) do
       {"image/jpeg", _, _, _} -> :ok
