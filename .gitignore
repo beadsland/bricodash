@@ -14,4 +14,17 @@ __pycache__/
 test/
 !sysd/bindsight/test
 sysd/bindsight/.vscode/launch.json
+
+##
+# Elixir
+##
+/_build/
+/cover/
+/deps/
+/doc/
+/.fetch
 erl_crash.dump
+*.ez
+relay-*.tar
+*.lock
+.elixir_ls
