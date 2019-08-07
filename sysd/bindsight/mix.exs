@@ -49,6 +49,7 @@ defmodule BindSight.MixProject do
       {:phoenix_html, "~> 2.13.3"},
       {:memoize, "~> 1.2"},
       {:gen_stage, "~> 0.11"},
+      {:okasaki, "~> 1.0.0"},
     ]
   end
 end

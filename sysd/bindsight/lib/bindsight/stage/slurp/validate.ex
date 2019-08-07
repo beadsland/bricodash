@@ -34,6 +34,10 @@ defmodule BindSight.Stage.Slurp.Validate do
     {:producer_consumer, :stateless, subscribe_to: [source]}
   end
 
+  def handle_events([{:batch, batch}], from, :stateless) do
+    handle_events(batch, from, :stateless)
+  end
+
   def handle_events(events, _from, :stateless) do
     fun = fn x -> BindSight.validate_frame(x) == :ok end
     checks = events |> Task.async_stream(fun) |> Enum.map(fn {:ok, x} -> x end)
