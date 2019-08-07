@@ -33,11 +33,9 @@ defmodule BindSight.WebAPI.Verify do
   end
 
   defp atomize(s) do
-    try do
-      String.to_existing_atom(s)
-    rescue
-      _ in ArgumentError -> nil
-    end
+    String.to_existing_atom(s)
+  rescue
+    _ in ArgumentError -> nil
   end
 
   defp verify_request(conn, _, _, comps) when length(comps) != 2, do: conn

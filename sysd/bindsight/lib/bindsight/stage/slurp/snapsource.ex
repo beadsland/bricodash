@@ -39,15 +39,13 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   end
 
   defp task_cycle(name, url) do
-    try do
-      Process.register(self(), "#{name}:task" |> String.to_atom())
-    rescue
-      _ in ArgumentError ->
-        Process.sleep(10)
-        task_cycle(name, url)
-    else
-      _ -> do_task_cycle(name, url)
-    end
+    Process.register(self(), "#{name}:task" |> String.to_atom())
+  rescue
+    _ in ArgumentError ->
+      Process.sleep(10)
+      task_cycle(name, url)
+  else
+    _ -> do_task_cycle(name, url)
   end
 
   defp do_task_cycle(name, url) do
@@ -62,16 +60,14 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   end
 
   def sync_notify(name, event, timeout \\ 5000) do
-    try do
-      GenStage.call(name, {:notify, event}, timeout)
-    catch
-      :exit, {:noproc, msg} ->
-        if Application.get_env(:bindsight, :ignore_noproc) do
-          Logger.log(:debug, "Ignoring noproc race condition on #{name}")
-        else
-          throw({:exit, {:noproc, msg}})
-        end
-    end
+    GenStage.call(name, {:notify, event}, timeout)
+  catch
+    :exit, {:noproc, msg} ->
+      if Application.get_env(:bindsight, :ignore_noproc) do
+        Logger.log(:debug, "Ignoring noproc race condition on #{name}")
+      else
+        throw({:exit, {:noproc, msg}})
+      end
   end
 
   def handle_call({:notify, event}, _from, state) do
