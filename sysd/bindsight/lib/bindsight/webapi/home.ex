@@ -30,14 +30,14 @@ defmodule BindSight.WebAPI.Home do
   end
 
   defp links([]), do: []
+
   defp links([head | tail]) do
     html = [camera(head), rest(head, :snapshot), rest(head, :stream), tag(:hr)]
     [html, links(tail)]
   end
 
   defp spacer(), do: raw(" &mdash; ")
-  defp camera(text), do: content_tag(:h2, text, [style: "display:inline"])
-  defp rest(camera, action), do: [spacer(), anchor(action, "#{camera}/#{action}")]
-  defp anchor(text, url), do: content_tag(:a, text, [href: url])
-
+  defp camera(text), do: content_tag(:h2, text, style: "display:inline")
+  defp rest(cam, act), do: [spacer(), anchor(action, "#{cam}/#{act}")]
+  defp anchor(text, url), do: content_tag(:a, text, href: url)
 end

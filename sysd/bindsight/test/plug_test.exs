@@ -17,7 +17,7 @@
 
 defmodule PlugTest do
   @moduledoc "Test cowboy plug functionality."
-  
+
   use ExUnit.Case
   use Plug.Test
 
@@ -68,5 +68,4 @@ defmodule PlugTest do
     assert conn.state == :sent
     assert conn.status == 404
   end
-
 end

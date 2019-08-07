@@ -24,20 +24,24 @@ defmodule BindSightTest do
   doctest BindSight.Stage.CameraSupervisor
 
   test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) == \
-           "http://rfid-access-building.lan:8080/"
+    assert BindSight.get_camera_url(:test) == "http://rfid-access-building.lan:8080/"
   end
 
   test "grab a raw snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
+    {:ok, data} =
+      :test
+      |> BindSight.get_camera_url()
+      |> BindSight.Snapshot.get_snapshot()
+
     assert is_binary(data)
   end
 
   test "validate a snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url
-                        |> BindSight.Snapshot.get_snapshot
+    {:ok, data} =
+      :test
+      |> BindSight.get_camera_url()
+      |> BindSight.Snapshot.get_snapshot()
+
     assert BindSight.validate_frame(data) == :ok
   end
-
 end

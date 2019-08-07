@@ -23,8 +23,11 @@ defmodule BindSight.WebAPI.Verify do
   def init(options), do: options
 
   def call(%Plug.Conn{request_path: path} = conn, opts) do
-    components = path |> String.trim("/") |> String.split("/")
-                      |> Enum.map(fn x -> atomize(x) end)
+    components =
+      path
+      |> String.trim("/")
+      |> String.split("/")
+      |> Enum.map(fn x -> atomize(x) end)
 
     verify_request(conn, opts[:cameras], opts[:actions], components)
   end
@@ -43,12 +46,12 @@ defmodule BindSight.WebAPI.Verify do
     cond do
       cam not in cameras ->
         conn |> send_resp(418, "That dog won't hunt (unknown camera).") |> halt
+
       act not in actions ->
         conn |> send_resp(400, "All down but nine (unknown action).") |> halt
+
       true ->
         conn
     end
-
   end
-
 end

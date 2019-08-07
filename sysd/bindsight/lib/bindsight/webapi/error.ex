@@ -27,13 +27,15 @@ defmodule BindSight.WebAPI.Error do
   @cluck Application.get_env(:bindsight, :cluck_errors)
 
   def send(conn, opts) do
-    error = if @cluck do
-      IO.puts(cluck(opts))
-      body = [content_tag(:h1, @error_msg), content_tag(:pre, cluck(opts))]
-      content_tag(:body, body) |> safe_to_string
-    else
-      @error_msg
-    end
+    error =
+      if @cluck do
+        IO.puts(cluck(opts))
+        body = [content_tag(:h1, @error_msg), content_tag(:pre, cluck(opts))]
+        content_tag(:body, body) |> safe_to_string
+      else
+        @error_msg
+      end
+
     send_resp(conn, conn.status, error)
   end
 
@@ -48,5 +50,4 @@ defmodule BindSight.WebAPI.Error do
     str = inspect(opts[label], label: label, pretty: true, limit: 7)
     "#{label}: #{str}"
   end
-
 end

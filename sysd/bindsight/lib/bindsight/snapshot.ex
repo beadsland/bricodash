@@ -25,17 +25,18 @@ defmodule BindSight.Snapshot do
 
   # Make request for snapshot and begin reading incoming stream.
   def get_snapshot(url) do
-    uri = url |> URI.parse
-    params = %{"action" => "snapshot"} |> URI.encode_query
-    scheme = uri.scheme |> String.to_existing_atom
+    uri = url |> URI.parse()
+    params = %{"action" => "snapshot"} |> URI.encode_query()
+    scheme = uri.scheme |> String.to_existing_atom()
     path = [uri.path, params] |> Enum.join("?")
 
     case mint_connect(scheme, uri.host, uri.port) do
       {:ok, conn} ->
-          {:ok, conn, _req} = Mint.HTTP.request(conn, "GET", path, [])
-          recv_snapshot(conn)
+        {:ok, conn, _req} = Mint.HTTP.request(conn, "GET", path, [])
+        recv_snapshot(conn)
+
       {:error, err} ->
-          {:fail, :mint, err}
+        {:fail, :mint, err}
     end
   end
 
@@ -45,7 +46,7 @@ defmodule BindSight.Snapshot do
 
     case Mint.HTTP.connect(scheme, host, port, opts) do
       {:ok, conn} -> {:ok, conn}
-      _           -> Mint.HTTP.connect(scheme, host, port, [])
+      _ -> Mint.HTTP.connect(scheme, host, port, [])
     end
   end
 
@@ -56,29 +57,44 @@ defmodule BindSight.Snapshot do
         {:ok, conn, responses} = Mint.HTTP.stream(conn, message)
 
         case parse_responses(responses, status, data) do
-          {:fail, status, headers}  -> Mint.HTTP.close(conn)
-                                       {:fail, status, headers}
-          {:fail, status}           -> recv_snapshot(conn, status)
-          {:ok, status, data}       -> recv_snapshot(conn, status, data)
-          {:done, data}             -> Mint.HTTP.close(conn)
-                                       {:ok, data}
+          {:fail, status, headers} ->
+            Mint.HTTP.close(conn)
+            {:fail, status, headers}
+
+          {:fail, status} ->
+            recv_snapshot(conn, status)
+
+          {:ok, status, data} ->
+            recv_snapshot(conn, status, data)
+
+          {:done, data} ->
+            Mint.HTTP.close(conn)
+            {:ok, data}
         end
     end
   end
 
   # Tail recurse over each response list until empty.
-  defp parse_responses([], 200, data), do:    {:ok, 200, data}
-  defp parse_responses([], status, nil), do:  {:fail, status}
+  defp parse_responses([], 200, data), do: {:ok, 200, data}
+  defp parse_responses([], status, nil), do: {:fail, status}
 
   defp parse_responses([head | tail], status, data) do
     case head do
-      {:status, _ref, status}  -> parse_responses(tail, status, data)
+      {:status, _ref, status} ->
+        parse_responses(tail, status, data)
+
       {:headers, _ref, headers}
-          when status != 200   -> {:fail, status, headers}
-      {:headers, _ref, _hdrs}  -> parse_responses(tail, status, <<>>)
-      {:data, _ref, next}      -> parse_responses(tail, status, data <> next)
-      {:done, _ref}            -> {:done, data}
+      when status != 200 ->
+        {:fail, status, headers}
+
+      {:headers, _ref, _hdrs} ->
+        parse_responses(tail, status, <<>>)
+
+      {:data, _ref, next} ->
+        parse_responses(tail, status, data <> next)
+
+      {:done, _ref} ->
+        {:done, data}
     end
   end
-
 end

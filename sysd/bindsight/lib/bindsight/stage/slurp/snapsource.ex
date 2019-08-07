@@ -29,21 +29,22 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   end
 
   def init(opts) do
-    url = opts[:camera] |> BindSight.get_camera_url
+    url = opts[:camera] |> BindSight.get_camera_url()
 
+    visor = BindSight.TaskSupervisor
     fun = fn -> task_cycle(opts[:name], url) end
-    Task.Supervisor.start_child(BindSight.TaskSupervisor, fun,
-                                restart: :permanent)
+    visor = Task.Supervisor.start_child(visor, fun, restart: :permanent)
 
     {:producer, []}
   end
 
   defp task_cycle(name, url) do
     try do
-      Process.register(self(), "#{name}:task" |> String.to_atom)
+      Process.register(self(), "#{name}:task" |> String.to_atom())
     rescue
-      _ in ArgumentError -> Process.sleep(10)
-                            task_cycle(name, url)
+      _ in ArgumentError ->
+        Process.sleep(10)
+        task_cycle(name, url)
     else
       _ -> do_task_cycle(name, url)
     end
@@ -51,9 +52,10 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   defp do_task_cycle(name, url) do
     Process.sleep(100)
+
     case BindSight.Snapshot.get_snapshot(url) do
       {:ok, data} -> sync_notify(name, data)
-      _           -> Process.sleep(60 * 1000)
+      _ -> Process.sleep(60 * 1000)
     end
 
     do_task_cycle(name, url)
@@ -73,11 +75,12 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   end
 
   def handle_call({:notify, event}, _from, state) do
-    {:reply, :ok, [event], state} # Dispatch immediately
+    # Dispatch immediately
+    {:reply, :ok, [event], state}
   end
 
   def handle_demand(_demand, state) do
-    {:noreply, [], state} # We don't care about the demand
+    # We don't care about the demand
+    {:noreply, [], state}
   end
-
 end

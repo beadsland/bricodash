@@ -21,11 +21,16 @@ defmodule BindSight do
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])
     {:ok, hostname} = :inet.gethostname()
-    {:ok, _pid} = [String.to_atom("bindsight@#{hostname}")]
-                  |> :net_kernel.start
 
-    Task.Supervisor.start_link(name: BindSight.TaskSupervisor,
-                               strategy: :one_for_one)
+    {:ok, _pid} =
+      [String.to_atom("bindsight@#{hostname}")]
+      |> :net_kernel.start()
+
+    Task.Supervisor.start_link(
+      name: BindSight.TaskSupervisor,
+      strategy: :one_for_one
+    )
+
     BindSight.Stage.CameraSupervisor.start_link([])
     BindSight.WebAPI.Server.start(type, args)
   end
@@ -43,9 +48,8 @@ defmodule BindSight do
   """
   def validate_frame(binary) do
     case ExImageInfo.info(binary) do
-      {"image/jpeg", _, _, _}   -> :ok
-      _                         -> :corrupt_frame
+      {"image/jpeg", _, _, _} -> :ok
+      _ -> :corrupt_frame
     end
   end
-
 end

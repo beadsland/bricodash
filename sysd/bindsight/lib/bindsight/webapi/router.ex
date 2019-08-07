@@ -23,22 +23,26 @@ defmodule BindSight.WebAPI.Router do
 
   @cameras Application.get_env(:bindsight, :cameras) |> Map.keys()
 
-  plug BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot]
-  plug :match
-  plug :dispatch
+  plug(BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot])
+  plug(:match)
+  plug(:dispatch)
 
   get "/" do
-    BindSight.WebAPI.Home.send(conn, [cameras: @cameras])
+    BindSight.WebAPI.Home.send(conn, cameras: @cameras)
   end
 
   # Note, cache-control defaults to "max-age=0, private, must-revalidate",
   # per https://hexdocs.pm/plug/Plug.Conn.html -- so we needn't do anything.
   get "/:camera/snapshot" do
-    {:ok, frame} = camera |> String.to_existing_atom
-      |> BindSight.get_camera_url |> BindSight.Snapshot.get_snapshot
+    {:ok, frame} =
+      camera
+      |> String.to_existing_atom()
+      |> BindSight.get_camera_url()
+      |> BindSight.Snapshot.get_snapshot()
+
     conn
-      |> put_resp_content_type("image/jpg")
-      |> send_resp(200, frame)
+    |> put_resp_content_type("image/jpg")
+    |> send_resp(200, frame)
   end
 
   match _ do
@@ -46,7 +50,6 @@ defmodule BindSight.WebAPI.Router do
   end
 
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    BindSight.WebAPI.Error.send(conn, [kind: kind, reason: reason, stack: stack])
+    BindSight.WebAPI.Error.send(conn, kind: kind, reason: reason, stack: stack)
   end
-
 end

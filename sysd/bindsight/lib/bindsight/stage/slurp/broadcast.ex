@@ -28,8 +28,8 @@ defmodule BindSight.Stage.Slurp.Broadcast do
   end
 
   def init(source) do
-    {:producer_consumer, 0, subscribe_to: [source],
-                            dispatcher: GenStage.BroadcastDispatcher}
+    dispatch = GenStage.BroadcastDispatcher
+    {:producer_consumer, 0, subscribe_to: [source], dispatcher: dispatch}
   end
 
   def handle_events(events, _from, count) do

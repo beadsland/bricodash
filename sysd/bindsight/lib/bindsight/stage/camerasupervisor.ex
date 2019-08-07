@@ -26,8 +26,10 @@ defmodule BindSight.Stage.CameraSupervisor do
 
   @impl true
   def init(_opts) do
-    children = Application.get_env(:bindsight, :cameras) |> Map.keys()
-               |> Enum.map(fn x -> speccer(x) end)
+    children =
+      Application.get_env(:bindsight, :cameras)
+      |> Map.keys()
+      |> Enum.map(fn x -> speccer(x) end)
 
     Supervisor.init(children, strategy: :one_for_one)
   end
@@ -35,5 +37,4 @@ defmodule BindSight.Stage.CameraSupervisor do
   defp speccer(camera) do
     Supervisor.child_spec({BindSight.Stage.Slurp.Spigot, camera}, id: camera)
   end
-
 end
