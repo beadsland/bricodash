@@ -25,10 +25,10 @@ defmodule BindSight.Snapshot do
 
   # Make request for snapshot and begin reading incoming stream.
   def get_snapshot(url) do
-    uri = URI.parse( url )
-    params = URI.encode_query( %{"action" => "snapshot"} )
-    scheme = String.to_existing_atom( uri.scheme )
-    path = Enum.join( [uri.path, params], "?" )
+    uri = url |> URI.parse
+    params = %{"action" => "snapshot"} |> URI.encode_query
+    scheme = uri.scheme |> String.to_existing_atom
+    path = [uri.path, params] |> Enum.join("?")
 
     case mint_connect(scheme, uri.host, uri.port) do
       {:ok, conn} ->
