@@ -39,6 +39,7 @@ defmodule BindSight.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:castore, "~> 0.1.0"},
       {:mint, "~> 0.2.0"},
       {:ex_image_info, "~> 0.2.4"},
