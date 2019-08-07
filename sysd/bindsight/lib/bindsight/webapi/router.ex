@@ -18,6 +18,9 @@
 defmodule BindSight.WebAPI.Router do
   @moduledoc "Router for BindSight WebAPI."
 
+  alias BindSight.WebAPI.Error
+  alias BindSight.WebAPI.Home
+
   use Plug.Router
   use Plug.ErrorHandler
 
@@ -28,7 +31,7 @@ defmodule BindSight.WebAPI.Router do
   plug(:dispatch)
 
   get "/" do
-    BindSight.WebAPI.Home.send(conn, cameras: @cameras)
+    Home.send(conn, cameras: @cameras)
   end
 
   # Note, cache-control defaults to "max-age=0, private, must-revalidate",
@@ -50,6 +53,6 @@ defmodule BindSight.WebAPI.Router do
   end
 
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
-    BindSight.WebAPI.Error.send(conn, kind: kind, reason: reason, stack: stack)
+    Error.send(conn, kind: kind, reason: reason, stack: stack)
   end
 end

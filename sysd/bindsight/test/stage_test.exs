@@ -20,28 +20,31 @@ defmodule StageTest do
 
   use ExUnit.Case
 
+  alias BindSight.Stage.Slurp.SnapSource
+  alias BindSight.Stage.Slurp.Spigot
+
   doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Validate
   doctest BindSight.Stage.Slurp.Broadcast
   doctest BindSight.Stage.Slurp.Spigot
 
   test "grab snapshot from SnapSource" do
-    {:ok, _pid} = BindSight.Stage.Slurp.SnapSource.start_link(camera: :test)
-    subscriptions = [{BindSight.Stage.Slurp.SnapSource, max_demand: 1}]
+    {:ok, _pid} = SnapSource.start_link(camera: :test)
+    subscriptions = [{SnapSource, max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     assert is_binary(data)
   end
 
   test "grab snapshot from Spigot" do
-    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 1}]
+    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     assert BindSight.validate_frame(data) == :ok
   end
 
   test "grab multiple snapshots from Spigot" do
-    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 10}]
+    subscriptions = [{Spigot.tap(:test), max_demand: 10}]
 
     result =
       subscriptions
@@ -53,7 +56,7 @@ defmodule StageTest do
   end
 
   test "grab broadcast frame across three clients" do
-    subscriptions = [{BindSight.Stage.Slurp.Spigot.tap(:test), max_demand: 1}]
+    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
     t1 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
     t2 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
     t3 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)

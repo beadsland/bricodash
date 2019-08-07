@@ -18,6 +18,9 @@
 defmodule BindSight do
   @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
 
+  alias BindSight.Stage.CameraSupervisor
+  alias Bindsight.WebAPI.Server
+
   def start(type, args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])
     {:ok, hostname} = :inet.gethostname()
@@ -31,8 +34,8 @@ defmodule BindSight do
       strategy: :one_for_one
     )
 
-    BindSight.Stage.CameraSupervisor.start_link([])
-    BindSight.WebAPI.Server.start(type, args)
+    CameraSupervisor.start_link([])
+    Server.start(type, args)
   end
 
   @doc "Retrieve camera URL by name from config."
