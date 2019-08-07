@@ -16,6 +16,7 @@
 ####
 
 defmodule BindSight.MixProject do
+  @moduledoc "Bricodash project file."
   use Mix.Project
 
   def project do
