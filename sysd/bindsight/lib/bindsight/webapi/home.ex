@@ -36,7 +36,7 @@ defmodule BindSight.WebAPI.Home do
     [html, links(tail)]
   end
 
-  defp spacer(), do: raw(" &mdash; ")
+  defp spacer, do: raw(" &mdash; ")
   defp camera(text), do: content_tag(:h2, text, style: "display:inline")
   defp rest(cam, act), do: [spacer(), anchor(action, "#{cam}/#{act}")]
   defp anchor(text, url), do: content_tag(:a, text, href: url)
