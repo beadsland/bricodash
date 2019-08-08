@@ -21,8 +21,12 @@ defmodule BindSight.Stage.Slurp.Batch do
   use GenStage
   require Logger
 
-  @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__,
-              tasks: BindSight.TaskSupervisor}
+  @defaults %{
+    source: :producer_not_specified,
+    camera: :test,
+    name: __MODULE__,
+    tasks: BindSight.TaskSupervisor
+  }
 
   def start_link(opts \\ []) do
     %{name: name} = Enum.into(opts, @defaults)
@@ -68,7 +72,8 @@ defmodule BindSight.Stage.Slurp.Batch do
 
   def handle_call({:notify, event}, _from, {camera, queue, pending}) do
     queue = Okasaki.Queue.insert(queue, event)
-    handle_demand(0, {camera, queue, pending})
+    {:noreply, batch, state} = handle_demand(0, {camera, queue, pending})
+    {:reply, :ok, batch, state}
   end
 
   def handle_demand(demand, {camera, queue, pending}) do
@@ -86,7 +91,7 @@ defmodule BindSight.Stage.Slurp.Batch do
         size = min(demand, onhold)
         {batch, queue} = assemble_batch(queue, size, [])
         Logger.info("Batch of #{size} frames dispatched from #{camera}.")
-        {:reply, :ok, [{:batch, batch}], {camera, queue, demand - size}}
+        {:noreply, [{:batch, batch}], {camera, queue, demand - size}}
     end
   end
 
