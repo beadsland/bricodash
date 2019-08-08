@@ -28,9 +28,11 @@ defmodule BindSight.Stage.Slurp.Spigot do
   @impl true
   def init(camera) do
     children = [
-      {BindSight.Stage.Slurp.SnapSource, [camera: camera, name: name(:snapsource, camera)]},
+      {Task.Supervisor, name: name(:tasks, camera)},
+      {BindSight.Stage.Slurp.SnapSource,
+       [camera: camera, name: name(:snapsource, camera), tasks: name(:tasks, camera)]},
       {BindSight.Stage.Slurp.Batch,
-       [source: name(:snapsource, camera), camera: camera, name: name(:batch, camera)]},
+       [source: name(:snapsource, camera), camera: camera, name: name(:batch, camera), tasks: name(:tasks, camera)]},
       {BindSight.Stage.Slurp.Validate,
        [source: {name(:batch, camera), max_demand: 2}, name: name(:validate, camera)]},
       {BindSight.Stage.Slurp.Broadcast,

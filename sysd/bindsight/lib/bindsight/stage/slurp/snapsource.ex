@@ -21,20 +21,19 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   use GenStage
   require Logger
 
-  @defaults %{camera: :test, name: __MODULE__}
+  @defaults %{camera: :test, name: __MODULE__, tasks: BindSight.TaskSupervisor}
 
   def start_link(opts \\ []) do
-    %{camera: camera, name: name} = Enum.into(opts, @defaults)
-    GenStage.start_link(__MODULE__, [camera: camera, name: name], name: name)
+    %{name: name} = Enum.into(opts, @defaults)
+    GenStage.start_link(__MODULE__, opts, name: name)
   end
 
   def init(opts) do
-    %{camera: camera, name: name} = Enum.into(opts, @defaults)
+    %{camera: camera, name: name, tasks: tasks} = Enum.into(opts, @defaults)
     url = camera |> BindSight.get_camera_url()
 
-    visor = BindSight.TaskSupervisor
     fun = fn -> task_cycle(name, url) end
-    Task.Supervisor.start_child(visor, fun, restart: :permanent)
+    Task.Supervisor.start_child(tasks, fun, restart: :permanent)
 
     {:producer, :stateless}
   end

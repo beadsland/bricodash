@@ -21,7 +21,8 @@ defmodule BindSight.Stage.Slurp.Batch do
   use GenStage
   require Logger
 
-  @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__}
+  @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__,
+              tasks: BindSight.TaskSupervisor}
 
   def start_link(opts \\ []) do
     %{name: name} = Enum.into(opts, @defaults)
@@ -29,11 +30,10 @@ defmodule BindSight.Stage.Slurp.Batch do
   end
 
   def init(opts) do
-    %{camera: camera} = Enum.into(opts, @defaults)
+    %{camera: camera, tasks: tasks} = Enum.into(opts, @defaults)
 
-    visor = BindSight.TaskSupervisor
     fun = fn -> task_cycle(opts) end
-    Task.Supervisor.start_child(visor, fun, restart: :permanent)
+    Task.Supervisor.start_child(tasks, fun, restart: :permanent)
 
     # , subscribe_to: [source]}
     {:producer, {camera, Okasaki.Queue.new(), 0}}
