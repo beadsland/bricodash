@@ -10,3 +10,9 @@ config :bindsight,
   },
   cowboy_acceptors: 5,
   cluck_errors: true
+
+config :logger, :console,
+  format: "$time $metadata[$level] $levelpad$message\n",
+  compile_time_purge_matching: [
+    [level_lower_than: :info]
+  ]
