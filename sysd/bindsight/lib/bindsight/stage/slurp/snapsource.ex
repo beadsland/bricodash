@@ -24,7 +24,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   alias BindSight.Common.Tasker
 
-  @defaults %{camera: :test, name: __MODULE__, tasks: BindSight.TaskSupervisor}
+  @defaults %{camera: :test, name: __MODULE__}
 
   def start_link(opts \\ []) do
     %{camera: camera, name: name} = Enum.into(opts, @defaults)

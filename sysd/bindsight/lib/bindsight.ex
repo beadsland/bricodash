@@ -29,11 +29,6 @@ defmodule BindSight do
       [String.to_atom("bindsight@#{hostname}")]
       |> :net_kernel.start()
 
-    Task.Supervisor.start_link(
-      name: BindSight.TaskSupervisor,
-      strategy: :one_for_one
-    )
-
     CameraSupervisor.start_link([])
     Server.start(type, args)
   end

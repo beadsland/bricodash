@@ -30,7 +30,11 @@ defmodule StageTest do
   doctest BindSight.Stage.Slurp.Spigot
 
   test "grab snapshot from SnapSource" do
-    {:ok, _pid} = SnapSource.start_link(camera: :test)
+    Task.Supervisor.start_link(name: BindSight.TestTaskSupervisor)
+
+    {:ok, _pid} =
+      SnapSource.start_link(camera: :test, tasks: BindSight.TestTaskSupervisor)
+
     subscriptions = [{SnapSource, max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
@@ -58,9 +62,16 @@ defmodule StageTest do
 
   test "grab broadcast frame across three clients" do
     subscriptions = [{Spigot.tap(:test), max_demand: 1}]
-    t1 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
-    t2 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
-    t3 = Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+
+    t1 =
+      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+
+    t2 =
+      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+
+    t3 =
+      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+
     data1 = Task.await(t1)
     data2 = Task.await(t2)
     data3 = Task.await(t3)

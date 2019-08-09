@@ -24,12 +24,7 @@ defmodule BindSight.Stage.Slurp.Batch do
 
   alias BindSight.Common.Tasker
 
-  @defaults %{
-    source: :producer_not_specified,
-    camera: :test,
-    name: __MODULE__,
-    tasks: BindSight.TaskSupervisor
-  }
+  @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__}
 
   def start_link(opts \\ []) do
     %{name: name} = Enum.into(opts, @defaults)

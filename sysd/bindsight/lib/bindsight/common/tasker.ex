@@ -28,8 +28,8 @@ defmodule BindSight.Common.Tasker do
 
   @defaults %{
     name: :need_a_unique_name,
-    tasks: BindSight.TaskSupervisor,
-    restart: :permanent,
+    tasks: :need_a_unique_name,
+    restart: :permanent
   }
 
   def start_task(mod, opts) do
@@ -51,5 +51,4 @@ defmodule BindSight.Common.Tasker do
       Process.sleep(10)
       register_task(name)
   end
-
 end

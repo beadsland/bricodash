@@ -28,7 +28,7 @@ defmodule BindSight.Stage.Slurp.Spigot do
   @impl true
   def init(camera) do
     children = [
-      {Task.Supervisor, name: name(:tasks, camera)},
+      {Task.Supervisor, name: name(:tasks, camera), strategy: :one_for_one},
       {BindSight.Stage.Slurp.SnapSource,
        [
          camera: camera,
