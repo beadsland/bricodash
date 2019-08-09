@@ -29,7 +29,7 @@ defmodule BindSight.Stage.Slurp.Batch do
   def start_link(opts \\ []) do
     %{name: name} = Enum.into(opts, @defaults)
     GenStage.start_link(__MODULE__, opts, name: name)
-    Tasker.start_task(__MODULE__, opts)
+    Tasker.start_task(__MODULE__, opts, name: name)
   end
 
   def init(opts) do
@@ -37,20 +37,12 @@ defmodule BindSight.Stage.Slurp.Batch do
     {:producer, {camera, Okasaki.Queue.new(), 0}}
   end
 
-  def perform_task(opts) do
-    %{source: source, name: name} = Enum.into(opts, @defaults)
-    [source] |> GenStage.stream() |> Enum.map(fn x -> sync_notify(name, x) end)
-  end
+  def perform_task(name, opts) do
+    %{source: source} = Enum.into(opts, @defaults)
 
-  def sync_notify(name, event, timeout \\ 5000) do
-    GenStage.call(name, {:notify, event}, timeout)
-  catch
-    :exit, {:noproc, msg} ->
-      if Application.get_env(:bindsight, :ignore_noproc) do
-        Logger.log(:debug, "Ignoring noproc race condition on #{name}")
-      else
-        throw({:exit, {:noproc, msg}})
-      end
+    [source]
+    |> GenStage.stream()
+    |> Enum.map(fn x -> Tasker.sync_notify(name, x) end)
   end
 
   def handle_call({:notify, event}, _from, {camera, queue, pending}) do

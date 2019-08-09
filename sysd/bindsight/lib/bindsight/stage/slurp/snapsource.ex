@@ -20,7 +20,6 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   use GenStage
   use BindSight.Common.Tasker
-  require Logger
 
   alias BindSight.Common.Tasker
 
@@ -31,34 +30,23 @@ defmodule BindSight.Stage.Slurp.SnapSource do
     opts = [url: camera |> BindSight.get_camera_url()] ++ opts
 
     GenStage.start_link(__MODULE__, opts, name: name)
-    Tasker.start_task(__MODULE__, opts)
+    Tasker.start_task(__MODULE__, opts, name: name)
   end
 
   def init(_opts) do
     {:producer, :stateless}
   end
 
-  def perform_task(opts) do
-    %{name: name, url: url} = Enum.into(opts, @defaults)
+  def perform_task(name, opts) do
+    %{url: url} = Enum.into(opts, @defaults)
     Process.sleep(100)
 
     case BindSight.Snapshot.get_snapshot(url) do
-      {:ok, data} -> sync_notify(name, data)
+      {:ok, data} -> Tasker.sync_notify(name, data)
       _ -> Process.sleep(60 * 1000)
     end
 
-    perform_task(opts)
-  end
-
-  def sync_notify(name, event, timeout \\ 5000) do
-    GenStage.call(name, {:notify, event}, timeout)
-  catch
-    :exit, {:noproc, msg} ->
-      if Application.get_env(:bindsight, :ignore_noproc) do
-        Logger.log(:debug, "Ignoring noproc race condition on #{name}")
-      else
-        throw({:exit, {:noproc, msg}})
-      end
+    perform_task(name, opts)
   end
 
   def handle_call({:notify, event}, _from, :stateless) do

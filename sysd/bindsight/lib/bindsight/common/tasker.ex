@@ -18,13 +18,15 @@
 defmodule BindSight.Common.Tasker do
   @moduledoc "Behavior for GenStage to launch a dedicated feeder task."
 
+  require Logger
+
   defmacro __using__(_) do
     quote location: :keep do
       @behaviour BindSight.Common.Tasker
     end
   end
 
-  @callback perform_task(opts :: [key: term]) :: term
+  @callback perform_task(name :: atom, opts :: [key: term]) :: term
 
   @defaults %{
     name: :need_a_unique_name,
@@ -32,16 +34,15 @@ defmodule BindSight.Common.Tasker do
     restart: :permanent
   }
 
-  def start_task(mod, opts) do
+  def start_task(mod, opts, name: name) do
     %{tasks: tasks, restart: restart} = Enum.into(opts, @defaults)
-    fun = fn -> launch_task(mod, opts) end
+    fun = fn -> launch_task(mod, opts, name: name) end
     Task.Supervisor.start_child(tasks, fun, restart: restart)
   end
 
-  defp launch_task(mod, opts) do
-    %{name: name} = Enum.into(opts, @defaults)
+  defp launch_task(mod, opts, name: name) do
     register_task(name)
-    mod.perform_task(opts)
+    mod.perform_task(name, opts)
   end
 
   defp register_task(name) do
@@ -50,5 +51,16 @@ defmodule BindSight.Common.Tasker do
     _ in ArgumentError ->
       Process.sleep(10)
       register_task(name)
+  end
+
+  def sync_notify(name, event, timeout \\ 5000) do
+    GenStage.call(name, {:notify, event}, timeout)
+  catch
+    :exit, {:noproc, msg} ->
+      if Application.get_env(:bindsight, :ignore_noproc) do
+        Logger.log(:debug, "Ignoring noproc race condition on #{name}")
+      else
+        throw({:exit, {:noproc, msg}})
+      end
   end
 end
