@@ -19,36 +19,27 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   @moduledoc "Slurp spigot producer to dispatch frames pulled via a task loop."
 
   use GenStage
+  use BindSight.Common.Tasker
   require Logger
+
+  alias BindSight.Common.Tasker
 
   @defaults %{camera: :test, name: __MODULE__, tasks: BindSight.TaskSupervisor}
 
   def start_link(opts \\ []) do
-    %{name: name} = Enum.into(opts, @defaults)
+    %{camera: camera, name: name} = Enum.into(opts, @defaults)
+    opts = [url: camera |> BindSight.get_camera_url()] ++ opts
+
     GenStage.start_link(__MODULE__, opts, name: name)
+    Tasker.start_task(__MODULE__, opts)
   end
 
-  def init(opts) do
-    %{camera: camera, name: name, tasks: tasks} = Enum.into(opts, @defaults)
-    url = camera |> BindSight.get_camera_url()
-
-    fun = fn -> task_cycle(name, url) end
-    Task.Supervisor.start_child(tasks, fun, restart: :permanent)
-
+  def init(_opts) do
     {:producer, :stateless}
   end
 
-  defp task_cycle(name, url) do
-    Process.register(self(), "#{name}:task" |> String.to_atom())
-  rescue
-    _ in ArgumentError ->
-      Process.sleep(10)
-      task_cycle(name, url)
-  else
-    _ -> do_task_cycle(name, url)
-  end
-
-  defp do_task_cycle(name, url) do
+  def perform_task(opts) do
+    %{name: name, url: url} = Enum.into(opts, @defaults)
     Process.sleep(100)
 
     case BindSight.Snapshot.get_snapshot(url) do
@@ -56,7 +47,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
       _ -> Process.sleep(60 * 1000)
     end
 
-    do_task_cycle(name, url)
+    perform_task(opts)
   end
 
   def sync_notify(name, event, timeout \\ 5000) do

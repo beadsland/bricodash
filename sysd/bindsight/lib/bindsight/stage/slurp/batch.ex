@@ -19,7 +19,10 @@ defmodule BindSight.Stage.Slurp.Batch do
   @moduledoc "Consumer-producer to render events in batches. Assumes max_demand = 2."
 
   use GenStage
+  use BindSight.Common.Tasker
   require Logger
+
+  alias BindSight.Common.Tasker
 
   @defaults %{
     source: :producer_not_specified,
@@ -31,30 +34,15 @@ defmodule BindSight.Stage.Slurp.Batch do
   def start_link(opts \\ []) do
     %{name: name} = Enum.into(opts, @defaults)
     GenStage.start_link(__MODULE__, opts, name: name)
+    Tasker.start_task(__MODULE__, opts)
   end
 
   def init(opts) do
-    %{camera: camera, tasks: tasks} = Enum.into(opts, @defaults)
-
-    fun = fn -> task_cycle(opts) end
-    Task.Supervisor.start_child(tasks, fun, restart: :permanent)
-
-    # , subscribe_to: [source]}
+    %{camera: camera} = Enum.into(opts, @defaults)
     {:producer, {camera, Okasaki.Queue.new(), 0}}
   end
 
-  defp task_cycle(opts) do
-    %{name: name} = Enum.into(opts, @defaults)
-    Process.register(self(), "#{name}:task" |> String.to_atom())
-  rescue
-    _ in ArgumentError ->
-      Process.sleep(10)
-      task_cycle(opts)
-  else
-    _ -> do_task_cycle(opts)
-  end
-
-  defp do_task_cycle(opts) do
+  def perform_task(opts) do
     %{source: source, name: name} = Enum.into(opts, @defaults)
     [source] |> GenStage.stream() |> Enum.map(fn x -> sync_notify(name, x) end)
   end

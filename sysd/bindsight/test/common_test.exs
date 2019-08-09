@@ -21,6 +21,7 @@ defmodule BindSightTest do
   use ExUnit.Case
   doctest BindSight
   doctest BindSight.Snapshot
+  doctest BindSight.Common.Tasker
   doctest BindSight.Stage.CameraSupervisor
 
   test "get :test camera path" do
