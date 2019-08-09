@@ -55,18 +55,13 @@ defmodule BindSight.Stage.Slurp.Batch do
     demand = demand + pending
     onhold = Okasaki.Queue.size(queue)
 
-    cond do
-      demand == 0 ->
-        {:noreply, [], {camera, queue, demand}}
-
-      onhold == 0 ->
-        {:noreply, [], {camera, queue, demand}}
-
-      true ->
-        size = min(demand, onhold)
-        {batch, queue} = assemble_batch(queue, size, [])
-        Logger.info("Batch of #{size} frames dispatched from #{camera}.")
-        {:noreply, [{:batch, batch}], {camera, queue, demand - size}}
+    if demand == 0 or onhold == 0 do
+      {:noreply, [], {camera, queue, demand}}
+    else
+      size = min(demand, onhold)
+      {batch, queue} = assemble_batch(queue, size, [])
+      Logger.info("Batch of #{size} frames dispatched from #{camera}.")
+      {:noreply, [{:batch, batch}], {camera, queue, demand - size}}
     end
   end
 

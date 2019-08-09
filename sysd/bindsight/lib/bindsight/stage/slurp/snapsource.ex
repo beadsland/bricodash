@@ -39,6 +39,10 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   def perform_task(name, opts) do
     %{url: url} = Enum.into(opts, @defaults)
+    do_perform_task(name, url)
+  end
+
+  defp do_perform_task(name, url) do
     Process.sleep(100)
 
     case BindSight.Snapshot.get_snapshot(url) do
@@ -46,16 +50,14 @@ defmodule BindSight.Stage.Slurp.SnapSource do
       _ -> Process.sleep(60 * 1000)
     end
 
-    perform_task(name, opts)
+    do_perform_task(name, url)
   end
 
   def handle_call({:notify, event}, _from, :stateless) do
-    # Dispatch immediately
     {:reply, :ok, [event], :stateless}
   end
 
   def handle_demand(_demand, :stateless) do
-    # We don't care about the demand
     {:noreply, [], :stateless}
   end
 end
