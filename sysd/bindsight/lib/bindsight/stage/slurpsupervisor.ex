@@ -19,13 +19,20 @@ defmodule BindSight.Stage.SlurpSupervisor do
   @moduledoc "Supervise slurp spigot (camera pipeline segment) for each camera."
 
   use Supervisor
+  require Logger
+
+  alias BindSight.Common.Library
 
   def start_link(_opts) do
-    Supervisor.start_link(__MODULE__, nil, name: __MODULE__)
+    Logger.info("Slurping cameras...")
+
+    Supervisor.start_link(__MODULE__, nil,
+      name: Library.get_register_name(:slurpsup)
+    )
   end
 
   @impl true
-  def init(_opts) do
+  def init(_) do
     children =
       Application.get_env(:bindsight, :cameras)
       |> Map.keys()

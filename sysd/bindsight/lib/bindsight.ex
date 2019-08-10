@@ -18,10 +18,7 @@
 defmodule BindSight do
   @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
 
-  alias BindSight.Stage.SlurpSupervisor
-  alias BindSight.WebAPI.Server
-
-  def start(type, args) do
+  def start(_type, _args) do
     Port.open({:spawn, "epmd -daemon"}, [:binary])
     {:ok, hostname} = :inet.gethostname()
 
@@ -29,7 +26,7 @@ defmodule BindSight do
       [String.to_atom("bindsight@#{hostname}")]
       |> :net_kernel.start()
 
-    SlurpSupervisor.start_link([])
-    Server.start(type, args)
+    children = [BindSight.Stage.SlurpSupervisor, BindSight.WebAPI.Server]
+    Supervisor.start_link(children, strategy: :one_for_one, restart: :permanent)
   end
 end

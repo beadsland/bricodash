@@ -18,10 +18,20 @@
 defmodule BindSight.WebAPI.Server do
   @moduledoc "Cowboy server instance for BindSight WebAPI."
 
+  use Supervisor
   require Logger
-  use Application
 
-  def start(_type, _args) do
+  alias BindSight.Common.Library
+
+  def start_link(_) do
+    Logger.info("Yeehaw cowboy...")
+
+    Supervisor.start_link(__MODULE__, nil,
+      name: Library.get_register_name(:wapisup)
+    )
+  end
+
+  def init(_) do
     port = Application.get_env(:bindsight, :cowboy_port, 2020)
     acceptors = Application.get_env(:bindsight, :cowboy_acceptors, 100)
     transport = [num_acceptors: acceptors]
@@ -33,10 +43,6 @@ defmodule BindSight.WebAPI.Server do
        options: [port: port, transport_options: transport]}
     ]
 
-    opts = [strategy: :one_for_one, name: BindSight.WebAPI.Supervisor]
-
-    Logger.info("Starting camera relay...")
-
-    Supervisor.start_link(children, opts)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 end

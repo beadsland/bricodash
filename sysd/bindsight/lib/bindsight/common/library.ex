@@ -25,11 +25,13 @@ defmodule BindSight.Common.Library do
   end
 
   @doc "Return unique registerable name for process, shortname if dev/test."
-  def get_register_name(mod, cam) do
+  def get_register_name(mod, cam), do: get_register_name("#{mod}:#{cam}")
+
+  def get_register_name(name) do
     if Application.get_env(:bindsight, :register_shortnames, false) do
-      "#{mod}:#{cam}" |> String.to_atom()
+      "#{name}" |> String.to_atom()
     else
-      "bindsight_#{mod}:#{cam}" |> String.to_atom()
+      "bindsight_#{name}" |> String.to_atom()
     end
   end
 end
