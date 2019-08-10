@@ -30,11 +30,11 @@ defmodule BindSight.Stage.Slurp.SnapSource do
     %{camera: camera, name: name} = Enum.into(opts, @defaults)
     opts = [url: camera |> BindSight.get_camera_url()] ++ opts
 
-    GenStage.start_link(__MODULE__, opts, name: name)
+    GenStage.start_link(__MODULE__, [], name: name)
     Tasker.start_task(__MODULE__, opts, name: name)
   end
 
-  def init(_opts) do
+  def init(_) do
     {:producer, :stateless}
   end
 
