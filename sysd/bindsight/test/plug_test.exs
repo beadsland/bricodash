@@ -27,6 +27,7 @@ defmodule PlugTest do
   doctest BindSight.WebAPI.Error
   doctest BindSight.WebAPI.Home
 
+  alias BindSight.Stage.Slurp.Validate
   alias BindSight.WebAPI.Router
 
   @opts Router.init([])
@@ -45,7 +46,7 @@ defmodule PlugTest do
 
     assert conn.state == :sent
     assert conn.status == 200
-    assert BindSight.validate_frame(conn.resp_body) == :ok
+    assert Validate.validate_frame(conn.resp_body) == :ok
   end
 
   test "returns I'm a teapot" do

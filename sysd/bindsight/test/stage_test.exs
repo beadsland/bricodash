@@ -20,15 +20,16 @@ defmodule StageTest do
 
   use ExUnit.Case
 
-  alias BindSight.Stage.Slurp.SnapSource
-  alias BindSight.Stage.Slurp.Spigot
-
   doctest BindSight.Stage.SlurpSupervisor
   doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Batch
   doctest BindSight.Stage.Slurp.Validate
   doctest BindSight.Stage.Slurp.Broadcast
   doctest BindSight.Stage.Slurp.Spigot
+
+  alias BindSight.Stage.Slurp.SnapSource
+  alias BindSight.Stage.Slurp.Spigot
+  alias BindSight.Stage.Slurp.Validate
 
   test "grab snapshot from SnapSource" do
     Task.Supervisor.start_link(name: BindSight.TestTaskSupervisor)
@@ -46,7 +47,7 @@ defmodule StageTest do
     subscriptions = [{Spigot.tap(:test), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
-    assert BindSight.validate_frame(data) == :ok
+    assert Validate.validate_frame(data) == :ok
   end
 
   test "grab multiple snapshots from Spigot" do
@@ -56,7 +57,7 @@ defmodule StageTest do
       subscriptions
       |> GenStage.stream()
       |> Enum.take(10)
-      |> Enum.map(fn x -> BindSight.validate_frame(x) end)
+      |> Enum.map(fn x -> Validate.validate_frame(x) end)
 
     assert result == List.duplicate(:ok, 10)
   end

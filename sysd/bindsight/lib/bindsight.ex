@@ -38,12 +38,4 @@ defmodule BindSight do
     cameras = Application.fetch_env!(:bindsight, :cameras)
     cameras[name]
   end
-
-  @doc "Confirm binary is valid JPEG."
-  def validate_frame(binary) do
-    case ExImageInfo.info(binary) do
-      {"image/jpeg", _, _, _} -> :ok
-      _ -> :corrupt_frame
-    end
-  end
 end

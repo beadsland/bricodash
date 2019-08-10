@@ -25,6 +25,7 @@ defmodule BindSightTest do
   doctest BindSight.Common.Tasker
 
   alias BindSight.Common.Snapshot
+  alias BindSight.Stage.Slurp.Validate
 
   test "get :test camera path" do
     assert BindSight.get_camera_url(:test) ==
@@ -40,6 +41,6 @@ defmodule BindSightTest do
   test "validate a snapshot" do
     {:ok, data} = :test |> BindSight.get_camera_url() |> Snapshot.get_snapshot()
 
-    assert BindSight.validate_frame(data) == :ok
+    assert Validate.validate_frame(data) == :ok
   end
 end

@@ -40,7 +40,7 @@ defmodule BindSight.Stage.Slurp.Validate do
   end
 
   def handle_events(events, _from, camera) do
-    fun = fn x -> BindSight.validate_frame(x) == :ok end
+    fun = fn x -> validate_frame(x) == :ok end
     checks = events |> Task.async_stream(fun) |> Enum.map(fn {:ok, x} -> x end)
 
     good =
@@ -56,5 +56,13 @@ defmodule BindSight.Stage.Slurp.Validate do
     end
 
     {:noreply, good, :stateless}
+  end
+
+  @doc "Confirm binary is valid JPEG."
+  def validate_frame(binary) do
+    case ExImageInfo.info(binary) do
+      {"image/jpeg", _, _, _} -> :ok
+      _ -> :corrupt_frame
+    end
   end
 end
