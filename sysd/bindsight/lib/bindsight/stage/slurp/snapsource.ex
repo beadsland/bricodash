@@ -21,6 +21,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   use GenStage
   use BindSight.Common.Tasker
 
+  alias BindSight.Common.Snapshot
   alias BindSight.Common.Tasker
 
   @defaults %{camera: :test, name: __MODULE__}
@@ -45,7 +46,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   defp do_perform_task(name, url) do
     Process.sleep(100)
 
-    case BindSight.Snapshot.get_snapshot(url) do
+    case Snapshot.get_snapshot(url) do
       {:ok, data} -> Tasker.sync_notify(name, data)
       _ -> Process.sleep(60 * 1000)
     end

@@ -18,11 +18,12 @@
 defmodule BindSight.WebAPI.Router do
   @moduledoc "Router for BindSight WebAPI."
 
-  alias BindSight.WebAPI.Error
-  alias BindSight.WebAPI.Home
-
   use Plug.Router
   use Plug.ErrorHandler
+
+  alias BindSight.Common.Snapshot
+  alias BindSight.WebAPI.Error
+  alias BindSight.WebAPI.Home
 
   @cameras Application.get_env(:bindsight, :cameras) |> Map.keys()
 
@@ -41,7 +42,7 @@ defmodule BindSight.WebAPI.Router do
       camera
       |> String.to_existing_atom()
       |> BindSight.get_camera_url()
-      |> BindSight.Snapshot.get_snapshot()
+      |> Snapshot.get_snapshot()
 
     conn
     |> put_resp_content_type("image/jpg")

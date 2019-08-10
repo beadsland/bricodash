@@ -19,9 +19,12 @@ defmodule BindSightTest do
   @moduledoc "Test basic utility functions used by other modules."
 
   use ExUnit.Case
+
   doctest BindSight
-  doctest BindSight.Snapshot
+  doctest BindSight.Common.Snapshot
   doctest BindSight.Common.Tasker
+
+  alias BindSight.Common.Snapshot
 
   test "get :test camera path" do
     assert BindSight.get_camera_url(:test) ==
@@ -29,19 +32,13 @@ defmodule BindSightTest do
   end
 
   test "grab a raw snapshot" do
-    {:ok, data} =
-      :test
-      |> BindSight.get_camera_url()
-      |> BindSight.Snapshot.get_snapshot()
+    {:ok, data} = :test |> BindSight.get_camera_url() |> Snapshot.get_snapshot()
 
     assert is_binary(data)
   end
 
   test "validate a snapshot" do
-    {:ok, data} =
-      :test
-      |> BindSight.get_camera_url()
-      |> BindSight.Snapshot.get_snapshot()
+    {:ok, data} = :test |> BindSight.get_camera_url() |> Snapshot.get_snapshot()
 
     assert BindSight.validate_frame(data) == :ok
   end

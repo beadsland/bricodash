@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Snapshot do
+defmodule BindSight.Common.Snapshot do
   @moduledoc "Retrieving a single snapshot from a specified camera."
 
   @doc """
