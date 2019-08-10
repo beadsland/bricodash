@@ -45,22 +45,21 @@ defmodule BindSight.Common.Tasker do
     mod.perform_task(name, opts)
   end
 
-  defp register_task(name) do
-    Process.register(self(), "#{name}:task" |> String.to_atom())
-  rescue
-    _ in ArgumentError ->
+  defp register_task(name, tries \\ 0) do
+    if Process.alive?(self()) or tries == 100 do
+      Process.register(self(), "#{name}:task" |> String.to_atom())
+    else
       Process.sleep(10)
-      register_task(name)
+      register_task(name, tries + 1)
+    end
   end
 
-  def sync_notify(name, event, timeout \\ 5000) do
-    GenStage.call(name, {:notify, event}, timeout)
-  catch
-    :exit, {:noproc, msg} ->
-      if Application.get_env(:bindsight, :ignore_noproc) do
-        Logger.log(:debug, "Ignoring noproc race condition on #{name}")
-      else
-        throw({:exit, {:noproc, msg}})
-      end
+  def sync_notify(name, event, timeout \\ 5000, tries \\ 0) do
+    if Process.whereis(name) != nil or tries == 100 do
+      GenStage.call(name, {:notify, event}, timeout)
+    else
+      Process.sleep(10)
+      sync_notify(name, event, timeout, tries + 1)
+    end
   end
 end
