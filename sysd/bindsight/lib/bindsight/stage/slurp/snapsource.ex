@@ -21,6 +21,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
   use GenStage
   use BindSight.Common.Tasker
 
+  alias BindSight.Common.Library
   alias BindSight.Common.Snapshot
   alias BindSight.Common.Tasker
 
@@ -28,7 +29,7 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   def start_link(opts \\ []) do
     %{camera: camera, name: name} = Enum.into(opts, @defaults)
-    opts = [url: camera |> BindSight.get_camera_url()] ++ opts
+    opts = [url: camera |> Library.get_camera_url()] ++ opts
 
     GenStage.start_link(__MODULE__, [], name: name)
     Tasker.start_task(__MODULE__, opts, name: name)

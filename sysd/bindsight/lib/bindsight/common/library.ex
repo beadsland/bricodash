@@ -15,21 +15,12 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight do
-  @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
+defmodule BindSight.Common.Library do
+  @moduledoc "Commonly used functions are functions used commonly."
 
-  alias BindSight.Stage.SlurpSupervisor
-  alias BindSight.WebAPI.Server
-
-  def start(type, args) do
-    Port.open({:spawn, "epmd -daemon"}, [:binary])
-    {:ok, hostname} = :inet.gethostname()
-
-    {:ok, _pid} =
-      [String.to_atom("bindsight@#{hostname}")]
-      |> :net_kernel.start()
-
-    SlurpSupervisor.start_link([])
-    Server.start(type, args)
+  @doc "Retrieve camera URL by name from config."
+  def get_camera_url(name) do
+    cameras = Application.fetch_env!(:bindsight, :cameras)
+    cameras[name]
   end
 end

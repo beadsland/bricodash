@@ -21,6 +21,7 @@ defmodule BindSight.WebAPI.Router do
   use Plug.Router
   use Plug.ErrorHandler
 
+  alias BindSight.Common.Library
   alias BindSight.Common.Snapshot
   alias BindSight.WebAPI.Error
   alias BindSight.WebAPI.Home
@@ -41,7 +42,7 @@ defmodule BindSight.WebAPI.Router do
     {:ok, frame} =
       camera
       |> String.to_existing_atom()
-      |> BindSight.get_camera_url()
+      |> Library.get_camera_url()
       |> Snapshot.get_snapshot()
 
     conn

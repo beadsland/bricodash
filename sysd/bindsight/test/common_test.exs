@@ -21,25 +21,27 @@ defmodule BindSightTest do
   use ExUnit.Case
 
   doctest BindSight
+  doctest BindSight.Common.Library
   doctest BindSight.Common.Snapshot
   doctest BindSight.Common.Tasker
 
+  alias BindSight.Common.Library
   alias BindSight.Common.Snapshot
   alias BindSight.Stage.Slurp.Validate
 
   test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) ==
+    assert Library.get_camera_url(:test) ==
              "http://rfid-access-building.lan:8080/"
   end
 
   test "grab a raw snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url() |> Snapshot.get_snapshot()
+    {:ok, data} = :test |> Library.get_camera_url() |> Snapshot.get_snapshot()
 
     assert is_binary(data)
   end
 
   test "validate a snapshot" do
-    {:ok, data} = :test |> BindSight.get_camera_url() |> Snapshot.get_snapshot()
+    {:ok, data} = :test |> Library.get_camera_url() |> Snapshot.get_snapshot()
 
     assert Validate.validate_frame(data) == :ok
   end
