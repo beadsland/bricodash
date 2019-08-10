@@ -23,22 +23,23 @@ defmodule BindSight.Stage.Slurp.Validate do
   use GenStage
   require Logger
 
-  @defaults %{source: :producer_not_specified, name: __MODULE__}
+  @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__}
 
   def start_link(opts \\ []) do
-    %{source: source, name: name} = Enum.into(opts, @defaults)
-    GenStage.start_link(__MODULE__, source, name: name)
+    %{name: name} = Enum.into(opts, @defaults)
+    GenStage.start_link(__MODULE__, opts, name: name)
   end
 
-  def init(source) do
-    {:producer_consumer, :stateless, subscribe_to: [source]}
+  def init(opts) do
+    %{source: source, camera: camera} = Enum.into(opts, @defaults)
+    {:producer_consumer, camera, subscribe_to: [source]}
   end
 
-  def handle_events([{:batch, batch}], from, :stateless) do
-    handle_events(batch, from, :stateless)
+  def handle_events([{:batch, batch}], from, camera) do
+    handle_events(batch, from, camera)
   end
 
-  def handle_events(events, _from, :stateless) do
+  def handle_events(events, _from, camera) do
     fun = fn x -> BindSight.validate_frame(x) == :ok end
     checks = events |> Task.async_stream(fun) |> Enum.map(fn {:ok, x} -> x end)
 
@@ -49,7 +50,10 @@ defmodule BindSight.Stage.Slurp.Validate do
       |> Enum.filter(fn x -> x != nil end)
 
     discard = length(events) - length(good)
-    if discard > 0, do: Logger.warn("Discarding #{discard} bad frames")
+
+    if discard > 0 do
+      Logger.warn("Discarding #{discard} bad frames from #{camera}")
+    end
 
     {:noreply, good, :stateless}
   end

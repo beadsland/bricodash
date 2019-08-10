@@ -45,6 +45,7 @@ defmodule BindSight.Stage.Slurp.Spigot do
       {BindSight.Stage.Slurp.Validate,
        [
          source: {name(:batch, camera), max_demand: 2},
+         camera: camera,
          name: name(:validate, camera)
        ]},
       {BindSight.Stage.Slurp.Broadcast,
