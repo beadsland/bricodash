@@ -20,11 +20,11 @@ defmodule BindSight.Stage.Slurp.Spigot do
 
   use Supervisor
 
+  alias BindSight.Common.Library
+
   def start_link(camera \\ :test) do
     Supervisor.start_link(__MODULE__, camera, name: name(:spigot, camera))
   end
-
-  alias BindSight.Common.Library
 
   @impl true
   def init(camera) do
