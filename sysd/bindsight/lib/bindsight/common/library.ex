@@ -23,4 +23,13 @@ defmodule BindSight.Common.Library do
     cameras = Application.fetch_env!(:bindsight, :cameras)
     cameras[name]
   end
+
+  @doc "Return unique registerable name for process, shortname if dev/test."
+  def get_register_name(mod, cam) do
+    if Application.get_env(:bindsight, :register_shortnames, false) do
+      "#{mod}:#{cam}" |> String.to_atom()
+    else
+      "bindsight_#{mod}:#{cam}" |> String.to_atom()
+    end
+  end
 end

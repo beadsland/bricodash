@@ -21,9 +21,10 @@ defmodule BindSight.Stage.Slurp.Spigot do
   use Supervisor
 
   def start_link(camera \\ :test) do
-    name = "spigot:#{camera}" |> String.to_atom()
-    Supervisor.start_link(__MODULE__, camera, name: name)
+    Supervisor.start_link(__MODULE__, camera, name: name(:spigot, camera))
   end
+
+  alias BindSight.Common.Library
 
   @impl true
   def init(camera) do
@@ -57,5 +58,5 @@ defmodule BindSight.Stage.Slurp.Spigot do
 
   def tap(camera), do: name(:broadcast, camera)
 
-  defp name(mod, cam), do: "#{mod}:#{cam}" |> String.to_atom()
+  defp name(mod, cam), do: Library.get_register_name(mod, cam)
 end

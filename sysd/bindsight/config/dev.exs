@@ -9,7 +9,8 @@ config :bindsight,
     hydro: "http://hydrocontroller.lan:8081/"
   },
   cowboy_acceptors: 5,
-  cluck_errors: true
+  cluck_errors: true,
+  register_shortnames: true
 
 config :logger, :console,
   format: "$time $metadata[$level] $levelpad$message\n",
