@@ -18,7 +18,7 @@
 defmodule BindSight do
   @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
 
-  alias BindSight.Stage.CameraSupervisor
+  alias BindSight.Stage.SlurpSupervisor
   alias BindSight.WebAPI.Server
 
   def start(type, args) do
@@ -29,7 +29,7 @@ defmodule BindSight do
       [String.to_atom("bindsight@#{hostname}")]
       |> :net_kernel.start()
 
-    CameraSupervisor.start_link([])
+    SlurpSupervisor.start_link([])
     Server.start(type, args)
   end
 

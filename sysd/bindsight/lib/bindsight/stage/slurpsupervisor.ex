@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.CameraSupervisor do
+defmodule BindSight.Stage.SlurpSupervisor do
   @moduledoc "Supervise slurp spigot (camera pipeline segment) for each camera."
 
   use Supervisor

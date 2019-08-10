@@ -22,10 +22,10 @@ defmodule BindSightTest do
   doctest BindSight
   doctest BindSight.Snapshot
   doctest BindSight.Common.Tasker
-  doctest BindSight.Stage.CameraSupervisor
 
   test "get :test camera path" do
-    assert BindSight.get_camera_url(:test) == "http://rfid-access-building.lan:8080/"
+    assert BindSight.get_camera_url(:test) ==
+             "http://rfid-access-building.lan:8080/"
   end
 
   test "grab a raw snapshot" do

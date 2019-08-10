@@ -23,6 +23,7 @@ defmodule StageTest do
   alias BindSight.Stage.Slurp.SnapSource
   alias BindSight.Stage.Slurp.Spigot
 
+  doctest BindSight.Stage.SlurpSupervisor
   doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Batch
   doctest BindSight.Stage.Slurp.Validate
