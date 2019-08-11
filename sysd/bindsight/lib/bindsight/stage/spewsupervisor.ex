@@ -43,7 +43,7 @@ defmodule BindSight.Stage.SpewSupervisor do
   end
 
   defp childname(camera, clientid) do
-    Library.get_register_name(:spew, "#{camera}:#{clientid}")
+    Library.get_register_name({:spew, camera, clientid})
   end
 
   defp name, do: Library.get_register_name(:spewsup)

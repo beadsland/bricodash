@@ -27,7 +27,9 @@ defmodule BindSight.Common.Library do
   end
 
   @doc "Return unique registerable name for process, shortname if dev/test."
-  def get_register_name(mod, cam), do: get_register_name("#{mod}:#{cam}")
+  def get_register_name(tup) when is_tuple(tup) do
+    get_register_name(Enum.join(Tuple.to_list(tup), ":"))
+  end
 
   def get_register_name(name) do
     if get_env(:register_shortnames, false) do

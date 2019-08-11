@@ -29,7 +29,7 @@ defmodule BindSight.Stage.Spew.Spigot do
     %{camera: camera, clientid: clientid} = Enum.into(opts, @defaults)
 
     Supervisor.start_link(__MODULE__, camera,
-      name: name(:spigot, "#{camera}:#{clientid}")
+      name: name({:spigot, camera, clientid})
     )
   end
 
@@ -43,5 +43,5 @@ defmodule BindSight.Stage.Spew.Spigot do
   # name(:broadcast, camera)
   def tap(camera, _clientid), do: Spigot.tap(camera)
 
-  defp name(mod, cam), do: Library.get_register_name(mod, cam)
+  defp name(tup), do: Library.get_register_name(tup)
 end

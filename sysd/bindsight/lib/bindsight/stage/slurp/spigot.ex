@@ -23,40 +23,40 @@ defmodule BindSight.Stage.Slurp.Spigot do
   alias BindSight.Common.Library
 
   def start_link(camera \\ :test) do
-    Supervisor.start_link(__MODULE__, camera, name: name(:spigot, camera))
+    Supervisor.start_link(__MODULE__, camera, name: name({:spigot, camera}))
   end
 
   @impl true
   def init(camera) do
     children = [
-      {Task.Supervisor, name: name(:tasks, camera), strategy: :one_for_one},
+      {Task.Supervisor, name: name({:tasks, camera}), strategy: :one_for_one},
       {BindSight.Stage.Slurp.SnapSource,
        [
          camera: camera,
-         name: name(:snapsource, camera),
-         tasks: name(:tasks, camera)
+         name: name({:snapsource, camera}),
+         tasks: name({:tasks, camera})
        ]},
       {BindSight.Stage.Slurp.Batch,
        [
-         source: name(:snapsource, camera),
+         source: name({:snapsource, camera}),
          camera: camera,
-         name: name(:batch, camera),
-         tasks: name(:tasks, camera)
+         name: name({:batch, camera}),
+         tasks: name({:tasks, camera})
        ]},
       {BindSight.Stage.Slurp.Validate,
        [
-         source: {name(:batch, camera), max_demand: 2},
+         source: {name({:batch, camera}), max_demand: 2},
          camera: camera,
-         name: name(:validate, camera)
+         name: name({:validate, camera})
        ]},
       {BindSight.Stage.Slurp.Broadcast,
-       [source: name(:validate, camera), name: name(:broadcast, camera)]}
+       [source: name({:validate, camera}), name: name({:broadcast, camera})]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)
   end
 
-  def tap(camera), do: name(:broadcast, camera)
+  def tap(camera), do: name({:broadcast, camera})
 
-  defp name(mod, cam), do: Library.get_register_name(mod, cam)
+  defp name(tup), do: Library.get_register_name(tup)
 end
