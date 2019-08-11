@@ -60,7 +60,11 @@ defmodule BindSight.Stage.Slurp.Batch do
     else
       size = min(demand, onhold)
       {batch, queue} = assemble_batch(queue, size, [])
-      Logger.info("Batch of #{size} frames dispatched from #{camera}.")
+
+      if size > 1 do
+        Logger.info("Batch of #{size} frames dispatched from #{camera}.")
+      end
+
       {:noreply, [{:batch, batch}], {camera, queue, demand - size}}
     end
   end
