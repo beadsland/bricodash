@@ -15,25 +15,33 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Common.Library do
-  @moduledoc "Commonly used functions are functions used commonly."
+defmodule BindSight.Stage.Spew.Spigot do
+  @moduledoc "GenStage pipeline segment for processing a single client request."
 
-  use Memoize
+  use Supervisor
 
-  @doc "Retrieve camera URL by name from config."
-  def get_camera_url(name) do
-    cameras = Application.fetch_env!(:bindsight, :cameras)
-    cameras[name]
+  alias BindSight.Common.Library
+  alias BindSight.Stage.Slurp.Spigot
+
+  @defaults %{camera: :test, clientid: :this_ought_to_be_unique}
+
+  def start_link(opts) do
+    %{camera: camera, clientid: clientid} = Enum.into(opts, @defaults)
+
+    Supervisor.start_link(__MODULE__, camera,
+      name: name(:spigot, "#{camera}:#{clientid}")
+    )
   end
 
-  @doc "Return unique registerable name for process, shortname if dev/test."
-  def get_register_name(mod, cam), do: get_register_name("#{mod}:#{cam}")
+  @impl true
+  def init(_camera) do
+    children = []
 
-  def get_register_name(name) do
-    if Application.get_env(:bindsight, :register_shortnames, false) do
-      "#{name}" |> String.to_atom()
-    else
-      "bindsight_#{name}" |> String.to_atom()
-    end
+    Supervisor.init(children, strategy: :one_for_one)
   end
+
+  # name(:broadcast, camera)
+  def tap(camera, _clientid), do: Spigot.tap(camera)
+
+  defp name(mod, cam), do: Library.get_register_name(mod, cam)
 end

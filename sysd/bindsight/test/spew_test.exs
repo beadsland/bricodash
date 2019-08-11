@@ -15,41 +15,27 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule StageTest do
+defmodule SpewTest do
   @moduledoc "Test GenStage pipeline functionality."
 
   use ExUnit.Case
 
-  doctest BindSight.Stage.SlurpSupervisor
-  doctest BindSight.Stage.Slurp.SnapSource
-  doctest BindSight.Stage.Slurp.Batch
-  doctest BindSight.Stage.Slurp.Validate
-  doctest BindSight.Stage.Slurp.Broadcast
-  doctest BindSight.Stage.Slurp.Spigot
+  doctest BindSight.Stage.SpewSupervisor
+  doctest BindSight.Stage.Spew.Spigot
 
-  alias BindSight.Stage.Slurp.SnapSource
-  alias BindSight.Stage.Slurp.Spigot
   alias BindSight.Stage.Slurp.Validate
-
-  test "grab snapshot from SnapSource" do
-    Task.Supervisor.start_link(name: BindSight.TestTaskSupervisor)
-
-    {:ok, _pid} =
-      SnapSource.start_link(camera: :test, tasks: BindSight.TestTaskSupervisor)
-
-    subscriptions = [{SnapSource, max_demand: 1}]
-    [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
-
-    assert is_binary(data)
-  end
+  alias BindSight.Stage.Spew.Spigot
+  alias BindSight.Stage.SpewSupervisor
 
   test "grab snapshot from Spigot" do
-    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
+    SpewSupervisor.start_child(:test, :test)
+    subscriptions = [{Spigot.tap(:test, :test), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     assert Validate.validate_frame(data) == :ok
   end
 
+  @doc """
   test "grab multiple snapshots from Spigot" do
     subscriptions = [{Spigot.tap(:test), max_demand: 10}]
 
@@ -81,4 +67,5 @@ defmodule StageTest do
     assert length(data1 -- data2) < 2
     assert length(data2 -- data3) < 2
   end
+  """
 end

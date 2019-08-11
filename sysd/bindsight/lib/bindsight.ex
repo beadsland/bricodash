@@ -26,7 +26,12 @@ defmodule BindSight do
       [String.to_atom("bindsight@#{hostname}")]
       |> :net_kernel.start()
 
-    children = [BindSight.Stage.SlurpSupervisor, BindSight.WebAPI.Server]
+    children = [
+      BindSight.Stage.SlurpSupervisor,
+      BindSight.WebAPI.Server,
+      BindSight.Stage.SpewSupervisor
+    ]
+
     Supervisor.start_link(children, strategy: :one_for_one, restart: :permanent)
   end
 end
