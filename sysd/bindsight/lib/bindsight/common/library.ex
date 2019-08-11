@@ -30,10 +30,15 @@ defmodule BindSight.Common.Library do
   def get_register_name(mod, cam), do: get_register_name("#{mod}:#{cam}")
 
   def get_register_name(name) do
-    if Application.get_env(:bindsight, :register_shortnames, false) do
+    if get_env(:register_shortnames, false) do
       "#{name}" |> String.to_atom()
     else
       "bindsight_#{name}" |> String.to_atom()
     end
+  end
+
+  @doc "Get config parameters for our application."
+  def get_env(key, default \\ nil) do
+    Application.get_env(:bindsight, key, default)
   end
 end

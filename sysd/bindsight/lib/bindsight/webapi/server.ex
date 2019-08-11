@@ -32,8 +32,8 @@ defmodule BindSight.WebAPI.Server do
   end
 
   def init(_) do
-    port = Application.get_env(:bindsight, :cowboy_port, 2020)
-    acceptors = Application.get_env(:bindsight, :cowboy_acceptors, 100)
+    port = Library.get_env(:cowboy_port, 2020)
+    acceptors = Library.get_env(:cowboy_acceptors, 100)
     transport = [num_acceptors: acceptors]
 
     children = [

@@ -34,7 +34,7 @@ defmodule BindSight.Stage.SlurpSupervisor do
   @impl true
   def init(_) do
     children =
-      Application.get_env(:bindsight, :cameras)
+      Library.get_env(:cameras)
       |> Map.keys()
       |> Enum.map(fn x -> speccer(x) end)
 

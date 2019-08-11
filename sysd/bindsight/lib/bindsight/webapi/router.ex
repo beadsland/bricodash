@@ -26,7 +26,7 @@ defmodule BindSight.WebAPI.Router do
   alias BindSight.WebAPI.Error
   alias BindSight.WebAPI.Home
 
-  @cameras Application.get_env(:bindsight, :cameras) |> Map.keys()
+  @cameras Library.get_env(:cameras) |> Map.keys()
 
   plug(BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot])
   plug(:match)

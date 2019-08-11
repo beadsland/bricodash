@@ -22,9 +22,11 @@ defmodule BindSight.WebAPI.Error do
   import Phoenix.HTML
   import Phoenix.HTML.Tag
 
+  alias BindSight.Common.Library
+
   @error_msg "Ditty's gone catawampous, it has."
 
-  @cluck Application.get_env(:bindsight, :cluck_errors)
+  @cluck Library.get_env(:cluck_errors)
 
   def send(conn, opts) do
     error =
