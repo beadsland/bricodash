@@ -36,6 +36,15 @@ defmodule SpewTest do
     assert Validate.validate_frame(data) == :ok
   end
 
+  test "shutdown gracefull after grab from Spigot" do
+    session = SpewSupervisor.start_session(camera: :test)
+    [{Spigot.tap(session), max_demand: 1}] |> GenStage.stream() |> Enum.take(1)
+    Process.sleep(10)
+
+    spigot = {:spigot, {:session, session}}
+    assert [] = Registry.lookup(Registry.BindSight, spigot)
+  end
+
   test "grab multiple Spigot snapshots" do
     sessions =
       1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session(camera: :test) end)

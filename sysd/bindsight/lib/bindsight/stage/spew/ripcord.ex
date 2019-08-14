@@ -15,23 +15,31 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Spew.Broadcast do
-  @moduledoc "Spew spigot endpoint that terminates spigot on unsubscription."
+defmodule BindSight.Stage.Spew.Ripcord do
+  @moduledoc "Spew spigot startpoint to serve client and arbitrary number of snoops."
 
-  use GenStage
+  use GenStage, restart: :temporary
 
   @defaults %{source: :producer_not_specified, name: __MODULE__}
 
   def start_link(opts \\ []) do
-    %{source: source, name: name} = Enum.into(opts, @defaults)
-    GenStage.start_link(__MODULE__, source, name: name)
+    %{name: name} = Enum.into(opts, @defaults)
+    GenStage.start_link(__MODULE__, opts, name: name)
   end
 
-  def init(source) do
-    {:producer_consumer, :stateless, subscribe_to: [source]}
+  def init(opts) do
+    %{source: source, spigot: spigot} = Enum.into(opts, @defaults)
+    dispatch = GenStage.BroadcastDispatcher
+
+    {:producer_consumer, spigot, subscribe_to: [source], dispatcher: dispatch}
   end
 
-  def handle_events(events, _from, :stateless) do
-    {:noreply, events, :stateless}
+  def handle_events(events, _from, spigot) do
+    {:noreply, events, spigot}
+  end
+
+  def handle_cancel(_reason, _from, spigot) do
+    Supervisor.stop(spigot)
+    {:stop, :normal, :stateless}
   end
 end

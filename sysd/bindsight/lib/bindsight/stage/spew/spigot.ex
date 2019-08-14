@@ -18,7 +18,7 @@
 defmodule BindSight.Stage.Spew.Spigot do
   @moduledoc "GenStage pipeline segment for processing a single client request."
 
-  use Supervisor
+  use Supervisor, restart: :temporary
 
   alias BindSight.Common.Library
   alias BindSight.Stage.Slurp.Spigot
@@ -27,29 +27,31 @@ defmodule BindSight.Stage.Spew.Spigot do
 
   def start_link(opts) do
     %{session: session} = Enum.into(opts, @defaults)
-
-    Supervisor.start_link(__MODULE__, opts,
-      name: name({:spigot, {:session, session}})
-    )
+    spigot = {:spigot, {:session, session}}
+    opts = [spigot: spigot] ++ opts
+    Supervisor.start_link(__MODULE__, opts, name: name(spigot))
   end
 
   @impl true
   def init(opts) do
-    %{camera: camera, session: session} = Enum.into(opts, @defaults)
+    %{camera: camera, spigot: spigot} = Enum.into(opts, @defaults)
 
     children = [
       {BindSight.Stage.Spew.Broadcast,
+       [source: Spigot.tap(camera), name: name({:broadcast, spigot})]},
+      {BindSight.Stage.Spew.Ripcord,
        [
-         source: Spigot.tap(camera),
-         name: name({:broadcast, {:spigot, {:session, session}}})
+         source: name({:broadcast, spigot}),
+         name: name({:ripcord, spigot}),
+         spigot: name(spigot)
        ]}
     ]
 
-    Supervisor.init(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :rest_for_one)
   end
 
   # name(:broadcast, camera)
-  def tap(session), do: name({:broadcast, {:spigot, {:session, session}}})
+  def tap(session), do: name({:ripcord, {:spigot, {:session, session}}})
 
   defp name(tup), do: Library.get_register_name(tup)
 end
