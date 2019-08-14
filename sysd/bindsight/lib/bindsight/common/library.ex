@@ -28,7 +28,13 @@ defmodule BindSight.Common.Library do
 
   @doc "Return unique registerable name for process, shortname if dev/test."
   def get_register_name(tup) when is_tuple(tup) do
-    get_register_name(Enum.join(Tuple.to_list(tup), ":"))
+    list = tup |> Tuple.to_list()
+
+    if Enum.all?(list, fn x -> is_atom(x) end) do
+      list |> Enum.join(":") |> get_register_name()
+    else
+      {:via, Registry, {Registry.BindSight, tup}}
+    end
   end
 
   def get_register_name(name) do

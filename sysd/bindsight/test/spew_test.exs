@@ -21,15 +21,20 @@ defmodule SpewTest do
   use ExUnit.Case
 
   doctest BindSight.Stage.SpewSupervisor
+  doctest BindSight.Stage.Spew.Broadcast
   doctest BindSight.Stage.Spew.Spigot
 
+  alias BindSight.Common.Library
   alias BindSight.Stage.Slurp.Validate
   alias BindSight.Stage.Spew.Spigot
-  alias BindSight.Stage.SpewSupervisor
 
   test "grab snapshot from Spigot" do
-    SpewSupervisor.start_child(:test, :test)
-    subscriptions = [{Spigot.tap(:test, :test), max_demand: 1}]
+    DynamicSupervisor.start_child(
+      Library.get_register_name(:spewsup),
+      {Spigot, session: :test}
+    )
+
+    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     assert Validate.validate_frame(data) == :ok

@@ -23,25 +23,33 @@ defmodule BindSight.Stage.Spew.Spigot do
   alias BindSight.Common.Library
   alias BindSight.Stage.Slurp.Spigot
 
-  @defaults %{camera: :test, clientid: :this_ought_to_be_unique}
+  @defaults %{camera: :test, session: -1}
 
   def start_link(opts) do
-    %{camera: camera, clientid: clientid} = Enum.into(opts, @defaults)
+    %{session: session} = Enum.into(opts, @defaults)
 
-    Supervisor.start_link(__MODULE__, camera,
-      name: name({:spigot, camera, clientid})
+    Supervisor.start_link(__MODULE__, opts,
+      name: name({:spigot, {:session, session}})
     )
   end
 
   @impl true
-  def init(_camera) do
-    children = []
+  def init(opts) do
+    %{camera: camera, session: session} = Enum.into(opts, @defaults)
+
+    children = [
+      {BindSight.Stage.Spew.Broadcast,
+       [
+         source: Spigot.tap(camera),
+         name: name({:broadcast, {:spigot, {:session, session}}})
+       ]}
+    ]
 
     Supervisor.init(children, strategy: :one_for_one)
   end
 
   # name(:broadcast, camera)
-  def tap(camera, _clientid), do: Spigot.tap(camera)
+  def tap(session), do: name({:broadcast, {:spigot, {:session, session}}})
 
   defp name(tup), do: Library.get_register_name(tup)
 end

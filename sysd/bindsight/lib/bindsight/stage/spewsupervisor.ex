@@ -25,26 +25,11 @@ defmodule BindSight.Stage.SpewSupervisor do
 
   def start_link(_) do
     Logger.info("Ready to spew clients...")
-    DynamicSupervisor.start_link(__MODULE__, nil, name: name())
+    DynamicSupervisor.start_link(__MODULE__, [], name: :spewsup)
   end
 
   @impl true
   def init(_) do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
-
-  def start_child(camera, clientid) do
-    child = {BindSight.Stage.Spew.Spigot, name: childname(camera, clientid)}
-    DynamicSupervisor.start_child(name(), child)
-  end
-
-  def stop_child(camera, clientid) do
-    Supervisor.terminate_child(name(), childname(camera, clientid))
-  end
-
-  defp childname(camera, clientid) do
-    Library.get_register_name({:spew, camera, clientid})
-  end
-
-  defp name, do: Library.get_register_name(:spewsup)
 end

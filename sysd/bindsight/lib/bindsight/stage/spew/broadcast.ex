@@ -15,24 +15,26 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight do
-  @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
+defmodule BindSight.Stage.Spew.Broadcast do
+  @moduledoc "Spew spigot startpoint to serve client and arbitrary number of snoops."
 
-  def start(_type, _args) do
-    Port.open({:spawn, "epmd -daemon"}, [:binary])
-    {:ok, hostname} = :inet.gethostname()
+  use GenStage
 
-    {:ok, _pid} =
-      [String.to_atom("bindsight@#{hostname}")]
-      |> :net_kernel.start()
+  @defaults %{source: :producer_not_specified, name: __MODULE__}
 
-    children = [
-      {Registry, keys: :unique, name: Registry.BindSight},
-      BindSight.Stage.SlurpSupervisor,
-      BindSight.WebAPI.Server,
-      BindSight.Stage.SpewSupervisor
-    ]
+  def start_link(opts \\ []) do
+    %{source: source, name: name} = Enum.into(opts, @defaults)
+    GenStage.start_link(__MODULE__, source, name: name)
+  end
 
-    Supervisor.start_link(children, strategy: :one_for_one, restart: :permanent)
+  def init(source) do
+    dispatch = GenStage.BroadcastDispatcher
+
+    {:producer_consumer, :stateless,
+     subscribe_to: [source], dispatcher: dispatch}
+  end
+
+  def handle_events(events, _from, :stateless) do
+    {:noreply, events, :stateless}
   end
 end
