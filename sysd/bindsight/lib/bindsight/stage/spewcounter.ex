@@ -15,28 +15,15 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.SpewSupervisor do
-  @moduledoc "Supervise spew spigot (client pipeline segment) for each client."
+defmodule BindSight.Stage.SpewCounter do
+  @moduledoc "Simple counter to track "
+  use Agent
 
-  use DynamicSupervisor
-  require Logger
-
-  alias BindSight.Stage.Spew.Spigot
-  alias BindSight.Stage.SpewCounter
-
-  def start_link(_) do
-    Logger.info("Ready to spew clients...")
-    DynamicSupervisor.start_link(__MODULE__, [], name: :spewsup)
+  def start_link(_opts) do
+    Agent.start_link(fn -> 0 end, name: __MODULE__)
   end
 
-  @impl true
-  def init(_) do
-    DynamicSupervisor.init(strategy: :one_for_one)
-  end
-
-  def start_session do
-    session = SpewCounter.next()
-    DynamicSupervisor.start_child(:spewsup, {Spigot, session: session})
-    session
+  def next do
+    Agent.get_and_update(__MODULE__, fn x -> {x + 1, x + 1} end)
   end
 end

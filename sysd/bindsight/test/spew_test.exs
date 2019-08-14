@@ -24,34 +24,41 @@ defmodule SpewTest do
   doctest BindSight.Stage.Spew.Broadcast
   doctest BindSight.Stage.Spew.Spigot
 
-  alias BindSight.Common.Library
   alias BindSight.Stage.Slurp.Validate
   alias BindSight.Stage.Spew.Spigot
+  alias BindSight.Stage.SpewSupervisor
 
   test "grab snapshot from Spigot" do
-    DynamicSupervisor.start_child(
-      Library.get_register_name(:spewsup),
-      {Spigot, session: :test}
-    )
-
-    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
+    session = SpewSupervisor.start_session()
+    subscriptions = [{Spigot.tap(session), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     assert Validate.validate_frame(data) == :ok
   end
 
-  @doc """
-  test "grab multiple snapshots from Spigot" do
-    subscriptions = [{Spigot.tap(:test), max_demand: 10}]
+  test "grab multiple Spigot snapshots" do
+    sessions = 1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session() end)
 
-    result =
-      subscriptions
-      |> GenStage.stream()
-      |> Enum.take(10)
-      |> Enum.map(fn x -> Validate.validate_frame(x) end)
+    subscriptions =
+      sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
 
-    assert result == List.duplicate(:ok, 10)
+    [data0 | _] =
+      subscriptions |> Enum.at(0) |> GenStage.stream() |> Enum.take(1)
+
+    [data1 | _] =
+      subscriptions |> Enum.at(1) |> GenStage.stream() |> Enum.take(1)
+
+    [data2 | _] =
+      subscriptions |> Enum.at(2) |> GenStage.stream() |> Enum.take(1)
+
+    assert Validate.validate_frame(data0) == :ok
+    assert Validate.validate_frame(data1) == :ok
+    assert Validate.validate_frame(data2) == :ok
+    assert data0 <> data1
+    assert data1 <> data2
   end
+
+  @doc """
 
   test "grab broadcast frame across three clients" do
     subscriptions = [{Spigot.tap(:test), max_demand: 1}]

@@ -30,6 +30,7 @@ defmodule BindSight do
       {Registry, keys: :unique, name: Registry.BindSight},
       BindSight.Stage.SlurpSupervisor,
       BindSight.WebAPI.Server,
+      BindSight.Stage.SpewCounter,
       BindSight.Stage.SpewSupervisor
     ]
 
