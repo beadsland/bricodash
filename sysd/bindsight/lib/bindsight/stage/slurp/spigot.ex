@@ -50,7 +50,15 @@ defmodule BindSight.Stage.Slurp.Spigot do
          name: name({:validate, camera})
        ]},
       {BindSight.Stage.Slurp.Broadcast,
-       [source: name({:validate, camera}), name: name({:broadcast, camera})]}
+       [source: name({:validate, camera}), name: name({:broadcast, camera})]},
+      {BindSight.Stage.SnoopSupervisor,
+       [
+         source: name({:broadcast, camera}),
+         camera: camera,
+         name: name({:snoops, camera}),
+         always: [BindSight.Stage.Slurp.FlushSnoop],
+         config: :slurp_snoops
+       ]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)

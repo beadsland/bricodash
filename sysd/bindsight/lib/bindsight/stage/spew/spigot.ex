@@ -44,7 +44,14 @@ defmodule BindSight.Stage.Spew.Spigot do
          source: name({:broadcast, spigot}),
          name: name({:ripcord, spigot}),
          spigot: name(spigot)
-       ]}
+       ]},
+      {BindSight.Stage.SnoopSupervisor,
+       [
+         source: name({:broadcast, spigot}),
+         name: name({:snoops, spigot}),
+         config: :spew_snoops
+       ] ++
+         opts}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)

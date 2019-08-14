@@ -26,6 +26,8 @@ defmodule SlurpTest do
   doctest BindSight.Stage.Slurp.Validate
   doctest BindSight.Stage.Slurp.Broadcast
   doctest BindSight.Stage.Slurp.Spigot
+  doctest BindSight.Stage.Slurp.FlushSnoop
+  doctest BindSight.Stage.SnoopSupervisor
 
   alias BindSight.Stage.Slurp.SnapSource
   alias BindSight.Stage.Slurp.Spigot
