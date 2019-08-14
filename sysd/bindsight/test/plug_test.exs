@@ -26,6 +26,7 @@ defmodule PlugTest do
   doctest BindSight.WebAPI.Verify
   doctest BindSight.WebAPI.Error
   doctest BindSight.WebAPI.Home
+  doctest BindSight.WebAPI.Frames
 
   alias BindSight.Stage.Slurp.Validate
   alias BindSight.WebAPI.Router
