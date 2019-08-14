@@ -29,7 +29,7 @@ defmodule SpewTest do
   alias BindSight.Stage.SpewSupervisor
 
   test "grab snapshot from Spigot" do
-    session = SpewSupervisor.start_session()
+    session = SpewSupervisor.start_session(camera: :test)
     subscriptions = [{Spigot.tap(session), max_demand: 1}]
     [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
@@ -37,7 +37,9 @@ defmodule SpewTest do
   end
 
   test "grab multiple Spigot snapshots" do
-    sessions = 1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session() end)
+    sessions =
+      1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session(camera: :test) end)
+
     subs = sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
     [data0 | _] = subs |> Enum.at(0) |> GenStage.stream() |> Enum.take(1)
     [data1 | _] = subs |> Enum.at(1) |> GenStage.stream() |> Enum.take(1)
@@ -51,7 +53,9 @@ defmodule SpewTest do
   end
 
   test "grab broadcast frames across three clients" do
-    sessions = 1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session() end)
+    sessions =
+      1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session(camera: :test) end)
+
     subs = sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
 
     t0 =

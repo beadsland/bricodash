@@ -24,6 +24,8 @@ defmodule BindSight.Stage.SpewSupervisor do
   alias BindSight.Stage.Spew.Spigot
   alias BindSight.Stage.SpewCounter
 
+  @defaults %{camera: :test}
+
   def start_link(_) do
     Logger.info("Ready to spew clients...")
     DynamicSupervisor.start_link(__MODULE__, [], name: :spewsup)
@@ -34,9 +36,15 @@ defmodule BindSight.Stage.SpewSupervisor do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
-  def start_session do
+  def start_session(opts) do
+    %{camera: camera} = Enum.into(opts, @defaults)
     session = SpewCounter.next()
-    DynamicSupervisor.start_child(:spewsup, {Spigot, session: session})
+
+    DynamicSupervisor.start_child(
+      :spewsup,
+      {Spigot, camera: camera, session: session}
+    )
+
     session
   end
 end
