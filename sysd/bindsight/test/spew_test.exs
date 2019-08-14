@@ -50,26 +50,30 @@ defmodule SpewTest do
     assert data1 <> data2
   end
 
-  @doc """
+  test "grab broadcast frames across three clients" do
+    sessions = 1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session() end)
+    subs = sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
 
-  test "grab broadcast frame across three clients" do
-    subscriptions = [{Spigot.tap(:test), max_demand: 1}]
+    t0 =
+      Task.async(fn ->
+        subs |> Enum.at(0) |> GenStage.stream() |> Enum.take(5)
+      end)
 
     t1 =
-      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+      Task.async(fn ->
+        subs |> Enum.at(1) |> GenStage.stream() |> Enum.take(5)
+      end)
 
     t2 =
-      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
+      Task.async(fn ->
+        subs |> Enum.at(2) |> GenStage.stream() |> Enum.take(5)
+      end)
 
-    t3 =
-      Task.async(fn -> subscriptions |> GenStage.stream() |> Enum.take(5) end)
-
+    data0 = Task.await(t0)
     data1 = Task.await(t1)
     data2 = Task.await(t2)
-    data3 = Task.await(t3)
 
+    assert length(data0 -- data1) < 2
     assert length(data1 -- data2) < 2
-    assert length(data2 -- data3) < 2
   end
-  """
 end
