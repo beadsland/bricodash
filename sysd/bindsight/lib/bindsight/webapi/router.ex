@@ -22,7 +22,8 @@ defmodule BindSight.WebAPI.Router do
   use Plug.ErrorHandler
 
   alias BindSight.Common.Library
-  alias BindSight.Common.Snapshot
+  alias BindSight.Stage.Spew.Spigot
+  alias BindSight.Stage.SpewSupervisor
   alias BindSight.WebAPI.Error
   alias BindSight.WebAPI.Home
 
@@ -39,11 +40,10 @@ defmodule BindSight.WebAPI.Router do
   # Note, cache-control defaults to "max-age=0, private, must-revalidate",
   # per https://hexdocs.pm/plug/Plug.Conn.html -- so we needn't do anything.
   get "/:camera/snapshot" do
-    {:ok, frame} =
-      camera
-      |> String.to_existing_atom()
-      |> Library.get_camera_url()
-      |> Snapshot.get_snapshot()
+    camera = camera |> String.to_existing_atom()
+    session = SpewSupervisor.start_session(camera: camera)
+    subscriptions = [{Spigot.tap(session), max_demand: 1}]
+    [frame | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
 
     conn
     |> put_resp_content_type("image/jpg")

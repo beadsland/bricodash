@@ -40,10 +40,11 @@ defmodule BindSight.Stage.SpewSupervisor do
     %{camera: camera} = Enum.into(opts, @defaults)
     session = SpewCounter.next()
 
-    DynamicSupervisor.start_child(
-      :spewsup,
-      {Spigot, camera: camera, session: session}
-    )
+    {:ok, _pid} =
+      DynamicSupervisor.start_child(
+        :spewsup,
+        {Spigot, camera: camera, session: session}
+      )
 
     session
   end
