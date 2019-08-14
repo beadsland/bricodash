@@ -38,18 +38,10 @@ defmodule SpewTest do
 
   test "grab multiple Spigot snapshots" do
     sessions = 1..3 |> Enum.map(fn _ -> SpewSupervisor.start_session() end)
-
-    subscriptions =
-      sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
-
-    [data0 | _] =
-      subscriptions |> Enum.at(0) |> GenStage.stream() |> Enum.take(1)
-
-    [data1 | _] =
-      subscriptions |> Enum.at(1) |> GenStage.stream() |> Enum.take(1)
-
-    [data2 | _] =
-      subscriptions |> Enum.at(2) |> GenStage.stream() |> Enum.take(1)
+    subs = sessions |> Enum.map(fn x -> [{Spigot.tap(x), max_demand: 1}] end)
+    [data0 | _] = subs |> Enum.at(0) |> GenStage.stream() |> Enum.take(1)
+    [data1 | _] = subs |> Enum.at(1) |> GenStage.stream() |> Enum.take(1)
+    [data2 | _] = subs |> Enum.at(2) |> GenStage.stream() |> Enum.take(1)
 
     assert Validate.validate_frame(data0) == :ok
     assert Validate.validate_frame(data1) == :ok
