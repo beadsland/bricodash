@@ -36,10 +36,7 @@ defmodule BindSight.WebAPI.Frames do
   end
 
   defp send_snapshot(camera, conn) do
-    camera = camera |> String.to_existing_atom()
-    session = SpewSupervisor.start_session(camera: camera)
-    subscriptions = [{Spigot.tap(session), max_demand: 1}]
-    [frame | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
+    [frame | _] = camera |> get_stream |> Enum.take(1)
 
     conn
     |> put_resp_content_type("image/jpg")
@@ -47,17 +44,14 @@ defmodule BindSight.WebAPI.Frames do
   end
 
   defp send_stream(camera, conn) do
-    camera = camera |> String.to_existing_atom()
-    session = SpewSupervisor.start_session(camera: camera)
-    subscriptions = [{Spigot.tap(session), mad_demand: 1}]
-    stream = subscriptions |> GenStage.stream()
+    stream = get_stream(camera)
+
+    contype = "multipart/x-mixed-replace;boundary=#{@boundary}"
 
     conn =
       conn
       |> put_resp_header("connection", "close")
-      |> put_resp_content_type(
-        "multipart/x-mixed-replace;boundary=#{@boundary}"
-      )
+      |> put_resp_content_type(contype)
       |> send_chunked(200)
 
     stream |> Stream.map(fn x -> send_frame(conn, x) end) |> Stream.run()
@@ -73,5 +67,11 @@ defmodule BindSight.WebAPI.Frames do
 
     {:ok, conn} = chunk(conn, headers)
     {:ok, _conn} = chunk(conn, frame)
+  end
+
+  defp get_stream(camera) do
+    camera = camera |> String.to_existing_atom()
+    session = SpewSupervisor.start_session(camera: camera)
+    [{Spigot.tap(session), mad_demand: 1}] |> GenStage.stream()
   end
 end
