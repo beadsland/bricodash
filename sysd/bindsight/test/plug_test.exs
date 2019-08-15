@@ -50,6 +50,9 @@ defmodule PlugTest do
     assert Validate.validate_frame(conn.resp_body) == :ok
   end
 
+  test "returns mjpg" do
+  end
+
   test "returns I'm a teapot" do
     conn = :get |> conn("/cuppa/snapshot", "") |> Router.call(@opts)
 

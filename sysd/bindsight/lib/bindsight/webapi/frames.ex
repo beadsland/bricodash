@@ -20,16 +20,18 @@ defmodule BindSight.WebAPI.Frames do
 
   import Plug.Conn
 
-  alias BindSight.Stage.SpewSupervisor
   alias BindSight.Stage.Spew.Spigot
+  alias BindSight.Stage.SpewSupervisor
 
   @defaults %{camera: :test, action: :snapshot}
+  @boundary "--SNAP-HACKLE-STOP--"
 
   def send(conn, opts) do
     %{camera: camera, action: action} = Enum.into(opts, @defaults)
 
     case action do
       :snapshot -> send_snapshot(camera, conn)
+      :stream -> send_stream(camera, conn)
     end
   end
 
@@ -42,5 +44,34 @@ defmodule BindSight.WebAPI.Frames do
     conn
     |> put_resp_content_type("image/jpg")
     |> send_resp(200, frame)
+  end
+
+  defp send_stream(camera, conn) do
+    camera = camera |> String.to_existing_atom()
+    session = SpewSupervisor.start_session(camera: camera)
+    subscriptions = [{Spigot.tap(session), mad_demand: 1}]
+    stream = subscriptions |> GenStage.stream()
+
+    conn =
+      conn
+      |> put_resp_header("connection", "close")
+      |> put_resp_content_type(
+        "multipart/x-mixed-replace;boundary=#{@boundary}"
+      )
+      |> send_chunked(200)
+
+    stream |> Stream.map(fn x -> send_frame(conn, x) end) |> Stream.run()
+    conn
+  end
+
+  defp send_frame(conn, frame) do
+    time = System.os_time()
+
+    headers =
+      ["", @boundary, "X-Timestamp: #{time}", "Content-Type: image/jpg", "\n"]
+      |> Enum.join("\n")
+
+    {:ok, conn} = chunk(conn, headers)
+    {:ok, _conn} = chunk(conn, frame)
   end
 end

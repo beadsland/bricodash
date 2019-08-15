@@ -28,7 +28,8 @@ defmodule BindSight.WebAPI.Router do
 
   @cameras Library.get_env(:cameras) |> Map.keys()
 
-  plug(BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot])
+  plug(BindSight.WebAPI.Verify, cameras: @cameras, actions: [:snapshot, :stream])
+
   plug(:match)
   plug(:dispatch)
 
@@ -40,6 +41,10 @@ defmodule BindSight.WebAPI.Router do
   # per https://hexdocs.pm/plug/Plug.Conn.html -- so we needn't do anything.
   get "/:camera/snapshot" do
     Frames.send(conn, camera: camera, action: :snapshot)
+  end
+
+  get "/:camera/stream" do
+    Frames.send(conn, camera: camera, action: :stream)
   end
 
   match _ do
