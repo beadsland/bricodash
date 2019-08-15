@@ -37,14 +37,12 @@ defmodule BindSight.WebAPI.Router do
     Home.send(conn, cameras: @cameras)
   end
 
-  # Note, cache-control defaults to "max-age=0, private, must-revalidate",
-  # per https://hexdocs.pm/plug/Plug.Conn.html -- so we needn't do anything.
   get "/:camera/snapshot" do
-    Frames.send(conn, camera: camera, action: :snapshot)
+    Frames.send(aggressive_nocache(conn), camera: camera, action: :snapshot)
   end
 
   get "/:camera/stream" do
-    Frames.send(conn, camera: camera, action: :stream)
+    Frames.send(aggressive_nocache(conn), camera: camera, action: :stream)
   end
 
   match _ do
@@ -53,5 +51,18 @@ defmodule BindSight.WebAPI.Router do
 
   defp handle_errors(conn, %{kind: kind, reason: reason, stack: stack}) do
     Error.send(conn, kind: kind, reason: reason, stack: stack)
+  end
+
+  # Note, cache-control defaults to "max-age=0, private, must-revalidate",
+  # per https://hexdocs.pm/plug/Plug.Conn.html
+  # But we want to be sure older, non-compliant browsers behave themselves.
+  defp aggressive_nocache(conn) do
+    cache =
+      "no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0"
+
+    conn
+    |> put_resp_header("cache-control", cache)
+    |> put_resp_header("expires", "Thu, 9 Sep 1999 0:0:00 GMT")
+    |> put_resp_header("pragma", "no-cache")
   end
 end
