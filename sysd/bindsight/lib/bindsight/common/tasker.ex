@@ -23,6 +23,7 @@ defmodule BindSight.Common.Tasker do
   defmacro __using__(_) do
     quote location: :keep do
       @behaviour BindSight.Common.Tasker
+      alias BindSight.Common.Tasker
     end
   end
 

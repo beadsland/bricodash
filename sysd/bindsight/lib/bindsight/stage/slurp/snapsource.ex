@@ -23,7 +23,6 @@ defmodule BindSight.Stage.Slurp.SnapSource do
 
   alias BindSight.Common.Library
   alias BindSight.Common.Snapshot
-  alias BindSight.Common.Tasker
 
   @defaults %{camera: :test, name: __MODULE__}
 

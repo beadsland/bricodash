@@ -22,8 +22,6 @@ defmodule BindSight.Stage.Slurp.Batch do
   use BindSight.Common.Tasker
   require Logger
 
-  alias BindSight.Common.Tasker
-
   @defaults %{source: :producer_not_specified, camera: :test, name: __MODULE__}
 
   def start_link(opts \\ []) do
