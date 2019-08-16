@@ -24,8 +24,10 @@ defmodule BindSightTest do
   doctest BindSight.Common.Library
   doctest BindSight.Common.Snapshot
   doctest BindSight.Common.Tasker
+  doctest BindSight.Common.Request
 
   alias BindSight.Common.Library
+  alias BindSight.Common.Request
   alias BindSight.Common.Snapshot
   alias BindSight.Stage.Slurp.Validate
 
@@ -42,6 +44,20 @@ defmodule BindSightTest do
 
   test "validate a snapshot" do
     {:ok, data} = :test |> Library.get_camera_url() |> Snapshot.get_snapshot()
+
+    assert Validate.validate_frame(data) == :ok
+  end
+
+  test "grab and validate a stage snapshot" do
+    Task.Supervisor.start_link(name: RequestTestTaskSup, strategy: :one_for_one)
+
+    Request.start_link(
+      camera: :test,
+      name: RequestTest,
+      tasks: RequestTestTaskSup
+    )
+
+    [{:ok, data} | _] = [RequestTest] |> GenStage.stream() |> Enum.take(1)
 
     assert Validate.validate_frame(data) == :ok
   end
