@@ -112,6 +112,7 @@ defmodule BindSight.Common.Request do
         parse_responses(tail, status, <<>>)
 
       {:data, _ref, next} ->
+        # do sync_notify here only....
         parse_responses(tail, status, data <> next)
 
       {:done, _ref} ->

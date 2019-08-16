@@ -33,6 +33,12 @@ defmodule BindSight.Stage.Slurp.Spigot do
     children = [
       {Task.Supervisor,
        name: name({:tasks, :slurp, camera}), strategy: :one_for_one},
+      {BindSight.Common.Request,
+       [
+         camera: camera,
+         name: name({:request, camera}),
+         tasks: name({:tasks, :slurp, camera})
+       ]},
       {BindSight.Stage.Slurp.SnapSource,
        [
          camera: camera,
