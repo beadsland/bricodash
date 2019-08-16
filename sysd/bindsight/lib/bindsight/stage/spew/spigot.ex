@@ -27,7 +27,7 @@ defmodule BindSight.Stage.Spew.Spigot do
 
   def start_link(opts) do
     %{session: session} = Enum.into(opts, @defaults)
-    spigot = {:spigot, {:session, session}}
+    spigot = {:spigot, :spew, session}
     opts = [spigot: spigot] ++ opts
     Supervisor.start_link(__MODULE__, opts, name: name(spigot))
   end
@@ -58,7 +58,7 @@ defmodule BindSight.Stage.Spew.Spigot do
   end
 
   # name(:broadcast, camera)
-  def tap(session), do: name({:ripcord, {:spigot, {:session, session}}})
+  def tap(session), do: name({:ripcord, {:spigot, :spew, session}})
 
   defp name(tup), do: Library.get_register_name(tup)
 end

@@ -23,25 +23,28 @@ defmodule BindSight.Stage.Slurp.Spigot do
   alias BindSight.Common.Library
 
   def start_link(camera \\ :test) do
-    Supervisor.start_link(__MODULE__, camera, name: name({:spigot, camera}))
+    Supervisor.start_link(__MODULE__, camera,
+      name: name({:spigot, :slurp, camera})
+    )
   end
 
   @impl true
   def init(camera) do
     children = [
-      {Task.Supervisor, name: name({:tasks, camera}), strategy: :one_for_one},
+      {Task.Supervisor,
+       name: name({:tasks, :slurp, camera}), strategy: :one_for_one},
       {BindSight.Stage.Slurp.SnapSource,
        [
          camera: camera,
          name: name({:snapsource, camera}),
-         tasks: name({:tasks, camera})
+         tasks: name({:tasks, :slurp, camera})
        ]},
       {BindSight.Stage.Slurp.Batch,
        [
          source: name({:snapsource, camera}),
          camera: camera,
          name: name({:batch, camera}),
-         tasks: name({:tasks, camera})
+         tasks: name({:tasks, :slurp, camera})
        ]},
       {BindSight.Stage.Slurp.Validate,
        [
