@@ -30,7 +30,6 @@ defmodule BindSight.Common.Tasker do
   @callback perform_task(name :: atom, opts :: [key: term]) :: term
 
   @defaults %{
-    name: :need_a_unique_name,
     tasks: :need_a_unique_name,
     restart: :permanent
   }
