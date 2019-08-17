@@ -49,4 +49,7 @@ defmodule BindSight.Common.Library do
   def get_env(key, default \\ nil) do
     Application.get_env(:bindsight, key, default)
   end
+
+  @doc "Return full path and query from a URI."
+  def query_path(uri), do: [uri.path, uri.query] |> Enum.join("?")
 end

@@ -20,22 +20,15 @@ defmodule BindSight.Common.MintJulep do
 
   require Logger
 
+  alias BindSight.Common.Library
+
   @doc "Return state for polling camera."
-  def sip(uri) do
-    parts = uri |> decompose_uri()
-    {parts, connect(parts)}
-  end
+  def sip(uri), do: {uri, connect(uri)}
 
-  defp decompose_uri(uri) do
-    path = [uri.path, uri.query] |> Enum.join("?")
-    scheme = uri.scheme |> String.to_existing_atom()
-    {scheme, uri, path}
-  end
-
-  defp connect(parts = {scheme, uri, _path}) do
-    case mint_connect(scheme, uri.host, uri.port) do
-      {:ok, conn} -> request(conn, parts)
-      {:error, err} -> try_again(nil, parts, :connect, err)
+  defp connect(uri) do
+    case mint_connect(uri.scheme |> String.to_atom(), uri.host, uri.port) do
+      {:ok, conn} -> request(conn, uri)
+      {:error, err} -> try_again(nil, uri, :connect, err)
     end
   end
 
@@ -49,21 +42,23 @@ defmodule BindSight.Common.MintJulep do
     end
   end
 
-  defp request(conn, parts = {_scheme, _uri, path}) do
-    case Mint.HTTP.request(conn, "GET", path, []) do
+  defp request(conn, uri) do
+    case Mint.HTTP.request(conn, "GET", Library.query_path(uri), []) do
       {:ok, conn, _ref} -> conn
-      {:error, conn, err} -> try_again(conn, parts, :request, err)
+      {:error, conn, err} -> try_again(conn, uri, :request, err)
     end
   end
 
   @doc "Drop and reopen connection on error."
-  def try_again(conn, parts = {_scheme, uri, path}, call, err) do
+  def try_again(conn, uri, call, err) do
+    path = Library.query_path(uri)
+
     Logger.warn(fn ->
       "Failed #{call}: #{uri.host}:#{uri.port}/#{path}: " <> inspect(err)
     end)
 
     Mint.HTTP.close(conn)
     Process.sleep(1000)
-    connect(parts)
+    connect(uri)
   end
 end

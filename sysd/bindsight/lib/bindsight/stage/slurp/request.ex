@@ -45,10 +45,10 @@ defmodule BindSight.Stage.Slurp.Request do
   end
 
   @impl true
-  def handle_info(message, state = {parts, conn}) do
+  def handle_info(message, state = {uri, conn}) do
     case Mint.HTTP.stream(conn, message) do
       {:ok, conn, resp} ->
-        dispatch_responses(resp, _state = {parts, conn})
+        dispatch_responses(resp, _state = {uri, conn})
 
       :unknown ->
         Logger.error(fn -> "Received unknown message: " <> inspect(message) end)
@@ -56,18 +56,18 @@ defmodule BindSight.Stage.Slurp.Request do
 
       {:error, conn, err, resp} ->
         {:noreply, resp,
-         _state = {parts, MintJulep.try_again(conn, parts, :response, err)}}
+         _state = {uri, MintJulep.try_again(conn, uri, :response, err)}}
     end
   end
 
-  defp dispatch_responses(resp, _state = {parts = {_scheme, uri, _query}, conn}) do
+  defp dispatch_responses(resp, _state = {uri, conn}) do
     if Enum.reduce(resp, nil, fn x, accu -> find_done(x, accu) end) do
       Mint.HTTP.close(conn)
       # because snap
       Process.sleep(100)
       {:noreply, resp, _state = MintJulep.sip(uri)}
     else
-      {:noreply, resp, _state = {parts, conn}}
+      {:noreply, resp, _state = {uri, conn}}
     end
   end
 
