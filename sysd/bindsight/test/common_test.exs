@@ -19,6 +19,7 @@ defmodule BindSightTest do
   @moduledoc "Test basic utility functions used by other modules."
 
   use ExUnit.Case
+  require Logger
 
   doctest BindSight
   doctest BindSight.Common.Library
@@ -46,12 +47,23 @@ defmodule BindSightTest do
     assert Validate.validate_frame(data) == :ok
   end
 
-  test "grab and validate a stage snapshot" do
+  test "grab and validate a request/digest snapshot" do
     [data | _] =
       [:"digest:test"]
       |> GenStage.stream()
       |> Enum.take(1)
 
     assert Validate.validate_frame(data) == :ok
+  end
+
+  test "grab and validate multiple request/digest snapshots" do
+    data =
+      [:"digest:test"]
+      |> GenStage.stream()
+      |> Enum.take(3)
+
+    assert Validate.validate_frame(Enum.at(data, 0)) == :ok
+    assert Validate.validate_frame(Enum.at(data, 1)) == :ok
+    assert Validate.validate_frame(Enum.at(data, 2)) == :ok
   end
 end
