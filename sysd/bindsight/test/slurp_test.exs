@@ -21,6 +21,8 @@ defmodule SlurpTest do
   use ExUnit.Case
 
   doctest BindSight.Stage.SlurpSupervisor
+  doctest BindSight.Stage.Slurp.Request
+  doctest BindSight.Stage.Slurp.Digest
   doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Batch
   doctest BindSight.Stage.Slurp.Validate

@@ -24,7 +24,6 @@ defmodule BindSightTest do
   doctest BindSight.Common.Library
   doctest BindSight.Common.Snapshot
   doctest BindSight.Common.Tasker
-  doctest BindSight.Common.Request
 
   alias BindSight.Common.Library
   alias BindSight.Common.Snapshot
@@ -48,8 +47,8 @@ defmodule BindSightTest do
   end
 
   test "grab and validate a stage snapshot" do
-    [{:ok, data} | _] =
-      [:"request:test"]
+    [data | _] =
+      [:"digest:test"]
       |> GenStage.stream()
       |> Enum.take(1)
 
