@@ -34,9 +34,14 @@ defmodule BindSight.Stage.Slurp.Request do
   @impl true
   def init(url) do
     uri = url |> URI.parse()
+
+    query = if uri.query, do: uri.query, else: ""
+    query = query |> URI.decode_query(%{:action => :snapshot})
+    uri = uri |> Map.put(:query, URI.encode_query(query))
+
+    path = [uri.path, uri.query] |> Enum.join("?")
+
     scheme = uri.scheme |> String.to_existing_atom()
-    params = %{"action" => "snapshot"} |> URI.encode_query()
-    path = [uri.path, params] |> Enum.join("?")
     parts = {scheme, uri, path}
 
     {:producer, _state = {parts, connect(parts)}}
