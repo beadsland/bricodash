@@ -55,19 +55,17 @@ defmodule BindSight.Stage.Slurp.Request do
         {:noreply, [], state}
 
       {:error, conn, err, resp} ->
-        {:noreply, resp,
-         _state = {uri, MintJulep.try_again(conn, uri, :response, err)}}
+        {:noreply, resp, _state = MintJulep.sip(uri, conn, :response, err)}
     end
   end
 
-  defp dispatch_responses(resp, _state = {uri, conn}) do
+  defp dispatch_responses(resp, state = {uri, conn}) do
     if Enum.reduce(resp, nil, fn x, accu -> find_done(x, accu) end) do
-      Mint.HTTP.close(conn)
       # because snap
       Process.sleep(100)
-      {:noreply, resp, _state = MintJulep.sip(uri)}
+      {:noreply, resp, _state = MintJulep.sip(uri, conn)}
     else
-      {:noreply, resp, _state = {uri, conn}}
+      {:noreply, resp, state}
     end
   end
 

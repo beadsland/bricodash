@@ -22,13 +22,27 @@ defmodule BindSight.Common.MintJulep do
 
   alias BindSight.Common.Library
 
-  @doc "Return state for polling camera."
-  def sip(uri), do: {uri, connect(uri)}
+  @doc "Return state for polling cameras, logging error if any."
+  def sip(uri, conn \\ nil, call \\ nil, err \\ nil) do
+    if conn, do: Mint.HTTP.close(conn)
+
+    if err do
+      path = Library.query_path(uri)
+
+      Logger.warn(fn ->
+        "Failed #{call}: #{uri.host}:#{uri.port}/#{path}: " <> inspect(err)
+      end)
+
+      Process.sleep(1000)
+    end
+
+    {uri, connect(uri)}
+  end
 
   defp connect(uri) do
     case mint_connect(uri.scheme |> String.to_atom(), uri.host, uri.port) do
       {:ok, conn} -> request(conn, uri)
-      {:error, err} -> try_again(nil, uri, :connect, err)
+      {:error, err} -> sip(uri, nil, :connect, err)
     end
   end
 
@@ -45,20 +59,7 @@ defmodule BindSight.Common.MintJulep do
   defp request(conn, uri) do
     case Mint.HTTP.request(conn, "GET", Library.query_path(uri), []) do
       {:ok, conn, _ref} -> conn
-      {:error, conn, err} -> try_again(conn, uri, :request, err)
+      {:error, conn, err} -> sip(uri, conn, :request, err)
     end
-  end
-
-  @doc "Drop and reopen connection on error."
-  def try_again(conn, uri, call, err) do
-    path = Library.query_path(uri)
-
-    Logger.warn(fn ->
-      "Failed #{call}: #{uri.host}:#{uri.port}/#{path}: " <> inspect(err)
-    end)
-
-    Mint.HTTP.close(conn)
-    Process.sleep(1000)
-    connect(uri)
   end
 end
