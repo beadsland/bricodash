@@ -22,6 +22,7 @@ defmodule BindSight.Stage.Slurp.Request do
   require Logger
 
   alias BindSight.Common.Library
+  alias BindSight.Common.MintJulep
 
   @defaults %{camera: :test, name: __MODULE__}
 
@@ -33,52 +34,14 @@ defmodule BindSight.Stage.Slurp.Request do
 
   @impl true
   def init(url) do
-    uri = url |> URI.parse()
+    uri = url |> URI.parse() |> query_put(:action, :snapshot)
+    {:producer, _state = MintJulep.sip(uri)}
+  end
 
+  defp query_put(uri, key, value) do
     query = if uri.query, do: uri.query, else: ""
-    query = query |> URI.decode_query(%{:action => :snapshot})
-    uri = uri |> Map.put(:query, URI.encode_query(query))
-
-    path = [uri.path, uri.query] |> Enum.join("?")
-
-    scheme = uri.scheme |> String.to_existing_atom()
-    parts = {scheme, uri, path}
-
-    {:producer, _state = {parts, connect(parts)}}
-  end
-
-  defp connect(parts = {scheme, uri, _path}) do
-    case mint_connect(scheme, uri.host, uri.port) do
-      {:ok, conn} -> request(conn, parts)
-      {:error, err} -> try_again(nil, parts, :connect, err)
-    end
-  end
-
-  # Try ipv6 by default, but fail-over to ipv4 gracefully.
-  defp mint_connect(scheme, host, port) do
-    opts = [transport_opts: [{:tcp_module, :inet6_tcp}]]
-
-    case Mint.HTTP.connect(scheme, host, port, opts) do
-      {:ok, conn} -> {:ok, conn}
-      _ -> Mint.HTTP.connect(scheme, host, port, [])
-    end
-  end
-
-  defp request(conn, parts = {_scheme, _uri, path}) do
-    case Mint.HTTP.request(conn, "GET", path, []) do
-      {:ok, conn, _ref} -> conn
-      {:error, conn, err} -> try_again(conn, parts, :request, err)
-    end
-  end
-
-  defp try_again(conn, parts = {_scheme, uri, path}, call, err) do
-    Logger.warn(fn ->
-      "Failed #{call}: #{uri.host}:#{uri.port}/#{path}: " <> inspect(err)
-    end)
-
-    Mint.HTTP.close(conn)
-    Process.sleep(1000)
-    connect(parts)
+    query = query |> URI.decode_query(%{key => value})
+    uri |> Map.put(:query, URI.encode_query(query))
   end
 
   @impl true
@@ -93,16 +56,16 @@ defmodule BindSight.Stage.Slurp.Request do
 
       {:error, conn, err, resp} ->
         {:noreply, resp,
-         _state = {parts, try_again(conn, parts, :response, err)}}
+         _state = {parts, MintJulep.try_again(conn, parts, :response, err)}}
     end
   end
 
-  defp dispatch_responses(resp, _state = {parts, conn}) do
+  defp dispatch_responses(resp, _state = {parts = {_scheme, uri, _query}, conn}) do
     if Enum.reduce(resp, nil, fn x, accu -> find_done(x, accu) end) do
       Mint.HTTP.close(conn)
       # because snap
       Process.sleep(100)
-      {:noreply, resp, _state = {parts, connect(parts)}}
+      {:noreply, resp, _state = MintJulep.sip(uri)}
     else
       {:noreply, resp, _state = {parts, conn}}
     end
