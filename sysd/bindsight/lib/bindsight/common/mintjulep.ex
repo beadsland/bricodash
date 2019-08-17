@@ -36,10 +36,16 @@ defmodule BindSight.Common.MintJulep do
       Process.sleep(1000)
     end
 
-    {uri, connect(uri)}
+    send(self(), :unfold_deferred_state)
+    {:deferred, {__MODULE__, :connect, uri}}
   end
 
-  defp connect(uri) do
+<<<<<<< HEAD
+  @doc "Callback to connect to camera host and issue a request thereto."
+=======
+  @doc "Connect to camera host and issue a request thereto."
+>>>>>>> a1681db9f95685a8ba7d7cf9d6905d5e9c56a88b
+  def connect(uri) do
     case mint_connect(uri.scheme |> String.to_atom(), uri.host, uri.port) do
       {:ok, conn} -> request(conn, uri)
       {:error, err} -> sip(uri, nil, :connect, err)

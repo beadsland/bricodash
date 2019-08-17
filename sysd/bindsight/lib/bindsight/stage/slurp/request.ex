@@ -45,6 +45,14 @@ defmodule BindSight.Stage.Slurp.Request do
   end
 
   @impl true
+  def handle_info(message, _state = {:deferred, {mod, fun, uri}}) do
+    handle_info(message, _state = {uri, apply(mod, fun, [uri])})
+  end
+
+  def handle_info(:unfold_deferred_state, state) do
+    {:noreply, [], state}
+  end
+
   def handle_info(message, state = {uri, conn}) do
     case Mint.HTTP.stream(conn, message) do
       {:ok, conn, resp} ->
