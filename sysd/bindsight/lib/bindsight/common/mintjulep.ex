@@ -55,15 +55,15 @@ defmodule BindSight.Common.MintJulep do
             apply(mod, :handle_normal_info, [message, state])
 
           {:ok, conn, resp} ->
-            apply(mod, :handle_mint, [resp, {mod, uri, conn}])
+            apply(mod, :handle_mint, [resp, _state = {mod, uri, conn}])
 
           {:error, conn, err, resp} ->
             {:noreply, resp,
-             _state = MintJulep.sip({mod, uri, conn}, :response, err)}
+             _state = MintJulep.sip(_state = {mod, uri, conn}, :response, err)}
         end
       end
 
-      def handle_normal_info(resp, {mod, uri, conn}) do
+      def handle_normal_info(resp, state = {mod, uri, conn}) do
         Logger.error(
           "MintJulep: #{uri}: Unknown info message: " <> inspect(resp)
         )
