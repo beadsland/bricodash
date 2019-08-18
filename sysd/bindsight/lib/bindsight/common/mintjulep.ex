@@ -18,12 +18,64 @@
 defmodule BindSight.Common.MintJulep do
   @moduledoc "Poll to obtain MJPEG snapshots as Mint messages."
 
+  @type state() :: {mod :: atom(), uri :: %URI{}, conn :: :deferred | term()}
+
+  @type genstage_return() ::
+          {:noreply, [event :: term()], new_state :: state()}
+          | {:noreply, [event :: term()], new_state :: state(), :hibernate}
+          | {:stop, reason :: term(), new_state :: state()}
+
+  @callback handle_normal_info(msg :: :timeout | term(), state()) ::
+              genstage_return()
+
+  @callback handle_mint(resp :: [term()], state()) ::
+              genstage_return()
+
+  defmacro __using__(_) do
+    quote do
+      @behaviour BindSight.Common.MintJulep
+
+      use GenStage
+      alias BindSight.Common.MintJulep
+
+      @impl true
+      def handle_info(message, _state = {mod, uri, :deferred}),
+        do: handle_info(message, _state = {mod, uri, MintJulep.connect(uri)})
+
+      def handle_info(:unfold_deferred_state, state),
+        do: {:noreply, [], state}
+
+      def handle_info(message, state = {mod, uri, conn}) do
+        case Mint.HTTP.stream(conn, message) do
+          :unknown ->
+            apply(mod, :handle_normal_info, [message, state])
+
+          {:ok, conn, resp} ->
+            apply(mod, :handle_mint, [resp, {mod, uri, conn}])
+
+          {:error, conn, err, resp} ->
+            {:noreply, resp,
+             _state = MintJulep.sip({mod, uri, conn}, :response, err)}
+        end
+      end
+
+      @defoverridable BindSight.Common.MintJulep
+    end
+  end
+
   require Logger
 
   alias BindSight.Common.Library
 
+  def init(mod, uri), do: {:producer, _state = sip(mod, uri)}
+
   @doc "Return state for polling cameras, logging error if any."
-  def sip(uri, conn \\ nil, call \\ nil, err \\ nil) do
+  def sip(mod, uri = %URI{}) when is_atom(mod) do
+    send(self(), :unfold_deferred_state)
+    {mod, uri, :deferred}
+  end
+
+  def sip(_state = {mod, uri, conn}, call \\ nil, err \\ nil) do
     if conn, do: Mint.HTTP.close(conn)
 
     if err do
@@ -36,19 +88,14 @@ defmodule BindSight.Common.MintJulep do
       Process.sleep(1000)
     end
 
-    send(self(), :unfold_deferred_state)
-    {:deferred, {__MODULE__, :connect, uri}}
+    sip(mod, uri)
   end
 
-<<<<<<< HEAD
   @doc "Callback to connect to camera host and issue a request thereto."
-=======
-  @doc "Connect to camera host and issue a request thereto."
->>>>>>> a1681db9f95685a8ba7d7cf9d6905d5e9c56a88b
   def connect(uri) do
     case mint_connect(uri.scheme |> String.to_atom(), uri.host, uri.port) do
       {:ok, conn} -> request(conn, uri)
-      {:error, err} -> sip(uri, nil, :connect, err)
+      {:error, err} -> sip({uri, nil}, :connect, err)
     end
   end
 
@@ -65,7 +112,7 @@ defmodule BindSight.Common.MintJulep do
   defp request(conn, uri) do
     case Mint.HTTP.request(conn, "GET", Library.query_path(uri), []) do
       {:ok, conn, _ref} -> conn
-      {:error, conn, err} -> sip(uri, conn, :request, err)
+      {:error, conn, err} -> sip({uri, conn}, :request, err)
     end
   end
 end

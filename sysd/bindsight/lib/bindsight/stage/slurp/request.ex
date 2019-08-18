@@ -18,11 +18,10 @@
 defmodule BindSight.Stage.Slurp.Request do
   @moduledoc "Slurp spigot producer to request snapshots from a camera."
 
-  use GenStage
+  use BindSight.Common.MintJulep
   require Logger
 
   alias BindSight.Common.Library
-  alias BindSight.Common.MintJulep
 
   @defaults %{camera: :test, name: __MODULE__}
 
@@ -35,7 +34,7 @@ defmodule BindSight.Stage.Slurp.Request do
   @impl true
   def init(url) do
     uri = url |> URI.parse() |> query_put(:action, :snapshot)
-    {:producer, _state = MintJulep.sip(uri)}
+    MintJulep.init(__MODULE__, uri)
   end
 
   defp query_put(uri, key, value) do
@@ -45,33 +44,11 @@ defmodule BindSight.Stage.Slurp.Request do
   end
 
   @impl true
-  def handle_info(message, _state = {:deferred, {mod, fun, uri}}) do
-    handle_info(message, _state = {uri, apply(mod, fun, [uri])})
-  end
-
-  def handle_info(:unfold_deferred_state, state) do
-    {:noreply, [], state}
-  end
-
-  def handle_info(message, state = {uri, conn}) do
-    case Mint.HTTP.stream(conn, message) do
-      {:ok, conn, resp} ->
-        dispatch_responses(resp, _state = {uri, conn})
-
-      :unknown ->
-        Logger.error(fn -> "Received unknown message: " <> inspect(message) end)
-        {:noreply, [], state}
-
-      {:error, conn, err, resp} ->
-        {:noreply, resp, _state = MintJulep.sip(uri, conn, :response, err)}
-    end
-  end
-
-  defp dispatch_responses(resp, state = {uri, conn}) do
+  def handle_mint(resp, state) do
     if Enum.reduce(resp, nil, fn x, accu -> find_done(x, accu) end) do
       # because snap
       Process.sleep(100)
-      {:noreply, resp, _state = MintJulep.sip(uri, conn)}
+      {:noreply, resp, _state = MintJulep.sip(state)}
     else
       {:noreply, resp, state}
     end
