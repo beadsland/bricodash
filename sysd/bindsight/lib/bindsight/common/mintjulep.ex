@@ -63,8 +63,11 @@ defmodule BindSight.Common.MintJulep do
         end
       end
 
-      def handle_normal_info(resp, state) do
-        Logger.error("Unknown info message: " <> inspect(resp))
+      def handle_normal_info(resp, {mod, uri, conn}) do
+        Logger.error(
+          "MintJulep: #{uri}: Unknown info message: " <> inspect(resp)
+        )
+
         {:noreply, [], state}
       end
 
