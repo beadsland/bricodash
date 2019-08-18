@@ -20,6 +20,7 @@ defmodule BindSight.Stage.Slurp.Request do
 
   use BindSight.Common.MintJulep
 
+  alias BindSight.Common.Camera
   alias BindSight.Common.Library
 
   @defaults %{camera: :test, name: __MODULE__}
@@ -35,15 +36,9 @@ defmodule BindSight.Stage.Slurp.Request do
       camera
       |> Library.get_camera_url()
       |> URI.parse()
-      |> query_put(:action, :snapshot)
+      |> Camera.build_request(Library.get_camera_api(camera), :snapshot)
 
     {:producer, _state = MintJulep.sip(__MODULE__, uri)}
-  end
-
-  defp query_put(uri, key, value) do
-    query = if uri.query, do: uri.query, else: ""
-    query = query |> URI.decode_query(%{key => value})
-    uri |> Map.put(:query, URI.encode_query(query))
   end
 
   @impl true

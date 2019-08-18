@@ -1,6 +1,7 @@
 import Config
 
 config :bindsight,
+  common_api: :mjpg_streamer,
   cameras: %{
     space: "http://wrtnode-webcam.lan:8080/",
     door: "http://rfid-access-building.lan:8080/",

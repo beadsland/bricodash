@@ -22,7 +22,9 @@ defmodule BindSightTest do
   require Logger
 
   doctest BindSight
+  doctest BindSight.Common.Camera
   doctest BindSight.Common.Library
+  doctest BindSight.Common.MintJulep
   doctest BindSight.Common.Snapshot
   doctest BindSight.Common.Tasker
 

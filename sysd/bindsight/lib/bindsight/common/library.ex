@@ -21,9 +21,26 @@ defmodule BindSight.Common.Library do
   use Memoize
 
   @doc "Retrieve camera URL by name from config."
-  def get_camera_url(name) do
+  def get_camera_url(name), do: name |> get_camera_info() |> elem(0)
+
+  @doc "Retrieve camera API by name from config."
+  def get_camera_api(name), do: name |> get_camera_info() |> elem(1)
+
+  defp get_camera_info(name) do
     cameras = Application.fetch_env!(:bindsight, :cameras)
-    cameras[name]
+
+    case cameras[name] do
+      {url, api} when is_binary(url) and is_atom(api) ->
+        {url, api}
+
+      url when is_binary(url) ->
+        {url, get_env(:common_api, :no_api_configured)}
+
+      input ->
+        raise ArgumentError,
+              "#{name} config expected string or string/atom tuple: " <>
+                inspect(input)
+    end
   end
 
   @doc "Return unique registerable name for process, shortname if dev/test."
