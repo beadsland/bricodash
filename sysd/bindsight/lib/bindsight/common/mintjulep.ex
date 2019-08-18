@@ -76,7 +76,7 @@ defmodule BindSight.Common.MintJulep do
 
   alias BindSight.Common.Library
 
-  def init(mod, uri), do: {:producer, _state = sip(mod, uri)}
+  def start_link(mod, args, opts), do: GenStage.start_link(mod, args, opts)
 
   @doc "Return state for polling cameras, logging error if any."
   def sip(mod, uri = %URI{}) when is_atom(mod) do

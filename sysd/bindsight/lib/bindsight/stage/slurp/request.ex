@@ -26,14 +26,18 @@ defmodule BindSight.Stage.Slurp.Request do
 
   def start_link(opts \\ []) do
     %{camera: camera, name: name} = Enum.into(opts, @defaults)
-    url = camera |> Library.get_camera_url()
-    GenStage.start_link(__MODULE__, url, name: name)
+    MintJulep.start_link(__MODULE__, camera, name: name)
   end
 
   @impl true
-  def init(url) do
-    uri = url |> URI.parse() |> query_put(:action, :snapshot)
-    MintJulep.init(__MODULE__, uri)
+  def init(camera) do
+    uri =
+      camera
+      |> Library.get_camera_url()
+      |> URI.parse()
+      |> query_put(:action, :snapshot)
+
+    {:producer, _state = MintJulep.sip(__MODULE__, uri)}
   end
 
   defp query_put(uri, key, value) do
