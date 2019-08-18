@@ -19,7 +19,6 @@ defmodule BindSight.Stage.Slurp.Request do
   @moduledoc "Slurp spigot producer to request snapshots from a camera."
 
   use BindSight.Common.MintJulep
-  require Logger
 
   alias BindSight.Common.Library
 

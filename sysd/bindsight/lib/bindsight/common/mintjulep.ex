@@ -31,11 +31,15 @@ defmodule BindSight.Common.MintJulep do
   @callback handle_mint(resp :: [term()], state()) ::
               genstage_return()
 
+  @optional_callbacks handle_normal_info: 2
+
   defmacro __using__(_) do
-    quote do
+    quote([]) do
       @behaviour BindSight.Common.MintJulep
 
       use GenStage
+      require Logger
+
       alias BindSight.Common.MintJulep
 
       @impl true
@@ -59,7 +63,12 @@ defmodule BindSight.Common.MintJulep do
         end
       end
 
-      @defoverridable BindSight.Common.MintJulep
+      def handle_normal_info(resp, state) do
+        Logger.error("Unknown info message: " <> inspect(resp))
+        {:noreply, [], state}
+      end
+
+      defoverridable handle_normal_info: 2
     end
   end
 
