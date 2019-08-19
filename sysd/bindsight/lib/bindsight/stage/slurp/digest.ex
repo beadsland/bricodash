@@ -23,40 +23,54 @@ defmodule BindSight.Stage.Slurp.Digest do
 
   @defaults %{source: :producer_not_specified, name: __MODULE__}
 
+  defstruct status: nil,
+            boundary: "Lorem ipsum dolor sit amet",
+            data: <<>>,
+            done: false
+
+  alias BindSight.Stage.Slurp.Digest
+
   def start_link(opts \\ []) do
     %{source: source, name: name} = Enum.into(opts, @defaults)
     GenStage.start_link(__MODULE__, source, name: name)
   end
 
   def init(source) do
-    {:producer_consumer, _state = {nil, <<>>, false}, subscribe_to: [source]}
+    {:producer_consumer, _state = %Digest{}, subscribe_to: [source]}
   end
 
-  def handle_events([head | tail], from, state = {status, data, _done}) do
+  def handle_events([head | tail], from, state = %Digest{}) do
+    status = state.status
+
     case head do
       {:status, _ref, status} ->
-        handle_events(tail, from, _state = {status, data, false})
+        handle_events(tail, from, _state = %{state | status: status})
 
       {:headers, _ref, _hdrs} when status == 200 ->
         handle_events(tail, from, state)
 
       {:headers, _ref, hdrs} ->
-        Logger.warn("Request failed: #{status}: " <> inspect(hdrs))
+        Logger.warn("Request failed: #{state.status}: " <> inspect(hdrs))
         handle_events(tail, from, state)
 
       {:data, _ref, next} ->
-        handle_events(tail, from, _state = {status, data <> next, false})
+        handle_events(tail, from, _state = %{state | data: state.data <> next})
 
       {:done, _ref} ->
-        handle_events(tail, from, _state = {status, data, true})
+        handle_events(tail, from, _state = %{state | done: true})
     end
   end
 
-  def handle_events([], _from, state = {status, data, done}) do
+  def handle_events([], _from, state = %Digest{}) do
     cond do
-      done and status == 200 -> {:noreply, [data], _state = {nil, <<>>, false}}
-      done -> {:noreply, [], _state = {nil, <<>>, false}}
-      true -> {:noreply, [], state}
+      state.done and state.status == 200 ->
+        {:noreply, [state.data], _state = %Digest{}}
+
+      state.done ->
+        {:noreply, [], _state = %Digest{}}
+
+      true ->
+        {:noreply, [], state}
     end
   end
 end
