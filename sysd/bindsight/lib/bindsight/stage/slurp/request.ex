@@ -36,7 +36,7 @@ defmodule BindSight.Stage.Slurp.Request do
       camera
       |> Library.get_camera_url()
       |> URI.parse()
-      |> Camera.build_request(Library.get_camera_api(camera), :snapshot)
+      |> Camera.build_request(Library.get_camera_api(camera), :stream)
 
     {:producer, _state = MintJulep.sip(__MODULE__, uri)}
   end
@@ -53,6 +53,8 @@ defmodule BindSight.Stage.Slurp.Request do
   end
 
   defp find_done(x, accu) do
+    #    IO.inspect(x)
+
     case x do
       {:done, _ref} -> true
       _ -> accu
