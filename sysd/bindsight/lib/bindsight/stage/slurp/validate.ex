@@ -55,7 +55,7 @@ defmodule BindSight.Stage.Slurp.Validate do
       Logger.warn("Discarding #{discard} bad frames from #{camera}")
     end
 
-    {:noreply, good, :stateless}
+    {:noreply, good, camera}
   end
 
   @doc "Confirm binary is valid JPEG."
