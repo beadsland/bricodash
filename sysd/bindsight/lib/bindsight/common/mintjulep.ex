@@ -40,6 +40,7 @@ defmodule BindSight.Common.MintJulep do
       use GenStage
       require Logger
 
+      alias BindSight.Common.Library
       alias BindSight.Common.MintJulep
 
       @impl true
@@ -64,9 +65,9 @@ defmodule BindSight.Common.MintJulep do
       end
 
       def handle_normal_info(resp, state = {mod, uri, conn}) do
-        Logger.error(
-          "MintJulep: #{uri}: Unknown info message: " <> inspect(resp)
-        )
+        ["MintJulep", uri, "unknown info message", inspect(resp)]
+        |> Library.error_chain()
+        |> Logger.error()
 
         {:noreply, [], state}
       end
@@ -93,9 +94,9 @@ defmodule BindSight.Common.MintJulep do
     if err do
       path = Library.query_path(uri)
 
-      Logger.warn(fn ->
-        "Failed #{call}: #{uri.host}:#{uri.port}/#{path}: " <> inspect(err)
-      end)
+      [["Failed ", call], [uri.host, ":", uri.port, "/", path], inspect(err)]
+      |> Library.error_chain()
+      |> Logger.warn()
 
       Process.sleep(1000)
     end

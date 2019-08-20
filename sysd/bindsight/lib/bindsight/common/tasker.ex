@@ -18,8 +18,6 @@
 defmodule BindSight.Common.Tasker do
   @moduledoc "Behavior for GenStage to launch a dedicated feeder task."
 
-  require Logger
-
   defmacro __using__(_) do
     quote location: :keep do
       @behaviour BindSight.Common.Tasker

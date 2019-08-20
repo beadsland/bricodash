@@ -69,4 +69,7 @@ defmodule BindSight.Common.Library do
 
   @doc "Return full path and query from a URI."
   def query_path(uri), do: [uri.path, uri.query] |> Enum.join("?")
+
+  @doc "Return IOList interspersed with colons."
+  def error_chain(list), do: Enum.intersperse(list, ": ")
 end
