@@ -25,9 +25,12 @@ defmodule BindSight.Stage.Slurp.Digest do
 
   defstruct status: nil,
             bound: "Lorem ipsum dolor sit amet",
-            data: <<>>,
+            boundsize: nil,
+            eolex: nil,
+            eohex: nil,
+            data: [],
             done: false,
-            frame: <<>>
+            frames: []
 
   alias BindSight.Stage.Slurp.Digest
 
@@ -42,6 +45,7 @@ defmodule BindSight.Stage.Slurp.Digest do
 
   def handle_events([head | tail], from, state = %Digest{}) do
     status = state.status
+    boundsize = state.boundsize
 
     case head do
       {:status, _ref, status} ->
@@ -54,8 +58,23 @@ defmodule BindSight.Stage.Slurp.Digest do
         Logger.warn("Request failed: #{state.status}: " <> inspect(hdrs))
         handle_events(tail, from, state)
 
-      {:data, _ref, next} ->
-        handle_data(next, tail, from, state)
+      {:frame_headers, _ref, _hdrs} ->
+        frame = state.data |> Enum.reverse() |> Enum.join()
+        frames = if frame == "", do: state.frames, else: [frame | state.frames]
+
+        handle_events(tail, from, _state = %{state | frames: frames, data: []})
+
+      {:text, _ref, text} when byte_size(text) > boundsize ->
+        handle_text([head | tail], from, state)
+
+      {:text, ref, text} ->
+        handle_events([{:data, ref, text} | tail], from, state)
+
+      {:data, _ref, ""} ->
+        handle_events(tail, from, state)
+
+      {:data, _ref, data} ->
+        handle_events(tail, from, _state = %{state | data: [data | state.data]})
 
       {:done, _ref} ->
         handle_events(tail, from, _state = %{state | done: true})
@@ -70,47 +89,57 @@ defmodule BindSight.Stage.Slurp.Digest do
       state.done ->
         {:noreply, [], _state = %Digest{}}
 
-      state.frame == "" ->
-        {:noreply, [], _state = %Digest{state | frame: nil}}
-
-      state.frame ->
-        {:noreply, [state.frame], _state = %Digest{state | frame: nil}}
+      state.frames ->
+        {:noreply, Enum.reverse(state.frames),
+         _state = %Digest{state | frames: []}}
 
       true ->
         {:noreply, [], state}
     end
   end
 
-  def handle_headers([], events, from, state),
+  defp handle_headers([], events, from, state),
     do: handle_events(events, from, state)
 
-  def handle_headers([{"content-type", ctype} | tail], events, from, state) do
-    bound = Regex.named_captures(~r/;boundary=(?<bound>.*)/, ctype)["bound"]
-
+  defp handle_headers([{"content-type", ctype} | tail], events, from, state) do
     bound =
-      "^(?<frame>.*)--#{bound}([\x0d\x0a]{1,2}[[:print:]]+)+[\x0d\x0a]{1,2}[\x0d\x0a]{1,2}(?<data>.*)\z"
+      "--" <> Regex.named_captures(~r/;boundary=(?<bound>.*)/, ctype)["bound"]
 
-    {:ok, bound} = Regex.compile(bound, "ms")
-    handle_headers(tail, events, from, _state = %Digest{state | bound: bound})
+    boundsize = byte_size(bound)
+    state = %Digest{state | bound: bound, boundsize: boundsize}
+
+    handle_headers(tail, events, from, state)
   end
 
-  def handle_headers([_head | tail], events, from, state),
+  defp handle_headers([_head | tail], events, from, state),
     do: handle_headers(tail, events, from, state)
 
-  def handle_data(next, events, from, state) do
-    data = state.data <> next
-    match = Regex.named_captures(state.bound, data)
-
-    #    if match, do: IO.inspect(match)
-
-    if match do
-      handle_events(events, from, %Digest{
-        state
-        | data: match["data"],
-          frame: match["frame"]
-      })
+  defp handle_text([head = {:text, ref, text} | tail], from, state) do
+    if String.contains?(text, state.bound) do
+      strip_boundary(head, tail, from, state)
     else
-      handle_events(events, from, %Digest{state | data: data})
+      handle_events([{:data, ref, text} | tail], from, state)
     end
+  end
+
+  defp strip_boundary({:text, ref, text}, tail, from, state) do
+    [pre, post] = String.split(text, state.bound, parts: 2)
+
+    state = if state.eohex == nil, do: determine_eol(text, state), else: state
+
+    [headers, post] = Regex.split(state.eohex, post, parts: 2)
+
+    events =
+      [{:data, ref, pre}, {:frame_headers, ref, headers}, {:data, ref, post}] ++
+        tail
+
+    handle_events(events, from, state)
+  end
+
+  defp determine_eol(text, state) do
+    [eol] = Regex.run(~r/[\n\r]+/, text, parts: 1)
+    {:ok, eolex} = Regex.compile(eol)
+    {:ok, eohex} = Regex.compile(eol <> eol)
+    %Digest{state | eolex: eolex, eohex: eohex}
   end
 end

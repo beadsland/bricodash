@@ -38,9 +38,14 @@ defmodule BindSight.Stage.Slurp.Spigot do
          camera: camera,
          name: name({:request, camera})
        ]},
-      {BindSight.Stage.Slurp.Digest,
+      {BindSight.Stage.Slurp.Chunk,
        [
          source: name({:request, camera}),
+         name: name({:chunk, camera})
+       ]},
+      {BindSight.Stage.Slurp.Digest,
+       [
+         source: name({:chunk, camera}),
          name: name({:digest, camera})
        ]},
       {BindSight.Stage.Slurp.SnapSource,

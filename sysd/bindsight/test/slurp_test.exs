@@ -22,6 +22,7 @@ defmodule SlurpTest do
 
   doctest BindSight.Stage.SlurpSupervisor
   doctest BindSight.Stage.Slurp.Request
+  doctest BindSight.Stage.Slurp.Chunk
   doctest BindSight.Stage.Slurp.Digest
   doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Batch
