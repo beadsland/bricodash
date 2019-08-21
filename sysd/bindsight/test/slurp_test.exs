@@ -24,7 +24,6 @@ defmodule SlurpTest do
   doctest BindSight.Stage.Slurp.Request
   doctest BindSight.Stage.Slurp.Chunk
   doctest BindSight.Stage.Slurp.Digest
-  doctest BindSight.Stage.Slurp.SnapSource
   doctest BindSight.Stage.Slurp.Batch
   doctest BindSight.Stage.Slurp.Validate
   doctest BindSight.Stage.Slurp.Broadcast
@@ -32,21 +31,8 @@ defmodule SlurpTest do
   doctest BindSight.Stage.Slurp.FlushSnoop
   doctest BindSight.Stage.SnoopSupervisor
 
-  alias BindSight.Stage.Slurp.SnapSource
   alias BindSight.Stage.Slurp.Spigot
   alias BindSight.Stage.Slurp.Validate
-
-  test "grab snapshot from SnapSource" do
-    Task.Supervisor.start_link(name: BindSight.TestTaskSupervisor)
-
-    {:ok, _pid} =
-      SnapSource.start_link(camera: :test, tasks: BindSight.TestTaskSupervisor)
-
-    subscriptions = [{SnapSource, max_demand: 1}]
-    [data | _] = subscriptions |> GenStage.stream() |> Enum.take(1)
-
-    assert is_binary(data)
-  end
 
   test "grab snapshot from Spigot" do
     subscriptions = [{Spigot.tap(:test), max_demand: 1}]

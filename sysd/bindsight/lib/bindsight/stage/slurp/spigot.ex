@@ -48,15 +48,9 @@ defmodule BindSight.Stage.Slurp.Spigot do
          source: name({:chunk, camera}),
          name: name({:digest, camera})
        ]},
-      {BindSight.Stage.Slurp.SnapSource,
-       [
-         camera: camera,
-         name: name({:snapsource, camera}),
-         tasks: name({:tasks, :slurp, camera})
-       ]},
       {BindSight.Stage.Slurp.Batch,
        [
-         source: name({:snapsource, camera}),
+         source: name({:digest, camera}),
          camera: camera,
          name: name({:batch, camera}),
          tasks: name({:tasks, :slurp, camera})
