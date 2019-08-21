@@ -34,13 +34,19 @@ defmodule BindSight.WebAPI.Server do
   def init(_) do
     port = Library.get_env(:cowboy_port, 2020)
     acceptors = Library.get_env(:cowboy_acceptors, 100)
+
     transport = [num_acceptors: acceptors]
+    protocol = [idle_timeout: :infinity]
 
     children = [
       {Plug.Cowboy,
        scheme: :http,
        plug: BindSight.WebAPI.Router,
-       options: [port: port, transport_options: transport]}
+       options: [
+         port: port,
+         transport_options: transport,
+         protocol_options: protocol
+       ]}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
