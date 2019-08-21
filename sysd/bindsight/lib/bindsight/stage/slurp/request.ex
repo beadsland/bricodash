@@ -53,8 +53,6 @@ defmodule BindSight.Stage.Slurp.Request do
   end
 
   defp find_done(x, accu) do
-    #    IO.inspect(x)
-
     case x do
       {:done, _ref} -> true
       _ -> accu
