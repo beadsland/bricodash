@@ -15,26 +15,33 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight do
-  @moduledoc "Concurrent frame-scrubbing webcam broadcast gateway daemon."
+defmodule BindSight.Stage.SloshSupervisor do
+  @moduledoc "Supervise slurp spigot (camera pipeline segment) for each camera."
 
-  def start(_type, _args) do
-    Port.open({:spawn, "epmd -daemon"}, [:binary])
-    {:ok, hostname} = :inet.gethostname()
+  use Supervisor
+  require Logger
 
-    {:ok, _pid} =
-      [String.to_atom("bindsight@#{hostname}")]
-      |> :net_kernel.start()
+  alias BindSight.Common.Library
 
-    children = [
-      {Registry, keys: :unique, name: Registry.BindSight},
-      BindSight.Stage.SloshSupervisor,
-      BindSight.Stage.SlurpSupervisor,
-      BindSight.WebAPI.Server,
-      BindSight.Stage.SpewCounter,
-      BindSight.Stage.SpewSupervisor
-    ]
+  def start_link(_opts) do
+    Logger.info("Sloshing streams...")
 
-    Supervisor.start_link(children, strategy: :one_for_one, restart: :permanent)
+    Supervisor.start_link(__MODULE__, nil,
+      name: Library.get_register_name(:sloshsup)
+    )
+  end
+
+  @impl true
+  def init(_) do
+    children =
+      Library.get_env(:cameras)
+      |> Map.keys()
+      |> Enum.map(fn x -> speccer(x) end)
+
+    Supervisor.init(children, strategy: :one_for_one)
+  end
+
+  defp speccer(camera) do
+    Supervisor.child_spec({BindSight.Stage.Slosh.Spigot, camera}, id: camera)
   end
 end

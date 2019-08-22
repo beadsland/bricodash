@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Slurp.Digest do
+defmodule BindSight.Stage.Slosh.Digest do
   @moduledoc "Slurp consumer-producer to frames from chunks."
 
   use GenStage
@@ -32,7 +32,7 @@ defmodule BindSight.Stage.Slurp.Digest do
             done: false,
             frames: []
 
-  alias BindSight.Stage.Slurp.Digest
+  alias BindSight.Stage.Slosh.Digest
 
   def start_link(opts \\ []) do
     %{source: source, name: name} = Enum.into(opts, @defaults)

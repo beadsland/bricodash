@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Slurp.Chunk do
+defmodule BindSight.Stage.Slosh.Chunk do
   @moduledoc "Slurp consumer-producer to frames from chunks."
 
   use GenStage

@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Slurp.Request do
+defmodule BindSight.Stage.Slosh.Request do
   @moduledoc "Slurp spigot producer to request snapshots from a camera."
 
   use BindSight.Common.MintJulep

@@ -20,10 +20,11 @@ defmodule SlurpTest do
 
   use ExUnit.Case
 
+  doctest BindSight.Stage.SloshSupervisor
+  doctest BindSight.Stage.Slosh.Request
+  doctest BindSight.Stage.Slosh.Chunk
+  doctest BindSight.Stage.Slosh.Digest
   doctest BindSight.Stage.SlurpSupervisor
-  doctest BindSight.Stage.Slurp.Request
-  doctest BindSight.Stage.Slurp.Chunk
-  doctest BindSight.Stage.Slurp.Digest
   doctest BindSight.Stage.Slurp.Batch
   doctest BindSight.Stage.Slurp.Validate
   doctest BindSight.Stage.Slurp.Broadcast

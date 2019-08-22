@@ -15,7 +15,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
-defmodule BindSight.Stage.Slurp.Spigot do
+defmodule BindSight.Stage.Slosh.Spigot do
   @moduledoc "GenStage pipeline segment for processing a single camera feed."
 
   use Supervisor
@@ -24,44 +24,34 @@ defmodule BindSight.Stage.Slurp.Spigot do
 
   def start_link(camera \\ :test) do
     Supervisor.start_link(__MODULE__, camera,
-      name: name({:spigot, :slurp, camera})
+      name: name({:spigot, :slosh, camera})
     )
   end
 
   @impl true
   def init(camera) do
     children = [
-      {Task.Supervisor,
-       name: name({:tasks, :slurp, camera}), strategy: :one_for_one},
-      {BindSight.Stage.Slurp.Batch,
+      {BindSight.Stage.Slosh.Request,
        [
-         source: BindSight.Stage.Slosh.Spigot.tap(camera),
          camera: camera,
-         name: name({:batch, camera}),
-         tasks: name({:tasks, :slurp, camera})
+         name: name({:request, camera})
        ]},
-      {BindSight.Stage.Slurp.Validate,
+      {BindSight.Stage.Slosh.Chunk,
        [
-         source: {name({:batch, camera}), max_demand: 2},
-         camera: camera,
-         name: name({:validate, camera})
+         source: name({:request, camera}),
+         name: name({:chunk, camera})
        ]},
-      {BindSight.Stage.Slurp.Broadcast,
-       [source: name({:validate, camera}), name: name({:broadcast, camera})]},
-      {BindSight.Stage.SnoopSupervisor,
+      {BindSight.Stage.Slosh.Digest,
        [
-         source: name({:broadcast, camera}),
-         camera: camera,
-         name: name({:snoops, camera}),
-         always: [BindSight.Stage.Slurp.FlushSnoop],
-         config: :slurp_snoops
+         source: name({:chunk, camera}),
+         name: name({:digest, camera})
        ]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)
   end
 
-  def tap(camera), do: name({:broadcast, camera})
+  def tap(camera), do: name({:digest, camera})
 
   defp name(tup), do: Library.get_register_name(tup)
 end
