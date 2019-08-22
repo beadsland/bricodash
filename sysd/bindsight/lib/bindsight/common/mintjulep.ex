@@ -45,7 +45,7 @@ defmodule BindSight.Common.MintJulep do
 
       @impl true
       def handle_info(message, _state = {mod, uri, :deferred}),
-        do: handle_info(message, _state = {mod, uri, MintJulep.connect(uri)})
+        do: handle_info(message, _state = {mod, uri, MintJulep.connect(mod, uri)})
 
       def handle_info(:unfold_deferred_state, state),
         do: {:noreply, [], state}
@@ -105,10 +105,10 @@ defmodule BindSight.Common.MintJulep do
   end
 
   @doc "Callback to connect to camera host and issue a request thereto."
-  def connect(uri) do
+  def connect(mod, uri) do
     case mint_connect(uri.scheme |> String.to_atom(), uri.host, uri.port) do
-      {:ok, conn} -> request(conn, uri)
-      {:error, err} -> sip({uri, nil}, :connect, err)
+      {:ok, conn} -> request(mod, uri, conn)
+      {:error, err} -> sip({mod, uri, nil}, :connect, err)
     end
   end
 
@@ -122,10 +122,10 @@ defmodule BindSight.Common.MintJulep do
     end
   end
 
-  defp request(conn, uri) do
+  defp request(mod, uri, conn) do
     case Mint.HTTP.request(conn, "GET", Library.query_path(uri), []) do
       {:ok, conn, _ref} -> conn
-      {:error, conn, err} -> sip({uri, conn}, :request, err)
+      {:error, conn, err} -> sip({mod, uri, conn}, :request, err)
     end
   end
 end
