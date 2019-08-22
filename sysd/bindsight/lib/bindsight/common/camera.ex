@@ -34,7 +34,7 @@ defmodule BindSight.Common.Camera do
 
   defp query_put(uri, key, value) do
     query = if uri.query, do: uri.query, else: ""
-    query = query |> URI.decode_query(%{key => value})
+    query = query |> URI.decode_query(%{Atom.to_string(key) => value})
     uri |> Map.put(:query, URI.encode_query(query))
   end
 end

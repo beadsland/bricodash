@@ -26,11 +26,9 @@ defmodule BindSight.WebAPI.Error do
 
   @error_msg "Ditty's gone catawampous, it has."
 
-  @cluck Library.get_env(:cluck_errors)
-
   def send(conn, opts) do
     error =
-      if @cluck do
+      if Library.get_env(:cluck_errors) do
         IO.puts(cluck(opts))
         body = [content_tag(:h1, @error_msg), content_tag(:pre, cluck(opts))]
         content_tag(:body, body) |> safe_to_string
