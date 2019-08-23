@@ -24,7 +24,7 @@ defmodule BindSight.WebAPI.Frames do
   alias BindSight.Stage.SpewSupervisor
 
   @defaults %{camera: :test, action: :snapshot}
-  @boundary "--SNAP-HACKLE-STOP--"
+  @boundary "SNAP-HACKLE-STOP"
 
   def send(conn, opts) do
     %{camera: camera, action: action} = Enum.into(opts, @defaults)
@@ -61,8 +61,36 @@ defmodule BindSight.WebAPI.Frames do
   defp send_frame(conn, frame) do
     time = System.os_time()
 
+    # HACK Cowboy manditorally appends any content-type header with a
+    # charset encoding, even if data is entirely binary. This means that
+    # in cases of multipart content-types, the boundary assignment is followed
+    # by a semicolor and then the charset designation.
+    #
+    # Mint expects boundary to always continue to end of line, and thus takes
+    # up "; charset=utf-8" as part of the boundary line. Thus, we must
+    # include this appended suffix when requesting multipart content-types
+    # from a cowboy server, or mint will hang indefinitely.
+    #
+    # Inclusion of charset is possibly RFC-compliance issue. However, cowboy
+    # will append even if charset already specified earlier on line.
+    #
+    # OTOH, Chrome successfully processes multipart content-type without
+    # being confused by cowboy's appending charset after boundary, so perhaps
+    # Mint is misbehaving by not using semicolon as delimiter therefor.
+    #
+    # That said, we expect boundary to be followed by end of line when marking
+    # next part's header block, and thus if Mint is misbehaving by expecting
+    # boundary to terminate the content-type line, we are likewise misbehaving
+    # by expecting boundary to terminate the pre-header line.
+
     headers =
-      ["", @boundary, "X-Timestamp: #{time}", "Content-Type: image/jpg", "\n"]
+      [
+        "",
+        "--#{@boundary}; charset=utf-8",
+        "X-Timestamp: #{time}",
+        "Content-Type: image/jpg",
+        "\n"
+      ]
       |> Enum.join("\n")
 
     {:ok, conn} = chunk(conn, headers)
@@ -72,6 +100,7 @@ defmodule BindSight.WebAPI.Frames do
   defp get_stream(camera) do
     camera = camera |> String.to_existing_atom()
     session = SpewSupervisor.start_session(camera: camera)
+
     [{Spigot.tap(session), mad_demand: 1}] |> GenStage.stream()
   end
 end

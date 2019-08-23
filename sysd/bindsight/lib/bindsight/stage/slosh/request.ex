@@ -23,20 +23,26 @@ defmodule BindSight.Stage.Slosh.Request do
   alias BindSight.Common.Camera
   alias BindSight.Common.Library
 
-  @defaults %{camera: :test, name: __MODULE__}
+  @defaults %{camera: :test, name: __MODULE__, url: nil}
 
   def start_link(opts \\ []) do
-    %{camera: camera, name: name} = Enum.into(opts, @defaults)
-    MintJulep.start_link(__MODULE__, camera, name: name)
+    %{name: name} = Enum.into(opts, @defaults)
+    MintJulep.start_link(__MODULE__, opts, name: name)
   end
 
   @impl true
-  def init(camera) do
+  def init(opts) do
+    %{camera: camera, url: url} = Enum.into(opts, @defaults)
+
     uri =
-      camera
-      |> Library.get_camera_url()
-      |> URI.parse()
-      |> Camera.build_request(Library.get_camera_api(camera), :stream)
+      if url do
+        url |> URI.parse()
+      else
+        camera
+        |> Library.get_camera_url()
+        |> URI.parse()
+        |> Camera.build_request(Library.get_camera_api(camera), :stream)
+      end
 
     {:producer, _state = MintJulep.sip(__MODULE__, uri)}
   end

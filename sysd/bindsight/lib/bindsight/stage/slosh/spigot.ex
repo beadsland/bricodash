@@ -22,18 +22,25 @@ defmodule BindSight.Stage.Slosh.Spigot do
 
   alias BindSight.Common.Library
 
-  def start_link(camera \\ :test) do
-    Supervisor.start_link(__MODULE__, camera,
+  @defaults %{camera: :test, url: nil}
+
+  def start_link(opts \\ []) do
+    %{camera: camera} = Enum.into(opts, @defaults)
+
+    Supervisor.start_link(__MODULE__, opts,
       name: name({:spigot, :slosh, camera})
     )
   end
 
   @impl true
-  def init(camera) do
+  def init(opts) do
+    %{camera: camera, url: url} = Enum.into(opts, @defaults)
+
     children = [
       {BindSight.Stage.Slosh.Request,
        [
          camera: camera,
+         url: url,
          name: name({:request, camera})
        ]},
       {BindSight.Stage.Slosh.Chunk,

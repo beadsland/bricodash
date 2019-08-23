@@ -42,6 +42,7 @@ defmodule BindSight.Stage.SloshSupervisor do
   end
 
   defp speccer(camera) do
-    Supervisor.child_spec({BindSight.Stage.Slosh.Spigot, camera}, id: camera)
+    opts = %{camera: camera}
+    Supervisor.child_spec({BindSight.Stage.Slosh.Spigot, opts}, id: camera)
   end
 end

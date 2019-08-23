@@ -28,6 +28,8 @@ defmodule PlugTest do
   doctest BindSight.WebAPI.Home
   doctest BindSight.WebAPI.Frames
 
+  alias BindSight.Common.Library
+  alias BindSight.Stage.Slosh.Spigot
   alias BindSight.Stage.Slurp.Validate
   alias BindSight.WebAPI.Router
 
@@ -51,6 +53,17 @@ defmodule PlugTest do
   end
 
   test "returns mjpg" do
+    port = Library.get_env(:port, 2020)
+
+    Spigot.start_link(
+      camera: :plugtest,
+      url: "http://192.168.42.50:#{port}/test/stream"
+    )
+
+    subscriptions = [Spigot.tap(:plugtest)]
+    data = subscriptions |> GenStage.stream() |> Enum.take(3)
+
+    assert Validate.validate_frame(Enum.at(data, 1)) == :ok
   end
 
   test "returns I'm a teapot" do

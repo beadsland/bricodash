@@ -45,7 +45,8 @@ defmodule BindSight.Common.MintJulep do
 
       @impl true
       def handle_info(message, _state = {mod, uri, :deferred}),
-        do: handle_info(message, _state = {mod, uri, MintJulep.connect(mod, uri)})
+        do:
+          handle_info(message, _state = {mod, uri, MintJulep.connect(mod, uri)})
 
       def handle_info(:unfold_deferred_state, state),
         do: {:noreply, [], state}
@@ -54,6 +55,24 @@ defmodule BindSight.Common.MintJulep do
         case Mint.HTTP.stream(conn, message) do
           :unknown ->
             apply(mod, :handle_normal_info, [message, state])
+
+          # HACK When mint reads cowboy stream, it never flushes data_buffer,
+          # but instead passes messages with empty response lists.
+          #
+          # This rule does what ought to be happening in
+          # mint.http1.collapse_body_buffer/2 (lines 761-770).
+          #
+          # Possibly related to cowboy glitch of appending charset to boundary
+          # in multipart content-type.
+
+          {:ok, conn, []} ->
+            buff = IO.iodata_to_binary(conn.request[:data_buffer])
+            conn = %{conn | request: Map.put(conn.request, :data_buffer, [])}
+
+            apply(mod, :handle_mint, [
+              [{:data, nil, buff}],
+              _state = {mod, uri, conn}
+            ])
 
           {:ok, conn, resp} ->
             apply(mod, :handle_mint, [resp, _state = {mod, uri, conn}])
