@@ -41,6 +41,7 @@ defmodule BindSight.MixProject do
   defp deps do
     [
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:castore, "~> 0.1.0"},
       {:mint, "~> 0.2.0"},
       {:ex_image_info, "~> 0.2.4"},
