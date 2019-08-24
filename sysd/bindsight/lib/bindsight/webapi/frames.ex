@@ -86,7 +86,7 @@ defmodule BindSight.WebAPI.Frames do
     headers =
       [
         "",
-        "--#{@boundary}; charset=utf-8",
+        "--#{@boundary}",
         "X-Timestamp: #{time}",
         "Content-Type: image/jpg",
         "\n"
