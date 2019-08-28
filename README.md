@@ -47,6 +47,7 @@ For more discussion, see:
 * Perl + Date::Manip
 * ImageMagick
 * [Elixir](https://elixir-lang.org/install.html)
+* [BindSight](https://wiki.hackmanhattan.com/BindSight)
 
 ### API Credentials
 
