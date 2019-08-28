@@ -84,8 +84,7 @@ def livemusic():
 
   for b in brico.events.load_cals( ["brite.json"] ):
     bstart = dateutil.parser.parse(b['start'])
-    if ("Friday Night Live" in b['event'] or "Friday Nights Live" in b['event']) \
-          and (bstart == start7 or bstart == start8):
+    if "Live" in b['event'] and (bstart >= start7 or bstart <= start8):
       return []
 
   return [{ "start": start8.isoformat(), "event": noisy("Friday Night Live Music"),
