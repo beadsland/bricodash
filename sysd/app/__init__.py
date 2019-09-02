@@ -11,48 +11,48 @@ import logging
 logger = logging.getLogger(__name__)
 
 import pychromecast
+import cec
 import time
 
 import app.launch
 
-def main(DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC):
+def main(DISPLAY_NAME, IGNORE_CEC):
     logger.debug('Hello defaultcast')
+    cec.init()
 
     if IGNORE_CEC:
-        logger.debug('Ignoring CEC for Chromecast ' + DISPLAY_NAME)
+        logger.debug('Ignoring CEC for Chromecast %s', DISPLAY_NAME)
         pychromecast.IGNORE_CEC.append(DISPLAY_NAME)
 
     casts = []
     attempt = 0
 
-    while attempt < 5 and len(casts) == 0:
+    while attempt < 5 and not casts:
         logger.debug('Searching for Chromecasts...')
         casts = pychromecast.get_chromecasts()
 
-        if len(casts) == 0 and attempt == 4:
+        if not casts and attempt == 4:
             logger.debug('No Devices Found')
             exit()
 
-        if len(casts) == 0:
+        if not casts:
             attempt += 1
             time.sleep(30)
 
-    cast = (cc for cc in casts if DISPLAY_NAME in (None, '') \
-                                  or cc.device.friendly_name == DISPLAY_NAME)
-    cast = list(cast)
-
-    if not len(cast):
-        logger.debug('Chromecast with name ' + DISPLAY_NAME + ' not found')
+    cast = [cc for cc in casts if DISPLAY_NAME in (None, '') \
+                                  or cc.device.friendly_name == DISPLAY_NAME]
+    if not cast:
+        logger.debug('Chromecast with name %s not found', DISPLAY_NAME)
         exit()
     else:
-      cast = cast[0]
+        cast = cast[0]
 
-    defaultcast = app.launch.DashboardLauncher(cast, dashboard_url=DASHBOARD_URL)
-    logger.info('Chromecast identified: %s' % defaultcast)
+    defaultcast = app.launch.DashboardLauncher(cast, cec)
+    logger.info('Chromecast identified: %s', defaultcast)
 
     try:
         while True:
             defaultcast.check()
-    except Exception as e:
-        logger.debug(e)
+    except Exception as err:
+        logger.debug(err)
         exit()
