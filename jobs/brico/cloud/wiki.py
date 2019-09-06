@@ -39,7 +39,8 @@ def main():
         report.append( (edit["timestamp"], title) )
         seen.append( edit["title"] )
 
-  report.append( (gallery.timestamp, ''.join([ wlogo, gallery.str() ]) ))
+  if gallery.timestamp:
+    report.append( (gallery.timestamp, ''.join([ wlogo, gallery.str() ]) ))
 
   brico.common.write_json("wiki.json", report)
   return report
