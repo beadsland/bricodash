@@ -38,7 +38,11 @@ def main():
 
   for e in edits:
     if e['title'] not in seen:
-      date = "(%s)" % e['date'][5:].replace("0", "")
+      nums = e['date'][5:].split("-")
+      month = nums[0].lstrip("0")
+      day = nums[1].lstrip("0")
+      date = "(%s-%s)" % (month, day)
+
       title = ' '.join([ elide_title( e['title'] ), date ])
       title = ''.join([ mlogo, brico.cloud.format_title(title) ])
       report.append( (datetime.datetime.fromtimestamp(e["timestamp"]).isoformat(),
