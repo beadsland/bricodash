@@ -58,8 +58,10 @@ class Cache():
   @memoized
   def paths(self, url):
     ext = urllib.parse.urlparse(url).path.split(".")[-1]
-    enc = "%s.%s" % ( urllib.parse.quote(url, safe='').replace("%", "!")[-100:],
+
+    enc = "%s.%s" % ( urllib.parse.quote(url, safe='').replace("%", "!"),
                       urllib.parse.quote(ext, safe='').replace("%", "!") )
+
     sml = "sm_%s" % enc
     local = { "full": os.path.join(brico.common.pwd(), self.local, enc),
               "smll": os.path.join(brico.common.pwd(), self.local, sml) }
