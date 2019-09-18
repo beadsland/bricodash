@@ -147,8 +147,14 @@ class Slack(BaseSlack):
         for file in message[key]:
           if 'author_icon' in file:
             if 'text' not in file: file['text'] = ""
-            footer = "(%s ago on #%s)" % ( self.human_time(file['ts']),
-                                           file['channel_name'] )
+
+            if 'service_name' in file:
+              channel = file['service_name']
+            else:
+              channel = "#%s" % file['channel_name']
+
+            footer = "(%s ago on %s)" % ( self.human_time(file['ts']),
+                                           channel )
             footer = html.span().clss('sledited').inner(footer).str()
             quote = "%s: %s %s" \
                      % (html.logo(thumb.get(file['author_icon'])),
