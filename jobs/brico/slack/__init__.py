@@ -86,8 +86,8 @@ class Slack(BaseSlack):
                                                    linky) ),
              ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
              ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(self.names(m.group(1))) ),
-             (":([A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
-                                                          emotags) ) ]
+             (":([A-Za-z][A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
+                                                                  emotags) ) ]
 
   def format_text(self, message):
     text = message['text']
