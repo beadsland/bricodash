@@ -64,10 +64,10 @@ def main():
     for tup in evtdict: evt = re.compile(tup[0]).sub(tup[1], evt)
     dt = dateparser.parse(item['local_date'] + " " + item['local_time'])
     if (dt.day == lasttues) and (dt.month == today.month):
-      evt = re.sub(r'(Tech Tuesday)', r'\1 / General Meeting', evt)
+      evt = re.sub(r'(Tech Tuesday)', r'\1 / Business Meeting', evt)
 
     if (dt.day == 8) and (dt.month == 1) and (dt.year == 2019):
-      evt = re.sub(r'(Tech Tuesday)', r'\1 / Rescheduled General Meeting', evt)
+      evt = re.sub(r'(Tech Tuesday)', r'\1 / Rescheduled Business Meeting', evt)
 
     mevt = re.sub(r'Math talk: +', '', evt)
     if mevt in colist("nyc-math"):
