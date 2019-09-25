@@ -6,6 +6,10 @@ allowing other Chromecast apps to work also by only launching when idle.
 Based on https://github.com/madmod/dashcast-docker
 
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
+
+Deprecated and soon to be fully retired, as we're swapping to a RaspberryPi
+dongle and using CEC features of the new TV to switch between it and the
+Chromecast.
 """
 
 import logging
