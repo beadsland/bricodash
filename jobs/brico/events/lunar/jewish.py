@@ -23,14 +23,12 @@ import datetime
 import dateutil.tz
 import convertdate
 
-def main(now): return passover(now) + [ purim(now), hanukkah(now) ]
+def main(now): return purim(now) + passover(now) + hanukkah(now) \
+                      + rosh_hashanah(now) + yom_kippur(now) + sukkot(now)
 
 def iso(dt): return dt.replace(tzinfo=None).isoformat()
 
-def purim(now):
-  eve = brico.events.lunar.sunset( holiday("purim", now) )
-  return { 'start': iso(eve), 'venue': "Holiday",
-           'event': "Purim " + brico.common.html.emoji("🕍") }
+def purim(now): return one_day(now, "Purim", "🕍", "🕍")
 
 def passover(now):
   first = holiday("passover", now, 8)
@@ -51,6 +49,10 @@ def passover(now):
     return [ bound, happy ]
   else: return [ bound ]
 
+def passover(now):
+  return multi_day(now, "Passover", 8, "🍞🚫",
+                   "<em>Chag Kashruth Pesach</em> (Happy Kosher Passover)")
+
 def hanukkah(now):
   first = holiday("hanukkah", now, 8)
   firsteve = brico.events.lunar.sunset( first )
@@ -62,7 +64,50 @@ def hanukkah(now):
   elif now < lasteve:
     (event, eve) = menorah(first, now)
 
-  return { 'start': iso(eve), 'venue': "Holiday", 'event': event }
+  return [{ 'start': iso(eve), 'venue': "Holiday", 'event': event }]
+
+def rosh_hashanah(now):
+  return multi_day(now, "Rosh Hashanah", 2, "🍎🍯",
+                   "<em>Shanah tovah um’tukah</em> Have a good and sweet new year")
+
+def yom_kippur(now):    return one_day(now, "Yom Kippur", "", "🍽️")
+
+def sukkot(now):
+  return multi_day(now, "Sukkot", 7, "", "<em>Chag Sameach</em> (Joyous Festival)")
+
+def one_day(now, hol, emobeg, emoend):
+  first = holiday( hol.replace(" ", "_").lower(), now )
+  firsteve = brico.events.lunar.sunset( first )
+  lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=1) )
+
+  emobeg = brico.common.html.emoji(emobeg)
+  emoend = brico.common.html.emoji(emoend)
+
+  if now < firsteve:
+    (event, eve) = ("%s Begins %s" % (hol, emobeg), firsteve)
+  elif now < lasteve:
+    (event, eve) = ("%s Ends %s" % (hol, emoend), lasteve)
+
+  return [{ 'start': iso(eve), 'venue': "Holiday", 'event': event }]
+
+def multi_day(now, hol, days, emoji, greet):
+  first = holiday(hol.replace(" ", "_").lower(), now, days)
+  firsteve = brico.events.lunar.sunset( first )
+  lasteve = brico.events.lunar.sunset( first + datetime.timedelta(days=days) )
+
+  emoji = brico.common.html.emoji(emoji)
+
+  if now < firsteve:
+    (event, eve) = ("First Night of %s %s" % (hol, emoji), firsteve)
+  elif now < lasteve:
+    (event, eve) = ("%s Ends %s" % (hol, emoji), lasteve)
+  bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
+
+  if firsteve < now < lasteve:
+    happy = { 'start': now.date().isoformat(), 'venue': "Holiday",
+              'event': "%s %s" % (greet, emoji) }
+    return [ bound, happy ]
+  else: return [ bound ]
 
 def unlit():
   return brico.common.html.span().style("opacity: .15").inner("🕯").str()
