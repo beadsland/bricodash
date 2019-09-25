@@ -32,5 +32,5 @@ DASHBOARD_URL = os.getenv('DASHBOARD_URL', 'https://home-assistant.io')
 DISPLAY_NAME = os.getenv('DISPLAY_NAME')
 IGNORE_CEC = os.getenv('IGNORE_CEC') == 'True'
 
-logger.info("%s %s %s" % (DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC))
-app.main(DISPLAY_NAME, DASHBOARD_URL, IGNORE_CEC)
+logger.info("%s %s" % (DISPLAY_NAME, IGNORE_CEC))
+app.main(DISPLAY_NAME, IGNORE_CEC)

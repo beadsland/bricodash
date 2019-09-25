@@ -43,7 +43,7 @@ class DashboardLauncher():
                 self.device.status.display_name in ('Backdrop',))
 
     def launch_dashboard(self):
-        logger.debug('Launching dashboard on Chromecast ' + self.device.name)
+        logger.debug('Launching dashboard')
         try:
             self.cec.set_active_source()
         except Exception as e:
