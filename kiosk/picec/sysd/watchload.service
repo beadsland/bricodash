@@ -1,0 +1,15 @@
+[Unit]
+Description=Watch load and reboot when extreme
+After=network-online.target
+
+[Service]
+User=nobody
+Group=nogroup
+Type=simple
+GuessMainPID=yes
+KillMode=mixed
+WorkingDirectory=/opt/watchload/sysd/
+ExecStart=/usr/bin/python3 -u /opt/watchload/sysd/watchload.py
+
+[Install]
+WantedBy=multi-user.target
