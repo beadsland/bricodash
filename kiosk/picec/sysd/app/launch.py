@@ -1,4 +1,3 @@
-
 """
 Launcher class to run DashCast semi-persistently on a Chromecast while
 allowing other Chromecast apps to work also by only launching when idle.
@@ -7,9 +6,7 @@ Based on https://github.com/madmod/dashcast-docker
 
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
-Deprecated and soon to be fully retired, as we're swapping to a RaspberryPi
-dongle and using CEC features of the new TV to switch between it and the
-Chromecast.
+Revised for use with HDMI-CEC by @mz@hackmanhattan.slack.com, 2019.
 """
 
 import logging
@@ -17,21 +14,11 @@ logger = logging.getLogger(__name__)
 
 import time
 
-import pychromecast.controllers.dashcast as dashcast
-
 class DashboardLauncher():
-    def __init__(self, device, dashboard_url='https://home-assistant.io', dashboard_app_name='DashCast'):
+    def __init__(self, device, cec):
         self.device = device
         logger.debug('DashboardLauncher ' + self.device.name)
-
-        self.controller = dashcast.DashCastController()
-        self.device.register_handler(self.controller)
-
-        receiver_controller = device.socket_client.receiver_controller
-        receiver_controller.register_status_listener(self)
-
-        self.dashboard_url = dashboard_url
-        self.dashboard_app_name = dashboard_app_name
+        self.cec = cec
 
     def check(self):
         """ Called when a new cast status has been received."""
@@ -57,9 +44,9 @@ class DashboardLauncher():
                 self.device.status.display_name in ('Backdrop',))
 
     def launch_dashboard(self):
-        logger.debug('Launching dashboard on Chromecast ' + self.device.name)
+        logger.debug('Launching dashboard')
         try:
-            self.controller.load_url(self.dashboard_url)
+            self.cec.set_active_source()
         except Exception as e:
             logger.debug(e)
             pass
