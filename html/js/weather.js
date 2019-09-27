@@ -61,10 +61,10 @@ var scale = [
   [25, "💨", "🍃"],        // moderate or fresh breeze
   [39, "🌬", "💨"],        // strong breeze, moderate gale
   [74, "🌀", "🌬"],        // strong gale, tropical depression or storm
-  [96, "🌀", "🌀"],         // category 1
-  [111, "🌀", "🌀🌀"],       // category 2
-  [130, "🌀", "🌀🌀🌀"],      // category 3
-  [157, "🌀", "🌀🌀🌀🌀"],     // category 4
+  [96, "🌬", "🌀"],         // category 1
+  [111, "🌬", "🌀🌀"],       // category 2
+  [130, "🌬", "🌀🌀🌀"],      // category 3
+  [157, "🌬", "🌀🌀🌀🌀"],     // category 4
   [200, "❗", "🌀🌀🌀🌀🌀"]      // category 5
   [767, "🛦", "❗🌀🌀🌀🌀🌀❗"]    // approaching mach 1
 ]
