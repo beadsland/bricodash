@@ -19,6 +19,7 @@ class DashboardLauncher():
         self.device = device
         logger.debug('DashboardLauncher ' + self.device.name)
         self.cec = cec
+        self.tv = cec.list_devices()[cec.CECDEVICE_TV]
 
     def check(self):
         """ Called when a new cast status has been received."""
@@ -40,7 +41,7 @@ class DashboardLauncher():
 
     def should_launch(self):
         """ If the device is active, the dashboard is not already active, and no other app is active."""
-        return (self.device.status is not None and
+        return (self.tv.is_on() and self.device.status is not None and
                 self.device.status.display_name in ('Backdrop',))
 
     def launch_dashboard(self):
