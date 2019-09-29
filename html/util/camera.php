@@ -51,7 +51,7 @@ $mjpg = array(
           'door' => "http://rfid-access-building.lan:8080/",
           'cr10' => "http://octoprint-main.lan:8080/",
           'hydro' => "http://hydrocontroller.lan:8081/",
-          'bind' => "http://192.168.42.50:2020/test/stream"
+          'bind' => "http://bricolage.hackmanhattan.com:2020/test/stream"
         );
 
 if ( !isset($_GET["view"]) ) {

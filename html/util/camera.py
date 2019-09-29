@@ -52,7 +52,8 @@ logger.info('Handle request.')
 ###
 referer = os.getenv('HTTP_REFERER')
 parsed = urllib.parse.urlparse(referer)
-whoami = urllib.parse.parse_qs(parsed.query)['whoami'][0]
+query = urllib.parse.parse_qs(parsed.query)
+whoami = query['whoami'][0] if 'whoami' in query else 'unspecified'
 regex = re.compile('[^a-zA-Z]')
 cleanami = regex.sub('', whoami)
 if cleanami:

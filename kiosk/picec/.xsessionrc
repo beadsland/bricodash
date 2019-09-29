@@ -1,0 +1,19 @@
+#!/bin/sh
+
+##
+# Autologin under lightdm.
+#
+# Provided by @mz@hackmanhattan.slack.com, 2019.
+##
+
+export FORCE_SCALE=1.375
+export WHOAMI=`uname -n`
+
+xset -dpms
+xset s off
+xset s noblank
+unclutter &
+matchbox-window-manager &
+rm -r ~/.cache/chromium/Default/Cache/*
+chromium-browser --force-device-scale-factor=$FORCE_SCALE --disable-infobars \
+  --kiosk --app=http://bricolage.hackmanhattan.com:8888/hm/dash/?whoami=$WHOAMI

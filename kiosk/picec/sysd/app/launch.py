@@ -1,4 +1,3 @@
-
 """
 Launcher class to run DashCast semi-persistently on a Chromecast while
 allowing other Chromecast apps to work also by only launching when idle.
@@ -6,6 +5,8 @@ allowing other Chromecast apps to work also by only launching when idle.
 Based on https://github.com/madmod/dashcast-docker
 
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
+
+Revised for use with HDMI-CEC by @mz@hackmanhattan.slack.com, 2019.
 """
 
 import logging

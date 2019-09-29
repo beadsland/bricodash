@@ -25,7 +25,7 @@ import dateutil.tz as tz
 import calendar
 
 def main(now):
-  return skeptic(now) + astron(now) + solar(now) + leap(now)
+  return astron(now) + solar(now) + leap(now)
 
 def leap(now):
   lday = "Leap Day " + brico.common.html.emoji("🤸‍♀️")
@@ -66,15 +66,3 @@ def solar(now):
 def toiso(edate):
   utc = edate.datetime().replace(tzinfo=tz.UTC)
   return utc.astimezone(tz.tzlocal()).replace(tzinfo=None).isoformat()
-
-def skeptic(now):
-  firsts = (datetime.date(now.year, m, 1) for m in range(1, 13))
-  then = now + datetime.timedelta(days=365)
-  secnds = (datetime.date(then.year, m, 1) for m in range(1, 13))
-  thirts = (list(day for day in firsts if day.weekday() == 6)[0],
-            list(day for day in secnds if day.weekday() == 6)[0])
-  skeptc = thirts[1] if thirts[0] < now.date() else thirts[0]
-  skeptc = skeptc + datetime.timedelta(days=12)
-  return [ { 'start': skeptc.isoformat(), 'venue': 'Holiday',
-             'event': "International Skeptics Day "
-                      + brico.common.html.emoji("🤔") } ]

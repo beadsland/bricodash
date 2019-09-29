@@ -17,6 +17,7 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+"""
 # This will likely run as a systemd service in the long run, but
 # for ease of development we'll do it as a cron job for now.
 #
@@ -26,6 +27,7 @@
 # cron syntax.
 #
 # crontab user: hm
+"""
 
 import datetime
 import os

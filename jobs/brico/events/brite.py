@@ -43,7 +43,7 @@ def main():
 
     if venue['name'] in tenants:
       start = event['start']['local']
-      name = multiple_replace(event['name']['text'], replace)
+      name = multiple_replace(event['name']['text'], replace).strip()
 
       isup = ""
       for up in upmeet:

@@ -16,6 +16,7 @@
 ####
 
 import dateutil.parser
+import dateutil.tz
 from dateutil.relativedelta import relativedelta
 import datetime
 import subprocess
@@ -28,6 +29,7 @@ import brico.common.html as html
 
 import brico.events.birth
 import brico.events.extra
+import brico.events.lunar.geeky
 
 def main():
   brico.events.birth.main()
@@ -37,7 +39,7 @@ def main():
   birth = "../html/pull/birth.cal"
   usnat = "cal/usnat.cal"
   local = "cal/local.cal"
-  extra = "../html/pull//extra.cal"
+  extra = "../html/pull/extra.cal"
   trivia = "cal/trivia.cal"
 
   ###
@@ -47,22 +49,22 @@ def main():
           + [ (evt, 'Local') for evt in parse_cal(local) ] \
           + [ (evt, 'Holiday') for evt in parse_cal(usnat) ]
   arr = sorted(arr)
-  arr = ( { 'start': t[0][0].decode('utf-8'),
+  arr = [ { 'start': t[0][0].decode('utf-8'),
             'venue': t[1],
-            'event': t[0][1].encode().decode('utf-8') } for t in arr )
-  arr = list(arr)
-
+            'event': t[0][1].encode().decode('utf-8') } for t in arr ]
   brico.common.write_json("holiday.json", arr[:10])
 
   ###
   # Geek holidays, birthdays and trivia
   ###
-  arr = sorted( parse_cal(trivia, 1) + parse_cal(birth, 3) \
-                + parse_cal(geek, 7) )
-  arr = ( { 'start': t[0].decode('utf-8'),
+  arr = parse_cal(trivia, 1) + parse_cal(birth, 3) + parse_cal(geek, 7)
+  arr = [ { 'start': t[0].decode('utf-8'),
             'venue': "Holiday",
-            'event': t[1].encode().decode('utf-8') } for t in arr )
-  arr = list(arr)
+            'event': t[1].encode().decode('utf-8') } for t in arr ]
+
+  now = datetime.datetime.now(dateutil.tz.tzlocal())
+  arr = arr + brico.events.lunar.geeky.main(now)
+  arr = sorted( arr, key = lambda i: i['start'])
 
   brico.common.write_json("geekday.json", arr[:10])
 
