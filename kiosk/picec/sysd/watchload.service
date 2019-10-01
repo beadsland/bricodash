@@ -1,15 +1,11 @@
 [Unit]
-Description=Watch load and reboot when extreme
+Description=Watch load and kill Chromium when over threshold
 After=network-online.target
 
 [Service]
-User=nobody
-Group=nogroup
+User=pi
 Type=simple
-GuessMainPID=yes
-KillMode=mixed
-WorkingDirectory=/opt/watchload/sysd/
-ExecStart=/usr/bin/python3 -u /opt/watchload/sysd/watchload.py
+ExecStart=/opt/bricodash/kiosk/picec/sysd/watchload.sh
 
 [Install]
 WantedBy=multi-user.target
