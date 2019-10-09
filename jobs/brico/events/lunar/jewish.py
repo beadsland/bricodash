@@ -68,7 +68,7 @@ def hanukkah(now):
 
 def rosh_hashanah(now):
   return multi_day(now, "Rosh Hashanah", 2, "🍎🍯",
-                   "<em>Shanah tovah um’tukah</em> Have a good and sweet new year")
+                   "<em>Shanah tovah um’tukah</em> (Good and sweet new year)")
 
 def yom_kippur(now):    return one_day(now, "Yom Kippur", "", "🍽️")
 
