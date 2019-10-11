@@ -71,9 +71,9 @@ if datetime.timedelta(seconds=0) \
                                               trymain("holiday")
                                               trymain("multi")
 
-if min == 10 and hr % 12 == 0 or 'holiday' in sys.argv:
+if min == 50 and hr % 12 == 5 or 'holiday' in sys.argv:
                                               trymain("holiday")
-if min == 10 and hr % 12 == 0 or 'multi' in sys.argv:
+if min == 50 and hr % 12 == 5 or 'multi' in sys.argv:
                                               trymain("multi")
 
 if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
