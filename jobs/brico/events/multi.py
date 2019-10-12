@@ -20,6 +20,7 @@ import brico.events.lunar.winter
 import brico.events.lunar.chinese
 import brico.events.lunar.christian
 import brico.events.lunar.muslim
+import brico.events.lunar.hindu
 import brico.events.lunar.sciencey
 
 import datetime
@@ -32,5 +33,6 @@ def main():
          + brico.events.lunar.winter.main(now) \
          + brico.events.lunar.christian.main(now) \
          + brico.events.lunar.muslim.main(now) \
+         + brico.events.lunar.hindu.main(now) \
          + brico.events.lunar.sciencey.main(now)
   brico.common.write_json("multi.json", hols)

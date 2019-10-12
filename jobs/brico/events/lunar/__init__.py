@@ -25,6 +25,15 @@ import astral
 import ephem
 
 @memoized
+def sunrise(date):
+  a = astral.Astral()
+  a.solar_depression = 'civil'
+  city = a[brico.common.city()]
+  sun = city.sun(date=date, local=True)
+
+  return sun['sunrise']
+
+@memoized
 def sunset(date):
   a = astral.Astral()
   a.solar_depression = 'civil'

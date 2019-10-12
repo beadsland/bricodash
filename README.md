@@ -46,8 +46,9 @@ For more discussion, see:
 * python3 + [requirements.txt](requirements.txt)
 * Perl + Date::Manip
 * ImageMagick
+* Common Lisp
 * [Elixir](https://elixir-lang.org/install.html)
-* [BindSight](https://wiki.hackmanhattan.com/BindSight)
+* [BindSight](https://wiki.hackmanhattan.com/BindSight) (experimental)
 
 ### API Credentials
 

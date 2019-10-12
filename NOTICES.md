@@ -13,6 +13,7 @@
 		- [jobs/vend/memoize.py](#jobsvendmemoizepy)
 		- [jobs/vend/multisub.py](#jobsvendmultisubpy)
 		- [jobs/vend/easter.py](#jobsvendeasterpy)
+		- [jobs/vend/calendar.l](#jobsvendcalendarl)
 	- [APIs](#apis)
 		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
 		- [jobs/brico/slack/](#jobsbricoslack)
@@ -157,7 +158,8 @@ of any kind.
 
 ### jobs/vend/easter.py
 
-Copyright (c) 2008 by Martin Diers, via <https://github.com/ActiveState/code/tree/master/recipes/Python/576517_Calculate_Easter_Western_given/>
+Copyright (c) 2008 by Martin Diers,
+via <https://github.com/ActiveState/code/tree/master/recipes/Python/576517_Calculate_Easter_Western_given/>
 Used under MIT License.
 
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -177,6 +179,21 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
+
+
+### jobs/vend/calendar.l
+
+The following Lisp code is from "Calendrical Calculations"
+by Nachum Dershowitz and Edward M. Reingold, _Software: Practice & Experience_,
+vol. 20, no. 9 (September, 1990), pp. 899--928 and
+from "Calendrical Calculations, II: Three Historical Calendars"
+by Edward M.  Reingold, Nachum Dershowitz, and Stewart M. Clamen,
+_Software: Practice & Experience_, vol. 23, no. 4 (April, 1993), pp. 383--404.
+
+This code is in the public domain, but any use of it should publically
+acknowledge its source.
+
+Retrieved: https://web.archive.org/web/20160417015329/http://emr.cs.iit.edu/~reingold/calendar.l
 
 
 ## APIs
