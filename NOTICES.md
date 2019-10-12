@@ -5,11 +5,11 @@
 - [Notices](#notices)
 	- [bricodash](#bricodash)
 	- [Public Use Caveat](#public-use-caveat)
-	- [Software](#software)
-		- [LICENSE.md](#licensemd)
+	- [Client Software](#client-software)
 		- [kiosk/picec/sysd/app/](#kioskpicecsysdapp)
-		- [html/util/camera.php](#htmlutilcameraphp)
 		- [html/js/clock.js](#htmljsclockjs)
+	- [Backend Software](#backend-software)
+		- [html/util/camera.php](#htmlutilcameraphp)
 		- [jobs/vend/memoize.py](#jobsvendmemoizepy)
 		- [jobs/vend/multisub.py](#jobsvendmultisubpy)
 		- [jobs/vend/easter.py](#jobsvendeasterpy)
@@ -23,6 +23,7 @@
 		- [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
 		- [jobs/common/short.py](#jobscommonshortpy)
 	- [Assets](#assets)
+		- [LICENSE.md](#licensemd)
 		- [html/img/fog.png](#htmlimgfogpng)
 		- [html/prox/mta](#htmlproxmta)
 		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
@@ -70,25 +71,7 @@ on any public Web site. (At least until such time as an appropriate privacy
 policy has been published for Bricodash).
 
 
-## Software
-
-### LICENSE.md
-
-Converted to markdown by Andreas Renberg.
-https://github.com/IQAndreas/markdown-licenses
-
-If there is any inconsistency between the markdown formatted license and
-the license it represents, please refer to the original license for the
-correct wording.
-
-GNU Affero General Public License (AGPL) v3.0
-<http://www.gnu.org/licenses/agpl-3.0.txt>.
-
-Please read the licenses ahead of time to make sure they are correct,
-and use them at your own risk. Although we have strived to keep the license
-wording identical to the originals, we are not responsible for any legal
-implications caused by discrepancies in the licenses.
-
+## Client Software
 
 ### kiosk/picec/sysd/app/
 
@@ -96,6 +79,23 @@ Based on <https://github.com/madmod/dashcast-docker>.
 Copyright © 2017 John Wells. Used and adapted in good faith.
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
+
+### html/js/clock.js
+
+Copyright © Tushar Gupta, via <https://stackoverflow.com/a/18229123>.
+Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
+https://creativecommons.org/licenses/by-sa/3.0/
+
+You do not have to comply with the license for elements of the material
+in the public domain or where your use is permitted by an applicable
+exception or limitation.
+
+No warranties are given. The license may not give you all of the permissions
+necessary for your intended use. For example, other rights such as publicity,
+privacy, or moral rights may limit how you use the material.
+
+
+## Backend Software
 
 ### html/util/camera.php
 
@@ -119,21 +119,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-### html/js/clock.js
-
-Copyright © Tushar Gupta, via <https://stackoverflow.com/a/18229123>.
-Used under Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).
-https://creativecommons.org/licenses/by-sa/3.0/
-
-You do not have to comply with the license for elements of the material
-in the public domain or where your use is permitted by an applicable
-exception or limitation.
-
-No warranties are given. The license may not give you all of the permissions
-necessary for your intended use. For example, other rights such as publicity,
-privacy, or moral rights may limit how you use the material.
 
 
 ### jobs/vend/memoize.py
@@ -343,6 +328,24 @@ for Firebase Services. https://firebase.google.com/terms/
 
 
 ## Assets
+
+### LICENSE.md
+
+Converted to markdown by Andreas Renberg.
+https://github.com/IQAndreas/markdown-licenses
+
+If there is any inconsistency between the markdown formatted license and
+the license it represents, please refer to the original license for the
+correct wording.
+
+GNU Affero General Public License (AGPL) v3.0
+<http://www.gnu.org/licenses/agpl-3.0.txt>.
+
+Please read the licenses ahead of time to make sure they are correct,
+and use them at your own risk. Although we have strived to keep the license
+wording identical to the originals, we are not responsible for any legal
+implications caused by discrepancies in the licenses.
+
 
 ### html/img/fog.png
 
