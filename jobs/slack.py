@@ -48,9 +48,14 @@ def who(s): return html.span().clss("slackee").inner( s ).str()
 hist = []
 lstwhn = ""
 lstwho = ""
+
 def hid(s): return html.span().clss('shide').inner(s).str()
 def sub(s): return html.span().clss('ssubt').inner(s).str()
-def huh(s): return html.span().clss('slacktext').inner(s).str()
+
+thin = "&#8202;"
+dthin = thin + thin
+def hug(s): return html.span().clss('slacktext').inner(s).str()
+def huh(s): return hug(s).replace("\n", sub( hid("\\").join([thin, thin]) ))
 
 ###
 # Format each message
