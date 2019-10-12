@@ -1,35 +1,36 @@
 # Notices
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [Notices](#notices)
-  - [bricodash](#bricodash)
-  - [Public Use Caveat](#public-use-caveat)
-  - [Software](#software)
-    - [LICENSE.md](#licensemd)
-    - [sysd/app/](#sysdapp)
-    - [html/util/camera.php](#htmlutilcameraphp)
-    - [html/js/clock.js](#htmljsclockjs)
-    - [jobs/vend/memoize.py](#jobsvendmemoizepy)
-    - [jobs/vend/multisub.py](#jobsvendmultisubpy)
-    - [jobs/vend/easter.py](#jobsvendeasterpy)
-  - [APIs](#apis)
-    - [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
-    - [jobs/brico/slack/](#jobsbricoslack)
-    - [jobs/brico/common/meetup.py](#jobsbricocommonmeetuppy)
-    - [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
-    - [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
-    - [jobs/brico/common/wiki.py](#jobsbricocommonwikipy)
-    - [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
-    - [jobs/common/short.py](#jobscommonshortpy)
-  - [Assets](#assets)
-    - [html/img/fog.png](#htmlimgfogpng)
-    - [html/prox/mta](#htmlproxmta)
-    - [html/img/flickr_nalends_super_pop.png](#htmlimgflickr_nalends_super_poppng)
-    - [html/css/font](#htmlcssfont)
-    - [html/img](#htmlimg)
-    - [html/snd/tick.mp3](#htmlsndtickmp3)
+<!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-<!-- TOC END -->
+- [Notices](#notices)
+	- [bricodash](#bricodash)
+	- [Public Use Caveat](#public-use-caveat)
+	- [Software](#software)
+		- [LICENSE.md](#licensemd)
+		- [kiosk/picec/sysd/app/](#kioskpicecsysdapp)
+		- [html/util/camera.php](#htmlutilcameraphp)
+		- [html/js/clock.js](#htmljsclockjs)
+		- [jobs/vend/memoize.py](#jobsvendmemoizepy)
+		- [jobs/vend/multisub.py](#jobsvendmultisubpy)
+		- [jobs/vend/easter.py](#jobsvendeasterpy)
+	- [APIs](#apis)
+		- [jobs/brico/weather/open.py](#jobsbricoweatheropenpy)
+		- [jobs/brico/slack/](#jobsbricoslack)
+		- [jobs/brico/common/meetup.py](#jobsbricocommonmeetuppy)
+		- [jobs/brico/events/brite.py](#jobsbricoeventsbritepy)
+		- [jobs/brico/events/castles.py, jobs/brico/events/private.py](#jobsbricoeventscastlespy-jobsbricoeventsprivatepy)
+		- [jobs/brico/common/wiki.py](#jobsbricocommonwikipy)
+		- [jobs/brico/cloud/github.py](#jobsbricocloudgithubpy)
+		- [jobs/common/short.py](#jobscommonshortpy)
+	- [Assets](#assets)
+		- [html/img/fog.png](#htmlimgfogpng)
+		- [html/prox/mta](#htmlproxmta)
+		- [html/img/flickr_nalends_super_pop.png](#htmlimgflickrnalendssuperpoppng)
+		- [html/css/font](#htmlcssfont)
+		- [html/img](#htmlimg)
+		- [html/snd/tick.mp3](#htmlsndtickmp3)
+
+<!-- /TOC -->
 
 ## bricodash
 
@@ -89,7 +90,7 @@ wording identical to the originals, we are not responsible for any legal
 implications caused by discrepancies in the licenses.
 
 
-### sysd/app/
+### kiosk/picec/sysd/app/
 
 Based on <https://github.com/madmod/dashcast-docker>.
 Copyright © 2017 John Wells. Used and adapted in good faith.
