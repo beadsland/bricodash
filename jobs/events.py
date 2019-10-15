@@ -133,6 +133,7 @@ for item in combo:
     start = brico.slack.ital( brico.events.format_dt(item['start']) )
 
     event = item['event']
+    event = re.sub(r'</?em>', "_", event)
     event = re.sub(brico.events.lunar.jewish.unlit(), " ", event)
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
