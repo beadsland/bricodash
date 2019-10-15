@@ -77,9 +77,9 @@ if min == 50 and hr % 12 == 5 or 'multi' in sys.argv:
                                               trymain("multi")
 
 if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
-                                              trymain("upmeet")
                                               trymain("brite")
-if min % 60 == 0 or 'tober' in sys.argv:      trymain("tober")
+#                                              trymain("upmeet")
+#if min % 60 == 0 or 'tober' in sys.argv:      trymain("tober")
 if min % 60 == 0 or 'castles' in sys.argv:    trymain("castles")
 if min % 10 == 0 or 'space' in sys.argv:      trymain("space")
 if min % 60 == 0 or 'private' in sys.argv:
