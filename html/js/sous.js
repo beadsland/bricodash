@@ -25,7 +25,7 @@
  */
  function sousveil() {
    var urlParams = new URLSearchParams(window.location.search);
-   if (urlParams.has("whoami") && urlParams.get("whoami") === "chromecast") {
+   if (urlParams.has("whoami") && urlParams.get("whoami") === "dash-tv-kiosk") {
      scheduleDiv("#sous", "pull/sous.html", 1000);
      var i;
      for (i=0; i<2000; i=i+250) {
