@@ -15,17 +15,21 @@
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
+import brico.common
 import brico.common.html
 from brico.events.lunar import sunrise, sunset
 
 import cl4py
-import datetime
 lisp = cl4py.Lisp()
+
+import os
+import datetime
 
 def iso(dt): return dt.replace(tzinfo=None).isoformat()
 
 def main(now):
-  lisp.function('load')('vend/calendar.l')
+  lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
+
   return holi(now)
 
 def holi(now):
