@@ -33,7 +33,7 @@ def iso(dt): return dt.replace(tzinfo=None).isoformat()
 def main(now):
   lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
 
-  for i in range(0, 19):
+  for i in range(-3, 19):
     diwali(now + datetime.timedelta(days=365*i))
 
   return holi(now) + diwali(now)
@@ -49,16 +49,6 @@ def holi(now):
            'event': "Rangwali Holi %s" % brico.common.html.emoji("💛💚💙💜")},
            ]
 
-# new moon -- laxmi pooja
-# south india one day earlier
-
-# calculate from new moon... after end of 7th month???
-
-#comes after navrati (equinox-related 9-day festival)
-#2023 Oct not Nov
-
-# Diwali is 20 days after the 10th day of Navratri
-
 def diwali(now):
   then = now - datetime.timedelta(days = 30)
   equin = ephem.next_autumn_equinox(then).datetime()
@@ -67,10 +57,34 @@ def diwali(now):
 
   hindu = lunar_date(newmoon)
 
+  # Examine whether library actually calculates tithi and whether they can be extracted.
+
+  # Should calculate all dates based on India Standard Timezone
+
+  # "A particular day is ruled by the tithi at Sunrise"
+
+  # Calendar day of a tithi is deemed to be calendar day of start of tithi
+
+
   # Library appears to be reporting gregorian day on which lunar tithi ends,
   # thus we use prior tithi to calculate gregorian day on which next tithi begins.
 
+  # 2016 Deepawali started two days earlier???
+  # 2018 Deepawali started one day earlier???
+
+  # 2021 Deepawali starts one day earlier, we calculate Diwali for same day but ending day earlier also???
+
   # If these calculations are correct, Diwali in 2028 ought to be only 4 days.
+
+  ##
+  # Solar day is determined by last muharat (sunset period) during the tithi...
+  #
+  # 2016: Dwadashi tithi Oct 26 2:30 to Oct 27 4:14 <-- muharat on 26th
+  #     : Dhantaras ends Oct 28 6:21 <-- second of two muharat, so 28th is solar day
+  #
+  ##
+
+  dwadashi = gregorian((hindu[0], hindu[1], 26, hindu[3]))
   first = gregorian((hindu[0], hindu[1], 27, hindu[3]))
   pratipad = next_pratipad(lunar_date(newmoon))
   last = gregorian((pratipad[0], pratipad[1], 1, pratipad[3]))
@@ -79,6 +93,8 @@ def diwali(now):
     diwali = newmoon.date() - datetime.timedelta(days=1)
   else:
     diwali = newmoon.date()
+
+  print(dwadashi, first, diwali, last)
 
   emoji = brico.common.html.logo("img/ggl-diwa.png")
 
