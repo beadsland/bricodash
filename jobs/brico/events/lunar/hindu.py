@@ -19,19 +19,19 @@ import brico.common
 import brico.common.html
 from brico.events.lunar import sunrise, sunset
 
-import cl4py
-lisp = cl4py.Lisp()
-
 import os
 import datetime
 import ephem
 import pytz
 import dateutil
 
+import cl4py
+lisp = cl4py.Lisp()
+lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
+
 def iso(dt): return dt.replace(tzinfo=None).isoformat()
 
 def main(now):
-  lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
 
   for i in range(-3, 19):
     diwali(now + datetime.timedelta(days=365*i))
