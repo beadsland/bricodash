@@ -73,7 +73,8 @@ def rosh_hashanah(now):
 def yom_kippur(now):    return one_day(now, "Yom Kippur", "", "🍽️")
 
 def sukkot(now):
-  return multi_day(now, "Sukkot", 7, "", "<em>Chag Sameach</em> (Joyous Festival)")
+  return multi_day(now, "Sukkot", 7, "🌿🌾🌿🍋",
+                   "<em>Chag Sameach</em> (Joyous Festival)")
 
 def one_day(now, hol, emobeg, emoend):
   first = holiday( hol.replace(" ", "_").lower(), now )
