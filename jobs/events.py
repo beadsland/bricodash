@@ -51,7 +51,7 @@ hr  = now.hour
 # Be sure than any interval defined below will occur coincident with the
 # master cron.py interval. Otherwise the rule in question below won't fire.
 
-EXC = False
+EXC = True
 
 def trymain(mod):
   try:
@@ -63,12 +63,18 @@ def trymain(mod):
       traceback.print_exception(*exc_info)
       del exc_info
 
-# Make sure sunset items actually update by firing 1 and 10 minutes after
+# Make sure sunset items actually update by firing in passes immediately after
 sunset = brico.events.lunar.sunset(datetime.datetime.today())
 if datetime.timedelta(seconds=0) \
    < (datetime.datetime.now(datetime.timezone.utc) - sunset) \
    < datetime.timedelta(minutes=30):
-                                              trymain("holiday")
+                                              trymain("multi")
+
+# Same for sunrise items (e.g., Hindu calendar)
+sunrise = brico.events.lunar.sunrise(datetime.datetime.today())
+if datetime.timedelta(seconds=0) \
+   < (datetime.datetime.now(datetime.timezone.utc) - sunrise) \
+   < datetime.timedelta(minutes=30):
                                               trymain("multi")
 
 if min == 50 and hr % 12 == 5 or 'holiday' in sys.argv:

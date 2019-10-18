@@ -24,13 +24,19 @@ lisp = cl4py.Lisp()
 
 import os
 import datetime
+import ephem
+import pytz
+import dateutil
 
 def iso(dt): return dt.replace(tzinfo=None).isoformat()
 
 def main(now):
   lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
 
-  return holi(now)
+  for i in range(0, 19):
+    diwali(now + datetime.timedelta(days=365*i))
+
+  return holi(now) + diwali(now)
 
 def holi(now):
   today = lunar_date(now)
@@ -42,6 +48,59 @@ def holi(now):
           {'start': iso(holimorn), 'venue': 'Holiday',
            'event': "Rangwali Holi %s" % brico.common.html.emoji("💛💚💙💜")},
            ]
+
+# new moon -- laxmi pooja
+# south india one day earlier
+
+# calculate from new moon... after end of 7th month???
+
+#comes after navrati (equinox-related 9-day festival)
+#2023 Oct not Nov
+
+# Diwali is 20 days after the 10th day of Navratri
+
+def diwali(now):
+  then = now - datetime.timedelta(days = 30)
+  equin = ephem.next_autumn_equinox(then).datetime()
+  navaratri = gregorian(next_pratipad(lunar_date(equin)))
+  newmoon = ephem.next_new_moon(navaratri).datetime().replace(tzinfo=pytz.UTC)
+
+  hindu = lunar_date(newmoon)
+
+  # Library appears to be reporting gregorian day on which lunar tithi ends,
+  # thus we use prior tithi to calculate gregorian day on which next tithi begins.
+
+  # If these calculations are correct, Diwali in 2028 ought to be only 4 days.
+  first = gregorian((hindu[0], hindu[1], 27, hindu[3]))
+  pratipad = next_pratipad(lunar_date(newmoon))
+  last = gregorian((pratipad[0], pratipad[1], 1, pratipad[3]))
+
+  if sunrise(newmoon.date()) > newmoon:
+    diwali = newmoon.date() - datetime.timedelta(days=1)
+  else:
+    diwali = newmoon.date()
+
+  emoji = brico.common.html.logo("img/ggl-diwa.png")
+
+  if now < sunrise(first):
+    (event, morn) = ("Diwali Begins %s" % emoji, sunrise(first))
+  elif now.date() == first.date():
+    (event, morn) = ("Happy Diwali! %s" % emoji, sunrise(first))
+  elif now < sunrise(diwali):
+    (event, morn) = ("Happy Diwali! %s" % emoji, now.date())
+  elif now.date() < sunrise(diwali + datetime.timedelta(days=1)):
+    (event, morn) = ("Happy Diwali! %s" % ''.join([emoji]*5), now.date())
+  elif now.date() < sunrise(last + datetime.timedelta(days=1)):
+    (event, morn) = ("Happy Diwali! %s" % emoji, now.date())
+  else:
+    (event, morn) = ("n/a", False)
+
+  if not morn:
+    return []
+  else:
+    return [{'start': iso(morn), 'venue': "Holiday", 'event': event},
+            {'start': iso(sunrise(last + datetime.timedelta(days=1))),
+             'venue': "Holiday", 'event': "Diwali Ends %s" % emoji}]
 
 def next_happens(today, lunar):
   if lisp.function('old-hindu-lunar-precedes')(today, lunar):
@@ -57,6 +116,18 @@ def lunar_date(date):
 
 def gregorian(lunar):
   abs = lisp.function('absolute-from-old-hindu-lunar')(lunar)
+
+  if abs == ():
+    if lunar[2] < 30:
+      return gregorian((lunar[0], lunar[1], lunar[2]+1, lunar[3]))
+    else:
+      return gregorian(next_pratipad((lunar[0], lunar[1], 1, lunar[3])))
+
   greg = lisp.function('gregorian-from-absolute')(abs)
   date = datetime.date(greg[2], greg[0], greg[1])
   return date
+
+def next_pratipad(lunar):
+  pratipad = gregorian((lunar[0], lunar[1], 1, lunar[3]))
+  nextmonth = lunar_date(pratipad + datetime.timedelta(days=31))
+  return (nextmonth[0], nextmonth[1], 1, nextmonth[3])
