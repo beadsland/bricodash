@@ -39,7 +39,7 @@ def passover(now):
   if now < firsteve:
     (event, eve) = ("First Night of Passover " + unlev, firsteve)
   elif now < lasteve:
-    (event, eve) = ("Passover Ends (≈) " + unlev, lasteve)
+    (event, eve) = ("Passover Ends (≈⁂) " + unlev, lasteve)
   bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
   if firsteve < now < lasteve:
@@ -87,7 +87,7 @@ def one_day(now, hol, emobeg, emoend):
   if now < firsteve:
     (event, eve) = ("%s Begins %s" % (hol, emobeg), firsteve)
   elif now < lasteve:
-    (event, eve) = ("%s Ends (≈) %s" % (hol, emoend), lasteve)
+    (event, eve) = ("%s Ends (≈⁂) %s" % (hol, emoend), lasteve)
 
   return [{ 'start': iso(eve), 'venue': "Holiday", 'event': event }]
 
@@ -101,7 +101,7 @@ def multi_day(now, hol, days, emoji, greet):
   if now < firsteve:
     (event, eve) = ("First Night of %s %s" % (hol, emoji), firsteve)
   elif now < lasteve:
-    (event, eve) = ("%s Ends (≈) %s" % (hol, emoji), lasteve)
+    (event, eve) = ("%s Ends (≈⁂) %s" % (hol, emoji), lasteve)
   bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
   if firsteve < now < lasteve:
