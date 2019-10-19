@@ -34,7 +34,7 @@ protobuf==3.6.1           # via pychromecast
 pychromecast==2.3.0
 python-dateutil==2.7.3    # via dateparser, icalendar, lunarcalendar
 python-resize-image==1.1.12
-pytz==2018.5              # via astral, convertdate, dateparser, datetime, icalendar, icalevents, lunarcalendar, tzlocal
+pytz==2018.5
 regex==2018.8.29          # via dateparser, wikitextparser
 requests==2.19.1
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
