@@ -27,9 +27,11 @@ import brico.events.space
 import brico.events.castles
 import brico.events.private
 import brico.events.lunar
-import brico.slack
+import brico.events.lunar.jewish
 
+import brico.slack
 import brico.common.html as html
+
 import datetime
 import os
 import sys
@@ -65,9 +67,10 @@ def trymain(mod):
 
 # Make sure sunset items actually update by firing in passes immediately after
 sunset = brico.events.lunar.sunset(datetime.datetime.today())
+max_bein_hashmashot = brico.events.lunar.jewish.max_bein_hashmashot()
 if datetime.timedelta(seconds=0) \
    < (datetime.datetime.now(datetime.timezone.utc) - sunset) \
-   < datetime.timedelta(minutes=30):
+   < datetime.timedelta(minutes=30) + max_bein_hashmashot:
                                               trymain("multi")
 
 # Same for sunrise items (e.g., Hindu calendar)
