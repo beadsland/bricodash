@@ -80,6 +80,12 @@ if datetime.timedelta(seconds=0) \
    < datetime.timedelta(minutes=30):
                                               trymain("multi")
 
+# Run after yesteray (several times to ensure it happens)
+if min < 30 and hr == 0:
+                                              trymain("holiday")
+                                              trymain("multi")
+
+# Run before thehaps
 if min == 50 and hr % 12 == 5 or 'holiday' in sys.argv:
                                               trymain("holiday")
 if min == 50 and hr % 12 == 5 or 'multi' in sys.argv:
