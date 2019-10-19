@@ -22,6 +22,7 @@ import copy
 import dateutil.tz as tz
 import re
 import requests
+import datetime
 
 import brico.common
 import brico.common.html as html
@@ -42,6 +43,8 @@ def main():
 
   private = icalevents.icalevents.events(string_content = file.encode('utf-8'))
   for i, e in enumerate(private):
+    if e.end - e.start < datetime.timedelta(hours = 3):
+      e.end = e.start + datetime.timedelta(hours = 3)
     e.start = e.start.astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")
     e.end = e.end.astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")
   new = private
