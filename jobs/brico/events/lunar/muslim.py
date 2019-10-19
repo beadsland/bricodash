@@ -24,10 +24,12 @@ import ephem
 
 astromoji = "".join([ "(", html.emoji("🔭🌑"), " / ", html.emoji("🇺🇸"), ")" ])
 nakedmoji = "".join([ "(", html.emoji("👁️🌒"), " / ", html.em("varies"), ")" ])
-islamoji = html.emoji("☪️")
-ramadmoji = " ".join([ "First Night of Ramaḍān", islamoji ])
-shawwmoji = " ".join([ "First Night of Shawwāl", islamoji ])
-greeting = " ".join([ html.em("Ramaḍān Kareem"), "(Noble Ramadan)", islamoji ])
+ramadmoji = " ".join([ "First Night of Ramaḍān", html.emoji("☪️") ])
+shawwmoji = " ".join([ "Eid al-Fitr (End of Ramaḍān)", html.emoji("🍽🛐️") ])
+ramgreet = " ".join([ html.em("Ramaḍān Kareem"), "(Noble Ramadan)",
+                      html.emoji("🌅🌇") ])
+fitgreet = " ".join([ html.em("Eid Mubarak"), "(Blessed Eid)", html.emoji("🍽🛐️")])
+endfmoji = " ".join([ "End of Eid al-Fitr", html.emoji("🍽🛐️") ])
 
 def iso(dt): return dt.isoformat()
 
@@ -37,28 +39,56 @@ def ramadan(now):
   now = now.replace(tzinfo=None)
   then = now - datetime.timedelta(days = 31)
   um = HijriDate(then.year, then.month, then.day, gr=True)
-  if (um.month < 9):
+  if (um.month < 10):
     um = HijriDate.get_georing_date('%d-08-28' % um.year)
   else:
     um = HijriDate.get_georing_date('%d-08-28' % (um.year + 1))
 
   events = []
 
-  (astroR, firstR) = new_month(um)
-  if astroR != firstR:
+  # Start of Ramadan
+  (astroR, nakedR) = new_month(um)
+  if astroR != nakedR:
     events.append(( astroR, "%s %s" % (ramadmoji, astromoji) ))
-  events.append(( firstR, "%s %s" % (ramadmoji, nakedmoji) ))
+  events.append(( nakedR, "%s %s" % (ramadmoji, nakedmoji) ))
 
-  (astroS, firstS) = new_month(um + datetime.timedelta(days = 28))
-  if now > astroR and now < firstS:
+  # Current day in Ramadan
+  (astroS, nakedS) = new_month(um + datetime.timedelta(days = 28))
+  if astroR < now < nakedS:
     events.append(( datetime.datetime.combine(now.date(),
                                               datetime.datetime.min.time()),
-                    greeting ))
-  if astroS != firstS:
-    events.append(( astroS, "%s %s" % (shawwmoji, astromoji) ))
-  events.append(( firstS, "%s %s" % (shawwmoji, nakedmoji) ))
+                    ramgreet ))
 
-  while events[0][0].date() < now.date():  events.pop(0)
+  # Start of Eid
+  if now < nakedS:
+    if astroS != nakedS and now < astroS:
+      events.append(( astroS, "%s %s" % (shawwmoji, astromoji) ))
+    events.append(( nakedS, "%s %s" % (shawwmoji, nakedmoji) ))
+
+  # Current day in Eid
+  astroE = brico.events.lunar.sunset(astroS.date() + datetime.timedelta(days=3))
+  astroE = astroE.replace(tzinfo=None)
+  nakedE = brico.events.lunar.sunset(nakedS.date() + datetime.timedelta(days=3))
+  nakedE = nakedE.replace(tzinfo=None)
+
+  if nakedS < now < nakedE:
+    events.append(( datetime.datetime.combine(now.date(),
+                                              datetime.datetime.min.time()),
+                    fitgreet ))
+  elif astroS < now < nakedE:
+    events.append(( datetime.datetime.combine(now.date(),
+                                              datetime.datetime.min.time()),
+                    ' '.join([fitgreet, astromoji]) ))
+
+
+  # End of Eid
+  if now < nakedE:
+    if astroE != nakedE and now < astroE:
+      events.append(( astroE, "%s %s" % (endfmoji, astromoji) ))
+    events.append(( nakedE, "%s %s" % (endfmoji, nakedmoji) ))
+
+  # Strip off events that have already happened
+  while events and events[0][0].date() < now.date():  events.pop(0)
 
   events = [ {'start': iso(t[0]), 'venue': "Holiday",
               'event': t[1]} for t in events ]
