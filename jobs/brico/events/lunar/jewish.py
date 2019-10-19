@@ -23,6 +23,8 @@ import datetime
 import dateutil.tz
 import convertdate
 
+threestars = "(≺%s)" % brico.common.html.emoji("✨")
+
 def max_bein_hashmashot(): return datetime.timedelta(minutes = 72)
 
 def main(now): return purim(now) + passover(now) + hanukkah(now) \
@@ -41,7 +43,8 @@ def passover(now):
   if now < firsteve:
     (event, eve) = ("First Night of Passover " + unlev, firsteve)
   elif now < lasteve + max_bein_hashmashot():
-    (event, eve) = ("Closing Twilight (≺⁂) of Passover " + unlev, lasteve)
+    (event, eve) = ("Closing Twilight %s of Passover %s" % (threestars, unlev),
+                    lasteve)
   bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
   if firsteve < now < lasteve + max_bein_hashmashot():
@@ -89,7 +92,8 @@ def one_day(now, hol, emobeg, emoend):
   if now < firsteve:
     (event, eve) = ("%s Begins %s" % (hol, emobeg), firsteve)
   elif now < lasteve + max_bein_hashmashot():
-    (event, eve) = ("%s Closing Twilight (≺⁂) %s" % (hol, emoend), lasteve)
+    (event, eve) = ("%s Closing Twilight %s %s" % (hol, threestars, emoend),
+                    lasteve)
 
   return [{ 'start': iso(eve), 'venue': "Holiday", 'event': event }]
 
@@ -103,7 +107,8 @@ def multi_day(now, hol, days, emoji, greet):
   if now < firsteve:
     (event, eve) = ("First Night of %s %s" % (hol, emoji), firsteve)
   elif now < lasteve + max_bein_hashmashot():
-    (event, eve) = ("Closing Twilight (≺⁂) of %s %s" % (hol, emoji), lasteve)
+    (event, eve) = ("Closing Twilight %s of %s %s" % (threestars, hol, emoji),
+                    lasteve)
   bound = { 'start': iso(eve), 'venue': "Holiday", 'event': event }
 
   if firsteve < now < lasteve + max_bein_hashmashot():
