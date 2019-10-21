@@ -95,7 +95,7 @@ def ramadan(now):
 
   return events
 
-# Estimating astronomical siting per:\
+# Estimating astronomical sighting per:
 # http://www.arabnews.com/node/1302826/saudi-arabia
 def new_month(date):
   newmn = ephem.next_new_moon(date).datetime()
