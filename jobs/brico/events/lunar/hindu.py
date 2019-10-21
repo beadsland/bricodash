@@ -33,8 +33,8 @@ def iso(dt): return dt.replace(tzinfo=None).isoformat()
 
 def main(now):
 
-  for i in range(-3, 19):
-    diwali(now + datetime.timedelta(days=365*i))
+#  for i in range(-3, 19):
+#    diwali(now + datetime.timedelta(days=365*i))
 
   return holi(now) + diwali(now)
 
@@ -94,13 +94,13 @@ def diwali(now):
   else:
     diwali = newmoon.date()
 
-  print(dwadashi, first, diwali, last)
+#  print(dwadashi, first, diwali, last)
 
   emoji = brico.common.html.logo("img/ggl-diwa.png")
 
   if now < sunrise(first):
     (event, morn) = ("Diwali Begins %s" % emoji, sunrise(first))
-  elif now.date() == first.date():
+  elif now.date() == first:
     (event, morn) = ("Happy Diwali! %s" % emoji, sunrise(first))
   elif now < sunrise(diwali):
     (event, morn) = ("Happy Diwali! %s" % emoji, now.date())
