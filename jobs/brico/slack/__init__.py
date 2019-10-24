@@ -28,16 +28,16 @@ import re
 import humanize
 import datetime
 
-def bold(str):  return "*%s*" % str
-def ital(str):  return "_%s_" % str
-def quot(str):  return ">%s" % str
-
 thumb = brico.common.thumb.Cache()
 re_thumb = re.compile(r"/files-tmb/")
 
 ###
 # Outer formatting
 ###
+def bold(str):  return "*%s*" % str
+def ital(str):  return "_%s_" % str
+def quot(str):  return ">%s" % str
+
 def div(s): return html.div().clss("slacking").inner(s).str()
 def usp(s): return html.span().clss("slacker").inner("@%s" % s).str()
 def chn(s): return html.span().clss("slackchan").inner("#%s" % s).str()
@@ -87,7 +87,9 @@ class Slack(BaseSlack):
              ("<#[^\|>]+\|([^>]+)?>", lambda m: chn(m.group(1)) ),
              ("<@([^\|>]+)(\|[^>]+)?>", lambda m: usp(self.names(m.group(1))) ),
              (":([A-Za-z][A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
-                                                                  emotags) ) ]
+                                                                  emotags) ),
+             ("\*([^\*]+)\*", lambda m: html.strong(m.group(1))),
+             ("\_([^\_]+)\_", lambda m: html.em(m.group(1))) ]
 
   def format_text(self, message):
     text = message['text']
