@@ -93,7 +93,7 @@ def diwali(now):
   # Reference: http://www.astrojyoti.com/understanding-panchangam.htm
   # Calculation Validation: https://www.drikpanchang.com/diwali/diwali-puja-calendar.html
 
-  emoji = brico.common.html.logo("img/ggl-diwa.png", ":diya:")
+  emoji = brico.common.html.logo("img/ggl-diya.png", ":diya:")
   vary = brico.common.html.em("(%s)" % "varies")
 
   # We're hard-coding for now because we aren't calculating tithi correctly
