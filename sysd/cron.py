@@ -46,4 +46,4 @@ if min % 10 == 0:    os.system(pwd + "/../jobs/events.py &")
 if min == 0 and (hr+6) % 12 == 0:
                      os.system(pwd + "/../jobs/thehaps.py &")
 if 1:                os.system(pwd + "/../jobs/sous/veil.py &")
-if 1:                os.system(pwd + "/../jobs/notify.py &")
+if min % 2 == 0:     os.system(pwd + "/../jobs/notify.py &")
