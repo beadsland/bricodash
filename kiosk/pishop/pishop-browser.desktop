@@ -1,9 +1,0 @@
-# pishop.local:  /home/pi/.config/autostart/kiosk-browser.desktop
-
-[Desktop Entry]
-Name=stream
-Exec=bash -c 'unclutter & chromium-browser --force-device-scale-factor=0.9 --disable-infobars --kiosk --app=http://bricolage.hackmanhattan.com:8888/hm/dash/?whoami=pishop'
-StartupNotify=true
-Terminal=false
-Type=Application
-StartupWMClass=kiosk-browser
