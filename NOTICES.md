@@ -81,6 +81,16 @@ Copyright © 2017 John Wells. Used and adapted in good faith.
 Adapted for hackmanhattan/defaultcast by @mz@hackmanhattan.slack.com, 2017.
 
 
+### kiosk/picec/watchload.sh
+
+Provided by @mz@hackmanhattan.slack.com, 2019.
+
+
+### kiosk/picec/.xsessionrc
+
+Provided by @mz@hackmanhattan.slack.com, 2019.
+
+
 ### html/js/clock.js
 
 Copyright © Tushar Gupta, via <https://stackoverflow.com/a/18229123>.
