@@ -30,6 +30,8 @@ lisp = cl4py.Lisp()
 lisp.function('load')(os.path.join(brico.common.pwd(), 'vend/calendar.l'))
 
 def iso(dt): return dt.replace(tzinfo=None).isoformat()
+def midnight(now):
+  return datetime.datetime.combine(now.date(), datetime.datetime.min.time())
 
 def main(now):
 
@@ -106,11 +108,11 @@ def diwali(now):
   elif now.date() == first:
     (event, morn) = ("Happy Diwali! %s" % emoji, sunrise(first))
   elif now < sunrise(diwali):
-    (event, morn) = ("Happy Diwali! %s" % emoji, now.date())
+    (event, morn) = ("Happy Diwali! %s" % emoji, midnight(now))
   elif now.date() < sunrise(diwali + datetime.timedelta(days=1)):
-    (event, morn) = ("Happy Diwali! %s" % ''.join([emoji]*5), now.date())
+    (event, morn) = ("Happy Diwali! %s" % ''.join([emoji]*5), midnight.now())
   elif now.date() < sunrise(last + datetime.timedelta(days=1)):
-    (event, morn) = ("Happy Diwali! %s" % emoji, now.date())
+    (event, morn) = ("Happy Diwali! %s" % emoji, midnight.now())
   else:
     (event, morn) = ("n/a", False)
 
