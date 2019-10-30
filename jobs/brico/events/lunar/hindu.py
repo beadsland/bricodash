@@ -110,7 +110,7 @@ def diwali(now):
   elif now < sunrise(diwali):
     (event, morn) = ("Happy Diwali! %s" % emoji, midnight(now))
   elif midnight(now) < sunrise(diwali + datetime.timedelta(days=1)).replace(tzinfo=None):
-    (event, morn) = ("Happy Diwali! %s" % ''.join([emoji]*5), midnight.now())
+    (event, morn) = ("Happy Diwali! %s" % ''.join([emoji]*5), midnight(now))
   elif midnight(now) < sunrise(last + datetime.timedelta(days=1)).replace(tzinfo=None):
     (event, morn) = ("Happy Diwali! %s" % emoji, midnight(now))
   else:
