@@ -121,7 +121,7 @@ def diwali(now):
   else:
     return [{'start': iso(morn), 'venue': "Holiday", 'event': event},
             {'start': iso(sunrise(last + datetime.timedelta(days=1))),
-             'venue': "Holiday", 'event': "Diwali Ends %s %s" % (vary, emoji)}]
+             'venue': "Holiday", 'event': "Diwali Ends %s" % (vary)}]
 
 def next_happens(today, lunar):
   if lisp.function('old-hindu-lunar-precedes')(today, lunar):
