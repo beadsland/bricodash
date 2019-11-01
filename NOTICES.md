@@ -455,6 +455,10 @@ FreeCodeCamp logo and glyph are trademarks of freeCodeCamp.
 
 TOOOL logo is a trademark of The Open Organization Of Lockpickers.
 
+ggl-* prefix glyphs are Google emoji images used in good faith, pending future
+inclusion of these glyphs in the Noto font. Images sourced from
+https://emojipedia.org/google/
+
 All product names, logos, brands, emoji glyphs, memes and other images are
 property of their respective owners. All company, product and service
 identifiers used in this application are for identification purposes only.
