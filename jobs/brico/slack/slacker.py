@@ -68,6 +68,13 @@ class Slack:
     if not user:
       names = { u['id']: ( u['profile']['display_name'], u['name'] )
                                                     for u in self.members() }
+
+      # Only use username if display name not available. Per slack account
+      # settings:
+      #
+      # "Usernames are not part of your profile, and are only required by Slack
+      # for technical reasons. Your username is mostly invisible to others, but
+      # you can change it if you want to."
       for id in names:
         names[id] = names[id][1] if names[id][0] == "" else names[id][0]
       return names
