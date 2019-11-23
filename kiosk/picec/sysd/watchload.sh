@@ -6,7 +6,10 @@
 # Provided by @mz@hackmanhattan.slack.com, 2019.
 ##
 
-LCAP=5
+LCAP="4.8"
+
+sleep 36000 # Wait for boot-cycle load to pass
+
 while [ 1 == 1 ]; do
     LOAD=$(awk '{print $1}' /proc/loadavg)
     if [ $(bc -l <<< "$LOAD > $LCAP") -eq 1 ]; then

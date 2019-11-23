@@ -7,7 +7,10 @@
 ##
 
 FORCE_SCALE=1.5
+FORCE_GCHRS=8
 WHOAMI=$(uname -n)
+
+APPURL="http://bricolage.hackmanhattan.com:8888/hm/dash/withgc.html?whoami=$WHOAMI&gc_hrs=$FORCE_GCHRS"
 
 xset -dpms
 xset s off
@@ -17,6 +20,6 @@ matchbox-window-manager &
 
 while :; do
     rm -r ~/.cache/chromium/Default/Cache/*
-    chromium-browser --force-device-scale-factor=$FORCE_SCALE --disable-infobars --kiosk --app=http://bricolage.hackmanhattan.com:8888/hm/dash/?whoami=$WHOAMI
+    chromium-browser --force-device-scale-factor=$FORCE_SCALE --disable-infobars --kiosk --disable-popup-blocking --app="$APPURL"
     sleep 30
 done
