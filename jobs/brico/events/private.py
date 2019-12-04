@@ -49,6 +49,13 @@ def main():
     e.end = e.end.astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")
   new = private
 
+  for sp in space:
+    end = dateparser.parse(sp['end'])
+    start = dateparser.parse(sp['start'])
+    if end - start < datetime.timedelta(hours = 3):
+      sp['end'] = start + datetime.timedelta(hours = 3)
+      sp['end'] = sp['end'].astimezone(tz.tzlocal()).strftime("%Y-%m-%dT%H:%M:%S")
+
   while len(space) > 0:
     new = []
     for e in private:
