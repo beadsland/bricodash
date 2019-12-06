@@ -89,7 +89,8 @@ class Slack(BaseSlack):
              (":([A-Za-z][A-Za-z\-_0-9]+):", lambda m: self.emoji(m.group(1),
                                                                   emotags) ),
              ("\*([^\*]+)\*", lambda m: html.strong(m.group(1))),
-             ("\_([^\_]+)\_", lambda m: html.em(m.group(1))) ]
+             ("\_([^\_]+)\_", lambda m: html.em(m.group(1))),
+             ("\~([^\_]+)\~", lambda m: html.strike(m.group(1))) ]
 
   def format_text(self, message):
     text = message['text']
