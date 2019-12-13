@@ -38,7 +38,7 @@ def main():
 
   upmeet = brico.events.load_cals( ["upmeet.json"] )
 
-  for event in brite.events(tenants):
+  for event in brite.events([44328393, 41243997]):
     venue = brite.venue(event)
 
     if venue['name'] in tenants:
@@ -97,15 +97,10 @@ class Brite:
     self.api = eventbrite.Eventbrite(token)
     self.venues = {}
 
-  def events(self, tenants):
-    query = { 'location.address': "137 West 14th Street, New York, NY",
-              'location.within': "1km",
-              'sort_by': "date" }
+  def events(self, ids):
     evts = []
-
-    for t in tenants:
-      query['q'] = t
-      route = "/events/search?%s" % urllib.parse.urlencode(query)
+    for id in ids:
+      route = "/venues/%d/events" % id
       result = self.api.get( route )
       evts += result['events']
     return evts
