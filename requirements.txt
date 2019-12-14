@@ -36,7 +36,7 @@ python-dateutil==2.7.3    # via dateparser, icalendar, lunarcalendar
 python-resize-image==1.1.12
 pytz==2018.5
 regex==2018.8.29          # via dateparser, wikitextparser
-requests==2.19.1
+requests==2.20.0
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
 tzlocal==1.5.1            # via dateparser
 ummalqura==2.0.1
