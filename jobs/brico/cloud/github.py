@@ -45,22 +45,25 @@ def main():
   for n in repos:
     result = get_events(n[0], n[1])
     if result is not None:
-      while len(result) > 0 and not (hubpush(result[0]) or labpush(result[0])):
-        result.pop(0)
-      if len(result) > 0:
-        push = result[0]
-        if n[1] == "github":
-          repo = brico.cloud.format_title(push["repo"]["name"])
-          title = ''.join([ hub_logo, repo ])
-    #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
-    #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
-        elif n[1] == "gitlab":
-          name = get_project_path(n[0], n[1], push["project_id"])
-          repo = brico.cloud.format_title(name)
-          title = ''.join([ lab_logo, repo ])
+      while len(result) > 0:
+        if not (hubpush(result[0]) or labpush(result[0])):
+          result.pop(0)
         else:
-          continue  # just move on if bad service name
-        report.append( (push["created_at"], title) )
+          push = result.pop(0)
+          if n[1] == "github":
+            repo = brico.cloud.format_title(push["repo"]["name"])
+            title = ''.join([ hub_logo, repo ])
+      #    avatar = thumb.get_thumb(get_user(n)["avatar_url"])
+      #    title = ''.join([ glogo, brico.common.html.logo(avatar), repo ])
+          elif n[1] == "gitlab":
+            name = get_project_path(n[0], n[1], push["project_id"])
+            repo = brico.cloud.format_title(name)
+            title = ''.join([ lab_logo, repo ])
+          else:
+            continue  # just move on if bad service name
+          if title not in seen:
+            report.append( (push["created_at"], title) )
+            seen.append( title )
 
   for p in range(1,10):
     result = get_events("hackmanhattan", "github", "hm", p)
@@ -72,7 +75,7 @@ def main():
         report.append( (push["created_at"], title) )
         seen.append( push["repo"]["name"] )
 
-  brico.common.write_json("github.json", report)
+  brico.common.write_json("github.json", sorted(report))
   return report
 
 ###
