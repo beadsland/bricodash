@@ -22,9 +22,15 @@ import piptools
 import os
 import fileinput
 
+security = ["urllib3>=1.24.2", "requests>=2.20", "pillow>=6.2"]
+
 os.system("pipreqs . --savepath requirements.in --use-local")
 
 for line in fileinput.input(files=["requirements.in"], inplace=True, backup='.bak'):
   print(line.replace("==", ">="))
+
+f=open("requirements.in", "a+")
+f.write("%s\r\n" % "\r\n".join(security))
+f.close()
 
 os.system('CUSTOM_COMPILE_COMMAND="util/genreqs.py" pip-compile requirements.in')
