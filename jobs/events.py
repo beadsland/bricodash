@@ -91,8 +91,8 @@ if min == 50 and hr % 12 == 5 or 'holiday' in sys.argv:
 if min == 50 and hr % 12 == 5 or 'multi' in sys.argv:
                                               trymain("multi")
 
-if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
-                                              trymain("brite")
+#if min % 60 == 0 or 'upmeet' in sys.argv or 'brite' in sys.argv:
+#                                              trymain("brite")
 #                                              trymain("upmeet")
 #if min % 60 == 0 or 'tober' in sys.argv:      trymain("tober")
 if min % 60 == 0 or 'castles' in sys.argv:    trymain("castles")
