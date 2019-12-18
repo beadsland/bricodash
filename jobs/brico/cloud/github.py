@@ -69,7 +69,7 @@ def main():
     result = get_events("hackmanhattan", "github", "hm", p)
 
     for push in result:
-      if push["repo"]["name"] not in seen:
+      if hubpush(push) and push["repo"]["name"] not in seen:
         repo = brico.cloud.format_title(push["repo"]["name"])
         title = ''.join([ hub_logo, repo ])
         report.append( (push["created_at"], title) )
