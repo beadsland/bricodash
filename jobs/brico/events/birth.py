@@ -45,6 +45,6 @@ def stringify(names):
     s = "%s's %s" % (s, cake)
 
   s = re.compile("s's").sub("s'", s)
-  s = re.compile("\)'s").sub("", s)
+  s = re.compile("\)'s").sub(")", s)
   s = re.compile(r", ([^,]*)$").sub(r" & \1", s)
   return s
