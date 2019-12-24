@@ -19,7 +19,9 @@
 
 import os
 
-sema = "../html/pull/pull.yes"
+cwd = os.path.dirname(os.path.realpath(__file__))
+
+sema = "%s/../html/pull/pull.yes" % cwd
 if os.path.exists(sema):
-  os.system("cd ..; git pull")
+  os.system("cd %s/..; git pull" % cwd)
   os.remove(sema)
