@@ -70,6 +70,9 @@ def main():
     if (dt.day == 7) and (dt.month == 1) and (dt.year == 2020):
       evt = re.sub(r'(Tech Tuesday)', r'\1 / Rescheduled Business Meeting', evt)
 
+    if (dt.month == 2):
+      evt = re.sub(r'(Tech Tuesday / Business Meeting)', r'\1 / Board Elections', evt)
+
     mevt = re.sub(r'Math talk: +', '', evt)
     if mevt in colist("nyc-math"):
       rsvp = colist_rsvps("nyc-math", item, mevt)
