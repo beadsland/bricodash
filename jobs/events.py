@@ -149,7 +149,7 @@ for item in combo:
 
     event = item['event']
     event = re.sub(r'</?em\ ?>', "_", event)
-    event = re.sub(brico.events.lunar.jewish.unlit(), " ", event)
+    event = re.sub(brico.events.lunar.jewish.unlit(), "\u202F‗\u202F", event)
     event = re.sub(r'<img[^>]+alt="([^"]*)"[^>]+>', r'\1', event)
     event = re.sub(r'<[^>]+>', '', event)
 
