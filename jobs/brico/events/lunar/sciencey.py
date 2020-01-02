@@ -29,7 +29,8 @@ def main(now):
 
 def leap(now):
   lday = "Leap Day " + brico.common.html.emoji("🤸‍♀️")
-  if calendar.isleap(now.year) and now < datetime.date(now.year, 3, 1):
+  if calendar.isleap(now.year) \
+      and now < datetime.datetime(now.year, 3, 1, 0, 0, 0, tzinfo=tz.UTC):
     return [ { 'start': datetime.date(now.year, 2, 29).isoformat(),
                'venue': "Holiday", 'event': lday } ]
   elif calendar.isleap(now.year + 1):
