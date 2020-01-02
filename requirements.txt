@@ -38,6 +38,7 @@ pytz==2018.5
 regex==2018.8.29          # via dateparser, wikitextparser
 requests==2.22.0
 six==1.11.0               # via pip-tools, protobuf, python-dateutil
+slacker==0.13.0
 tzlocal==1.5.1            # via dateparser
 ummalqura==2.0.1
 urllib3==1.25.7
