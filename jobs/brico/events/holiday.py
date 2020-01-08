@@ -23,6 +23,7 @@ import subprocess
 import json
 import os
 import sys
+import re
 
 import brico.common
 import brico.common.html as html
@@ -98,5 +99,17 @@ def parse_cal(filename, days=30):
 # Haven't found a python module that does this for all our use cases
 ###
 def recur(str):
+  if re.match("[0-9]{4,}-[0-9]{2}-[0-9]{2}", str): return one_shot_kludge(str)
+
   recur = os.path.join(brico.common.pwd(), "brico/events/recur.pl")
   return subprocess.check_output([recur, str])
+
+###
+# Handle one-shot future (non-recurring) events
+###
+def one_shot_kludge(str):
+  date = dateutil.parser.parse(str)
+  now = datetime.datetime.now()
+  if date < now - datetime.timedelta(days = 1):
+    date = now + datetime.timedelta(days = 1000)
+  return bytes(date.isoformat(), 'utf-8')
