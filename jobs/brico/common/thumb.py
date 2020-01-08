@@ -62,6 +62,8 @@ class Cache():
     enc = "%s.%s" % ( urllib.parse.quote(url, safe='').replace("%", "!"),
                       urllib.parse.quote(ext, safe='').replace("%", "!") )
 
+    enc = enc[-240:]
+
     sml = "sm_%s" % enc
     local = { "full": os.path.join(brico.common.pwd(), self.local, enc),
               "smll": os.path.join(brico.common.pwd(), self.local, sml) }
