@@ -65,7 +65,7 @@ def main():
 
   now = datetime.datetime.now(dateutil.tz.tzlocal())
   arr = arr + brico.events.lunar.geeky.main(now)
-  arr = sorted( arr, key = lambda i: i['start'])
+  arr = sorted( arr, key = lambda i: i['start'].replace('-', '/'))
 
   brico.common.write_json("geekday.json", arr[:10])
 
