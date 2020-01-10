@@ -116,4 +116,4 @@ def one_shot_kludge(str):
   now = datetime.datetime.now()
   if date < now - datetime.timedelta(days = 1):
     date = now + datetime.timedelta(days = 1000)
-  return bytes(date.isoformat(), 'utf-8')
+  return bytes(date.isoformat().replace('-', '/'), 'utf-8')
