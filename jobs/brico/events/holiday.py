@@ -81,7 +81,7 @@ def parse_cal(filename, days=30):
         spl = line.strip().decode().split("::")
         if len(spl) > 2 and spl[2].strip() != "":
           moji = spl[2].strip()
-          moji = html.emoji(moji) if len(moji) < 10 else html.logo(moji)
+          moji = html.emoji(moji) if not moji.isascii() else html.logo(moji)
           arr.append( (spl[0], "%s %s" % (spl[1], moji)) )
         elif len(spl) > 1:
           arr.append( (spl[0], spl[1]) )
