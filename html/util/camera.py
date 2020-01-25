@@ -33,6 +33,8 @@ import pathlib
 import urllib
 import re
 
+import datetime
+
 filename = "../img/ceilingcat.jpg"
 
 TIMEOUT = 1.0
@@ -59,7 +61,6 @@ cleanami = regex.sub('', whoami)
 if cleanami:
   pathlib.Path("../pull/doorcam_%s.touch" % cleanami).touch()
 
-
 mjpg = {
         'space': "http://192.168.42.22:8080/",
         'door': "http://192.168.42.21:8080/",
@@ -77,6 +78,12 @@ mjpg = {
 form = cgi.FieldStorage()
 view =    "space"   if not 'view' in form     else form['view'].value
 logger.info(view)
+
+if datetime.datetime.now() < datetime.datetime(2020, 1, 27, 9, 0, 0):
+  if view == "door":
+    logger.info('Down for maintenance.')
+    exit()
+
 action =  "stream"  if not 'action' in form   else form['action'].value
 logger.info(action)
 query = mjpg[view] + "?action=snapshot"
