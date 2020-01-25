@@ -14,6 +14,7 @@ __pycache__/
 test/
 !sysd/bindsight/test
 sysd/bindsight/.vscode/launch.json
+.ropeproject
 
 ##
 # Elixir
