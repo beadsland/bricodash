@@ -115,8 +115,11 @@ def snap():
 def do_snap(response):
   sys.stdout.flush()
 
-#  for block in response.iter_content(1024):
-#    sys.stdout.buffer.write(block)
+# Circumvent greytoss while we diagnose network issues
+  for block in response.iter_content(1024):
+    sys.stdout.buffer.write(block)
+  return
+
   bstr = b''
   for block in response.iter_content(1024):
     bstr += block
